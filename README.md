@@ -1,8 +1,8 @@
 # jkbayes
-An R package implementing functions to assist in Bayesian analysis
+An R package implementing functions to assist in Bayesian analysis.
 
 # Introduction
-`jkbayes` is an R package which implements functions to assist in Bayesian analysis. The package is under development. Please check back for more.
+`jkbayes` is an R package which implements functions to assist in Bayesian analysis written by Johannes Karreth. For more resources, please see [Johannes Karreth's website](http://www.jkarreth.net/index.html). The package is in the beginning stages and is under development. Please check back for more.
 
 # Installing The Package
 Currently the package can be downloaded with the devtools package in R from GitHub. To do this, install devtools by calling:
