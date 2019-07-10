@@ -5,10 +5,13 @@ Authors@R:
     as.person(c(
     "Johannes Karreth <jkarreth@ursinus.edu> [aut]",
     "Shana Scogin <shanarscogin@gmail.com> [aut, cre]",
-    "Neil Williams <snpwill@uga.edu> [aut]"
+    "Neil Williams <snpwill@uga.edu> [aut]",
+    "Myunghee Lee <mlq38@mail.missouri.edu> [aut]"
     ))
 Description: An implementation of functions to assist Bayesian analysis and results presentation.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
+Suggests: 
+    testthat

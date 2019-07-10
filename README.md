@@ -34,4 +34,4 @@ Please check back for more examples.
 This package is in the beginning stages. We hope to be up and running within the next few months. Please check back for more.
 
 # Contact
-Please contact sscogin@nd.edu if you encounter any bugs or have questions or comments about the package. Feel to also check out [Johannes Karreth's website](http://www.jkarreth.net/index.html) for more resources on Bayesian analysis. 
+Please contact sscogin@nd.edu if you encounter any bugs with the package or have any comments. Feel free to check out [Johannes Karreth's website](http://www.jkarreth.net/index.html) for more resources on Bayesian analysis. 
