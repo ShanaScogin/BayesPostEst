@@ -1,0 +1,20 @@
+---
+title: "Getting Started with BayesPostEst"
+author: "Johannes Karreth, Shana Scogin, Neil Williams, Myunghee Lee"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{getting_started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+`BayesPostEst` is an R package which implements functions to assist in Bayesian analysis written by Johannes Karreth. For more resources, please see [Johannes Karreth's website](http://www.jkarreth.net/index.html). The package is in the beginning stages and is under development. Please check back for more.

@@ -1,4 +1,4 @@
-# BayesPostEst
+# BayesPostEst [![Build Status](https://travis-ci.com/ShanaScogin/BayesPostEst.svg?branch=master)](https://travis-ci.com/ShanaScogin/BayesPostEst)
 An R package implementing functions to assist in Bayesian analysis.
 
 # Introduction
