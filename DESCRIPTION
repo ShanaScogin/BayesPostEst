@@ -2,20 +2,11 @@ Package: jkbayes
 Title: Analyze and Present Bayesian Models
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Johannes",
-           family = "Karreth",
-           role = c("aut"),
-           email = "jkarreth@ursinus.edu ",
-           comment = c(ORCID = "0000-0003-4586-7153"))
-    person(given = "Shana",
-           family = "Scogin",
-           role = c("aut", "cre"),
-           email = "shanarscogin@gmail.com",
-           comment = c(ORCID = "0000-0002-7801-853X"))
-    person(given = "Neil",
-           family = "Williams",
-           role = c("aut"),
-           email = "snpwill@uga.edu"
+    as.person(c(
+    "Johannes Karreth <jkarreth@ursinus.edu> [aut]",
+    "Shana Scogin <shanarscogin@gmail.com> [aut, cre]",
+    "Neil Williams <snpwill@uga.edu> [aut]"
+    ))
 Description: An implementation of functions to assist Bayesian analysis and results presentation.
 License: GPL-3
 Encoding: UTF-8
