@@ -1,2 +1,8 @@
+^Meta$
+^doc$
+^\.travis\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^cran-comments\.md$
+^JOSSpaper$
+^LICENSE$
