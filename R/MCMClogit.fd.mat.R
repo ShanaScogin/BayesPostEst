@@ -1,11 +1,22 @@
-# R function to calculate first differences after a Bayesian logit model 
-# Johannes Karreth
+#'@title MCMClogit.fd.mat
+#'@description R function to calculate first differences after a Bayesian logit model 
+#'@param model_matrix model matrix, including intercept. Create with model.matrix(formula, data)
+#'@param mcmc_out posterior distributions of all logit coefficients, 
+#'in matrix form - can easily be created from rstan, MCMCpack, R2jags, etc.
+#'@param credint tbd
+#'@param percentiles tbd
+#'@param full_sims tbd
+#'@return output
+#'@examples
+#' \donttest{
+#'   set.seed(123456)
+#'   example for user goes here
+#'   unit testing goes in testthat
+#' }
+#'@export
 
-# model_matrix: model matrix, including intercept
-# mcmc_out: posterior distributions of all logit coefficients, 
-#  in matrix form - can easily be created from rstan, MCMCpack, R2jags, etc.
-
-MCMClogit.fd.mat <- function(model_matrix, mcmc_out, 
+MCMClogit.fd.mat <- function(model_matrix, 
+                             mcmc_out, 
                              credint = c(0.05, 0.95), 
                              percentiles = c(0.25, 0.75),
                              full_sims = FALSE){

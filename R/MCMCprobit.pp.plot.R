@@ -1,12 +1,27 @@
-# R function to calculate and plot predicted probabilities after a Bayesian probit model
-# Johannes Karreth
-
-# model.matrix: model matrix, including intercept, focal predictor in the second column
-# mcmc.out: posterior distributions of all probit coefficients, 
-#  in matrix form - can easily be created from rstan, MCMCpack, R2jags, etc.
-# x.range: range of focal predictor
-
-MCMCprobit.pp.plot <- function(model.matrix, mcmc.out, x.col = 2, x.range, xlabel, ylabel){
+#'@title MCMCprobit.pp.plot
+#'@description R function to calculate and plot predicted probabilities after a Bayesian probit model
+#'@param model_matrix model matrix, including intercept, focal predictor in the second column
+#'@param mcmc_out posterior distributions of all probit coefficients, 
+#'in matrix form - can easily be created from rstan, MCMCpack, R2jags, etc.
+#'@param x.col tbd
+#'@param x.range tbd
+#'@param xlabel tbd
+#'@param ylabel tbd
+#'@return output
+#'@examples
+#' \donttest{
+#'   set.seed(123456)
+#'   example for user goes here
+#'   unit testing goes in testthat
+#' }
+#'@export
+#'
+MCMCprobit.pp.plot <- function(model.matrix, 
+                               mcmc.out, 
+                               x.col = 2, 
+                               x.range, 
+                               xlabel, 
+                               ylabel){
   
   require(ggplot2)
   require(dplyr)

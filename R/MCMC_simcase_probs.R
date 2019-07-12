@@ -1,33 +1,37 @@
-# R function to calculate predicted probabilities for 
-# "average" cases after a Bayesian logit or probit model 
-# Johannes Karreth
-
-###########################################
-# NOTE: This function is not fully tested
-# Use with caution! Feedback appreciated.
-###########################################
-
-# For an explanation of predicted probabilities for "average" cases,
+#'@title MCMC_simcase_probs
+#'@description This function calculates predicted probabilities for 
+#'"average" cases after a Bayesian logit or probit model # For an explanation of predicted probabilities for "average" cases,
 # see e.g. King, Tomz & Wittenberg (2000)
 # doi: 10.2307/2669316
-
-# model_matrix: model matrix, including intercept. Create with model.matrix(formula, data)
-# mcmc_out: posterior distributions of all coefficients
+#'@param model_matrix model matrix, including intercept. Create with model.matrix(formula, data)
+#'@param mcmc_out posterior distributions of all coefficients
 #   in matrix form - can easily be created from rstan, MCMCpack, R2jags, R2OpenBUGS, etc.
-# x_col: column number of the explanatory variable for which to calculate associated Pr(y = 1)
-# x_range_vec: name of the vector with the range of relevant values of the 
-#   explanatory variable for which to calculate associated Pr(y = 1)
-# link: link function, character vector set to "logit" (default) or "probit"
-# lower: lower percentile (default: 5th) for credible interval of predicted probabilities
-# upper: upper percentile (default: 95th) for credible interval of predicted probabilities
-
-# Output: a matrix with 4 columns:
-# predictor: identical to x_range
-# median_pp: median predicted probability at given x
-# lower_pp: lower bound of credible interval of predicted probability at given x
-# upper_pp: upper bound of credible interval of predicted probability at given x
-
-MCMC_simcase_probs <- function(model_matrix, mcmc_out, x_col, x_range_vec, link = "logit", lower = 0.05, upper = 0.95){
+#'@param x_col # x_col: column number of the explanatory variable for which to calculate 
+#'associated Pr(y = 1)
+#'@param x_range_vec name of the vector with the range of relevant values of the 
+#'explanatory variable for which to calculate associated Pr(y = 1)
+#'@param link # link: link function, character vector set to "logit" (default) or "probit"
+#'@param lower  # lower:  percentile (default: 5th) for credible interval of predicted probabilities
+#'@param upper  # upper: upper percentile (default: 95th) for credible interval of predicted probabilities
+#'@return Output: a matrix with 4 columns:
+#'predictor: identical to x_range
+#'median_pp: median predicted probability at given x
+#'lower_pp: lower bound of credible interval of predicted probability at given x
+#'upper_pp: upper bound of credible interval of predicted probability at given x
+#'@examples
+#' \donttest{
+#'   set.seed(123456)
+#'   example for user goes here
+#'   unit testing goes in testthat
+#' }
+#'@export
+MCMC_simcase_probs <- function(model_matrix, 
+                               mcmc_out, 
+                               x_col, 
+                               x_range_vec, 
+                               link = "logit", 
+                               lower = 0.05, 
+                               upper = 0.95){
   
   require(dplyr); require(reshape2)
   
