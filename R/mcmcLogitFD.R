@@ -1,9 +1,9 @@
-#'@title MCMClogit.fd.mat
+#'@title First Differences of a Bayesian Logit Model
 #'@description R function to calculate first differences after a Bayesian logit model 
 #'@param model_matrix model matrix, including intercept. Create with model.matrix(formula, data)
 #'@param mcmc_out posterior distributions of all logit coefficients, 
 #'in matrix form - can easily be created from rstan, MCMCpack, R2jags, etc.
-#'@param credint tbd
+#'@param ci the bounds of the credible interval
 #'@param percentiles tbd
 #'@param full_sims tbd
 #'@return output
@@ -15,9 +15,9 @@
 #' }
 #'@export
 
-MCMClogit.fd.mat <- function(model_matrix, 
+mcmcLogitFD <- function(model_matrix, 
                              mcmc_out, 
-                             credint = c(0.05, 0.95), 
+                             ci = c(0.05, 0.95), ## need to standardize this
                              percentiles = c(0.25, 0.75),
                              full_sims = FALSE){
   
@@ -50,8 +50,8 @@ MCMClogit.fd.mat <- function(model_matrix,
     fd <- pp[, 2] - pp[, 1]
     
     fd.mat[i-1, 1] <- quantile(fd, probs = c(0.5))
-    fd.mat[i-1, 2] <- quantile(fd, probs = c(credint[1]))
-    fd.mat[i-1, 3] <- quantile(fd, probs = c(credint[2]))
+    fd.mat[i-1, 2] <- quantile(fd, probs = c(ci[1]))
+    fd.mat[i-1, 3] <- quantile(fd, probs = c(ci[2]))
     
     fd.full[, i-1] <- fd
     

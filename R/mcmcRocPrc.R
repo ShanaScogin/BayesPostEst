@@ -3,7 +3,7 @@
 #'references: Area under the curve functions written by Andreas Beger
 #'<https://ssrn.com/abstract=2765419>
 #'
-#'@title MCMC ROC PRC
+#'@title ROC and Precision-recall Curve
 #'@description This function generates ROC and precision-recall curves 
 #'after fitting a logit/probit regression model in Stan
 #'references: Area under the curve functions written by Andreas Beger
@@ -25,7 +25,7 @@
 #' }
 #'@export
 
-MCMC_roc_prc <- function(stan_object, # this needs to be generalized
+mcmcRocPrc <- function(stan_object, # this needs to be generalized
                          model_frame, 
                          model_name = "Model"){
   

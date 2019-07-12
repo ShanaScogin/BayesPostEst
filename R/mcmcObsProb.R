@@ -2,7 +2,7 @@
 #'"observed" cases after a Bayesian logit or probit model,
 #'following Hanmer & Kalkan (2013; doi: 10.1111/j.1540-5907.2012.00602.x).
 #'
-#'@title MCMC Observed Plot
+#'@title Bayesian MCMC Observed Values Predicted Probablities
 #'@description Implements R function to calculate the predicted probabilities
 #'for "observed" cases after a Bayesian logit or probit model, following
 #'Hanmer & Kalkan (2013; doi: 10.1111/j.1540-5907.2012.00602.x).
@@ -30,13 +30,13 @@
 #' }
 #'@export
 
-MCMC_observed_probs <- function(model_matrix, 
-                                mcmc_out, 
-                                x_col, 
-                                x_range_vec, 
-                                link = "logit", 
-                                lower = 0.05, 
-                                upper = 0.95){
+mcmcObsProb <- function(model_matrix,
+                        mcmc_out, 
+                        x_col, 
+                        x_range_vec, 
+                        link = "logit", 
+                        lower = 0.05, 
+                        upper = 0.95){
   
   X <- matrix(rep(t(model_matrix), length(x_range_vec)), 
               ncol = ncol(model_matrix), byrow = TRUE )

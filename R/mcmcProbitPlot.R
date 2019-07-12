@@ -1,5 +1,5 @@
 #' An R function to calculate and plot predicted probabilities after a Bayesian probit model.
-#'@title MCMCprobit.pp.plot
+#'@title Plot Predicted Probabilities after a Bayesian Probit Model
 #'@description R function to calculate and plot predicted probabilities after a Bayesian probit model
 #'@param model_matrix model matrix, including intercept, focal predictor in the second column
 #'@param mcmc_out posterior distributions of all probit coefficients, 
@@ -17,7 +17,7 @@
 #' }
 #'@export
 #'
-MCMCprobit.pp.plot <- function(model.matrix, 
+mcmcProbitPlot <- function(model.matrix, 
                                mcmc.out, 
                                x.col = 2, 
                                x.range, 

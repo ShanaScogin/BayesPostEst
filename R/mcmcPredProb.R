@@ -1,7 +1,7 @@
 #'This function calculates predicted probabilities for "average" cases after a Bayesian 
 #'logit or probit model. For an explanation of predicted probabilities for "average" cases,
 #' see e.g. King, Tomz & Wittenberg (2000, <doi: 10.2307/2669316>)
-#'@title MCMC_simcase_probs
+#'@title Bayesian MCMC Predicted Probablities for the 'Average' Case
 #'@description This function calculates predicted probabilities for "average" cases after a Bayesian logit 
 #'or probit model. For an explanation of predicted probabilities for "average" cases,
 # see e.g. King, Tomz & Wittenberg (2000) doi: 10.2307/2669316
@@ -28,13 +28,13 @@
 #' }
 #'@export
 #'
-MCMC_simcase_probs <- function(model_matrix, 
-                               mcmc_out, 
-                               x_col, 
-                               x_range_vec, 
-                               link = "logit", 
-                               lower = 0.05, 
-                               upper = 0.95){
+mcmcPredProb <- function(model_matrix, 
+                         mcmc_out, 
+                         x_col, 
+                         x_range_vec, 
+                         link = "logit", 
+                         lower = 0.05, 
+                         upper = 0.95){
   
   X <- matrix(rep(apply(X = model_matrix,
                         MARGIN = 2,
