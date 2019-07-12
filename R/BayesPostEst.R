@@ -9,7 +9,25 @@
 NULL
 #> NULL
 
-#' @importFrom stats median
+#' @importFrom stats median pnorm
+NULL
+
+#' @importFrom ggplot2 ggplot
+NULL
+
+#' @importFrom dplyr summarize group_by tibble
+NULL
+
+#' @importFrom ggmcmc ggs
+NULL
+
+#' @importFrom reshape2 melt
+NULL
+
+#' @importFrom ROCR prediction performance
+NULL
+
+#' @importFrom caTools trapz
 NULL
 
 #' @useDynLib BayesPostEst

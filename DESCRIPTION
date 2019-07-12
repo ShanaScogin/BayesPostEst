@@ -10,6 +10,14 @@ Authors@R:
     ))
 Description: An implementation of functions to assist Bayesian analysis and results presentation.
 License: GPL-3
+Imports:
+    stats,
+    dplyr,
+    ggmcmc, 
+    ROCR,
+    caTools,
+    reshape2,
+    ggplot2
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1

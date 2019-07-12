@@ -2,5 +2,10 @@
 
 export(MCMC_observed_probs)
 export(MCMC_roc_prc)
+export(MCMC_simcase_probs)
+export(MCMClogit.fd.mat)
+export(MCMCprobit.fd.mat)
+export(MCMCprobit.pp.plot)
+export(mcmctab)
 importFrom(stats,median)
 useDynLib(BayesPostEst)

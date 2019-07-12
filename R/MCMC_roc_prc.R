@@ -1,3 +1,8 @@
+#'This function generates ROC and precision-recall curves 
+#'after fitting a logit/probit regression model in Stan
+#'references: Area under the curve functions written by Andreas Beger
+#'<https://ssrn.com/abstract=2765419>
+#'
 #'@title MCMC ROC PRC
 #'@description This function generates ROC and precision-recall curves 
 #'after fitting a logit/probit regression model in Stan
@@ -25,11 +30,10 @@ MCMC_roc_prc <- function(stan_object, # this needs to be generalized
                          model_name = "Model"){
   
   # Prepare MCMC output
-  require("ggmcmc")
-  mcmc_ggs <- ggs(stan_object, family = "pred")
+  mcmc_ggs <- ggmcmc::ggs(stan_object, family = "pred")
   
-  require("dplyr")
-  median_pred <- summarize(group_by(mcmc_ggs, Parameter),
+
+  median_pred <- dplyr::summarize(dplyr::group_by(mcmc_ggs, Parameter),
                            y_pred = median(value) #,
                            # y_pred_lower = quantile(value, probs = ci[1]),
                            # y_pred_upper = quantile(value, probs = ci[2])
@@ -39,28 +43,25 @@ MCMC_roc_prc <- function(stan_object, # this needs to be generalized
   median_pred$y_obs <- model_frame[, 1]
   # median_pred$x_obs <- model_frame[, xvar]
   
-  # Area under the curve functions from Andreas Beger
+  # For more on the area under the curve functions see Andreas Beger
   # <https://ssrn.com/abstract=2765419>
   
-  require("ROCR")
-  require("caTools")
-  
   auc_roc <- function(obs, pred) {
-    pred <- prediction(pred, obs)
-    auc  <- performance(pred, "auc")@y.values[[1]]
+    pred <- ROCR::prediction(pred, obs)
+    auc  <- ROCR::performance(pred, "auc")@y.values[[1]]
     return(auc)
   }
   
   auc_pr <- function(obs, pred) {
-    xx.df <- prediction(pred, obs)
-    perf  <- performance(xx.df, "prec", "rec")
+    xx.df <- ROCR::prediction(pred, obs)
+    perf  <- ROCR::performance(xx.df, "prec", "rec")
     xy    <- data.frame(recall = perf@x.values[[1]], 
                         precision = perf@y.values[[1]])
     
     # take out division by 0 for lowest threshold
     xy <- subset(xy, !is.nan(xy$precision))
     
-    res   <- trapz(xy$recall, xy$precision)
+    res   <- caTools::trapz(xy$recall, xy$precision)
     res
   }
   
@@ -68,10 +69,10 @@ MCMC_roc_prc <- function(stan_object, # this needs to be generalized
   
   area_under_prc <- data.frame(auc = auc_pr(obs = median_pred$y_obs, pred = median_pred$y_pred), Model = model_name)
   
-  prediction_obj <- prediction(predictions = median_pred$y_pred,
+  prediction_obj <- ROCR::prediction(predictions = median_pred$y_pred,
                                labels = median_pred$y_obs)
   
-  prc_performance_obj <- performance(prediction.obj = prediction_obj,
+  prc_performance_obj <- ROCR::performance(prediction.obj = prediction_obj,
                                      measure = "prec",
                                      x.measure = "rec")
   
@@ -80,7 +81,7 @@ MCMC_roc_prc <- function(stan_object, # this needs to be generalized
                         Model = model_name)
   names(prc_dat) <- c("x", "y", "Model")
   
-  roc_performance_obj <- performance(prediction.obj = prediction_obj,
+  roc_performance_obj <- ROCR::performance(prediction.obj = prediction_obj,
                                      measure = "tpr",
                                      x.measure = "fpr")
   

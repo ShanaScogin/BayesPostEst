@@ -1,19 +1,21 @@
+#'This function calculates predicted probabilities for "average" cases after a Bayesian 
+#'logit or probit model. For an explanation of predicted probabilities for "average" cases,
+#' see e.g. King, Tomz & Wittenberg (2000, <doi: 10.2307/2669316>)
 #'@title MCMC_simcase_probs
-#'@description This function calculates predicted probabilities for 
-#'"average" cases after a Bayesian logit or probit model # For an explanation of predicted probabilities for "average" cases,
-# see e.g. King, Tomz & Wittenberg (2000)
-# doi: 10.2307/2669316
+#'@description This function calculates predicted probabilities for "average" cases after a Bayesian logit 
+#'or probit model. For an explanation of predicted probabilities for "average" cases,
+# see e.g. King, Tomz & Wittenberg (2000) doi: 10.2307/2669316
 #'@param model_matrix model matrix, including intercept. Create with model.matrix(formula, data)
 #'@param mcmc_out posterior distributions of all coefficients
 #   in matrix form - can easily be created from rstan, MCMCpack, R2jags, R2OpenBUGS, etc.
-#'@param x_col # x_col: column number of the explanatory variable for which to calculate 
+#'@param x_col column number of the explanatory variable for which to calculate 
 #'associated Pr(y = 1)
 #'@param x_range_vec name of the vector with the range of relevant values of the 
 #'explanatory variable for which to calculate associated Pr(y = 1)
-#'@param link # link: link function, character vector set to "logit" (default) or "probit"
-#'@param lower  # lower:  percentile (default: 5th) for credible interval of predicted probabilities
-#'@param upper  # upper: upper percentile (default: 95th) for credible interval of predicted probabilities
-#'@return Output: a matrix with 4 columns:
+#'@param link link: link function, character vector set to "logit" (default) or "probit"
+#'@param lower  lower:  percentile (default: 5th) for credible interval of predicted probabilities
+#'@param upper  upper: upper percentile (default: 95th) for credible interval of predicted probabilities
+#'@return a matrix with 4 columns:
 #'predictor: identical to x_range
 #'median_pp: median predicted probability at given x
 #'lower_pp: lower bound of credible interval of predicted probability at given x
@@ -25,6 +27,7 @@
 #'   unit testing goes in testthat
 #' }
 #'@export
+#'
 MCMC_simcase_probs <- function(model_matrix, 
                                mcmc_out, 
                                x_col, 
@@ -32,8 +35,6 @@ MCMC_simcase_probs <- function(model_matrix,
                                link = "logit", 
                                lower = 0.05, 
                                upper = 0.95){
-  
-  require(dplyr); require(reshape2)
   
   X <- matrix(rep(apply(X = model_matrix,
                         MARGIN = 2,
@@ -53,9 +54,9 @@ MCMC_simcase_probs <- function(model_matrix,
   }
   
   colnames(pp) <- as.character(x_range_vec)
-  longFrame <- melt(pp, id.vars = Var2)
+  longFrame <- reshape2::melt(pp, id.vars = Var2)
   
-  pp_dat <- summarize(group_by(longFrame, Var2), 
+  pp_dat <- dplyr::summarize(dplyr::group_by(longFrame, Var2), 
                       median_pp = quantile(value, probs = 0.5), 
                       lower_pp = quantile(value, probs = lower), 
                       upper_pp = quantile(value, probs = upper))

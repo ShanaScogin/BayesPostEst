@@ -1,3 +1,4 @@
+#' An R function to calculate and plot predicted probabilities after a Bayesian probit model.
 #'@title MCMCprobit.pp.plot
 #'@description R function to calculate and plot predicted probabilities after a Bayesian probit model
 #'@param model_matrix model matrix, including intercept, focal predictor in the second column
@@ -23,9 +24,6 @@ MCMCprobit.pp.plot <- function(model.matrix,
                                xlabel, 
                                ylabel){
   
-  require(ggplot2)
-  require(dplyr)
-  
   X <- matrix(rep(apply(X = model.matrix,
                         MARGIN = 2,
                         FUN = function(x) median(x)),
@@ -37,12 +35,17 @@ MCMCprobit.pp.plot <- function(model.matrix,
   pp <- pnorm(t(X %*% t(mcmc.out)))
   
   colnames(pp) <- as.character(x.range)
-  longFrame <- melt(pp, id.vars = Var2)
+  longFrame <- reshape2::melt(pp, id.vars = Var2)
   longFrame$Xvar <- as.character(longFrame$Var2)
   
-  longSumframe <- summarize(group_by(longFrame, Xvar), median.PP = median(value), lower90 = quantile(value, probs = 0.05), upper90 = quantile(value, probs = 0.95), lower80 = quantile(value, probs = 0.1), upper80 = quantile(value, probs = 0.9))
+  longSumframe <- dplyr::summarize(dplyr::group_by(longFrame, Xvar), 
+                                   median.PP = median(value), 
+                                   lower90 = quantile(value, probs = 0.05), 
+                                   upper90 = quantile(value, probs = 0.95), 
+                                   lower80 = quantile(value, probs = 0.1), 
+                                   upper80 = quantile(value, probs = 0.9))
   
-  pp.plot <- ggplot(data = longSumframe, aes(x = Xvar, y = median.PP))
+  pp.plot <- ggplot2::ggplot(data = longSumframe, aes(x = Xvar, y = median.PP))
   pp.plot <- pp.plot + geom_segment(data = longSumframe, aes(x = Xvar, xend = Xvar, y = lower90, yend = upper90), alpha = 0.35)
   # pp.plot <- pp.plot + geom_segment(data = longSumframe.m1, aes(x = IGOs, xend = IGOs, y = lower80, yend = upper80), alpha = 0.35, size = 2)
   pp.plot <- pp.plot + geom_point(size = 3)

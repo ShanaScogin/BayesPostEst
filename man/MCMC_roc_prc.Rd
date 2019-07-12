@@ -27,6 +27,12 @@ after fitting a logit/probit regression model in Stan
 references: Area under the curve functions written by Andreas Beger
 <https://ssrn.com/abstract=2765419>
 }
+\details{
+This function generates ROC and precision-recall curves 
+after fitting a logit/probit regression model in Stan
+references: Area under the curve functions written by Andreas Beger
+<https://ssrn.com/abstract=2765419>
+}
 \examples{
 \donttest{
   set.seed(123456)

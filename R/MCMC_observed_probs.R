@@ -70,8 +70,7 @@ MCMC_observed_probs <- function(model_matrix,
   lower_pp <- apply(X = pp_mat, MARGIN = 2, function(x) quantile(x, probs = c(lower)))
   upper_pp <- apply(X = pp_mat, MARGIN = 2, function(x) quantile(x, probs = c(upper)))
   
-  require("dplyr")
-  pp_dat <- tibble(predictor = x_range_vec,
+  pp_dat <- dplyr::tibble(predictor = x_range_vec,
                    median_pp = median_pp,
                    lower_pp = lower_pp,
                    upper_pp = upper_pp)
