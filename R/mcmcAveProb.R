@@ -13,9 +13,9 @@
 #'@param x_range_vec name of the vector with the range of relevant values of the 
 #'explanatory variable for which to calculate associated Pr(y = 1)
 #'@param link link: link function, character vector set to "logit" (default) or "probit"
-#'@param lower  lower:  percentile (default: 5th) for credible interval of predicted probabilities
-#'@param upper  upper: upper percentile (default: 95th) for credible interval of predicted probabilities
-#'@return a matrix with 4 columns:
+#'@param ci the bounds of the credible interval. Default is 0.05 and 0.95. 
+#'Enter as a vector, such as c(0.05, 0.95).
+#'#'@return a matrix with 4 columns:
 #'predictor: identical to x_range
 #'median_pp: median predicted probability at given x
 #'lower_pp: lower bound of credible interval of predicted probability at given x
@@ -29,12 +29,11 @@
 #'@export
 #'
 mcmcAveProb <- function(model_matrix, 
-                         mcmc_out, 
-                         x_col, 
-                         x_range_vec, 
-                         link = "logit", 
-                         lower = 0.05, 
-                         upper = 0.95){
+                        mcmc_out, 
+                        x_col, 
+                        x_range_vec, 
+                        link = "logit", 
+                        ci = c(0.05, 0.95)){
   
   X <- matrix(rep(apply(X = model_matrix,
                         MARGIN = 2,
@@ -58,8 +57,8 @@ mcmcAveProb <- function(model_matrix,
   
   pp_dat <- dplyr::summarize(dplyr::group_by(longFrame, Var2), 
                       median_pp = quantile(value, probs = 0.5), 
-                      lower_pp = quantile(value, probs = lower), 
-                      upper_pp = quantile(value, probs = upper))
+                      lower_pp = quantile(value, probs = ci[1]), 
+                      upper_pp = quantile(value, probs = ci[2]))
   
   names(pp_dat) <- c("predictor", "median_pp", "lower_pp", "upper_pp")
   

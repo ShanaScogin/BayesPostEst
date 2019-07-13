@@ -20,7 +20,8 @@ Imports:
     caTools,
     reshape2,
     ggplot2, 
-    R2jags
+    R2jags,
+    coda
 Encoding: UTF-8
 LazyData: TRUE
 LazyLoad: TRUE

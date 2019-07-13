@@ -50,7 +50,7 @@ fit <- R2jags::jags(data = datjags, inits = inits,
 
 ### observed value approach
 xmat <- model.matrix(Y ~ X1 + X2, data = data)
-mcmc <- as.mcmc(fit)
+mcmc <- coda::as.mcmc(fit)
 mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
 X1_sim <- seq(from = min(datjags$X1),
               to = max(datjags$X1), 

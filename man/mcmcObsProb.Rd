@@ -5,7 +5,7 @@
 \title{Bayesian MCMC Observed Values Predicted Probablities}
 \usage{
 mcmcObsProb(model_matrix, mcmc_out, xcol, xrange, link = "logit",
-  lower = 0.05, upper = 0.95)
+  ci = c(0.05, 0.95))
 }
 \arguments{
 \item{model_matrix}{model matrix, including intercept. Create with 
@@ -22,9 +22,8 @@ explanatory variable for which to calculate associated Pr(y = 1)}
 
 \item{link}{link function, character vector set to "logit" (default) or "probit"}
 
-\item{lower}{lower bound of credible interval of predicted probability at given x}
-
-\item{upper}{upper bound of credible interval of predicted probability at given x}
+\item{ci}{the bounds of the credible interval. Default is 0.05 and 0.95. 
+Enter as a vector, such as c(0.05, 0.95).}
 }
 \value{
 An object
@@ -37,7 +36,7 @@ Hanmer & Kalkan (2013) <doi: 10.1111/j.1540-5907.2012.00602.x>.
 \details{
 This function calculates predicted probabilities for 
 "observed" cases after a Bayesian logit or probit model
-following Hanmer & Kalkan (2013; doi: 10.1111/j.1540-5907.2012.00602.x).
+following Hanmer & Kalkan (2013) <doi: 10.1111/j.1540-5907.2012.00602.x>.
 }
 \examples{
 \donttest{

@@ -5,7 +5,8 @@
 #'@param model_matrix model matrix, including intercept. Create with model.matrix(formula, data)
 #'@param mcmc_out posterior distributions of all logit coefficients, 
 #'in matrix form - can easily be created from rstan, MCMCpack, R2jags, etc.
-#'@param ci the bounds of the credible interval
+#'@param ci the bounds of the credible interval. Default is 0.05 and 0.95. 
+#'Enter as a vector, such as c(0.05, 0.95).
 #'@param percentiles tbd
 #'@param full_sims tbd
 #'@return output

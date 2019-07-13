@@ -15,8 +15,8 @@
 #'@param xrange name of the vector with the range of relevant values of the 
 #'explanatory variable for which to calculate associated Pr(y = 1)
 #'@param link link function, character vector set to "logit" (default) or "probit"
-#'@param lower lower bound of credible interval of predicted probability at given x
-#'@param upper upper bound of credible interval of predicted probability at given x
+#'@param ci the bounds of the credible interval. Default is 0.05 and 0.95. 
+#'Enter as a vector, such as c(0.05, 0.95).
 #'@references Hanmer, M. J., & Ozan Kalkan, K. (2013). Behind the curve: Clarifying 
 #'the best approach to calculating predicted probabilities and marginal effects from 
 #'limited dependent variable models. American Journal of Political Science, 57(1), 
@@ -35,8 +35,7 @@ mcmcObsProb <- function(model_matrix,
                         xcol, ## I should we rename this or allow a var name
                         xrange, 
                         link = "logit", 
-                        lower = 0.05, 
-                        upper = 0.95){
+                        ci = c(0.05, 0.95)){
   
   X <- matrix(rep(t(model_matrix), length(xrange)), 
               ncol = ncol(model_matrix), byrow = TRUE )
@@ -70,8 +69,8 @@ mcmcObsProb <- function(model_matrix,
   }
   
   median_pp <- apply(X = pp_mat, MARGIN = 2, function(x) quantile(x, probs = c(0.5)))
-  lower_pp <- apply(X = pp_mat, MARGIN = 2, function(x) quantile(x, probs = c(lower)))
-  upper_pp <- apply(X = pp_mat, MARGIN = 2, function(x) quantile(x, probs = c(upper)))
+  lower_pp <- apply(X = pp_mat, MARGIN = 2, function(x) quantile(x, probs = ci[1]))
+  upper_pp <- apply(X = pp_mat, MARGIN = 2, function(x) quantile(x, probs = ci[2]))
   
   pp_dat <- dplyr::tibble(predictor = xrange,
                    median_pp = median_pp,
