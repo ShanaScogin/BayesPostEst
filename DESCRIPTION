@@ -19,7 +19,8 @@ Imports:
     ROCR,
     caTools,
     reshape2,
-    ggplot2
+    ggplot2, 
+    R2jags
 Encoding: UTF-8
 LazyData: TRUE
 LazyLoad: TRUE

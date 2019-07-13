@@ -1,15 +1,11 @@
-#'This function implements calculates predicted probabilities for 
-#'"observed" cases after a Bayesian logit or probit model,
-#'following Hanmer & Kalkan (2013; doi: 10.1111/j.1540-5907.2012.00602.x).
+#'This function calculates predicted probabilities for 
+#'"observed" cases after a Bayesian logit or probit model
+#'following Hanmer & Kalkan (2013) <doi: 10.1111/j.1540-5907.2012.00602.x>.
 #'
 #'@title Bayesian MCMC Observed Values Predicted Probablities
 #'@description Implements R function to calculate the predicted probabilities
 #'for "observed" cases after a Bayesian logit or probit model, following
-#'Hanmer & Kalkan (2013; doi: 10.1111/j.1540-5907.2012.00602.x).
-#'
-#'Please check out and cite:
-#'
-#'Hanmer & Kalkan (2013; doi: 10.1111/j.1540-5907.2012.00602.x).
+#'Hanmer & Kalkan (2013) <doi: 10.1111/j.1540-5907.2012.00602.x>.
 #'@param model_matrix model matrix, including intercept. Create with 
 #'model.matrix(formula, data)
 #'@param mcmc_out posterior distributions of all coefficients in matrix 
@@ -21,6 +17,10 @@
 #'@param link link function, character vector set to "logit" (default) or "probit"
 #'@param lower lower bound of credible interval of predicted probability at given x
 #'@param upper upper bound of credible interval of predicted probability at given x
+#'@references Hanmer, M. J., & Ozan Kalkan, K. (2013). Behind the curve: Clarifying 
+#'the best approach to calculating predicted probabilities and marginal effects from 
+#'limited dependent variable models. American Journal of Political Science, 57(1), 
+#'263-277.
 #'@return An object
 #'@examples
 #' \donttest{

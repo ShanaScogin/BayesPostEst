@@ -1,5 +1,7 @@
-#'@title First Differences after a Bayesian Probit Model
-#'@description R function to calculate first differences after a Bayesian probit model 
+## Combining mcmcLogitFD and mcmcProbitFD
+
+#'@title First Differences of a Bayesian Logit or Probit model
+#'@description R function to calculate first differences after a Bayesian logit or probit model 
 #'@param model_matrix model matrix, including intercept. Create with model.matrix(formula, data)
 #'@param mcmc_out posterior distributions of all logit coefficients, 
 #'in matrix form - can easily be created from rstan, MCMCpack, R2jags, etc.
@@ -14,11 +16,13 @@
 #'   unit testing goes in testthat
 #' }
 #'@export
-mcmcProbitFD <- function(model_matrix, 
-                              mcmc_out, 
-                              ci = c(0.05, 0.95), ## need to standardize this with teh others - mcmcObsProb has upper and lower
-                              percentiles = c(0.25, 0.75), 
-                              full_sims = FALSE){
+
+mcmcFD <- function(model_matrix,
+                   mcmc_out, 
+                   link = "logit",
+                   ci = c(0.05, 0.95), ## need to standardize this
+                   percentiles = c(0.25, 0.75),
+                   full_sims = FALSE){
   
   fd.mat <- matrix(NA, ncol = 3, nrow = ncol(model_matrix) - 1)
   colnames(fd.mat) <- c("Median", "Lower", "Upper")
@@ -38,13 +42,13 @@ mcmcProbitFD <- function(model_matrix,
                     times = 2),
                 nrow = 2,
                 byrow = TRUE)
-    X[, i] <- ifelse(length(unique(model_matrix[, i])) == 2 & 
-                       range(model_matrix[, i]) == c(0, 1), c(0, 1), 
+    X[, i] <- ifelse(length(unique(model_matrix[, i])) == 2 & range(model_matrix[, i]) == c(0, 1), c(0, 1), 
                      quantile(model_matrix[, i], probs = percentiles))
     
     # X[, i] <- quantile(model_matrix[, i], probs = percentiles)
     
-    pp <- pnorm(t(X %*% t(mcmc_out)))
+    Xb <- t(X %*% t(mcmc_out))
+    pp <- exp(Xb) / (1 + exp(Xb))
     
     fd <- pp[, 2] - pp[, 1]
     
@@ -62,7 +66,7 @@ mcmcProbitFD <- function(model_matrix,
   
   if(full_sims == FALSE){
     return(fd.dat)
-  } 
+  }
   
   if(full_sims == TRUE){
     return(fd.full)

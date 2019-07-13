@@ -30,6 +30,9 @@ NULL
 #' @importFrom caTools trapz
 NULL
 
+#' @importFrom R2jags jags
+NULL
+
 #' @useDynLib BayesPostEst
 NULL
 

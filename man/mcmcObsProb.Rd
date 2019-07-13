@@ -32,15 +32,11 @@ An object
 \description{
 Implements R function to calculate the predicted probabilities
 for "observed" cases after a Bayesian logit or probit model, following
-Hanmer & Kalkan (2013; doi: 10.1111/j.1540-5907.2012.00602.x).
-
-Please check out and cite:
-
-Hanmer & Kalkan (2013; doi: 10.1111/j.1540-5907.2012.00602.x).
+Hanmer & Kalkan (2013) <doi: 10.1111/j.1540-5907.2012.00602.x>.
 }
 \details{
-This function implements calculates predicted probabilities for 
-"observed" cases after a Bayesian logit or probit model,
+This function calculates predicted probabilities for 
+"observed" cases after a Bayesian logit or probit model
 following Hanmer & Kalkan (2013; doi: 10.1111/j.1540-5907.2012.00602.x).
 }
 \examples{
@@ -49,4 +45,10 @@ following Hanmer & Kalkan (2013; doi: 10.1111/j.1540-5907.2012.00602.x).
   example for user goes here
   unit testing goes in testthat
 }
+}
+\references{
+Hanmer, M. J., & Ozan Kalkan, K. (2013). Behind the curve: Clarifying 
+the best approach to calculating predicted probabilities and marginal effects from 
+limited dependent variable models. American Journal of Political Science, 57(1), 
+263-277.
 }
