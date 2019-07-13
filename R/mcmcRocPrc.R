@@ -30,19 +30,13 @@ mcmcRocPrc <- function(stan_object, # this needs to be generalized
                          model_name = "Model"){
   
   # Prepare MCMC output
-  mcmc_ggs <- ggmcmc::ggs(stan_object, family = "pred")
-  
+  pred_prob <- rstanarm::posterior_linpred(stan_object, transform = TRUE)
 
-  median_pred <- dplyr::summarize(dplyr::group_by(mcmc_ggs, Parameter),
-                           y_pred = median(value) #,
-                           # y_pred_lower = quantile(value, probs = ci[1]),
-                           # y_pred_upper = quantile(value, probs = ci[2])
-  )
-  
-  # Observed y and x						 
-  median_pred$y_obs <- model_frame[, 1]
-  # median_pred$x_obs <- model_frame[, xvar]
-  
+  y_pred <- apply(X = pred_prob, margin = 2, FUN = function(x) median(x))
+
+  # Observed y and x
+  pred_obs <- data.frame(y_pred = y_pred, y_obs = model_frame[, 1])						 
+
   # For more on the area under the curve functions see Andreas Beger
   # <https://ssrn.com/abstract=2765419>
   
@@ -65,12 +59,12 @@ mcmcRocPrc <- function(stan_object, # this needs to be generalized
     res
   }
   
-  area_under_roc <- data.frame(auc = auc_roc(obs = median_pred$y_obs, pred = median_pred$y_pred), Model = model_name)
+  area_under_roc <- data.frame(auc = auc_roc(obs = pred_obs$y_obs, pred = pred_obs$y_pred), Model = model_name)
   
-  area_under_prc <- data.frame(auc = auc_pr(obs = median_pred$y_obs, pred = median_pred$y_pred), Model = model_name)
+  area_under_prc <- data.frame(auc = auc_pr(obs = pred_obs$y_obs, pred = pred_obs$y_pred), Model = model_name)
   
-  prediction_obj <- ROCR::prediction(predictions = median_pred$y_pred,
-                               labels = median_pred$y_obs)
+  prediction_obj <- ROCR::prediction(predictions = pred_obs$y_pred,
+                               labels = pred_obs$y_obs)
   
   prc_performance_obj <- ROCR::performance(prediction.obj = prediction_obj,
                                      measure = "prec",
