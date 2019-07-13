@@ -1,4 +1,4 @@
-#'@title First Differences of a Bayesian Logit Model
+#'@title First Differences of a Bayesian
 #'@description R function to calculate first differences after a Bayesian logit model 
 #'@param model_matrix model matrix, including intercept. Create with model.matrix(formula, data)
 #'@param mcmc_out posterior distributions of all logit coefficients, 
@@ -15,11 +15,11 @@
 #' }
 #'@export
 
-mcmcLogitFD <- function(model_matrix, 
-                             mcmc_out, 
-                             ci = c(0.05, 0.95), ## need to standardize this
-                             percentiles = c(0.25, 0.75),
-                             full_sims = FALSE){
+mcmcLogitFD <- function(model_matrix,
+                        mcmc_out, 
+                        ci = c(0.05, 0.95), ## need to standardize this
+                        percentiles = c(0.25, 0.75),
+                        full_sims = FALSE){
   
   fd.mat <- matrix(NA, ncol = 3, nrow = ncol(model_matrix) - 1)
   colnames(fd.mat) <- c("Median", "Lower", "Upper")

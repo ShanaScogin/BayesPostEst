@@ -14,9 +14,9 @@
 #'model.matrix(formula, data)
 #'@param mcmc_out posterior distributions of all coefficients in matrix 
 #'form - can easily be created from rstan, MCMCpack, R2jags, R2OpenBUGS, etc.
-#'@param x_col column number of the explanatory variable for which to calculate 
+#'@param xcol column number of the explanatory variable for which to calculate 
 #'associated Pr(y = 1)
-#'@param x_range_vec name of the vector with the range of relevant values of the 
+#'@param xrange name of the vector with the range of relevant values of the 
 #'explanatory variable for which to calculate associated Pr(y = 1)
 #'@param link link function, character vector set to "logit" (default) or "probit"
 #'@param lower lower bound of credible interval of predicted probability at given x
@@ -32,15 +32,15 @@
 
 mcmcObsProb <- function(model_matrix,
                         mcmc_out, 
-                        x_col, 
-                        x_range_vec, 
+                        xcol, ## I should we rename this or allow a var name
+                        xrange, 
                         link = "logit", 
                         lower = 0.05, 
                         upper = 0.95){
   
-  X <- matrix(rep(t(model_matrix), length(x_range_vec)), 
+  X <- matrix(rep(t(model_matrix), length(xrange)), 
               ncol = ncol(model_matrix), byrow = TRUE )
-  X[, x_col] <- sort(rep(x_range_vec, times = nrow(X) / length(x_range_vec)))
+  X[, xcol] <- sort(rep(xrange, times = nrow(X) / length(xrange)))
   
   if(link == "logit"){
     logit_linpred <- t(X %*% t(mcmc_out))
@@ -54,15 +54,15 @@ mcmcObsProb <- function(model_matrix,
   
   
   # emptry matrix for PPs
-  pp_mat <- matrix(NA, nrow = nrow(mcmc_out), ncol = length(x_range_vec))
+  pp_mat <- matrix(NA, nrow = nrow(mcmc_out), ncol = length(xrange))
   
   # indices
-  pp_mat_lowerindex <- 1 + (0:(length(x_range_vec) - 1) * nrow(model_matrix))
-  pp_mat_upperindex <- nrow(model_matrix) + (0:(length(x_range_vec) - 1) * nrow(model_matrix))
+  pp_mat_lowerindex <- 1 + (0:(length(xrange) - 1) * nrow(model_matrix))
+  pp_mat_upperindex <- nrow(model_matrix) + (0:(length(xrange) - 1) * nrow(model_matrix))
   
   
   # fill matrix with PPs, one for each value of the predictor of interest
-  for(i in 1:length(x_range_vec)){
+  for(i in 1:length(xrange)){
     pp_mat[, i] <- apply(X = pp[, c(pp_mat_lowerindex[i]:pp_mat_upperindex[i])], MARGIN = 1, FUN = function(x) mean(x))
   }
   
@@ -70,7 +70,7 @@ mcmcObsProb <- function(model_matrix,
   lower_pp <- apply(X = pp_mat, MARGIN = 2, function(x) quantile(x, probs = c(lower)))
   upper_pp <- apply(X = pp_mat, MARGIN = 2, function(x) quantile(x, probs = c(upper)))
   
-  pp_dat <- dplyr::tibble(predictor = x_range_vec,
+  pp_dat <- dplyr::tibble(predictor = xrange,
                    median_pp = median_pp,
                    lower_pp = lower_pp,
                    upper_pp = upper_pp)

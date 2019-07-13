@@ -28,7 +28,7 @@
 #' }
 #'@export
 #'
-mcmcPredProb <- function(model_matrix, 
+mcmcAveProb <- function(model_matrix, 
                          mcmc_out, 
                          x_col, 
                          x_range_vec, 

@@ -1,11 +1,11 @@
-#' An R function to calculate and plot predicted probabilities after a Bayesian probit model.
-#'@title Plot Predicted Probabilities after a Bayesian Probit Model
+#'An R function to calculate and plot predicted probabilities after a Bayesian logit or probit model.
+#'@title Plot Predicted Probabilities after a Bayesian Logit or Probit Model
 #'@description R function to calculate and plot predicted probabilities after a Bayesian probit model
 #'@param model_matrix model matrix, including intercept, focal predictor in the second column
 #'@param mcmc_out posterior distributions of all probit coefficients, 
 #'in matrix form - can easily be created from rstan, MCMCpack, R2jags, etc.
-#'@param x.col tbd
-#'@param x.range tbd
+#'@param xcol tbd
+#'@param xrange tbd
 #'@param xlabel tbd
 #'@param ylabel tbd
 #'@return output
@@ -19,22 +19,22 @@
 #'
 mcmcProbitPlot <- function(model.matrix, 
                                mcmc.out, 
-                               x.col = 2, 
-                               x.range, 
+                               xcol = 2, 
+                               xrange, 
                                xlabel, 
                                ylabel){
   
   X <- matrix(rep(apply(X = model.matrix,
                         MARGIN = 2,
                         FUN = function(x) median(x)),
-                  times = length(x.range)),
-              nrow = length(x.range),
+                  times = length(xrange)),
+              nrow = length(xrange),
               byrow = TRUE)
-  X[, x.col] <- x.range
+  X[, xcol] <- xrange
   
   pp <- pnorm(t(X %*% t(mcmc.out)))
   
-  colnames(pp) <- as.character(x.range)
+  colnames(pp) <- as.character(xrange)
   longFrame <- reshape2::melt(pp, id.vars = Var2)
   longFrame$Xvar <- as.character(longFrame$Var2)
   
@@ -45,12 +45,12 @@ mcmcProbitPlot <- function(model.matrix,
                                    lower80 = quantile(value, probs = 0.1), 
                                    upper80 = quantile(value, probs = 0.9))
   
-  pp.plot <- ggplot2::ggplot(data = longSumframe, aes(x = Xvar, y = median.PP))
-  pp.plot <- pp.plot + geom_segment(data = longSumframe, aes(x = Xvar, xend = Xvar, y = lower90, yend = upper90), alpha = 0.35)
-  # pp.plot <- pp.plot + geom_segment(data = longSumframe.m1, aes(x = IGOs, xend = IGOs, y = lower80, yend = upper80), alpha = 0.35, size = 2)
-  pp.plot <- pp.plot + geom_point(size = 3)
-  pp.plot <- pp.plot + scale_y_continuous(limits = c(0, NA))
-  pp.plot <- pp.plot + theme_minimal() + xlab(xlabel) + ylab(ylabel)
+  PPplot <- ggplot2::ggplot(data = longSumframe, aes(x = Xvar, y = median.PP))
+  PPplot <- PPplot + geom_segment(data = longSumframe, aes(x = Xvar, xend = Xvar, y = lower90, yend = upper90), alpha = 0.35)
+  # PPplot <- PPplot + geom_segment(data = longSumframe.m1, aes(x = IGOs, xend = IGOs, y = lower80, yend = upper80), alpha = 0.35, size = 2)
+  PPplot <- PPplot + geom_point(size = 3)
+  PPplot <- PPplot + scale_y_continuous(limits = c(0, NA))
+  PPplot <- PPplot + theme_minimal() + xlab(xlabel) + ylab(ylabel)
   
-  print(pp.plot)
+  print(PPplot)
 }
