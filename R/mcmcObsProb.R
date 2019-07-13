@@ -32,7 +32,7 @@
 
 mcmcObsProb <- function(model_matrix,
                         mcmc_out, 
-                        xcol, ## I should we rename this or allow a var name
+                        xcol, ## I think should we rename this or allow a var name
                         xrange, 
                         link = "logit", 
                         ci = c(0.05, 0.95)){

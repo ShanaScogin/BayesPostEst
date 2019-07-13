@@ -1,4 +1,4 @@
-#' R function for summarizing a data frame as a table of bar plots
+#'R function for summarizing a data frame as a table of bar plots
 #'@title Generate bar plots for multiple variables
 #'@description R function for summarizing a data frame as a table of bar plots
 #'@param rows number of rows of plots within the figure
@@ -13,9 +13,8 @@
 
 dfBarTable <- function(df, rows = 2){
 
-require("ggplot2")
 
-plot <- ggplot(data = tidyr::gather(df, factor_key = TRUE), aes(x = factor(value))) + 
+plot <- ggplot2::ggplot(data = tidyr::gather(df, factor_key = TRUE), aes(x = factor(value))) + 
   geom_bar() + 
   facet_wrap(~ key, scales = "free", as.table = TRUE, nrow = rows) + 
   scale_x_discrete(breaks = NULL) + 
