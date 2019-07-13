@@ -58,12 +58,15 @@ mcmcObsProb <- function(model_matrix,
   
   # indices
   pp_mat_lowerindex <- 1 + (0:(length(xrange) - 1) * nrow(model_matrix))
-  pp_mat_upperindex <- nrow(model_matrix) + (0:(length(xrange) - 1) * nrow(model_matrix))
+  pp_mat_upperindex <- nrow(model_matrix) + (0:(length(xrange) - 1) * 
+                                               nrow(model_matrix))
   
   
   # fill matrix with PPs, one for each value of the predictor of interest
   for(i in 1:length(xrange)){
-    pp_mat[, i] <- apply(X = pp[, c(pp_mat_lowerindex[i]:pp_mat_upperindex[i])], MARGIN = 1, FUN = function(x) mean(x))
+    pp_mat[, i] <- apply(X = pp[, 
+                                c(pp_mat_lowerindex[i]:pp_mat_upperindex[i])], 
+                         MARGIN = 1, FUN = function(x) mean(x))
   }
   
   median_pp <- apply(X = pp_mat, MARGIN = 2, function(x) quantile(x, probs = c(0.5)))

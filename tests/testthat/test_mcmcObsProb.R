@@ -1,3 +1,5 @@
+## I have not put the testthat wrapper on this yet - just
+## sim'ed the data and making sure it works.
 
 ## simulating some data
 set.seed(123456)

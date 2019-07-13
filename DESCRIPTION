@@ -1,6 +1,8 @@
 Package: BayesPostEst
+Type: Package
 Title: Analyze and Present Bayesian Models
 Version: 0.0.0.9000
+Date: 2019-07-12
 Authors@R: 
     as.person(c(
     "Johannes Karreth <jkarreth@ursinus.edu> [aut]",
@@ -19,7 +21,11 @@ Imports:
     reshape2,
     ggplot2
 Encoding: UTF-8
-LazyData: true
-RoxygenNote: 6.1.1
+LazyData: TRUE
+LazyLoad: TRUE
 Suggests: 
-    testthat
+    testthat,
+    knitr,
+    rmarkdown
+RoxygenNote: 6.1.1
+VignetteBuilder: knitr

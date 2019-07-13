@@ -32,3 +32,4 @@ NULL
 
 #' @useDynLib BayesPostEst
 NULL
+
