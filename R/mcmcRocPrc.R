@@ -25,14 +25,16 @@
 #' }
 #'@export
 
-mcmcRocPrc <- function(stan_object, # this needs to be generalized
+mcmcRocPrc <- function(rstanarm_object, # this needs to be generalized
                          model_frame, 
                          model_name = "Model"){
   
   # Prepare MCMC output
+  if (class(rstanarm_object) == "stanreg"){
   pred_prob <- rstanarm::posterior_linpred(stan_object, transform = TRUE)
+  }
 
-  y_pred <- apply(X = pred_prob, margin = 2, FUN = function(x) median(x))
+  y_pred <- apply(X = pred_prob, MARGIN = 2, FUN = function(x) median(x))
 
   # Observed y and x
   pred_obs <- data.frame(y_pred = y_pred, y_obs = model_frame[, 1])						 
