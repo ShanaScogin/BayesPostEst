@@ -4,7 +4,7 @@
 \alias{mcmcAveProb}
 \title{Bayesian MCMC Predicted Probablities for the 'Average' Case}
 \usage{
-mcmcAveProb(model_matrix, mcmc_out, x_col, x_range_vec, link = "logit",
+mcmcAveProb(model_matrix, mcmc_out, xcol, xrange, link = "logit",
   ci = c(0.05, 0.95))
 }
 \arguments{
@@ -12,10 +12,10 @@ mcmcAveProb(model_matrix, mcmc_out, x_col, x_range_vec, link = "logit",
 
 \item{mcmc_out}{posterior distributions of all coefficients}
 
-\item{x_col}{column number of the explanatory variable for which to calculate 
+\item{xcol}{column number of the explanatory variable for which to calculate 
 associated Pr(y = 1)}
 
-\item{x_range_vec}{name of the vector with the range of relevant values of the 
+\item{xrange}{name of the vector with the range of relevant values of the 
 explanatory variable for which to calculate associated Pr(y = 1)}
 
 \item{link}{link: link function, character vector set to "logit" (default) or "probit"}

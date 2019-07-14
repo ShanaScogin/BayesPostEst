@@ -4,15 +4,15 @@
 \alias{mcmcRocPrc}
 \title{ROC and Precision-recall Curve}
 \usage{
-mcmcRocPrc(stan_object, model_frame, model_name = "Model")
+mcmcRocPrc(rstanarm_object, model_frame, model_name = "Model")
 }
 \arguments{
-\item{stan_object}{rstan object of class "stanfit", including parameters and 
-predicted values for each observation, with the prefix "pred"}
-
 \item{model_frame}{model frame used to fit the model}
 
 \item{model_name}{name of model for plotting}
+
+\item{stan_object}{rstan object of class "stanfit", including parameters and 
+predicted values for each observation, with the prefix "pred"}
 }
 \value{
 A list with four elements: 

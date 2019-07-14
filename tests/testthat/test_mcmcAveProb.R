@@ -1,6 +1,6 @@
 test_that("Simple model runs with mcmcObsRob", {
   
-  ## simulating some data
+  ## simulating data
   set.seed(123456)
   b0 <- 0.2 # true value for the intercept
   b1 <- 0.5 # true value for first beta
@@ -45,22 +45,21 @@ test_that("Simple model runs with mcmcObsRob", {
                       parameters.to.save = params, n.chains = 2, n.iter = 2000, 
                       n.burnin = 1000, model.file = model)
   
-  ### observed value approach
+  ### average value approach
   xmat <- model.matrix(Y ~ X1 + X2, data = data)
   mcmc <- coda::as.mcmc(fit)
   mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
   X1_sim <- seq(from = min(datjags$X1),
                 to = max(datjags$X1), 
                 length.out = 10)
-  obs_prob <- mcmcObsProb(model_matrix = xmat,
+  ave_prob <- mcmcAveProb(model_matrix = xmat,
                           mcmc_out = mcmc_mat,
                           xcol = 2,
                           xrange = X1_sim)
   
-  value <- obs_prob[1, 1]
+  value <- ave_prob[1, 1]
   check_against <- c(-0.998)
   expect_equal(round(as.numeric(value), 3), check_against)
-  
   
   # devtools::source_url("https://raw.githubusercontent.com/jkarreth/JKmisc/master/MCMC_observed_probs.R")
   # prot_obs_prob <- MCMC_observed_probs(model_matrix = xmat, 
