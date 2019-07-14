@@ -1,16 +1,8 @@
-# This is copied from the other PP plot and is a draft.
-# Needs to be changed to plot first diff if we go that route
-
-#'An R function to calculate and plot predicted probabilities after a Bayesian probit model.
-#'@title Plot Predicted Probabilities after a Bayesian Probit Model
-#'@description R function to calculate and plot predicted probabilities after a Bayesian probit model
-#'@param model_matrix model matrix, including intercept, focal predictor in the second column
-#'@param mcmc_out posterior distributions of all probit coefficients, 
-#'in matrix form - can easily be created from rstan, MCMCpack, R2jags, etc.
-#'@param xcol tbd
-#'@param xrange tbd
-#'@param xlabel tbd
-#'@param ylabel tbd
+#'An R function to plot first differences after a Bayesian logit or probit model.
+#'@title Plot First Differences from MCMC output 
+#'@description R function to plot first differences generated from MCMC output
+#'@param fd_full Output generated from mcmcFD(..., full_sims = TRUE)
+#'@param ROPE numeric vector of length two, defining the Region of Practical Equivalence around 0. Defaults to NULL
 #'@return output
 #'@examples
 #' \donttest{
@@ -20,40 +12,74 @@
 #' }
 # removed the export
 #'
-mcmcFDPlot <- function(model.matrix, 
-                               mcmc.out, 
-                               xcol = 2, 
-                               xrange, 
-                               xlabel, 
-                               ylabel){
+
+mcmcFDplot <- function(fd_full, ROPE = NULL){
+  # convert fd_full to long data frame
+  fd_dat <- tidyr::gather(as.data.frame(fd_full), 
+                          key = variable, 
+                          value = fd)
   
-  X <- matrix(rep(apply(X = model.matrix,
-                        MARGIN = 2,
-                        FUN = function(x) median(x)),
-                  times = length(xrange)),
-              nrow = length(xrange),
-              byrow = TRUE)
-  X[, xcol] <- xrange
+  # create first plot
   
-  pp <- pnorm(t(X %*% t(mcmc.out)))
+  if(is.null(ROPE) == FALSE){
+  fd_plot <- ggplot2::ggplot(data = fd_dat,
+                    aes(x = fd, y = variable)) + 
+    geom_rect(xmin = ROPE[1], xmax = ROPE[2], ymin = 0, ymax = Inf, fill = "black") + 
+    ggridges::stat_density_ridges(quantile_lines = TRUE, 
+                                  quantiles = c(0.025, 0.5, 0.975),
+                                  vline_color = "white") + 
+    scale_x_continuous(labels = function(x) x*100) + 
+    xlab("Percentage point change in Pr(y = 1)\nas each predictor changes as indicated") + 
+    ylab("")
   
-  colnames(pp) <- as.character(xrange)
-  longFrame <- reshape2::melt(pp, id.vars = Var2)
-  longFrame$Xvar <- as.character(longFrame$Var2)
+  # calculate area left/right of ROPE
+  fd_outROPE <- apply(fd_full, 2, 
+                         function(x) ifelse(median(x) < 0, 
+                                            sum(x < ROPE[1]) / length(x), 
+                                            sum(x > ROPE[2]) / length(x)))
+  fd_annotate <- data.frame(xpos = apply(fd_full, 2, 
+                                           function(x) ifelse(median(x) < 0, 
+                                                              quantile(x, probs = 0.01) - 0.02, 
+                                                              quantile(x, probs = 0.99) + 0.02)), 
+                              ypos = as.factor(colnames(fd_full)), 
+                              outROPE = paste(round(fd_outROPE * 100, digits = 1), "%", sep = ""))
+    
+  # final plot
+  fd_plot <- fd_plot + 
+    geom_text(data = fd_annotate, aes(x = xpos, y = ypos, label = outROPE), 
+                                 color = "black", nudge_y = 0.1, size = 4)
+  }
   
-  longSumframe <- dplyr::summarize(dplyr::group_by(longFrame, Xvar), 
-                                   median.PP = median(value), 
-                                   lower90 = quantile(value, probs = 0.05), 
-                                   upper90 = quantile(value, probs = 0.95), 
-                                   lower80 = quantile(value, probs = 0.1), 
-                                   upper80 = quantile(value, probs = 0.9))
+  if(is.null(ROPE) == TRUE){
+  fd_plot <- ggplot2::ggplot(data = fd_dat,
+                               aes(x = fd, y = variable)) + 
+      geom_vline(xintercept = 0) + 
+      ggridges::stat_density_ridges(quantile_lines = TRUE, 
+                                    quantiles = c(0.025, 0.5, 0.975),
+                                    vline_color = "white") + 
+      scale_x_continuous(labels = function(x) x*100) + 
+      xlab("Percentage point change in Pr(y = 1)\nas each predictor changes as indicated") + 
+      ylab("")
+    
+    # calculate area left/right of 0
+    fd_out0 <- apply(fd_full, 2, 
+                        function(x) ifelse(median(x) < 0, 
+                                           sum(x < 0) / length(x), 
+                                           sum(x > 0) / length(x)))
+    fd_annotate <- data.frame(xpos = apply(fd_full, 2, 
+                                           function(x) ifelse(median(x) < 0, 
+                                                              quantile(x, probs = 0.01) - 0.02, 
+                                                              quantile(x, probs = 0.99) + 0.02)), 
+                              ypos = as.factor(colnames(fd_full)), 
+                              out0 = paste(round(fd_out0 * 100, digits = 1), "%", sep = ""))
+    
+    # final plot
+    fd_plot <- fd_plot + 
+      geom_text(data = fd_annotate, aes(x = xpos, y = ypos, label = out0), 
+                color = "black", nudge_y = 0.1, size = 4)
+    
+  }
   
-  PPplot <- ggplot2::ggplot(data = longSumframe, aes(x = Xvar, y = median.PP))
-  PPplot <- PPplot + geom_segment(data = longSumframe, aes(x = Xvar, xend = Xvar, y = lower90, yend = upper90), alpha = 0.35)
-  # PPplot <- PPplot + geom_segment(data = longSumframe.m1, aes(x = IGOs, xend = IGOs, y = lower80, yend = upper80), alpha = 0.35, size = 2)
-  PPplot <- PPplot + geom_point(size = 3)
-  PPplot <- PPplot + scale_y_continuous(limits = c(0, NA))
-  PPplot <- PPplot + theme_minimal() + xlab(xlabel) + ylab(ylabel)
-  
-  print(PPplot)
+  # print plot
+  print(fd_plot)
 }
