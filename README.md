@@ -25,7 +25,7 @@ library(BayesPostEst)
 After the package is loaded, check out the `?BayesPostEst` to see a help file. 
 
 # Basic Usage
-This package will implement several main functions. Please check back for more details.
+This package will implement several main functions. Please check back for more details. Details will come soon. 
 
 ## Examples
 Please check back for more examples.
