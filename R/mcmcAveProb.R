@@ -16,7 +16,7 @@
 #'@param xinterest name of the explanatory variable for which to calculate 
 #'associated Pr(y = 1). If xcol is supplied, this is not needed. If both
 #'are supplied, the function defaults to this argument and xcol is ignored
-#'@param link name of the link function. It is a character vector set to 
+#'@param link type of model. It is a character vector set to 
 #'"logit" (default) or "probit"
 #'@param ci the bounds of the credible interval. Default is c(0.05, 0.95).
 #'@references King, G., Tomz, M., & Wittenberg, J. (2000). Making the most of 

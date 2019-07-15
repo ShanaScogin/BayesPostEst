@@ -20,7 +20,8 @@ MCMCpack, rstan, rstanarm. Currently only jags object is supported.}
 
 \item{simout}{tbd}
 
-\item{link}{link function, character vector set to "logit" (default) or "probit"}
+\item{link}{type of model. It is a character vector set to 
+"logit" (default) or "probit"}
 
 \item{ci}{the bounds of the credible interval. Default is 0.05 and 0.95. 
 Enter as a vector, such as c(0.05, 0.95).}

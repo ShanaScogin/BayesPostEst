@@ -24,7 +24,7 @@ explanatory variable for which to calculate associated Pr(y = 1)}
 \item{xcol}{column number of the explanatory variable for which to calculate 
 associated Pr(y = 1)}
 
-\item{link}{name of the link function. It is a character vector set to 
+\item{link}{type of model. It is a character vector set to 
 "logit" (default) or "probit"}
 
 \item{ci}{the bounds of the credible interval. Default is c(0.05, 0.95).}

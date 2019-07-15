@@ -5,6 +5,8 @@
 #'@param modelmatrix model matrix, including intercept. Create with model.matrix(formula, data)
 #'@param mcmcout posterior distributions of all logit coefficients, 
 #'in matrix form - can easily be created from rstan, MCMCpack, R2jags, etc.
+#'@param link type of model. It is a character vector set to 
+#'"logit" (default) or "probit"
 #'@param ci the bounds of the credible interval. Default is 0.05 and 0.95. 
 #'Enter as a vector, such as c(0.05, 0.95).
 #'@param percentiles default is c(0.25, 0.75)

@@ -24,7 +24,8 @@ Imports:
     coda,
     ggridges,
     tidyr,
-    rstanarm
+    rstanarm,
+    R2jags
 Encoding: UTF-8
 LazyData: TRUE
 LazyLoad: TRUE
