@@ -28,7 +28,7 @@ After the package is loaded, check out the `?BayesPostEst` to see a help file.
 This package will implement several main functions. Please check back for more details. Details will come soon. 
 
 ## Examples
-Please check back for more examples.
+Please check back for more examples. These are from [Johannes Karreth's website](http://www.jkarreth.net/index.html).
 
 # What's Happening
 This package is in the beginning stages. We hope to be up and running within the next few months. Please check back for more.
