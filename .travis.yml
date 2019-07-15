@@ -2,7 +2,10 @@
 
 language: R
 warnings_are_errors: FALSE
-sudo: FALSE
+sudo: true
+before_install:
+  - sudo apt-get install jags
+  - sudo apt-get install r-cran-rjags
 cache: packages
 
 os:
