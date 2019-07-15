@@ -4,21 +4,22 @@
 \alias{mcmcFD}
 \title{First Differences of a Bayesian Logit or Probit model}
 \usage{
-mcmcFD(model_matrix, mcmc_out, link = "logit", ci = c(0.025, 0.975),
+mcmcFD(modelmatrix, mcmcout, link = "logit", ci = c(0.025, 0.975),
   percentiles = c(0.25, 0.75), full_sims = FALSE)
 }
 \arguments{
-\item{model_matrix}{model matrix, including intercept. Create with model.matrix(formula, data)}
+\item{modelmatrix}{model matrix, including intercept. Create with model.matrix(formula, data)}
 
-\item{mcmc_out}{posterior distributions of all logit coefficients, 
+\item{mcmcout}{posterior distributions of all logit coefficients, 
 in matrix form - can easily be created from rstan, MCMCpack, R2jags, etc.}
 
 \item{ci}{the bounds of the credible interval. Default is 0.05 and 0.95. 
 Enter as a vector, such as c(0.05, 0.95).}
 
-\item{percentiles}{tbd}
+\item{percentiles}{default is c(0.25, 0.75)}
 
-\item{full_sims}{tbd}
+\item{full_sims}{logical indicator of whether full object will be returned.
+Default is FALSE.}
 }
 \value{
 output

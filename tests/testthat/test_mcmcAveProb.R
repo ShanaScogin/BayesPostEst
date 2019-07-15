@@ -1,4 +1,4 @@
-test_that("Simple model runs with mcmcObsRob", {
+test_that("Simple model runs with mcmcAveProb", {
   
   ## simulating data
   set.seed(123456)

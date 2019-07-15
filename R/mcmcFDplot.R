@@ -23,13 +23,13 @@ mcmcFDplot <- function(fdfull,
   
   if(is.null(ROPE) == FALSE){
   fd_plot <- ggplot2::ggplot(data = fd_dat, aes(x = fd, y = variable)) + 
-    ggplot::geom_rect(xmin = ROPE[1], xmax = ROPE[2], ymin = 0, ymax = Inf, fill = "black") + 
+    ggplot2::geom_rect(xmin = ROPE[1], xmax = ROPE[2], ymin = 0, ymax = Inf, fill = "black") + 
     ggridges::stat_density_ridges(quantile_lines = TRUE, 
                                   quantiles = c(0.025, 0.5, 0.975),
                                   vline_color = "white") + 
-    ggplot::scale_x_continuous(labels = function(x) x * 100) + 
-    ggplot::xlab("Percentage point change in Pr(y = 1)\nas each predictor changes as indicated") + 
-    ggplot::ylab("")
+    ggplot2::scale_x_continuous(labels = function(x) x * 100) + 
+    ggplot2::xlab("Percentage point change in Pr(y = 1)\nas each predictor changes as indicated") + 
+    ggplot2::ylab("")
   
   # calculate area left/right of ROPE
   fd_outROPE <- apply(fdfull, 2, 
@@ -52,13 +52,13 @@ mcmcFDplot <- function(fdfull,
   if(is.null(ROPE) == TRUE){
   fd_plot <- ggplot2::ggplot(data = fd_dat,
                                aes(x = fd, y = variable)) + 
-    ggplot::geom_vline(xintercept = 0) + 
+    ggplot2::geom_vline(xintercept = 0) + 
     ggridges::stat_density_ridges(quantile_lines = TRUE, 
                                     quantiles = c(0.025, 0.5, 0.975),
                                     vline_color = "white") + 
-    ggplot::scale_x_continuous(labels = function(x) x*100) + 
-    ggplot::xlab("Percentage point change in Pr(y = 1)\nas each predictor changes as indicated") + 
-    ggplot::ylab("")
+    ggplot2::scale_x_continuous(labels = function(x) x*100) + 
+    ggplot2::xlab("Percentage point change in Pr(y = 1)\nas each predictor changes as indicated") + 
+    ggplot2::ylab("")
     
     # calculate area left/right of 0
     fd_out0 <- apply(fdfull, 2, 
@@ -74,7 +74,7 @@ mcmcFDplot <- function(fdfull,
     
     # final plot
     fd_plot <- fd_plot + 
-      ggplot::geom_text(data = fd_annotate, aes(x = xpos, y = ypos, label = out0), 
+      ggplot2::geom_text(data = fd_annotate, aes(x = xpos, y = ypos, label = out0), 
                 color = "black", nudge_y = 0.1, size = 4)
     
   }

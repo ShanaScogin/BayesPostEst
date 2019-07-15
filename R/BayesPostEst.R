@@ -13,7 +13,8 @@ NULL
 #' sd variable.names
 NULL
 
-#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 ggplot geom_rect xlab ylab geom_vline scale_x_continuous
+#' geom_text geom_bar facet_wrap scale_x_discrete scale_y_continuous
 NULL
 
 #' @importFrom dplyr summarize group_by tibble
@@ -41,9 +42,6 @@ NULL
 NULL
 
 #' @importFrom rstanarm posterior_linpred
-NULL
-
-#' @importFrom R2jags jags
 NULL
 
 #> NULL
