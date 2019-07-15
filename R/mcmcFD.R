@@ -2,13 +2,14 @@
 
 #'@title First Differences of a Bayesian Logit or Probit model
 #'@description R function to calculate first differences after a Bayesian logit or probit model 
-#'@param model_matrix model matrix, including intercept. Create with model.matrix(formula, data)
-#'@param mcmc_out posterior distributions of all logit coefficients, 
+#'@param modelmatrix model matrix, including intercept. Create with model.matrix(formula, data)
+#'@param mcmcout posterior distributions of all logit coefficients, 
 #'in matrix form - can easily be created from rstan, MCMCpack, R2jags, etc.
 #'@param ci the bounds of the credible interval. Default is 0.05 and 0.95. 
 #'Enter as a vector, such as c(0.05, 0.95).
-#'@param percentiles tbd
-#'@param full_sims tbd
+#'@param percentiles default is c(0.25, 0.75)
+#'@param full_sims logical indicator of whether full object will be returned.
+#'Default is FALSE.
 #'@return output
 #'@examples
 #' \donttest{
@@ -16,37 +17,37 @@
 #' }
 #'@export
 
-mcmcFD <- function(model_matrix,
-                   mcmc_out, 
+mcmcFD <- function(modelmatrix,
+                   mcmcout, 
                    link = "logit",
                    ci = c(0.025, 0.975),
                    percentiles = c(0.25, 0.75),
                    full_sims = FALSE){
   
-  fd.mat <- matrix(NA, ncol = 3, nrow = ncol(model_matrix) - 1)
+  fd.mat <- matrix(NA, ncol = 3, nrow = ncol(modelmatrix) - 1)
   colnames(fd.mat) <- c("Median", "Lower", "Upper")
-  rownames(fd.mat) <- colnames(model_matrix)[-1]
+  rownames(fd.mat) <- colnames(modelmatrix)[-1]
   
   fd.full <- matrix(rep(NA),
-                    ncol = ncol(model_matrix) - 1,
-                    nrow = nrow(mcmc_out),
+                    ncol = ncol(modelmatrix) - 1,
+                    nrow = nrow(mcmcout),
                     byrow = TRUE)
-  colnames(fd.full) <- colnames(model_matrix)[-1]
+  colnames(fd.full) <- colnames(modelmatrix)[-1]
   
-  for (i in 2:ncol(model_matrix)){
+  for (i in 2:ncol(modelmatrix)){
     
-    X <- matrix(rep(apply(X = model_matrix,
+    X <- matrix(rep(apply(X = modelmatrix,
                           MARGIN = 2,
                           FUN = function(x) median(x)),
                     times = 2),
                 nrow = 2,
                 byrow = TRUE)
-    X[, i] <- ifelse(length(unique(model_matrix[, i])) == 2 & range(model_matrix[, i]) == c(0, 1), c(0, 1), 
-                     quantile(model_matrix[, i], probs = percentiles))
+    X[, i] <- ifelse(length(unique(modelmatrix[, i])) == 2 & range(modelmatrix[, i]) == c(0, 1), c(0, 1), 
+                     quantile(modelmatrix[, i], probs = percentiles))
     
-    # X[, i] <- quantile(model_matrix[, i], probs = percentiles)
+    # X[, i] <- quantile(modelmatrix[, i], probs = percentiles)
     
-    Xb <- t(X %*% t(mcmc_out))
+    Xb <- t(X %*% t(mcmcout))
     pp <- exp(Xb) / (1 + exp(Xb))
     
     fd <- pp[, 2] - pp[, 1]
