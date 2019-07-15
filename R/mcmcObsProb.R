@@ -89,7 +89,7 @@ mcmcObsProb <- function(modelmatrix,
                         xinterest,
                         xrange, 
                         link = "logit", 
-                        ci = c(0.05, 0.95)){
+                        ci = c(0.025, 0.975)){
   
   if(missing(xcol) & missing(xinterest)) {
     stop("Please enter a column number or name of your predictor of interest)")

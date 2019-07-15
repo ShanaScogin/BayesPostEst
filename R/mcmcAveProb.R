@@ -86,7 +86,7 @@ mcmcAveProb <- function(model_matrix,
                         xcol, 
                         xrange, 
                         link = "logit", 
-                        ci = c(0.05, 0.95)){
+                        ci = c(0.025, 0.975)){
   
   X <- matrix(rep(apply(X = model_matrix,
                         MARGIN = 2,

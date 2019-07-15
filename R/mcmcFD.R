@@ -21,7 +21,7 @@
 mcmcFD <- function(model_matrix,
                    mcmc_out, 
                    link = "logit",
-                   ci = c(0.05, 0.95), ## need to standardize this
+                   ci = c(0.025, 0.975),
                    percentiles = c(0.25, 0.75),
                    full_sims = FALSE){
   
