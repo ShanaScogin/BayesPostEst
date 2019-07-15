@@ -8,7 +8,7 @@
 #'Hanmer & Kalkan (2013) <doi: 10.1111/j.1540-5907.2012.00602.x>.
 #'@param formula tbd
 #'@param data tbd
-#'@param xvariable name of the explanatory variable for which to calculate 
+#'@param xinterest name of the explanatory variable for which to calculate 
 #'associated Pr(y = 1).
 #'@param mcmcfit name of the vector with the range of relevant values of the 
 #'explanatory variable for which to calculate associated Pr(y = 1)
@@ -105,10 +105,14 @@ mcmcSimObs <- function(formula,
   if(missing(xinterest)) {
     stop("Please enter your variable of interest")
   } else {
-    var <- data[ , grepl( xinterest , names( data ) ) ]
-    xrange <- seq(from = min(var),
-                  to = max(var),
-                  length.out = simout)
+    if(!(xinterest %in% variable.names(modelmatrix))) {
+      stop("Variable name does not match any in the matrix. Please enter another.")
+    } else {
+      var <- data[ , grepl( xinterest , names( data ) ) ]
+      xrange <- seq(from = min(var),
+                    to = max(var),
+                    length.out = simout)
+    }
   }
   
   # fit variable

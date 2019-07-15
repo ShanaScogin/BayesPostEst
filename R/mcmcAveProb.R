@@ -13,7 +13,7 @@
 #'associated Pr(y = 1)
 #'@param xrange name of the vector with the range of relevant values of the 
 #'explanatory variable for which to calculate associated Pr(y = 1)
-#'@param xvariable name of the explanatory variable for which to calculate 
+#'@param xinterest name of the explanatory variable for which to calculate 
 #'associated Pr(y = 1). If xcol is supplied, this is not needed. If both
 #'are supplied, the function defaults to this argument and xcol is ignored
 #'@param link name of the link function. It is a character vector set to 
@@ -71,22 +71,24 @@
 #' inits <- list(inits1, inits2)
 #' 
 #' ## fitting the model with R2jags
+#' library(R2jags)
 #' set.seed(123)
-#' fit <- R2jags::jags(data = datjags, inits = inits, 
-#'                     parameters.to.save = params, n.chains = 2, n.iter = 2000, 
-#'                     n.burnin = 1000, model.file = model)
+#' fit <- jags(data = datjags, inits = inits, 
+#'          parameters.to.save = params, n.chains = 2, n.iter = 2000, 
+#'          n.burnin = 1000, model.file = model)
 #' 
 #' ### average value approach
+#' library(coda)
 #' xmat <- model.matrix(Y ~ X1 + X2, data = data)
-#' mcmc <- coda::as.mcmc(fit)
+#' mcmc <- as.mcmc(fit)
 #' mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
 #' X1_sim <- seq(from = min(datjags$X1),
 #'               to = max(datjags$X1), 
 #'               length.out = 10)
 #' ave_prob <- mcmcAveProb(modelmatrix = xmat,
 #'                         mcmcout = mcmc_mat,
-#'                         xcol = 2,
-#'                         xrange = X1_sim)
+#'                         xrange = X1_sim, 
+#'                         xcol = 2)
 #' }
 #'@export
 #'

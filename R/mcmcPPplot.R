@@ -1,4 +1,5 @@
 ## This function is not being included in the package
+## at this time
 
 #'An R function to calculate and plot predicted probabilities after a Bayesian logit or probit model.
 #'@title Plot Predicted Probabilities after a Bayesian Logit or Probit Model
@@ -14,17 +15,14 @@
 #'@examples
 #' \donttest{
 #'   set.seed(123456)
-#'   example for user goes here
-#'   unit testing goes in testthat
 #' }
-#'@export
 #'
-mcmcProbitPlot <- function(model.matrix, 
-                               mcmc.out, 
-                               xcol = 2, 
-                               xrange, 
-                               xlabel, 
-                               ylabel){
+mcmcPPplot <- function(model.matrix, 
+                       mcmc.out, 
+                       xcol = 2, 
+                       xrange, 
+                       xlabel, 
+                       ylabel){
   
   X <- matrix(rep(apply(X = model.matrix,
                         MARGIN = 2,

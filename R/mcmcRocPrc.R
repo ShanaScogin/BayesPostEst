@@ -20,8 +20,6 @@
 #'@examples
 #' \donttest{
 #'   set.seed(123456)
-#'   example for user goes here
-#'   unit testing goes in testthat
 #' }
 #'@export
 

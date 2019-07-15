@@ -23,7 +23,5 @@ R function for summarizing a data frame as a table of bar plots
 \examples{
 \donttest{
   set.seed(123456)
-  example for user goes here
-  unit testing goes in testthat
 }
 }

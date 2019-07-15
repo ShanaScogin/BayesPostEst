@@ -29,7 +29,5 @@ R function to calculate first differences after a Bayesian logit or probit model
 \examples{
 \donttest{
   set.seed(123456)
-  example for user goes here
-  unit testing goes in testthat
 }
 }

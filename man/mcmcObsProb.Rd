@@ -4,7 +4,7 @@
 \alias{mcmcObsProb}
 \title{Bayesian MCMC Observed Values Predicted Probablities}
 \usage{
-mcmcObsProb(modelmatrix, mcmcout, xcol, xrange, xinterest,
+mcmcObsProb(modelmatrix, mcmcout, xinterest, xrange, xcol,
   link = "logit", ci = c(0.025, 0.975))
 }
 \arguments{
@@ -14,20 +14,20 @@ model.matrix(formula, data)}
 \item{mcmcout}{posterior distributions of all coefficients in matrix 
 form - can easily be created from rstan, MCMCpack, R2jags, R2OpenBUGS, etc.}
 
-\item{xcol}{column number of the explanatory variable for which to calculate 
-associated Pr(y = 1)}
+\item{xinterest}{name of the explanatory variable for which to calculate 
+associated Pr(y = 1). If \code{xcol} is supplied, this is not needed. If both
+are supplied, the function defaults to this argument and xcol is ignored}
 
 \item{xrange}{name of the vector with the range of relevant values of the 
 explanatory variable for which to calculate associated Pr(y = 1)}
+
+\item{xcol}{column number of the explanatory variable for which to calculate 
+associated Pr(y = 1)}
 
 \item{link}{name of the link function. It is a character vector set to 
 "logit" (default) or "probit"}
 
 \item{ci}{the bounds of the credible interval. Default is c(0.05, 0.95).}
-
-\item{xvariable}{name of the explanatory variable for which to calculate 
-associated Pr(y = 1). If \code{xcol} is supplied, this is not needed. If both
-are supplied, the function defaults to this argument and xcol is ignored}
 }
 \value{
 This function returns a matrix with 4 columns:
@@ -90,22 +90,24 @@ inits2 <- list("b" = rep(0, 3))
 inits <- list(inits1, inits2)
 
 ## fitting the model with R2jags
+library(R2jags)
 set.seed(123)
-fit <- R2jags::jags(data = datjags, inits = inits, 
-                    parameters.to.save = params, n.chains = 2, n.iter = 2000, 
-                    n.burnin = 1000, model.file = model)
+fit <- jags(data = datjags, inits = inits, 
+          parameters.to.save = params, n.chains = 2, n.iter = 2000, 
+          n.burnin = 1000, model.file = model)
 
 ### observed value approach
+library(coda)
 xmat <- model.matrix(Y ~ X1 + X2, data = data)
-mcmc <- coda::as.mcmc(fit)
+mcmc <- as.mcmc(fit)
 mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
 X1_sim <- seq(from = min(datjags$X1),
               to = max(datjags$X1), 
               length.out = 10)
 obs_prob <- mcmcObsProb(modelmatrix = xmat,
                         mcmcout = mcmc_mat,
-                        xcol = 2,
-                        xrange = X1_sim)
+                        xrange = X1_sim,
+                        xcol = 2)
 }
 }
 \references{

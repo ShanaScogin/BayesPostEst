@@ -12,6 +12,9 @@ mcmcSimObs(formula, data, xinterest, mcmcfit, simout = 10,
 
 \item{data}{tbd}
 
+\item{xinterest}{name of the explanatory variable for which to calculate 
+associated Pr(y = 1).}
+
 \item{mcmcfit}{name of the vector with the range of relevant values of the 
 explanatory variable for which to calculate associated Pr(y = 1)}
 
@@ -21,9 +24,6 @@ explanatory variable for which to calculate associated Pr(y = 1)}
 
 \item{ci}{the bounds of the credible interval. Default is 0.05 and 0.95. 
 Enter as a vector, such as c(0.05, 0.95).}
-
-\item{xvariable}{name of the explanatory variable for which to calculate 
-associated Pr(y = 1).}
 }
 \value{
 This function returns a matrix with 4 columns:

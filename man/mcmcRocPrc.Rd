@@ -36,7 +36,5 @@ references: Area under the curve functions written by Andreas Beger
 \examples{
 \donttest{
   set.seed(123456)
-  example for user goes here
-  unit testing goes in testthat
 }
 }

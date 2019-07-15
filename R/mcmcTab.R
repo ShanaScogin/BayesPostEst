@@ -71,7 +71,7 @@ mcmcTab <- function(sims,
       sims <- as.matrix(coda::as.mcmc(sims))
     }
     if(class(sims)[1] == "bugs"){
-      sims <- R2WinBUGS::sims$sims.matrix
+      sims <- sims$sims.matrix
     }  
     if(class(sims)[1] == "mcmc"){
       sims <- as.matrix(sims)

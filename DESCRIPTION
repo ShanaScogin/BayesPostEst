@@ -21,13 +21,16 @@ Imports:
     caTools,
     reshape2,
     ggplot2, 
-    R2jags,
-    coda
+    coda,
+    ggridges,
+    tidyr,
+    rstanarm
 Encoding: UTF-8
 LazyData: TRUE
 LazyLoad: TRUE
 Suggests: knitr,
     rmarkdown,
-    testthat
+    testthat,
+    R2jags
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
