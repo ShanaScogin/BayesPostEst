@@ -98,7 +98,7 @@ mcmcSimObs <- function(formula,
 
   # range of x variable of interest argument
   if(missing(xinterest)) {
-    stop("Please enter your predictor of interest")
+    stop("Please enter your variable of interest")
   } else {
     var <- data[ , grepl( xinterest , names( data ) ) ]
     xrange <- seq(from = min(var),
@@ -115,6 +115,7 @@ mcmcSimObs <- function(formula,
 
   X <- matrix(rep(t(modelmatrix), length(xrange)), 
               ncol = ncol(modelmatrix), byrow = TRUE )
+  colnames(X) <- variable.names(modelmatrix)
   X[ , grepl( xinterest , variable.names( X ) ) ] <- 
     sort(rep(xrange, times = nrow(X) / length(xrange)))
   
