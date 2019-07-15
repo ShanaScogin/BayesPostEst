@@ -69,44 +69,54 @@
 #'                     parameters.to.save = params, n.chains = 2, n.iter = 2000, 
 #'                     n.burnin = 1000, model.file = model)
 #' 
-#' ### observed value approach
-#' xmat <- model.matrix(Y ~ X1 + X2, data = data)
-#' mcmc <- coda::as.mcmc(fit)
-#' mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
-#' X1_sim <- seq(from = min(datjags$X1),
-#'               to = max(datjags$X1), 
-#'               length.out = 10)
-#' obs_prob <- mcmcObsProb(modelmatrix = xmat,
-#'                         mcmcout = mcmc_mat,
-#'                         xcol = 2,
-#'                         xrange = X1_sim)
+#' ### observed value approach with mcmcSimObs
+#' obs_prob_sim <- mcmcObsProb(formula = Y ~ X1 + X2,
+#'                         data = data,
+#'                         xinterest = c("X1"),
+#'                         mcmcfit = fit)
 #' }
 #'@export
 
-mcmcObsProb <- function(modelmatrix,
-                        mcmcout, 
-                        xcol, 
+mcmcSimObs <- function(formula,
+                        data,
                         xinterest,
-                        xrange, 
+                        mcmcfit,
+                        simout = 10, 
                         link = "logit", 
-                        ci = c(0.05, 0.95)){
+                        ci = c(0.025, 0.975)){
   
-  if(missing(xcol) & missing(xinterest)) {
-    stop("Please enter a column number or name of your predictor of interest)")
+  # formula argument
+  if(missing(formula)) {
+      stop("Please enter the formula")
   }
   
-  if(!missing(xcol) & !missing(xinterest)) {
-    message("Both xcol and xinterest were supplied by user. Function defaults to xinterest.")
+  if(missing(data)) {
+    stop("Please enter data")
+  } else{
+    modelmatrix <- model.matrix(object = formula, data = data)
+  }
+
+  # range of x variable of interest argument
+  if(missing(xinterest)) {
+    stop("Please enter your predictor of interest")
+  } else {
+    var <- data[ , grepl( xinterest , names( data ) ) ]
+    xrange <- seq(from = min(var),
+                  to = max(var),
+                  length.out = simout)
   }
   
+  # fit variable
+  if(missing(mcmcfit)) {
+    stop("Please enter the mcmc fit output")
+  } else {
+    mcmcout <- as.matrix(coda::as.mcmc(fit))[, 1:ncol(modelmatrix)]
+  }
+
   X <- matrix(rep(t(modelmatrix), length(xrange)), 
               ncol = ncol(modelmatrix), byrow = TRUE )
-  if(!missing(xinterest)) {
-    X[ , grepl( xinterest , variable.names( X ) ) ] <- 
-      sort(rep(xrange, times = nrow(X) / length(xrange)))
-  } else {
-    X[, xcol] <- sort(rep(xrange, times = nrow(X) / length(xrange)))
-  }
+  X[ , grepl( xinterest , variable.names( X ) ) ] <- 
+    sort(rep(xrange, times = nrow(X) / length(xrange)))
   
   if(link == "logit"){
     logit_linpred <- t(X %*% t(mcmcout))

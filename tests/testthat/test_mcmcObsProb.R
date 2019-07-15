@@ -52,8 +52,8 @@ test_that("Simple model runs with mcmcObsRob", {
   X1_sim <- seq(from = min(datjags$X1),
                 to = max(datjags$X1), 
                 length.out = 10)
-  obs_prob <- mcmcObsProb(model_matrix = xmat,
-                          mcmc_out = mcmc_mat,
+  obs_prob <- mcmcObsProb(modelmatrix = xmat,
+                          mcmcout = mcmc_mat,
                           xcol = 2,
                           xrange = X1_sim)
   
