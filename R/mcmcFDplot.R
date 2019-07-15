@@ -1,5 +1,3 @@
-## This function is not being included in the package
-
 #'An R function to plot first differences after a Bayesian logit or probit model.
 #'@title Plot First Differences from MCMC output 
 #'@description R function to plot first differences generated from MCMC output
