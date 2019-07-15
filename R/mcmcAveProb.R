@@ -1,25 +1,34 @@
 #'This function calculates predicted probabilities for "average" cases after a Bayesian 
 #'logit or probit model. For an explanation of predicted probabilities for "average" cases,
-#' see e.g. King, Tomz & Wittenberg (2000, <doi: 10.2307/2669316>)
+#'see e.g. King, Tomz & Wittenberg (2000) <doi: 10.2307/2669316>
 #'@title Bayesian MCMC Predicted Probablities for the 'Average' Case
-#'@description This function calculates predicted probabilities for "average" cases after a Bayesian logit 
-#'or probit model. For an explanation of predicted probabilities for "average" cases,
-# see e.g. King, Tomz & Wittenberg (2000) doi: 10.2307/2669316
-#'@param model_matrix model matrix, including intercept. Create with model.matrix(formula, data)
-#'@param mcmc_out posterior distributions of all coefficients
-#   in matrix form - can easily be created from rstan, MCMCpack, R2jags, R2OpenBUGS, etc.
+#'@description This function calculates predicted probabilities for "average" cases after 
+#'a Bayesian logit or probit model. For an explanation of predicted probabilities for 
+#'"average" cases, see e.g. King, Tomz & Wittenberg (2000) <doi: 10.2307/2669316>
+#'@param modelmatrix model matrix, including intercept. Create with 
+#'\code{model.matrix(formula, data)}
+#'@param mcmcout posterior distributions of all coefficients
+#'in matrix form - can easily be created from rstan, MCMCpack, R2jags, R2OpenBUGS, etc.
 #'@param xcol column number of the explanatory variable for which to calculate 
 #'associated Pr(y = 1)
 #'@param xrange name of the vector with the range of relevant values of the 
 #'explanatory variable for which to calculate associated Pr(y = 1)
-#'@param link link: link function, character vector set to "logit" (default) or "probit"
-#'@param ci the bounds of the credible interval. Default is 0.05 and 0.95. 
-#'Enter as a vector, such as c(0.05, 0.95).
-#'#'@return a matrix with 4 columns:
-#'predictor: identical to x_range
-#'median_pp: median predicted probability at given x
-#'lower_pp: lower bound of credible interval of predicted probability at given x
-#'upper_pp: upper bound of credible interval of predicted probability at given x
+#'@param xvariable name of the explanatory variable for which to calculate 
+#'associated Pr(y = 1). If xcol is supplied, this is not needed. If both
+#'are supplied, the function defaults to this argument and xcol is ignored
+#'@param link name of the link function. It is a character vector set to 
+#'"logit" (default) or "probit"
+#'@param ci the bounds of the credible interval. Default is c(0.05, 0.95).
+#'@references King, G., Tomz, M., & Wittenberg, J. (2000). Making the most of 
+#'statistical analyses: Improving interpretation and presentation. Available at 
+#'SSRN 1083738. <doi: 10.2307/2669316>
+#'@return This function returns a matrix with 4 columns:
+#'\itemize{
+#'\item predictor: identical to x_range
+#'\item median_pp: median predicted probability at given x
+#'\item lower_pp: lower bound of credible interval of predicted probability at given x
+#'\item upper_pp: upper bound of credible interval of predicted probability at given x
+#'}
 #'@examples
 #' \donttest{
 #'   ## simulating data
@@ -74,35 +83,53 @@
 #' X1_sim <- seq(from = min(datjags$X1),
 #'               to = max(datjags$X1), 
 #'               length.out = 10)
-#' ave_prob <- mcmcAveProb(model_matrix = xmat,
-#'                         mcmc_out = mcmc_mat,
+#' ave_prob <- mcmcAveProb(modelmatrix = xmat,
+#'                         mcmcout = mcmc_mat,
 #'                         xcol = 2,
 #'                         xrange = X1_sim)
 #' }
 #'@export
 #'
-mcmcAveProb <- function(model_matrix, 
-                        mcmc_out, 
+mcmcAveProb <- function(modelmatrix, 
+                        mcmcout, 
                         xcol, 
                         xrange, 
+                        xinterest,
                         link = "logit", 
                         ci = c(0.025, 0.975)){
   
-  X <- matrix(rep(apply(X = model_matrix,
+  # checking arguments
+  if(missing(xcol) & missing(xinterest)) {
+    stop("Please enter a column number or name of your variable of interest.)")
+  }
+  if(!missing(xcol) & !missing(xinterest)) {
+    message("Both xcol and xinterest were supplied by user. Function defaults to xinterest.")
+  }
+  if(!missing(xinterest)) {
+    if(!(xinterest %in% variable.names(modelmatrix)))
+      stop("Variable name does not match any in the matrix. Please enter another.")
+  }
+  
+  X <- matrix(rep(apply(X = modelmatrix,
                         MARGIN = 2,
                         FUN = function(x) median(x)),
                   times = length(xrange)),
               nrow = length(xrange),
               byrow = TRUE)
-  X[, xcol] <- xrange
+  colnames(X) <- variable.names(modelmatrix)
+  if(!missing(xinterest)) {
+    X[ , grepl( xinterest , variable.names( X ) ) ] <- xrange
+  } else {
+    X[, xcol] <- xrange
+  }
   
   if(link == "logit"){
-    logit_linpred <- t(X %*% t(mcmc_out))
+    logit_linpred <- t(X %*% t(mcmcout))
     logit_pp <- exp(logit_linpred) / (1 + exp(logit_linpred)) # still seems fine
     pp <- logit_pp}
   
   if(link == "probit"){
-    pp <- pnorm(t(X %*% t(mcmc_out)))
+    pp <- pnorm(t(X %*% t(mcmcout)))
   }
   
   colnames(pp) <- as.character(xrange)

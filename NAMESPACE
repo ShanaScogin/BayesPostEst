@@ -3,6 +3,7 @@
 export(dfBarTable)
 export(mcmcAveProb)
 export(mcmcFD)
+export(mcmcFDplot)
 export(mcmcObsProb)
 export(mcmcProbitPlot)
 export(mcmcRocPrc)

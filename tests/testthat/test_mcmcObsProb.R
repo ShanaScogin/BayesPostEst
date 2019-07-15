@@ -68,11 +68,14 @@ test_that("Simple model runs with mcmcObsRob", {
                           xrange = X1_sim)
   
   
+  ## Compare to Johannes' previous function
   # devtools::source_url("https://raw.githubusercontent.com/jkarreth/JKmisc/master/MCMC_observed_probs.R")
-  # prot_obs_prob <- MCMC_observed_probs(model_matrix = xmat, 
-  #                                      mcmc_out = mcmc_mat, 
-  #                                      x_col = 2, 
-  #                                      x_range_vec = X1_sim)
-  
+  # prot_obs_prob <- MCMC_observed_probs(model_matrix = xmat,
+  #                                      mcmc_out = mcmc_mat,
+  #                                      x_col = 2,
+  #                                      x_range_vec = X1_sim,
+  #                                      upper = 0.975,
+  #                                      lower = 0.025)
+  # 
   
 })

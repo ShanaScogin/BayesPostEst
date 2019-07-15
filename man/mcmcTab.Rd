@@ -16,10 +16,11 @@ mcmcTab(sims, ci = c(0.025, 0.975), pars = NULL, Pr = FALSE,
 
 \item{Pr}{print percent of posterior draws with same sign as median; defaults to FALSE}
 
-\item{ROPE}{vector of two values defining the region of practical equivalence; returns % of posterior to the left/right of ROPE}
+\item{ROPE}{vector of two values defining the region of practical equivalence; 
+returns \% of posterior to the left/right of ROPE}
 }
 \value{
-output
+an data frame containing MCMC summary statistics
 }
 \description{
 R function for summarizing MCMC output in a regression-style table

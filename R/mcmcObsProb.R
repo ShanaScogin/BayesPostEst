@@ -1,7 +1,6 @@
 #'This function calculates predicted probabilities for 
 #'"observed" cases after a Bayesian logit or probit model
 #'following Hanmer & Kalkan (2013) <doi: 10.1111/j.1540-5907.2012.00602.x>.
-#'
 #'@title Bayesian MCMC Observed Values Predicted Probablities
 #'@description Implements R function to calculate the predicted probabilities
 #'for "observed" cases after a Bayesian logit or probit model, following
@@ -14,9 +13,12 @@
 #'associated Pr(y = 1)
 #'@param xrange name of the vector with the range of relevant values of the 
 #'explanatory variable for which to calculate associated Pr(y = 1)
-#'@param link link function, character vector set to "logit" (default) or "probit"
-#'@param ci the bounds of the credible interval. Default is 0.05 and 0.95. 
-#'Enter as a vector, such as c(0.05, 0.95).
+#'@param xvariable name of the explanatory variable for which to calculate 
+#'associated Pr(y = 1). If \code{xcol} is supplied, this is not needed. If both
+#'are supplied, the function defaults to this argument and xcol is ignored
+#'@param link name of the link function. It is a character vector set to 
+#'"logit" (default) or "probit"
+#'@param ci the bounds of the credible interval. Default is c(0.05, 0.95).
 #'@references Hanmer, M. J., & Ozan Kalkan, K. (2013). Behind the curve: Clarifying 
 #'the best approach to calculating predicted probabilities and marginal effects from 
 #'limited dependent variable models. American Journal of Political Science, 57(1), 
@@ -82,12 +84,12 @@
 #'                         xrange = X1_sim)
 #' }
 #'@export
-
+#'
 mcmcObsProb <- function(modelmatrix,
                         mcmcout, 
                         xcol, 
-                        xinterest,
                         xrange, 
+                        xinterest,
                         link = "logit", 
                         ci = c(0.025, 0.975)){
   

@@ -4,12 +4,13 @@
 \alias{mcmcFDplot}
 \title{Plot First Differences from MCMC output}
 \usage{
-mcmcFDplot(fd_full, ROPE = NULL)
+mcmcFDplot(fdfull, ROPE = NULL)
 }
 \arguments{
-\item{fd_full}{Output generated from mcmcFD(..., full_sims = TRUE)}
+\item{fdfull}{Output generated from mcmcFD(..., full_sims = TRUE)}
 
-\item{ROPE}{numeric vector of length two, defining the Region of Practical Equivalence around 0. Defaults to NULL}
+\item{ROPE}{numeric vector of length two, defining the Region of Practical 
+Equivalence around 0. Defaults to NULL}
 }
 \value{
 output
@@ -26,5 +27,4 @@ An R function to plot first differences after a Bayesian logit or probit model.
   example for user goes here
   unit testing goes in testthat
 }
-
 }

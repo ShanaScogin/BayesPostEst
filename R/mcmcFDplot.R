@@ -1,8 +1,9 @@
 #'An R function to plot first differences after a Bayesian logit or probit model.
 #'@title Plot First Differences from MCMC output 
 #'@description R function to plot first differences generated from MCMC output
-#'@param fd_full Output generated from mcmcFD(..., full_sims = TRUE)
-#'@param ROPE numeric vector of length two, defining the Region of Practical Equivalence around 0. Defaults to NULL
+#'@param fdfull Output generated from mcmcFD(..., full_sims = TRUE)
+#'@param ROPE numeric vector of length two, defining the Region of Practical 
+#'Equivalence around 0. Defaults to NULL
 #'@return output
 #'@examples
 #' \donttest{
@@ -10,12 +11,11 @@
 #'   example for user goes here
 #'   unit testing goes in testthat
 #' }
-# removed the export
+#' @export
 #'
-
-mcmcFDplot <- function(fd_full, ROPE = NULL){
-  # convert fd_full to long data frame
-  fd_dat <- tidyr::gather(as.data.frame(fd_full), 
+mcmcFDplot <- function(fdfull, ROPE = NULL){
+  # convert fdfull to long data frame
+  fd_dat <- tidyr::gather(as.data.frame(fdfull), 
                           key = variable, 
                           value = fd)
   
@@ -33,15 +33,15 @@ mcmcFDplot <- function(fd_full, ROPE = NULL){
     ylab("")
   
   # calculate area left/right of ROPE
-  fd_outROPE <- apply(fd_full, 2, 
+  fd_outROPE <- apply(fdfull, 2, 
                          function(x) ifelse(median(x) < 0, 
                                             sum(x < ROPE[1]) / length(x), 
                                             sum(x > ROPE[2]) / length(x)))
-  fd_annotate <- data.frame(xpos = apply(fd_full, 2, 
+  fd_annotate <- data.frame(xpos = apply(fdfull, 2, 
                                            function(x) ifelse(median(x) < 0, 
                                                               quantile(x, probs = 0.01) - 0.02, 
                                                               quantile(x, probs = 0.99) + 0.02)), 
-                              ypos = as.factor(colnames(fd_full)), 
+                              ypos = as.factor(colnames(fdfull)), 
                               outROPE = paste(round(fd_outROPE * 100, digits = 1), "%", sep = ""))
     
   # final plot
@@ -62,15 +62,15 @@ mcmcFDplot <- function(fd_full, ROPE = NULL){
       ylab("")
     
     # calculate area left/right of 0
-    fd_out0 <- apply(fd_full, 2, 
+    fd_out0 <- apply(fdfull, 2, 
                         function(x) ifelse(median(x) < 0, 
                                            sum(x < 0) / length(x), 
                                            sum(x > 0) / length(x)))
-    fd_annotate <- data.frame(xpos = apply(fd_full, 2, 
+    fd_annotate <- data.frame(xpos = apply(fdfull, 2, 
                                            function(x) ifelse(median(x) < 0, 
                                                               quantile(x, probs = 0.01) - 0.02, 
                                                               quantile(x, probs = 0.99) + 0.02)), 
-                              ypos = as.factor(colnames(fd_full)), 
+                              ypos = as.factor(colnames(fdfull)), 
                               out0 = paste(round(fd_out0 * 100, digits = 1), "%", sep = ""))
     
     # final plot

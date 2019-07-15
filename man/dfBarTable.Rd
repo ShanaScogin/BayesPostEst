@@ -7,6 +7,8 @@
 dfBarTable(df, rows = 2)
 }
 \arguments{
+\item{df}{dataframe}
+
 \item{rows}{number of rows of plots within the figure}
 }
 \value{

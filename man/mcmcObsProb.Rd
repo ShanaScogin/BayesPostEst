@@ -4,8 +4,8 @@
 \alias{mcmcObsProb}
 \title{Bayesian MCMC Observed Values Predicted Probablities}
 \usage{
-mcmcObsProb(modelmatrix, mcmcout, xcol, xinterest, xrange,
-  link = "logit", ci = c(0.05, 0.95))
+mcmcObsProb(modelmatrix, mcmcout, xcol, xrange, xinterest,
+  link = "logit", ci = c(0.025, 0.975))
 }
 \arguments{
 \item{modelmatrix}{model matrix, including intercept. Create with 
@@ -20,10 +20,14 @@ associated Pr(y = 1)}
 \item{xrange}{name of the vector with the range of relevant values of the 
 explanatory variable for which to calculate associated Pr(y = 1)}
 
-\item{link}{link function, character vector set to "logit" (default) or "probit"}
+\item{link}{name of the link function. It is a character vector set to 
+"logit" (default) or "probit"}
 
-\item{ci}{the bounds of the credible interval. Default is 0.05 and 0.95. 
-Enter as a vector, such as c(0.05, 0.95).}
+\item{ci}{the bounds of the credible interval. Default is c(0.05, 0.95).}
+
+\item{xvariable}{name of the explanatory variable for which to calculate 
+associated Pr(y = 1). If \code{xcol} is supplied, this is not needed. If both
+are supplied, the function defaults to this argument and xcol is ignored}
 }
 \value{
 An object

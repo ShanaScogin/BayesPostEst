@@ -4,7 +4,7 @@
 \alias{mcmcFD}
 \title{First Differences of a Bayesian Logit or Probit model}
 \usage{
-mcmcFD(model_matrix, mcmc_out, link = "logit", ci = c(0.05, 0.95),
+mcmcFD(model_matrix, mcmc_out, link = "logit", ci = c(0.025, 0.975),
   percentiles = c(0.25, 0.75), full_sims = FALSE)
 }
 \arguments{
