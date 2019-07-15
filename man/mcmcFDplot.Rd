@@ -27,4 +27,5 @@ An R function to plot first differences after a Bayesian logit or probit model.
   example for user goes here
   unit testing goes in testthat
 }
+
 }

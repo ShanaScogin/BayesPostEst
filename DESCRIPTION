@@ -11,6 +11,7 @@ Authors@R:
     "Myunghee Lee <mlq38@mail.missouri.edu> [aut]"
     ))
 Description: An implementation of functions to assist Bayesian analysis and results presentation.
+URL: https://github.com/ShanaScogin/BayesPostEst
 License: GPL-3
 Imports:
     stats,
@@ -25,9 +26,8 @@ Imports:
 Encoding: UTF-8
 LazyData: TRUE
 LazyLoad: TRUE
-Suggests: 
-    testthat,
-    knitr,
-    rmarkdown
-RoxygenNote: 6.1.1
+Suggests: knitr,
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
+RoxygenNote: 6.1.1

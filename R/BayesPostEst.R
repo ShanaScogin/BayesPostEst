@@ -1,8 +1,8 @@
 #' BayesPostEst
 #'
-#' @section BayesPostEst functions:
-#' To use this package, decide which function you need to use
-#' to present and visualize your Bayesian results.
+#' @section BayesPostEst functions: The functions in this
+#' package assist in analyzing and presenting results
+#' from Bayesian analysis.
 #'
 #' @docType package
 #' @name BayesPostEst
@@ -32,7 +32,5 @@ NULL
 
 #' @importFrom R2jags jags
 NULL
-
-#' @useDynLib BayesPostEst
-NULL
+#> NULL
 

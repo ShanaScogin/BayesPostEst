@@ -8,25 +8,31 @@ mcmcSimObs(formula, data, xinterest, mcmcfit, simout = 10,
   link = "logit", ci = c(0.025, 0.975))
 }
 \arguments{
+\item{formula}{tbd}
+
+\item{data}{tbd}
+
+\item{mcmcfit}{name of the vector with the range of relevant values of the 
+explanatory variable for which to calculate associated Pr(y = 1)}
+
+\item{simout}{tbd}
+
 \item{link}{link function, character vector set to "logit" (default) or "probit"}
 
 \item{ci}{the bounds of the credible interval. Default is 0.05 and 0.95. 
 Enter as a vector, such as c(0.05, 0.95).}
 
-\item{modelmatrix}{model matrix, including intercept. Create with 
-model.matrix(formula, data)}
-
-\item{mcmcout}{posterior distributions of all coefficients in matrix 
-form - can easily be created from rstan, MCMCpack, R2jags, R2OpenBUGS, etc.}
-
-\item{xcol}{column number of the explanatory variable for which to calculate 
-associated Pr(y = 1)}
-
-\item{xrange}{name of the vector with the range of relevant values of the 
-explanatory variable for which to calculate associated Pr(y = 1)}
+\item{xvariable}{name of the explanatory variable for which to calculate 
+associated Pr(y = 1).}
 }
 \value{
-An object
+This function returns a matrix with 4 columns:
+\itemize{
+\item predictor: identical to x_range
+\item median_pp: median predicted probability at given x
+\item lower_pp: lower bound of credible interval of predicted probability at given x
+\item upper_pp: upper bound of credible interval of predicted probability at given x
+}
 }
 \description{
 Implements R function to calculate the predicted probabilities

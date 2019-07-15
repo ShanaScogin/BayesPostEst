@@ -30,7 +30,13 @@ associated Pr(y = 1). If \code{xcol} is supplied, this is not needed. If both
 are supplied, the function defaults to this argument and xcol is ignored}
 }
 \value{
-An object
+This function returns a matrix with 4 columns:
+\itemize{
+\item predictor: identical to x_range
+\item median_pp: median predicted probability at given x
+\item lower_pp: lower bound of credible interval of predicted probability at given x
+\item upper_pp: upper bound of credible interval of predicted probability at given x
+}
 }
 \description{
 Implements R function to calculate the predicted probabilities

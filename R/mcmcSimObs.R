@@ -6,14 +6,13 @@
 #'@description Implements R function to calculate the predicted probabilities
 #'for "observed" cases after a Bayesian logit or probit model, following
 #'Hanmer & Kalkan (2013) <doi: 10.1111/j.1540-5907.2012.00602.x>.
-#'@param modelmatrix model matrix, including intercept. Create with 
-#'model.matrix(formula, data)
-#'@param mcmcout posterior distributions of all coefficients in matrix 
-#'form - can easily be created from rstan, MCMCpack, R2jags, R2OpenBUGS, etc.
-#'@param xcol column number of the explanatory variable for which to calculate 
-#'associated Pr(y = 1)
-#'@param xrange name of the vector with the range of relevant values of the 
+#'@param formula tbd
+#'@param data tbd
+#'@param xvariable name of the explanatory variable for which to calculate 
+#'associated Pr(y = 1).
+#'@param mcmcfit name of the vector with the range of relevant values of the 
 #'explanatory variable for which to calculate associated Pr(y = 1)
+#'@param simout tbd
 #'@param link link function, character vector set to "logit" (default) or "probit"
 #'@param ci the bounds of the credible interval. Default is 0.05 and 0.95. 
 #'Enter as a vector, such as c(0.05, 0.95).
@@ -21,7 +20,13 @@
 #'the best approach to calculating predicted probabilities and marginal effects from 
 #'limited dependent variable models. American Journal of Political Science, 57(1), 
 #'263-277.
-#'@return An object
+#'@return This function returns a matrix with 4 columns:
+#'\itemize{
+#'\item predictor: identical to x_range
+#'\item median_pp: median predicted probability at given x
+#'\item lower_pp: lower bound of credible interval of predicted probability at given x
+#'\item upper_pp: upper bound of credible interval of predicted probability at given x
+#'}
 #'@examples
 #' \donttest{
 #'   ## simulating data
@@ -78,12 +83,12 @@
 #'@export
 
 mcmcSimObs <- function(formula,
-                        data,
-                        xinterest,
-                        mcmcfit,
-                        simout = 10, 
-                        link = "logit", 
-                        ci = c(0.025, 0.975)){
+                       data,
+                       xinterest,
+                       mcmcfit,
+                       simout = 10, 
+                       link = "logit", 
+                       ci = c(0.025, 0.975)){
   
   # formula argument
   if(missing(formula)) {

@@ -1,3 +1,5 @@
+## This function is not being included in the package
+
 #'An R function to calculate and plot predicted probabilities after a Bayesian logit or probit model.
 #'@title Plot Predicted Probabilities after a Bayesian Logit or Probit Model
 #'@description R function to calculate and plot predicted probabilities after a Bayesian probit model

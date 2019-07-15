@@ -9,8 +9,8 @@
 BayesPostEst
 }
 \section{BayesPostEst functions}{
-
-To use this package, decide which function you need to use
-to present and visualize your Bayesian results.
+ The functions in this
+package assist in analyzing and presenting results
+from Bayesian analysis.
 }
 
