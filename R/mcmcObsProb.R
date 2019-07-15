@@ -91,12 +91,17 @@ mcmcObsProb <- function(modelmatrix,
                         link = "logit", 
                         ci = c(0.025, 0.975)){
   
+  # checking arguments
   if(missing(xcol) & missing(xinterest)) {
     stop("Please enter a column number or name of your predictor of interest)")
   }
-  
   if(!missing(xcol) & !missing(xinterest)) {
     message("Both xcol and xinterest were supplied by user. Function defaults to xinterest.")
+  }
+  if(!missing(xinterest)) {
+    vars <- variable.names(xinterest)
+    if(!(xinterest %in% vars))
+      stop("Variable name does not match any in the matrix. Please enter another.")
   }
   
   X <- matrix(rep(t(modelmatrix), length(xrange)), 

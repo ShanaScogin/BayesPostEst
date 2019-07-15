@@ -61,6 +61,12 @@ test_that("Simple model runs with mcmcObsRob", {
   check_against <- c(-0.998)
   expect_equal(round(as.numeric(value), 3), check_against)
   
+  obs_prob2 <- mcmcObsProb(modelmatrix = xmat,
+                          mcmcout = mcmc_mat,
+                          xinterest = "X1",
+                          xcol = 2,
+                          xrange = X1_sim)
+  
   
   # devtools::source_url("https://raw.githubusercontent.com/jkarreth/JKmisc/master/MCMC_observed_probs.R")
   # prot_obs_prob <- MCMC_observed_probs(model_matrix = xmat, 
