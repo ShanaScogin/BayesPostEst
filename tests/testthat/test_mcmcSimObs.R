@@ -49,7 +49,7 @@ test_that("Simple model runs with mcmcObsRob", {
   obs_prob_sim <- mcmcSimObs(formula = Y ~ X1 + X2,
                           data = data,
                           xinterest = c("X1"),
-                          mcmcfit = fit)
+                          sims = fit)
 
   value <- obs_prob[1, 1]
   check_against <- c(-0.998)
