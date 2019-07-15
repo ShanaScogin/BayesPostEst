@@ -51,7 +51,7 @@ test_that("Simple model runs with mcmcSimObs", {
                           xinterest = c("X1"),
                           sims = fit)
 
-  value <- obs_prob[1, 1]
+  value <- obs_prob_sim[1, 1]
   check_against <- c(-0.998)
   expect_equal(round(as.numeric(value), 3), check_against)
   
