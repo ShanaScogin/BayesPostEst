@@ -21,8 +21,8 @@ Enter as a vector, such as c(0.05, 0.95).}
 
 \item{percentiles}{default is c(0.25, 0.75)}
 
-\item{full_sims}{logical indicator of whether full object will be returned.
-Default is FALSE.}
+\item{fullsims}{logical indicator of whether full object (based on all MCMC draws 
+rather than average) will be returned. Default is \code{FALSE}.}
 }
 \value{
 output

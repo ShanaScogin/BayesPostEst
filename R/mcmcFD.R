@@ -10,8 +10,8 @@
 #'@param ci the bounds of the credible interval. Default is 0.05 and 0.95. 
 #'Enter as a vector, such as c(0.05, 0.95).
 #'@param percentiles default is c(0.25, 0.75)
-#'@param full_sims logical indicator of whether full object will be returned.
-#'Default is FALSE.
+#'@param fullsims logical indicator of whether full object (based on all MCMC draws 
+#'rather than average) will be returned. Default is \code{FALSE}.
 #'@return output
 #'@examples
 #' \donttest{

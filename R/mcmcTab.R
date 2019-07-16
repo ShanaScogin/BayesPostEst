@@ -57,7 +57,12 @@
 #'                     n.burnin = 1000, model.file = model)
 #' 
 #' ## printing out table
-#' mcmcTab(coda::as.mcmc(fit))
+#' object <- mcmcTab(fit, 
+#'           ci = c(0.025, 0.975), 
+#'           pars = NULL, 
+#'           Pr = FALSE,
+#'           ROPE = NULL)
+#' object
 #' }
 #'@export
 

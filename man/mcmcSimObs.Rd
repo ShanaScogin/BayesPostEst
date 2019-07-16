@@ -27,9 +27,9 @@ MCMCpack, rstan, rstanarm. Currently only jags object is supported.}
 
 \item{ci}{the bounds of the credible interval. Default is \code{c(0.05, 0.95)}.}
 
-\item{fullsims}{logical indicator of whether full object will be returned.
-Default is \code{FALSE}. A note: The longer \code{xrange} is, the larger the full
-output will be if \code{TRUE} is selected.}
+\item{fullsims}{logical indicator of whether full object (based on all MCMC draws 
+rather than average) will be returned. Default is \code{FALSE}. A note: The longer 
+range of x values is, the larger the full output will be if \code{TRUE} is selected.}
 }
 \value{
 This function returns a matrix with 4 columns:

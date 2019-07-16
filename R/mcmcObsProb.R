@@ -19,9 +19,9 @@
 #'@param link type of model. It is a character vector set to 
 #'"logit" (default) or "probit"
 #'@param ci the bounds of the credible interval. Default is \code{c(0.05, 0.95)}.
-#'@param fullsims logical indicator of whether full object will be returned.
-#'Default is \code{FALSE}. A note: The longer \code{xrange} is, the larger the full
-#'output will be if \code{TRUE} is selected.
+#'@param fullsims logical indicator of whether full object (based on all MCMC draws 
+#'rather than average) will be returned. Default is \code{FALSE}. A note: The longer 
+#'\code{xrange} is, the larger the full output will be if \code{TRUE} is selected.
 #'@references Hanmer, M. J., & Ozan Kalkan, K. (2013). Behind the curve: Clarifying 
 #'the best approach to calculating predicted probabilities and marginal effects from 
 #'limited dependent variable models. American Journal of Political Science, 57(1), 
