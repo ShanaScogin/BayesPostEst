@@ -15,8 +15,10 @@
 #'@param simout tbd
 #'@param link type of model. It is a character vector set to 
 #'"logit" (default) or "probit"
-#'@param ci the bounds of the credible interval. Default is 0.05 and 0.95. 
-#'Enter as a vector, such as c(0.05, 0.95).
+#'@param ci the bounds of the credible interval. Default is \code{c(0.05, 0.95)}.
+#'@param fullsims logical indicator of whether full object will be returned.
+#'Default is \code{FALSE}. A note: The longer \code{xrange} is, the larger the full
+#'output will be if \code{TRUE} is selected.
 #'@references Hanmer, M. J., & Ozan Kalkan, K. (2013). Behind the curve: Clarifying 
 #'the best approach to calculating predicted probabilities and marginal effects from 
 #'limited dependent variable models. American Journal of Political Science, 57(1), 
@@ -89,7 +91,8 @@ mcmcSimObs <- function(formula,
                        sims,
                        simout = 10, 
                        link = "logit", 
-                       ci = c(0.025, 0.975)){
+                       ci = c(0.025, 0.975),
+                       fullsims = FALSE){
   
   # formula argument
   if(missing(formula)) {
@@ -165,5 +168,14 @@ mcmcSimObs <- function(formula,
                    lower_pp = lower_pp,
                    upper_pp = upper_pp)
   
-  return(pp_dat)
+  if(fullsims == FALSE){
+    return(pp_dat) # pp_dat was created by summarizing longFrame
+  }
+  
+  if(fullsims == TRUE){
+    longFrame <- reshape2::melt(pp_mat, id.vars = .data::Var2)
+    names(longFrame) <- c("Iteration", "x", "pp")
+    return(longFrame) 
+  }
+  
 }

@@ -18,7 +18,10 @@
 #'are supplied, the function defaults to this argument and xcol is ignored
 #'@param link type of model. It is a character vector set to 
 #'"logit" (default) or "probit"
-#'@param ci the bounds of the credible interval. Default is c(0.05, 0.95).
+#'@param ci the bounds of the credible interval. Default is \code{c(0.05, 0.95)}.
+#'@param fullsims logical indicator of whether full object will be returned.
+#'Default is \code{FALSE}. A note: The longer \code{xrange} is, the larger the full
+#'output will be if \code{TRUE} is selected.
 #'@references King, G., Tomz, M., & Wittenberg, J. (2000). Making the most of 
 #'statistical analyses: Improving interpretation and presentation. Available at 
 #'SSRN 1083738. <doi: 10.2307/2669316>
@@ -98,7 +101,8 @@ mcmcAveProb <- function(modelmatrix,
                         xrange, 
                         xinterest,
                         link = "logit", 
-                        ci = c(0.025, 0.975)){
+                        ci = c(0.025, 0.975),
+                        fullsims = FALSE){
   
   # checking arguments
   if(missing(xcol) & missing(xinterest)) {
@@ -144,5 +148,13 @@ mcmcAveProb <- function(modelmatrix,
   
   names(pp_dat) <- c("predictor", "median_pp", "lower_pp", "upper_pp")
   
-  return(pp_dat)
+  if(fullsims == FALSE){
+    return(pp_dat) # pp_dat was created by summarizing longFrame
+  }
+  
+  if(fullsims == TRUE){
+    names(longFrame) <- c("Iteration", "x", "pp")
+    return(longFrame) 
+  }
+  
 }

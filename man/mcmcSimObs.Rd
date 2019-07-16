@@ -5,7 +5,7 @@
 \title{Bayesian MCMC Observed Values Predicted Probablities}
 \usage{
 mcmcSimObs(formula, data, xinterest, sims, simout = 10, link = "logit",
-  ci = c(0.025, 0.975))
+  ci = c(0.025, 0.975), fullsims = FALSE)
 }
 \arguments{
 \item{formula}{tbd}
@@ -23,8 +23,11 @@ MCMCpack, rstan, rstanarm. Currently only jags object is supported.}
 \item{link}{type of model. It is a character vector set to 
 "logit" (default) or "probit"}
 
-\item{ci}{the bounds of the credible interval. Default is 0.05 and 0.95. 
-Enter as a vector, such as c(0.05, 0.95).}
+\item{ci}{the bounds of the credible interval. Default is \code{c(0.05, 0.95)}.}
+
+\item{fullsims}{logical indicator of whether full object will be returned.
+Default is \code{FALSE}. A note: The longer \code{xrange} is, the larger the full
+output will be if \code{TRUE} is selected.}
 }
 \value{
 This function returns a matrix with 4 columns:
