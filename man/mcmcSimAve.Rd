@@ -8,9 +8,11 @@ mcmcSimAve(formula, data, xinterest, sims, simout = 10, link = "logit",
   ci = c(0.025, 0.975), fullsims = FALSE)
 }
 \arguments{
-\item{formula}{tbd}
+\item{formula}{A formula object, with the dependent variable on the
+left of a ~ operator, and the independent variables on the right.}
 
-\item{data}{tbd}
+\item{data}{A data frame, list or environment (or object coercible by
+as.data.frame to a data frame) containing the variables in the model.}
 
 \item{xinterest}{name of the explanatory variable for which to calculate 
 associated Pr(y = 1).}
@@ -45,7 +47,9 @@ a Bayesian logit or probit model. For an explanation of predicted probabilities 
 }
 \details{
 This function calculates predicted probabilities for "average" cases after a Bayesian 
-logit or probit model. For an explanation of predicted probabilities for "average" cases,
+logit or probit model. It has the same functionality as \code{mcmcAveProb()}
+function in this package; however, this function automates the data preparation. 
+For an explanation of predicted probabilities for "average" cases,
 see e.g. King, Tomz & Wittenberg (2000) <doi: 10.2307/2669316>
 }
 \examples{

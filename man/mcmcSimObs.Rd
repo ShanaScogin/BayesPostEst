@@ -8,9 +8,11 @@ mcmcSimObs(formula, data, xinterest, sims, simout = 10, link = "logit",
   ci = c(0.025, 0.975), fullsims = FALSE)
 }
 \arguments{
-\item{formula}{tbd}
+\item{formula}{A formula object, with the dependent variable on the
+left of a ~ operator, and the independent variables on the right.}
 
-\item{data}{tbd}
+\item{data}{A data frame, list or environment (or object coercible by
+as.data.frame to a data frame) containing the variables in the model.}
 
 \item{xinterest}{name of the explanatory variable for which to calculate 
 associated Pr(y = 1).}
