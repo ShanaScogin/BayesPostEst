@@ -47,5 +47,8 @@ NULL
 #' @importFrom R2jags jags
 NULL
 
+#' @importFrom rlang .data
+NULL
+
 #> NULL
 

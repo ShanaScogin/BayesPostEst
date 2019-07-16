@@ -16,13 +16,13 @@ mcmcFDplot <- function(fdfull,
   
   # convert fdfull to long data frame
   fd_dat <- tidyr::gather(as.data.frame(fdfull), 
-                          key = variable, 
-                          value = fd)
+                          key = .data$variable, 
+                          value = .data$fd) ## check this
   
   # create first plot
   
   if(is.null(ROPE) == FALSE){
-  fd_plot <- ggplot2::ggplot(data = fd_dat, aes(x = fd, y = variable)) + 
+  fd_plot <- ggplot2::ggplot(data = fd_dat, aes(x = .data$fd, y = .data$variable)) + 
     ggplot2::geom_rect(xmin = ROPE[1], xmax = ROPE[2], ymin = 0, ymax = Inf, fill = "black") + 
     ggridges::stat_density_ridges(quantile_lines = TRUE, 
                                   quantiles = c(0.025, 0.5, 0.975),
@@ -40,18 +40,18 @@ mcmcFDplot <- function(fdfull,
                                            function(x) ifelse(median(x) < 0, 
                                                               quantile(x, probs = 0.01) - 0.02, 
                                                               quantile(x, probs = 0.99) + 0.02)), 
-                              ypos = as.factor(colnames(fdfull)), 
-                              outROPE = paste(round(fd_outROPE * 100, digits = 1), "%", sep = ""))
+                            ypos = as.factor(colnames(fdfull)), 
+                            outROPE = paste(round(fd_outROPE * 100, digits = 1), "%", sep = ""))
     
   # final plot
   fd_plot <- fd_plot + 
-    geom_text(data = fd_annotate, aes(x = xpos, y = ypos, label = outROPE), 
+    geom_text(data = fd_annotate, aes(x = .data$xpos, y = .data$ypos, label = .data$outROPE), 
                                  color = "black", nudge_y = 0.1, size = 4)
   }
   
   if(is.null(ROPE) == TRUE){
   fd_plot <- ggplot2::ggplot(data = fd_dat,
-                               aes(x = fd, y = variable)) + 
+                               aes(x = .data$fd, y = .data$variable)) + 
     ggplot2::geom_vline(xintercept = 0) + 
     ggridges::stat_density_ridges(quantile_lines = TRUE, 
                                     quantiles = c(0.025, 0.5, 0.975),
@@ -74,7 +74,8 @@ mcmcFDplot <- function(fdfull,
     
     # final plot
     fd_plot <- fd_plot + 
-      ggplot2::geom_text(data = fd_annotate, aes(x = xpos, y = ypos, label = out0), 
+      ggplot2::geom_text(data = fd_annotate, 
+                         aes(x = .data$xpos, y = .data$ypos, label = .data$out0), 
                 color = "black", nudge_y = 0.1, size = 4)
     
   }

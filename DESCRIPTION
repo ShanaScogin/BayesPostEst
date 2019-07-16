@@ -25,7 +25,8 @@ Imports:
     ggridges,
     tidyr,
     rstanarm,
-    R2jags
+    R2jags,
+    rlang
 Encoding: UTF-8
 LazyData: TRUE
 LazyLoad: TRUE

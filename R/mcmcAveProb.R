@@ -137,10 +137,10 @@ mcmcAveProb <- function(modelmatrix,
   colnames(pp) <- as.character(xrange)
   longFrame <- reshape2::melt(pp)
   
-  pp_dat <- dplyr::summarize(dplyr::group_by(longFrame, longFrame[, 2]), 
-                      median_pp = quantile(value, probs = 0.5), 
-                      lower_pp = quantile(value, probs = ci[1]), 
-                      upper_pp = quantile(value, probs = ci[2]))
+  pp_dat <- dplyr::summarize(dplyr::group_by(longFrame, .data$Var2), 
+                      median_pp = quantile(.data$value, probs = 0.5), 
+                      lower_pp = quantile(.data$value, probs = ci[1]), 
+                      upper_pp = quantile(.data$value, probs = ci[2]))
   
   names(pp_dat) <- c("predictor", "median_pp", "lower_pp", "upper_pp")
   
