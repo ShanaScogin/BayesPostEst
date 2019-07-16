@@ -1,6 +1,9 @@
 #'This function calculates predicted probabilities for 
 #'"observed" cases after a Bayesian logit or probit model
-#'following Hanmer & Kalkan (2013) <doi: 10.1111/j.1540-5907.2012.00602.x>.
+#'following Hanmer & Kalkan (2013) <doi: 10.1111/j.1540-5907.2012.00602.x>. 
+#'It has the same functionality as \code{mcmcObsProb()}
+#'function in this package; however, \code{mcmcSimObs()} automates the 
+#'data preparation.
 #'
 #'@title Bayesian MCMC Observed Values Predicted Probablities
 #'@description Implements R function to calculate the predicted probabilities

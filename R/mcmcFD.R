@@ -24,7 +24,7 @@ mcmcFD <- function(modelmatrix,
                    link = "logit",
                    ci = c(0.025, 0.975),
                    percentiles = c(0.25, 0.75),
-                   full_sims = FALSE){
+                   fullsims = FALSE){
   
   fd.mat <- matrix(NA, ncol = 3, nrow = ncol(modelmatrix) - 1)
   colnames(fd.mat) <- c("Median", "Lower", "Upper")
@@ -66,11 +66,11 @@ mcmcFD <- function(modelmatrix,
   fd.dat$VarName <- rownames(fd.mat)
   fd.dat$VarID <- row(fd.mat)[, 1]
   
-  if(full_sims == FALSE){
+  if(fullsims == FALSE){
     return(fd.dat)
   }
   
-  if(full_sims == TRUE){
+  if(fullsims == TRUE){
     return(fd.full)
   }
   
