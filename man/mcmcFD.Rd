@@ -4,11 +4,22 @@
 \alias{mcmcFD}
 \title{First Differences of a Bayesian Logit or Probit model}
 \usage{
-mcmcFD(modelmatrix, mcmcout, link = "logit", ci = c(0.025, 0.975),
-  percentiles = c(0.25, 0.75), full_sims = FALSE)
+mcmcFD(formula, data, modelmatrix, mcmcout, link = "logit",
+  ci = c(0.025, 0.975), percentiles = c(0.25, 0.75),
+  fullsims = FALSE)
 }
 \arguments{
-\item{modelmatrix}{model matrix, including intercept. Create with model.matrix(formula, data)}
+\item{formula}{A formula object, with the dependent variable on the
+left of a ~ operator, and the independent variables on the right. If argument
+\code{modelmatrix} is supplied, function defaults to that argument}
+
+\item{data}{A data frame, list or environment (or object coercible by
+as.data.frame to a data frame) containing the variables in the model. If argument
+\code{modelmatrix} is supplied, function defaults to that argument}
+
+\item{modelmatrix}{model matrix, including intercept. Include instead of \code{formula} and
+\code{data} arguments. If all three are included, function defaults to modelmatrix.
+Create with model.matrix(formula, data)}
 
 \item{mcmcout}{posterior distributions of all logit coefficients, 
 in matrix form - can easily be created from rstan, MCMCpack, R2jags, etc.}
@@ -16,13 +27,12 @@ in matrix form - can easily be created from rstan, MCMCpack, R2jags, etc.}
 \item{link}{type of model. It is a character vector set to 
 "logit" (default) or "probit"}
 
-\item{ci}{the bounds of the credible interval. Default is 0.05 and 0.95. 
-Enter as a vector, such as c(0.05, 0.95).}
+\item{ci}{the bounds of the credible interval. Default is \code{c(0.025, 0.975)}.}
 
-\item{percentiles}{default is c(0.25, 0.75)}
+\item{percentiles}{default is \code{c(0.25, 0.75)}}
 
 \item{fullsims}{logical indicator of whether full object (based on all MCMC draws 
-rather than average) will be returned. Default is \code{FALSE}.}
+rather than average) will be returned. Default is \code{FALSE}}
 }
 \value{
 output

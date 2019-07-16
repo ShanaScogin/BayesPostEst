@@ -31,7 +31,7 @@ are supplied, the function defaults to this argument and xcol is ignored}
 
 \item{fullsims}{logical indicator of whether full object (based on all MCMC draws 
 rather than average) will be returned. Default is \code{FALSE}. A note: The longer 
-\code{xrange} is, the larger the full output will be if \code{TRUE} is selected.}
+\code{xrange} is, the larger the full output will be if \code{TRUE} is selected}
 }
 \value{
 This function returns a matrix with 4 columns:
