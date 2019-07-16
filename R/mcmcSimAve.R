@@ -1,11 +1,10 @@
-#'This function calculates predicted probabilities for 
-#'"observed" cases after a Bayesian logit or probit model
-#'following Hanmer & Kalkan (2013) <doi: 10.1111/j.1540-5907.2012.00602.x>.
-#'
-#'@title Bayesian MCMC Observed Values Predicted Probablities
-#'@description Implements R function to calculate the predicted probabilities
-#'for "observed" cases after a Bayesian logit or probit model, following
-#'Hanmer & Kalkan (2013) <doi: 10.1111/j.1540-5907.2012.00602.x>.
+#'This function calculates predicted probabilities for "average" cases after a Bayesian 
+#'logit or probit model. For an explanation of predicted probabilities for "average" cases,
+#'see e.g. King, Tomz & Wittenberg (2000) <doi: 10.2307/2669316>
+#'@title Bayesian MCMC Predicted Probablities for the 'Average' Case
+#'@description This function calculates predicted probabilities for "average" cases after 
+#'a Bayesian logit or probit model. For an explanation of predicted probabilities for 
+#'"average" cases, see e.g. King, Tomz & Wittenberg (2000) <doi: 10.2307/2669316>
 #'@param formula tbd
 #'@param data tbd
 #'@param xinterest name of the explanatory variable for which to calculate 
@@ -19,10 +18,9 @@
 #'@param fullsims logical indicator of whether full object will be returned.
 #'Default is \code{FALSE}. A note: The longer \code{xrange} is, the larger the full
 #'output will be if \code{TRUE} is selected.
-#'@references Hanmer, M. J., & Ozan Kalkan, K. (2013). Behind the curve: Clarifying 
-#'the best approach to calculating predicted probabilities and marginal effects from 
-#'limited dependent variable models. American Journal of Political Science, 57(1), 
-#'263-277.
+#'@references King, G., Tomz, M., & Wittenberg, J. (2000). Making the most of 
+#'statistical analyses: Improving interpretation and presentation. Available at 
+#'SSRN 1083738. <doi: 10.2307/2669316>
 #'@return This function returns a matrix with 4 columns:
 #'\itemize{
 #'\item predictor: identical to x_range
@@ -72,20 +70,28 @@
 #' inits <- list(inits1, inits2)
 #' 
 #' ## fitting the model with R2jags
+#' library(R2jags)
 #' set.seed(123)
-#' fit <- R2jags::jags(data = datjags, inits = inits, 
-#'                     parameters.to.save = params, n.chains = 2, n.iter = 2000, 
-#'                     n.burnin = 1000, model.file = model)
+#' fit <- jags(data = datjags, inits = inits, 
+#'          parameters.to.save = params, n.chains = 2, n.iter = 2000, 
+#'          n.burnin = 1000, model.file = model)
 #' 
-#' ### observed value approach with mcmcSimObs
-#' obs_prob_sim <- mcmcSimObs(formula = Y ~ X1 + X2,
-#'                            data = data,
-#'                            xinterest = c("X1"),
-#'                            sims = fit)
+#' ### average value approach
+#' library(coda)
+#' xmat <- model.matrix(Y ~ X1 + X2, data = data)
+#' mcmc <- as.mcmc(fit)
+#' mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
+#' X1_sim <- seq(from = min(datjags$X1),
+#'               to = max(datjags$X1), 
+#'               length.out = 10)
+#' ave_prob_sim <- mcmcSimAve(modelmatrix = xmat,
+#'                         mcmcout = mcmc_mat,
+#'                         xrange = X1_sim, 
+#'                         xcol = 2)
 #' }
 #'@export
-
-mcmcSimObs <- function(formula,
+#'
+mcmcSimAve <- function(formula,
                        data,
                        xinterest,
                        sims,
@@ -96,7 +102,7 @@ mcmcSimObs <- function(formula,
   
   # formula argument
   if(missing(formula)) {
-      stop("Please enter the formula")
+    stop("Please enter the formula")
   }
   
   if(missing(data)) {
@@ -104,7 +110,7 @@ mcmcSimObs <- function(formula,
   } else{
     modelmatrix <- model.matrix(object = formula, data = data)
   }
-
+  
   # range of x variable of interest argument
   if(missing(xinterest)) {
     stop("Please enter your variable of interest")
@@ -125,55 +131,44 @@ mcmcSimObs <- function(formula,
   } else {
     mcmcout <- as.matrix(coda::as.mcmc(sims))[, 1:ncol(modelmatrix)]
   }
-
-  X <- matrix(rep(t(modelmatrix), length(xrange)), 
-              ncol = ncol(modelmatrix), byrow = TRUE )
+  
+  X <- matrix(rep(apply(X = modelmatrix,
+                        MARGIN = 2,
+                        FUN = function(x) median(x)),
+                  times = length(xrange)),
+              nrow = length(xrange),
+              byrow = TRUE)
   colnames(X) <- variable.names(modelmatrix)
-  X[ , grepl( xinterest , variable.names( X ) ) ] <- 
-    sort(rep(xrange, times = nrow(X) / length(xrange)))
+  if(!missing(xinterest)) {
+    X[ , grepl( xinterest , variable.names( X ) ) ] <- xrange
+  } else {
+    X[, xcol] <- xrange
+  }
   
   if(link == "logit"){
     logit_linpred <- t(X %*% t(mcmcout))
     logit_pp <- exp(logit_linpred) / (1 + exp(logit_linpred)) # still seems fine
-    pp <- logit_pp
-  }
+    pp <- logit_pp}
   
   if(link == "probit"){
     pp <- pnorm(t(X %*% t(mcmcout)))
   }
   
+  colnames(pp) <- as.character(xrange)
+  longFrame <- reshape2::melt(pp)
   
-  # emptry matrix for PPs
-  pp_mat <- matrix(NA, nrow = nrow(mcmcout), ncol = length(xrange))
+  pp_dat <- dplyr::summarize(dplyr::group_by(longFrame, .data$Var2), 
+                      median_pp = quantile(.data$value, probs = 0.5), 
+                      lower_pp = quantile(.data$value, probs = ci[1]), 
+                      upper_pp = quantile(.data$value, probs = ci[2]))
   
-  # indices
-  pp_mat_lowerindex <- 1 + (0:(length(xrange) - 1) * nrow(modelmatrix))
-  pp_mat_upperindex <- nrow(modelmatrix) + (0:(length(xrange) - 1) * 
-                                               nrow(modelmatrix))
-  
-  
-  # fill matrix with PPs, one for each value of the predictor of interest
-  for(i in 1:length(xrange)){
-    pp_mat[, i] <- apply(X = pp[, 
-                                c(pp_mat_lowerindex[i]:pp_mat_upperindex[i])], 
-                         MARGIN = 1, FUN = function(x) mean(x))
-  }
-  
-  median_pp <- apply(X = pp_mat, MARGIN = 2, function(x) quantile(x, probs = c(0.5)))
-  lower_pp <- apply(X = pp_mat, MARGIN = 2, function(x) quantile(x, probs = ci[1]))
-  upper_pp <- apply(X = pp_mat, MARGIN = 2, function(x) quantile(x, probs = ci[2]))
-  
-  pp_dat <- dplyr::tibble(predictor = xrange,
-                   median_pp = median_pp,
-                   lower_pp = lower_pp,
-                   upper_pp = upper_pp)
+  names(pp_dat) <- c("predictor", "median_pp", "lower_pp", "upper_pp")
   
   if(fullsims == FALSE){
     return(pp_dat) # pp_dat was created by summarizing longFrame
   }
   
   if(fullsims == TRUE){
-    longFrame <- reshape2::melt(pp_mat, id.vars = .data::Var2)
     names(longFrame) <- c("Iteration", "x", "pp")
     return(longFrame) 
   }

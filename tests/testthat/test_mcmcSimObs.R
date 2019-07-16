@@ -55,4 +55,8 @@ test_that("Simple model runs with mcmcSimObs", {
   check_against <- c(-0.998)
   expect_equal(round(as.numeric(value), 3), check_against)
   
+  value <- obs_prob_sim[7, 4]
+  check_against <- c(0.617)
+  expect_equal(round(as.numeric(value), 3), check_against)
+  
 })

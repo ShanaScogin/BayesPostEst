@@ -1,4 +1,6 @@
-# 
+# This needs to be formatted and catered to mcmcTab
+
+
 # ## simulating data
 # set.seed(123456)
 # b0 <- 0.2 # true value for the intercept

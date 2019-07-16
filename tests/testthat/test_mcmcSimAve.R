@@ -1,6 +1,6 @@
-test_that("Simple model runs with mcmcAveProb", {
+test_that("Simple model runs with mcmcSimObs", {
   
-  ## simulating data
+  ## simulating some data
   set.seed(123456)
   b0 <- 0.2 # true value for the intercept
   b1 <- 0.5 # true value for first beta
@@ -45,36 +45,18 @@ test_that("Simple model runs with mcmcAveProb", {
                       parameters.to.save = params, n.chains = 2, n.iter = 2000, 
                       n.burnin = 1000, model.file = model)
   
-  ### average value approach
-  xmat <- model.matrix(Y ~ X1 + X2, data = data)
-  mcmc <- coda::as.mcmc(fit)
-  mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
-  X1_sim <- seq(from = min(datjags$X1),
-                to = max(datjags$X1), 
-                length.out = 10)
-  ave_prob <- mcmcAveProb(modelmatrix = xmat,
-                          mcmcout = mcmc_mat,
-                          xcol = 2,
-                          xrange = X1_sim)
-  
-  value <- ave_prob[1, 1]
+  ### observed value approach with mcmcSimObs
+  ave_prob_sim <- mcmcSimAve(formula = Y ~ X1 + X2,
+                          data = data,
+                          xinterest = c("X1"),
+                          sims = fit)
+
+  value <- ave_prob_sim[1, 1]
   check_against <- c(-0.998)
   expect_equal(round(as.numeric(value), 3), check_against)
   
-  value <- ave_prob[7, 4]
+  value <- ave_prob_sim[7, 4]
   check_against <- c(0.629)
   expect_equal(round(as.numeric(value), 3), check_against)
-  
-  
-  ## Compare to Johannes' previous function
-  # devtools::source_url("https://raw.githubusercontent.com/jkarreth/JKmisc/master/MCMC_simcase_probs.R")  
-  # prob <- MCMC_simcase_probs(model_matrix = xmat,
-  #                                      mcmc_out = mcmc_mat,
-  #                                      x_col = 2,
-  #                                      x_range_vec = X1_sim,
-  #                            upper = 0.975,
-  #                            lower = 0.025
-  #                            )
-  
   
 })
