@@ -22,7 +22,58 @@
 #'@return output
 #'@examples
 #' \donttest{
-#'   set.seed(123456)
+#' ## simulating data
+#' set.seed(123456)
+#' b0 <- 0.2 # true value for the intercept
+#' b1 <- 0.5 # true value for first beta
+#' b2 <- 0.7 # true value for second beta
+#' n <- 500 # sample size
+#' X1 <- runif(n, -1, 1)
+#' X2 <- runif(n, -1, 1)
+#' Z <- b0 + b1 * X1 + b2 * X2
+#' pr <- 1 / (1 + exp(-Z)) # inv logit function
+#' Y <- rbinom(n, 1, pr) 
+#' data <- data.frame(cbind(X1, X2, Y))
+#' 
+#' ## formatting the data for jags
+#' datjags <- as.list(data)
+#' datjags$N <- length(datjags$Y)
+#' 
+#' ## creating jags model
+#' model <- function()  {
+#'   
+#'   for(i in 1:N){
+#'     Y[i] ~ dbern(p[i])  ## Bernoulli distribution of y_i
+#'     logit(p[i]) <- mu[i]    ## Logit link function
+#'     mu[i] <- b[1] + 
+#'       b[2] * X1[i] + 
+#'       b[3] * X2[i]
+#'   }
+#'   
+#'   for(j in 1:3){
+#'     b[j] ~ dnorm(0, 0.001) ## Use a coefficient vector for simplicity
+#'   }
+#'   
+#' }
+#' 
+#' params <- c("b")
+#' inits1 <- list("b" = rep(0, 3))
+#' inits2 <- list("b" = rep(0, 3))
+#' inits <- list(inits1, inits2)
+#' 
+#' ## fitting the model with R2jags
+#' set.seed(123)
+#' fit <- R2jags::jags(data = datjags, inits = inits, 
+#'                     parameters.to.save = params, n.chains = 2, n.iter = 2000, 
+#'                     n.burnin = 1000, model.file = model)
+#' 
+#' ## running function
+#' xmat <- model.matrix(Y ~ X1 + X2, data = data)
+#' mcmc <- coda::as.mcmc(fit)
+#' mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
+#' object <- mcmcFD(modelmatrix = xmat,
+#'                  mcmcout = mcmc_mat)
+#' object
 #' }
 #'@export
 
@@ -37,25 +88,25 @@ mcmcFD <- function(formula,
   
   # checking arguments
   if(!missing(modelmatrix)) {
-    fd.mat <- matrix(NA, ncol = 3, nrow = ncol(modelmatrix) - 1)
+    fdmat <- matrix(NA, ncol = 3, nrow = ncol(modelmatrix) - 1)
   } else {
     if(missing(formula) | missing(data)) {
       stop("Please enter both the formula and data.")
     } else {
-      modelmatrix <- model.matrix(formula = formula, data = data)
-      fd.mat <- matrix(NA, ncol = 3, nrow = ncol(modelmatrix) - 1)
+      modelmatrix <- model.matrix(object = formula, data = data)
+      fdmat <- matrix(NA, ncol = 3, nrow = ncol(modelmatrix) - 1)
     }
   }
   
   
-  colnames(fd.mat) <- c("Median", "Lower", "Upper")
-  rownames(fd.mat) <- colnames(modelmatrix)[-1]
+  colnames(fdmat) <- c("Median", "Lower", "Upper")
+  rownames(fdmat) <- colnames(modelmatrix)[-1]
   
-  fd.full <- matrix(rep(NA),
+  fdfull <- matrix(rep(NA),
                     ncol = ncol(modelmatrix) - 1,
                     nrow = nrow(mcmcout),
                     byrow = TRUE)
-  colnames(fd.full) <- colnames(modelmatrix)[-1]
+  colnames(fdfull) <- colnames(modelmatrix)[-1]
   
   for (i in 2:ncol(modelmatrix)){
     
@@ -76,24 +127,24 @@ mcmcFD <- function(formula,
     
     fd <- pp[, 2] - pp[, 1]
     
-    fd.mat[i-1, 1] <- quantile(fd, probs = c(0.5))
-    fd.mat[i-1, 2] <- quantile(fd, probs = c(ci[1]))
-    fd.mat[i-1, 3] <- quantile(fd, probs = c(ci[2]))
+    fdmat[i-1, 1] <- quantile(fd, probs = c(0.5))
+    fdmat[i-1, 2] <- quantile(fd, probs = c(ci[1]))
+    fdmat[i-1, 3] <- quantile(fd, probs = c(ci[2]))
     
-    fd.full[, i-1] <- fd
+    fdfull[, i-1] <- fd
     
   }
   
-  fd.dat <- as.data.frame(fd.mat)
-  fd.dat$VarName <- rownames(fd.mat)
-  fd.dat$VarID <- row(fd.mat)[, 1]
+  fd.dat <- as.data.frame(fdmat)
+  fd.dat$VarName <- rownames(fdmat)
+  fd.dat$VarID <- row(fdmat)[, 1]
   
   if(fullsims == FALSE){
     return(fd.dat)
   }
   
   if(fullsims == TRUE){
-    return(fd.full)
+    return(fdfull)
   }
   
 }

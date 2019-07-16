@@ -46,7 +46,13 @@ test_that("Simple model runs with mcmcAveProb", {
                       n.burnin = 1000, model.file = model)
   
   ## running function
-  mm <- model.matrix(Y ~ X1 + X2, data = data)
-  object <- mcmcFD(modelmatrix = mm,
-                   mcmcout = fit)
+  xmat <- model.matrix(Y ~ X1 + X2, data = data)
+  mcmc <- coda::as.mcmc(fit)
+  mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
+  object <- mcmcFD(modelmatrix = xmat,
+                   mcmcout = mcmc_mat)
+  
+  value <- object[1, 2]
+  check_against <- c(0.048)
+  expect_equal(round(as.numeric(value), 3), check_against)
 })
