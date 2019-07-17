@@ -115,6 +115,6 @@ test_that("Simple probit model runs with mcmcFD", {
                    link = "probit") ## check to see if these are correct
   
   value <- object[1, 2]
-  check_against <- c(0.076)
+  check_against <- c(0.050)
   expect_equal(round(as.numeric(value), 3), check_against)
 })
