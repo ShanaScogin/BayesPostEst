@@ -124,7 +124,7 @@ mcmcSimObs <- function(formula,
     }
   }
   
-  # fit variable
+  # sims argument
   if(missing(sims)) {
     stop("Please enter the mcmc fit output")
   } else {
