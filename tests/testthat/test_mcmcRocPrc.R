@@ -1,6 +1,6 @@
-## need to get the actual tests in this
-
 test_that("Simple model runs with mcmcAveProb", {
+  skip_on_cran()
+  ## this test is longer than CRAN allows
 
   ## simulating data
   set.seed(123456)
@@ -21,35 +21,39 @@ test_that("Simple model runs with mcmcAveProb", {
                 data = data,
                 family = binomial(link = "logit"))
   
-  # using mcmcRocPrc with median draws
-  
+  ## using mcmcRocPrc with median draws
   fit_sum <- mcmcRocPrc(sims = m,
                         modelframe = model.frame(m),
                         fullsims = FALSE)
   
-  fit_sum$area_under_roc
-  plot(x = fit_sum$roc_dat$x, 
-       y = fit_sum$roc_dat$y, 
-       type = "l", 
-       main = "ROC")
-  abline(a = 0, b = 1)
+  ## testing
+  value <- fit_sum$prc_dat[156, 2]
+  check_against <- c(0.658)
+  expect_equal(round(as.numeric(value), 3), check_against)
   
-  fit_sum$area_under_prc
-  plot(x = fit_sum$prc_dat$x, 
-       y = fit_sum$prc_dat$y, 
-       type = "l", 
-       main = "PRC")
+  value_roc <- fit_sum$area_under_roc
+  check_against_roc <- c(0.627)
+  expect_equal(round(as.numeric(value_roc), 3), check_against_roc)
   
-  # using mcmcRocPrc with full draws
+  value_prc <- fit_sum$area_under_prc
+  check_against_prc <- c(0.621)
+  expect_equal(round(as.numeric(value_prc), 3), check_against_prc)
   
+  ## using mcmcRocPrc with full draws
   fit_full <- mcmcRocPrc(sims = m,
                          modelframe = model.frame(m),
                          fullsims = TRUE)
   
-  # works but this is slooooow!
+  ## testing
+  value_area_under_roc <- unlist(lapply(fit_full, '[[', 1))[986]
+  check_against_full_roc <- c(0.616)
+  expect_equal(round(as.numeric(value_area_under_roc), 3), 
+               check_against_full_roc)
   
-  # area under roc:
-  area_under_roc <- unlist(lapply(fit_full, '[[', 1))
-  area_under_prc <- unlist(lapply(fit_full, '[[', 2))
-
+  
+  
+  value_area_under_prc <- unlist(lapply(fit_full, '[[', 2))[965]
+  check_against_full_prc <- c(0.618)
+  expect_equal(round(as.numeric(value_area_under_prc), 3), 
+               check_against_full_prc)
 })
