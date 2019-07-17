@@ -1,8 +1,18 @@
 ## Combining mcmcLogitFD and mcmcProbitFD
 
-#'@title First Differences of a Bayesian Logit or Probit model
+#'@title First Differences of a Bayesian Logit or Probit model. This function 
+#'has the same functionality as \code{mcmcFD()} in this package; 
+#'however, \code{mcmcSimFD()} automates the data preparation.
 #'@description R function to calculate first differences after a Bayesian logit or probit model 
-#'@param modelmatrix model matrix, including intercept. Create with model.matrix(formula, data)
+#'@param formula A formula object, with the dependent variable on the
+#'left of a ~ operator, and the independent variables on the right. If argument
+#'\code{modelmatrix} is supplied, function defaults to that argument
+#'@param data A data frame, list or environment (or object coercible by
+#'as.data.frame to a data frame) containing the variables in the model. If argument
+#'\code{modelmatrix} is supplied, function defaults to that argument
+#'@param modelmatrix model matrix, including intercept. Include instead of \code{formula} and
+#'\code{data} arguments. If all three are included, function defaults to modelmatrix.
+#'Create with model.matrix(formula, data)
 #'@param mcmcout posterior distributions of all logit coefficients, 
 #'in matrix form - can easily be created from rstan, MCMCpack, R2jags, etc.
 #'@param link type of model. It is a character vector set to 
@@ -14,18 +24,83 @@
 #'@return output
 #'@examples
 #' \donttest{
-#'   set.seed(123456)
+#' ## simulating data
+#' set.seed(123456)
+#' b0 <- 0.2 # true value for the intercept
+#' b1 <- 0.5 # true value for first beta
+#' b2 <- 0.7 # true value for second beta
+#' n <- 500 # sample size
+#' X1 <- runif(n, -1, 1)
+#' X2 <- runif(n, -1, 1)
+#' Z <- b0 + b1 * X1 + b2 * X2
+#' pr <- 1 / (1 + exp(-Z)) # inv logit function
+#' Y <- rbinom(n, 1, pr) 
+#' data <- data.frame(cbind(X1, X2, Y))
+#' 
+#' ## formatting the data for jags
+#' datjags <- as.list(data)
+#' datjags$N <- length(datjags$Y)
+#' 
+#' ## creating jags model
+#' model <- function()  {
+#'   
+#'   for(i in 1:N){
+#'     Y[i] ~ dbern(p[i])  ## Bernoulli distribution of y_i
+#'     logit(p[i]) <- mu[i]    ## Logit link function
+#'     mu[i] <- b[1] + 
+#'       b[2] * X1[i] + 
+#'       b[3] * X2[i]
+#'   }
+#'   
+#'   for(j in 1:3){
+#'     b[j] ~ dnorm(0, 0.001) ## Use a coefficient vector for simplicity
+#'   }
+#'   
+#' }
+#' 
+#' params <- c("b")
+#' inits1 <- list("b" = rep(0, 3))
+#' inits2 <- list("b" = rep(0, 3))
+#' inits <- list(inits1, inits2)
+#' 
+#' ## fitting the model with R2jags
+#' set.seed(123)
+#' fit <- R2jags::jags(data = datjags, inits = inits, 
+#'                     parameters.to.save = params, n.chains = 2, n.iter = 2000, 
+#'                     n.burnin = 1000, model.file = model)
+#' 
+#' ## running function
+#' xmat <- model.matrix(Y ~ X1 + X2, data = data)
+#' mcmc <- coda::as.mcmc(fit)
+#' mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
+#' object <- mcmcFD(modelmatrix = xmat,
+#'                  mcmcout = mcmc_mat)
+#' object
 #' }
 #'@export
 
-mcmcFD <- function(modelmatrix,
+mcmcSimFD <- function(formula,
+                   data,
+                   modelmatrix,
                    mcmcout, 
                    link = "logit",
                    ci = c(0.025, 0.975),
                    percentiles = c(0.25, 0.75),
                    fullsims = FALSE) {
   
-  fdmat <- matrix(NA, ncol = 3, nrow = ncol(modelmatrix) - 1)
+  # checking arguments
+  if(!missing(modelmatrix)) {
+    fdmat <- matrix(NA, ncol = 3, nrow = ncol(modelmatrix) - 1)
+  } else {
+    if(missing(formula) | missing(data)) {
+      stop("Please enter both the formula and data.")
+    } else {
+      modelmatrix <- model.matrix(object = formula, data = data)
+      fdmat <- matrix(NA, ncol = 3, nrow = ncol(modelmatrix) - 1)
+    }
+  }
+  
+  
   colnames(fdmat) <- c("Median", "Lower", "Upper")
   rownames(fdmat) <- colnames(modelmatrix)[-1]
   
