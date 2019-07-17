@@ -65,12 +65,10 @@
 #'                     n.burnin = 1000, model.file = model)
 #' 
 #' ## running function
-#' xmat <- model.matrix(Y ~ X1 + X2, data = data)
-#' mcmc <- coda::as.mcmc(fit)
-#' mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
-#' object <- mcmcFD(modelmatrix = xmat,
-#'                  mcmcout = mcmc_mat)
-#' object
+#' object_fd_sim <- mcmcSimFD(formula = Y ~ X1 + X2,
+#'                  data = data,
+#'                  sims = fit)
+#' object_fd_sim
 #' }
 #'@export
 

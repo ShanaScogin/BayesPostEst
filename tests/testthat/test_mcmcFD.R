@@ -45,12 +45,24 @@ test_that("Simple model runs with mcmcFD", {
                       parameters.to.save = params, n.chains = 2, n.iter = 2000, 
                       n.burnin = 1000, model.file = model)
   
-  ## running function
+  ## running function with logit
   xmat <- model.matrix(Y ~ X1 + X2, data = data)
   mcmc <- coda::as.mcmc(fit)
   mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
   object <- mcmcFD(modelmatrix = xmat,
                    mcmcout = mcmc_mat)
+  
+  value <- object[1, 2]
+  check_against <- c(0.048)
+  expect_equal(round(as.numeric(value), 3), check_against)
+  
+  ## running function with probit
+  xmat <- model.matrix(Y ~ X1 + X2, data = data)
+  mcmc <- coda::as.mcmc(fit)
+  mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
+  object <- mcmcFD(modelmatrix = xmat,
+                   mcmcout = mcmc_mat,
+                   link = "probit") ## check to see if these are correct
   
   value <- object[1, 2]
   check_against <- c(0.048)
