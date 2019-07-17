@@ -82,8 +82,8 @@ test_that("Simple probit model runs with mcmcFD", {
     
     for(i in 1:N){
       Y[i] ~ dbern(p[i])  ## Bernoulli distribution of y_i
-      logit(p[i]) <- mu[i]    ## Logit link function
-                      ## change to probit?
+      probit(p[i]) <- mu[i]    ## Update with probit link function
+
       mu[i] <- b[1] + 
         b[2] * X1[i] + 
         b[3] * X2[i]
