@@ -14,19 +14,19 @@ Description: An implementation of functions to assist Bayesian analysis and resu
 URL: https://github.com/ShanaScogin/BayesPostEst
 License: GPL-3
 Imports:
-    stats,
+    caTools,
+    coda,
     dplyr,
     ggmcmc, 
-    ROCR,
-    caTools,
-    reshape2,
     ggplot2, 
-    coda,
     ggridges,
-    tidyr,
+    R2jags, 
+    reshape2,
+    rlang,
     rstanarm,
-    R2jags,
-    rlang
+    ROCR,
+    stats,
+    tidyr
 Encoding: UTF-8
 LazyData: TRUE
 LazyLoad: TRUE

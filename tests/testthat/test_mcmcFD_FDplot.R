@@ -117,4 +117,12 @@ test_that("Simple probit model runs with mcmcFD", {
   value <- object[1, 2]
   check_against <- c(0.050)
   expect_equal(round(as.numeric(value), 3), check_against)
+  
+  ## checking FD plot
+  full <- mcmcFD(modelmatrix = xmat,
+                 mcmcout = mcmc_mat,
+                 fullsims = TRUE) # first running mcmcFD with full output
+  mcmcFDplot(full)
+  
+  
 })

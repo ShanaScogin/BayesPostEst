@@ -108,10 +108,10 @@ mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
 X1_sim <- seq(from = min(datjags$X1),
               to = max(datjags$X1), 
               length.out = 10)
-ave_prob_sim <- mcmcSimAve(modelmatrix = xmat,
-                        mcmcout = mcmc_mat,
-                        xrange = X1_sim, 
-                        xcol = 2)
+ave_prob_sim <- mcmcSimAve(formula = Y ~ X1 + X2,
+                        data = data,
+                        xinterest = c("X1"),
+                        sims = fit)
 }
 }
 \references{

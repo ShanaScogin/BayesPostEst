@@ -15,12 +15,12 @@ mcmcFDplot <- function(fdfull,
                        ROPE = NULL){
   
   # convert fdfull to long data frame
-  fd_dat <- tidyr::gather(as.data.frame(fd_full))
+  fd_dat <- tidyr::gather(as.data.frame(fdfull))
   
   # create first plot
   
   if(is.null(ROPE) == FALSE){
-  fd_plot <- ggplot2::ggplot(data = fd_dat, aes(x = .data$fd, y = .data$variable)) + 
+  fd_plot <- ggplot2::ggplot(data = fd_dat, aes(x = .data$value, y = .data$key)) + 
     ggplot2::geom_rect(xmin = ROPE[1], xmax = ROPE[2], ymin = 0, ymax = Inf, fill = "black") + 
     ggridges::stat_density_ridges(quantile_lines = TRUE, 
                                   quantiles = c(0.025, 0.5, 0.975),
@@ -49,7 +49,7 @@ mcmcFDplot <- function(fdfull,
   
   if(is.null(ROPE) == TRUE){
   fd_plot <- ggplot2::ggplot(data = fd_dat,
-                               aes(x = .data$fd, y = .data$variable)) + 
+                               aes(x = .data$value, y = .data$key)) + 
     ggplot2::geom_vline(xintercept = 0) + 
     ggridges::stat_density_ridges(quantile_lines = TRUE, 
                                     quantiles = c(0.025, 0.5, 0.975),

@@ -88,10 +88,10 @@
 #' X1_sim <- seq(from = min(datjags$X1),
 #'               to = max(datjags$X1), 
 #'               length.out = 10)
-#' ave_prob_sim <- mcmcSimAve(modelmatrix = xmat,
-#'                         mcmcout = mcmc_mat,
-#'                         xrange = X1_sim, 
-#'                         xcol = 2)
+#' ave_prob_sim <- mcmcSimAve(formula = Y ~ X1 + X2,
+#'                         data = data,
+#'                         xinterest = c("X1"),
+#'                         sims = fit)
 #' }
 #'@export
 #'
@@ -143,11 +143,8 @@ mcmcSimAve <- function(formula,
               nrow = length(xrange),
               byrow = TRUE)
   colnames(X) <- variable.names(modelmatrix)
-  if(!missing(xinterest)) {
-    X[ , grepl( xinterest , variable.names( X ) ) ] <- xrange
-  } else {
-    X[, xcol] <- xrange
-  }
+  
+  X[ , grepl( xinterest , variable.names( X ) ) ] <- xrange
   
   if(link == "logit"){
     logit_linpred <- t(X %*% t(mcmcout))
