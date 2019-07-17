@@ -57,6 +57,7 @@ test_that("Simple model runs with mcmcFD", {
   expect_equal(round(as.numeric(value), 3), check_against)
   
   ## running function with probit
+  ## need to add whole probit fitting here
   xmat <- model.matrix(Y ~ X1 + X2, data = data)
   mcmc <- coda::as.mcmc(fit)
   mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
@@ -65,6 +66,6 @@ test_that("Simple model runs with mcmcFD", {
                    link = "probit") ## check to see if these are correct
   
   value <- object[1, 2]
-  check_against <- c(0.048)
+  check_against <- c(0.076)
   expect_equal(round(as.numeric(value), 3), check_against)
 })

@@ -25,6 +25,10 @@ mcmcFD <- function(modelmatrix,
                    percentiles = c(0.25, 0.75),
                    fullsims = FALSE) {
   
+  if(missing(modelmatrix) | missing(mcmcout)){
+    stop("Please enter required arguments.")
+  }
+  
   fdmat <- matrix(NA, ncol = 3, nrow = ncol(modelmatrix) - 1)
   colnames(fdmat) <- c("Median", "Lower", "Upper")
   rownames(fdmat) <- colnames(modelmatrix)[-1]
@@ -49,8 +53,15 @@ mcmcFD <- function(modelmatrix,
     
     # X[, i] <- quantile(modelmatrix[, i], probs = percentiles)
     
-    Xb <- t(X %*% t(mcmcout))
+    if(link == "logit") {
+      Xb <- t(X %*% t(mcmcout))
     pp <- exp(Xb) / (1 + exp(Xb))
+    } else if (link == "probit") {
+      pp <- pnorm(t(X %*% t(mcmcout)))
+    } else {
+      stop("Please enter valid link argument.")
+    }
+    
     
     fd <- pp[, 2] - pp[, 1]
     
@@ -62,12 +73,12 @@ mcmcFD <- function(modelmatrix,
     
   }
   
-  fd.dat <- as.data.frame(fdmat)
-  fd.dat$VarName <- rownames(fdmat)
-  fd.dat$VarID <- row(fdmat)[, 1]
+  fddat <- as.data.frame(fdmat)
+  fddat$VarName <- rownames(fdmat)
+  fddat$VarID <- row(fdmat)[, 1]
   
   if(fullsims == FALSE){
-    return(fd.dat)
+    return(fddat)
   }
   
   if(fullsims == TRUE){

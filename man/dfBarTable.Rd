@@ -15,7 +15,8 @@ dfBarTable(df, rows = 2)
 output
 }
 \description{
-R function for summarizing a data frame as a table of bar plots
+R function for summarizing a data frame as a table of bar plots. 
+This function helps with visualizing data before analysis.
 }
 \details{
 R function for summarizing a data frame as a table of bar plots

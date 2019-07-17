@@ -1,6 +1,7 @@
 #'R function for summarizing a data frame as a table of bar plots
 #'@title Generate bar plots for multiple variables
-#'@description R function for summarizing a data frame as a table of bar plots
+#'@description R function for summarizing a data frame as a table of bar plots. 
+#'This function helps with visualizing data before analysis. 
 #'@param df dataframe
 #'@param rows number of rows of plots within the figure
 #'@return output
