@@ -9,6 +9,9 @@
 NULL
 #> NULL
 
+#' @importFrom rlang .data
+NULL
+
 #' @importFrom stats median pnorm model.matrix quantile
 #' sd variable.names
 NULL
@@ -45,9 +48,6 @@ NULL
 NULL
 
 #' @importFrom R2jags jags
-NULL
-
-#' @importFrom rlang .data
 NULL
 
 #> NULL
