@@ -15,9 +15,7 @@ mcmcFDplot <- function(fdfull,
                        ROPE = NULL){
   
   # convert fdfull to long data frame
-  fd_dat <- tidyr::gather(as.data.frame(fdfull), 
-                          key = .data$variable, 
-                          value = .data$fd) ## check this
+  fd_dat <- tidyr::gather(as.data.frame(fd_full))
   
   # create first plot
   
