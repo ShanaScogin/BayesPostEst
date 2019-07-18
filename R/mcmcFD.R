@@ -68,7 +68,7 @@
 #' object
 #' }
 #'@export
-
+#'
 mcmcFD <- function(modelmatrix,
                    mcmcout, 
                    link = "logit",
@@ -79,31 +79,31 @@ mcmcFD <- function(modelmatrix,
   if(missing(modelmatrix) | missing(mcmcout)){
     stop("Please enter required arguments.")
   }
-  
+
   fdmat <- matrix(NA, ncol = 3, nrow = ncol(modelmatrix) - 1)
   colnames(fdmat) <- c("Median", "Lower", "Upper")
   rownames(fdmat) <- colnames(modelmatrix)[-1]
-  
+
   fdfull <- matrix(rep(NA),
                     ncol = ncol(modelmatrix) - 1,
                     nrow = nrow(mcmcout),
                     byrow = TRUE)
   colnames(fdfull) <- colnames(modelmatrix)[-1]
-  
+
   for (i in 2:ncol(modelmatrix)){
-    
+
     X <- matrix(rep(apply(X = modelmatrix,
                           MARGIN = 2,
                           FUN = function(x) median(x)),
                     times = 2),
                 nrow = 2,
                 byrow = TRUE)
-    X[, i] <- ifelse(length(unique(modelmatrix[, i])) == 2 & 
-                     range(modelmatrix[, i]) == c(0, 1), c(0, 1), 
+    X[, i] <- ifelse(length(unique(modelmatrix[, i])) == 2 &
+                     range(modelmatrix[, i]) == c(0, 1), c(0, 1),
                      quantile(modelmatrix[, i], probs = percentiles))
-    
+
     # X[, i] <- quantile(modelmatrix[, i], probs = percentiles)
-    
+
     if(link == "logit") {
       Xb <- t(X %*% t(mcmcout))
     pp <- exp(Xb) / (1 + exp(Xb))
@@ -112,26 +112,26 @@ mcmcFD <- function(modelmatrix,
     } else {
       stop("Please enter valid link argument.")
     }
-    
-    
+
+
     fd <- pp[, 2] - pp[, 1]
-    
+
     fdmat[i-1, 1] <- quantile(fd, probs = c(0.5))
     fdmat[i-1, 2] <- quantile(fd, probs = c(ci[1]))
     fdmat[i-1, 3] <- quantile(fd, probs = c(ci[2]))
-    
+
     fdfull[, i-1] <- fd
-    
+
   }
-  
+
   fddat <- as.data.frame(fdmat)
   fddat$VarName <- rownames(fdmat)
   fddat$VarID <- row(fdmat)[, 1]
-  
+
   if(fullsims == FALSE){
     return(fddat)
   }
-  
+
   if(fullsims == TRUE){
     return(fdfull)
   }

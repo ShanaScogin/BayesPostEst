@@ -4,10 +4,10 @@
 \alias{dfBarTable}
 \title{Generate bar plots for multiple variables}
 \usage{
-dfBarTable(df, rows = 2)
+dfBarTable(data, rows = 2)
 }
 \arguments{
-\item{df}{dataframe}
+\item{data}{dataframe to be visualized}
 
 \item{rows}{number of rows of plots within the figure}
 }
@@ -16,7 +16,7 @@ output
 }
 \description{
 R function for summarizing a data frame as a table of bar plots. 
-This function helps with visualizing data before analysis.
+This function helps with visualizing data before analysis
 }
 \details{
 R function for summarizing a data frame as a table of bar plots
