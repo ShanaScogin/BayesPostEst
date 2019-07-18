@@ -7,7 +7,9 @@
 #'@param pars character vector of parameters to be printed; defaults to NULL (all parameters are printed)
 #'@param Pr print percent of posterior draws with same sign as median; defaults to FALSE
 #'@param ROPE vector of two values defining the region of practical equivalence; 
-#'returns \% of posterior to the left/right of ROPE
+#'returns \% of posterior to the left/right of ROPE (kruskhe)
+# the way it's currently specified if all on same scale
+# FALSE set true if scaled - 
 #'@return an data frame containing MCMC summary statistics
 #'@examples
 #' \donttest{
@@ -72,6 +74,12 @@ mcmcTab <- function(sims,
                     Pr = FALSE,
                     ROPE = NULL) {# add warning that for ROPE to be meaningful, 
                                   # all coefs/quantities must be on the same scale
+  
+  if(is.NULL(ROPE)){
+    message("ROPE is only meaningful if all quantities are on the same scale.")
+  } ## check if NULL is better than T or F
+  
+  ### add message
   
     if(class(sims)[1] == "jags" || class(sims)[1] == "rjags"){
       sims <- as.matrix(coda::as.mcmc(sims))
