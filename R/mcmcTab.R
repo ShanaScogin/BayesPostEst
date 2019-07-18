@@ -6,10 +6,10 @@
 #'@param ci desired level for credible intervals; defaults to c(0.025, 0.975)
 #'@param pars character vector of parameters to be printed; defaults to NULL (all parameters are printed)
 #'@param Pr print percent of posterior draws with same sign as median; defaults to FALSE
-#'@param ROPE vector of two values defining the region of practical equivalence; 
-#'returns \% of posterior to the left/right of ROPE (kruskhe)
-# the way it's currently specified if all on same scale
-# FALSE set true if scaled - 
+#'@param ROPE vector of two values defining the region of practical equivalence ("ROPE"); 
+#'returns \% of posterior to the left/right of ROPE. ## ADD MORE CITATIONS HERE ##.
+#'Note: For this quantity to be meaningful, all parameters must be on the same scale 
+#'(e.g. standardized coefficients or first differences).
 #'@return an data frame containing MCMC summary statistics
 #'@examples
 #' \donttest{
@@ -75,9 +75,11 @@ mcmcTab <- function(sims,
                     ROPE = NULL) {# add warning that for ROPE to be meaningful, 
                                   # all coefs/quantities must be on the same scale
   
-  if(is.NULL(ROPE)){
-    message("ROPE is only meaningful if all quantities are on the same scale.")
-  } ## check if NULL is better than T or F
+  if(!is.null(ROPE)){
+    message("This table contains an estimate for parameter values outside of the region of 
+            practical equivalence (ROPE). For this quantity to be meaningful, all parameters 
+            must be on the same scale (e.g. standardized coefficients or first differences).")
+  }
   
   ### add message
   

@@ -17,8 +17,10 @@ MCMCpack, rstan, rstanarm}
 
 \item{Pr}{print percent of posterior draws with same sign as median; defaults to FALSE}
 
-\item{ROPE}{vector of two values defining the region of practical equivalence; 
-returns \% of posterior to the left/right of ROPE}
+\item{ROPE}{vector of two values defining the region of practical equivalence ("ROPE"); 
+returns \% of posterior to the left/right of ROPE. ## ADD MORE CITATIONS HERE ##.
+Note: For this quantity to be meaningful, all parameters must be on the same scale 
+(e.g. standardized coefficients or first differences).}
 }
 \value{
 an data frame containing MCMC summary statistics
