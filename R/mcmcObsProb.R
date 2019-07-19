@@ -28,7 +28,7 @@
 #'263-277.
 #'@return This function returns a matrix with 4 columns:
 #'\itemize{
-#'\item predictor: identical to x_range
+#'\item x: identical to x_range
 #'\item median_pp: median predicted probability at given x
 #'\item lower_pp: lower bound of credible interval of predicted probability at given x
 #'\item upper_pp: upper bound of credible interval of predicted probability at given x
@@ -158,7 +158,7 @@ mcmcObsProb <- function(modelmatrix,
   lower_pp <- apply(X = pp_mat, MARGIN = 2, function(x) quantile(x, probs = ci[1]))
   upper_pp <- apply(X = pp_mat, MARGIN = 2, function(x) quantile(x, probs = ci[2]))
   
-  pp_dat <- dplyr::tibble(predictor = xrange,
+  pp_dat <- dplyr::tibble(x = xrange,
                    median_pp = median_pp,
                    lower_pp = lower_pp,
                    upper_pp = upper_pp)

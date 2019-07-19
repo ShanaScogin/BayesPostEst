@@ -81,7 +81,7 @@ mcmcFD <- function(modelmatrix,
   }
 
   fdmat <- matrix(NA, ncol = 3, nrow = ncol(modelmatrix) - 1)
-  colnames(fdmat) <- c("Median", "Lower", "Upper")
+  colnames(fdmat) <- c("median_fd", "lower_fd", "upper_fd")
   rownames(fdmat) <- colnames(modelmatrix)[-1]
 
   fdfull <- matrix(rep(NA),

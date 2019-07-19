@@ -131,7 +131,7 @@ mcmcAveProb <- function(modelmatrix,
   
   if(link == "logit"){
     logit_linpred <- t(X %*% t(mcmcout))
-    logit_pp <- exp(logit_linpred) / (1 + exp(logit_linpred)) # still seems fine
+    logit_pp <- exp(logit_linpred) / (1 + exp(logit_linpred)) 
     pp <- logit_pp}
   
   if(link == "probit"){
@@ -146,7 +146,7 @@ mcmcAveProb <- function(modelmatrix,
                       lower_pp = quantile(.data$value, probs = ci[1]), 
                       upper_pp = quantile(.data$value, probs = ci[2]))
   
-  names(pp_dat) <- c("predictor", "median_pp", "lower_pp", "upper_pp")
+  names(pp_dat) <- c("x", "median_pp", "lower_pp", "upper_pp")
   
   if(fullsims == FALSE){
     return(pp_dat) # pp_dat was created by summarizing longFrame

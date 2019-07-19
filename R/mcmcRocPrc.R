@@ -67,6 +67,7 @@
 
 mcmcRocPrc <- function(sims, # this needs to be generalized
                        modelframe,
+                       curves = FALSE,
                        fullsims = FALSE){
   
   # Prepare MCMC output
@@ -105,34 +106,46 @@ mcmcRocPrc <- function(sims, # this needs to be generalized
   area_under_roc <- auc_roc(obs = pred_obs$y_obs, pred = pred_obs$y_pred)
   
   area_under_prc <- auc_pr(obs = pred_obs$y_obs, pred = pred_obs$y_pred)
-  
-  prediction_obj <- ROCR::prediction(predictions = pred_obs$y_pred,
-                               labels = pred_obs$y_obs)
-  
-  prc_performance_obj <- ROCR::performance(prediction.obj = prediction_obj,
-                                     measure = "prec",
-                                     x.measure = "rec")
-  
-  prc_dat <- data.frame(x = prc_performance_obj@x.values,
-                        y = prc_performance_obj@y.values)
-  names(prc_dat) <- c("x", "y")
-  
-  roc_performance_obj <- ROCR::performance(prediction.obj = prediction_obj,
-                                     measure = "tpr",
-                                     x.measure = "fpr")
-  
-  roc_dat <- data.frame(x = roc_performance_obj@x.values,
-                        y = roc_performance_obj@y.values)
-  names(roc_dat) <- c("x", "y")
-  
-  # Results as a list
-  results <- list()
-  results$area_under_roc <- area_under_roc
-  results$area_under_prc <- area_under_prc
-  results$prc_dat <- prc_dat
-  results$roc_dat <- roc_dat
 
-  return(results)
+  if(curves == FALSE){
+    # Results as a list
+    results <- list()
+    results$area_under_roc <- area_under_roc
+    results$area_under_prc <- area_under_prc
+
+    return(results)
+    }
+
+  if(curves == TRUE){
+
+    prediction_obj <- ROCR::prediction(predictions = pred_obs$y_pred,
+                                 labels = pred_obs$y_obs)
+    
+    prc_performance_obj <- ROCR::performance(prediction.obj = prediction_obj,
+                                       measure = "prec",
+                                       x.measure = "rec")
+    
+    prc_dat <- data.frame(x = prc_performance_obj@x.values,
+                          y = prc_performance_obj@y.values)
+    names(prc_dat) <- c("x", "y")
+    
+    roc_performance_obj <- ROCR::performance(prediction.obj = prediction_obj,
+                                       measure = "tpr",
+                                       x.measure = "fpr")
+    
+    roc_dat <- data.frame(x = roc_performance_obj@x.values,
+                          y = roc_performance_obj@y.values)
+    names(roc_dat) <- c("x", "y")
+    
+    # Results as a list
+    results <- list()
+    results$area_under_roc <- area_under_roc
+    results$area_under_prc <- area_under_prc
+    results$prc_dat <- prc_dat
+    results$roc_dat <- roc_dat
+  
+    return(results)
+    }
   }
 
   if(fullsims == TRUE){
@@ -169,7 +182,14 @@ mcmcRocPrc <- function(sims, # this needs to be generalized
   area_under_roc <- auc_roc(obs = pred_obs$y_obs, pred = pred_obs$y_pred)
   
   area_under_prc <- auc_pr(obs = pred_obs$y_obs, pred = pred_obs$y_pred)
+
+  if(curves == FALSE){
+  # Results as a list
+  one_result <- c(area_under_roc, area_under_prc)
+  return(one_result)
+  }
   
+  if(curves == TRUE){
   prediction_obj <- ROCR::prediction(predictions = pred_obs$y_pred,
                                labels = pred_obs$y_obs)
   
@@ -197,11 +217,23 @@ mcmcRocPrc <- function(sims, # this needs to be generalized
   one_result$roc_dat <- roc_dat
 
   return(one_result)
+  }
 }
 
+if(curves == FALSE){
+all_results <- matrix(nrow = nrow(pred_prob), ncol = 2)
+for(i in 1:nrow(pred_prob)){
+  all_results[i, ] <- RocPrcOneDraw(pred_prob[i, ])
+}
+all_results <- as.data.frame(all_results)
+names(all_results) <- c("area_under_roc", "area_under_prc")
+}
+
+if(curves == TRUE){
 all_results <- list()
 for(i in 1:nrow(pred_prob)){
   all_results[[i]] <- RocPrcOneDraw(pred_prob[i, ])
+}
 }
 
 return(all_results)

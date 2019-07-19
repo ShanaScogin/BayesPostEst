@@ -81,7 +81,7 @@ mcmcFDplot <- function(fdfull,
                                   quantiles = c(0.025, 0.5, 0.975),
                                   vline_color = "white") + 
     ggplot2::scale_x_continuous(labels = function(x) x * 100) + 
-    ggplot2::xlab("Percentage point change in Pr(y = 1)\nas each predictor changes as indicated") + 
+    ggplot2::xlab("Percentage point change in Pr(y = 1)") + 
     ggplot2::ylab("")
   
   # calculate area left/right of ROPE
@@ -110,7 +110,7 @@ mcmcFDplot <- function(fdfull,
                                     quantiles = c(0.025, 0.5, 0.975),
                                     vline_color = "white") + 
     ggplot2::scale_x_continuous(labels = function(x) x*100) + 
-    ggplot2::xlab("Percentage point change in Pr(y = 1)\nas each predictor changes as indicated") + 
+    ggplot2::xlab("Percentage point change in Pr(y = 1)") + 
     ggplot2::ylab("")
     
     # calculate area left/right of 0
@@ -132,7 +132,5 @@ mcmcFDplot <- function(fdfull,
                 color = "black", nudge_y = 0.1, size = 4)
     
   }
-  
-  # print plot
-  print(fd_plot)
+  fd_plot
 }
