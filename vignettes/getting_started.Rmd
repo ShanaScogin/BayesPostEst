@@ -1,16 +1,13 @@
 ---
-title: "BayesPostEst package vignette"
+title: "Getting Started with BayesPostEst"
 author: "Johannes Karreth"
-date: "7/18/2019"
-output:
-  html_document:
-    theme: cosmo
-    highlight: tango
-    toc: true
-    toc_float: true
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
 bibliography: "references.bib"
-editor_options: 
-  chunk_output_type: console
+vignette: >
+  %\VignetteIndexEntry{getting_started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include=FALSE}
@@ -166,7 +163,7 @@ We then load rstan (@rstan2019)...
 ```{r}
 library("rstan")
 rstan_options(auto_write = TRUE)
-options(mc.cores = parallel::detectCores())
+options(mc.cores = 2)
 ```
 
 ... and estimate the model, re-using the data in list format created for JAGS earlier.

@@ -12,6 +12,10 @@ MCMCpack, rstan, rstanarm. Currently only rstanarm objects are supported}
 
 \item{modelframe}{model frame used to fit the model}
 
+\item{curves}{logical indicator of whether or not to return values for the 
+curves. If set to `FALSE`, results are returned as a list with out the extra
+values. Default is `FALSE`.}
+
 \item{fullsims}{logical indicator of whether full object (based on all MCMC draws 
 rather than average) will be returned. Default is \code{FALSE}. Note: If \code{TRUE}
 is chosen, the function takes notably longer to run}

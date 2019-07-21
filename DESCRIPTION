@@ -14,17 +14,20 @@ Description: An implementation of functions to assist Bayesian analysis and resu
 URL: https://github.com/ShanaScogin/BayesPostEst
 License: GPL-3
 Imports:
+    carData,
     caTools,
     coda,
     dplyr,
     ggmcmc, 
     ggplot2, 
     ggridges,
+    MCMCpack,
     R2jags, 
     reshape2,
     rlang,
     rstanarm,
     ROCR,
+    rstan,
     stats,
     tidyr
 Encoding: UTF-8
