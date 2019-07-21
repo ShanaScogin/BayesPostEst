@@ -25,7 +25,7 @@
 #'@references King, G., Tomz, M., & Wittenberg, J. (2000). Making the most of 
 #'statistical analyses: Improving interpretation and presentation. Available at 
 #'SSRN 1083738. <doi: 10.2307/2669316>
-#'@return This function returns a matrix with 4 columns:
+#'@return a matrix with 4 columns:
 #'\itemize{
 #'\item predictor: identical to x_range
 #'\item median_pp: median predicted probability at given x

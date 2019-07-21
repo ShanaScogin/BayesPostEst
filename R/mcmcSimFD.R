@@ -16,7 +16,8 @@
 #'@param percentiles default is \code{c(0.25, 0.75)}
 #'@param fullsims logical indicator of whether full object (based on all MCMC draws 
 #'rather than average) will be returned. Default is \code{FALSE}
-#'@return output
+#'@return an object of class \code{matrix} with the first differences for each
+#'covariate
 #'@examples
 #' \donttest{
 #' ## simulating data

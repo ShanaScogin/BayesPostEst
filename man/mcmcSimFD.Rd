@@ -30,7 +30,8 @@ MCMCpack, rstan, rstanarm. Currently only jags object is supported}
 rather than average) will be returned. Default is \code{FALSE}}
 }
 \value{
-output
+an object of class \code{matrix} with the first differences for each
+covariate
 }
 \description{
 R function to calculate first differences after a Bayesian logit or probit model

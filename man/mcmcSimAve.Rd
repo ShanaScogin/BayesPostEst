@@ -32,7 +32,7 @@ rather than average) will be returned. Default is \code{FALSE}. A note: The long
 range of x values is, the larger the full output will be if \code{TRUE} is selected}
 }
 \value{
-This function returns a matrix with 4 columns:
+a matrix with 4 columns:
 \itemize{
 \item predictor: identical to x_range
 \item median_pp: median predicted probability at given x

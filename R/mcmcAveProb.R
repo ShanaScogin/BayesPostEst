@@ -16,8 +16,9 @@
 #'\code{stanfit} class objects, and \code{object$sims.matrix} for a \code{bugs} class object.
 #'**Note: the order of columns in this matrix must correspond to the order of columns 
 #'in the model matrix.**
-#'@param xcol column number of the explanatory variable for which to calculate 
-#'associated Pr(y = 1)
+#'@param xcol column number of the posterior draws (\code{mcmcout}) and model matrices 
+#'that corresponds to the explanatory variable for which to calculate associated Pr(y = 1).
+#'Note that the columns in these matrices must match
 #'@param xrange name of the vector with the range of relevant values of the 
 #'explanatory variable for which to calculate associated Pr(y = 1)
 #'@param xinterest semi-optional argument. Name of the explanatory variable for which 
@@ -32,7 +33,7 @@
 #'@references King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most 
 #'of Statistical Analyses: Improving Interpretation and Presentation.” American Journal 
 #'of Political Science 44 (2): 347–61. http://www.jstor.org/stable/2669316
-#'@return This function returns a matrix with 4 columns:
+#'@return a matrix with 4 columns:
 #'\itemize{
 #'\item predictor: identical to x_range
 #'\item median_pp: median predicted probability at given x
@@ -116,7 +117,7 @@ mcmcAveProb <- function(modelmatrix,
     stop("Please enter a column number or name of your variable of interest.)")
   }
   if(!missing(xcol) & !missing(xinterest)) {
-    message("Both xcol and xinterest were supplied by user. Function defaults to xinterest.")
+    message("Both xcol and xinterest were supplied by user. Function defaults to xcol")
   }
   if(!missing(xinterest)) {
     if(!(xinterest %in% variable.names(modelmatrix)))

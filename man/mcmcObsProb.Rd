@@ -20,8 +20,9 @@ objects, as.matrix() from base R for \code{mcmc}, \code{mcmc.list}, \code{stanre
 **Note: the order of columns in this matrix must correspond to the order of columns 
 in the model matrix.**}
 
-\item{xcol}{posterior draws (\code{mcmcout}) column number of the explanatory 
-variable for which to calculate associated Pr(y = 1)}
+\item{xcol}{column number of the posterior draws (\code{mcmcout}) and model matrices 
+that corresponds to the explanatory variable for which to calculate associated Pr(y = 1).
+Note that the columns in these matrices must match}
 
 \item{xrange}{name of the vector with the range of relevant values of the 
 explanatory variable for which to calculate associated Pr(y = 1)}
@@ -40,7 +41,7 @@ rather than average) will be returned. Default is \code{FALSE}. A note: The long
 \code{xrange} is, the larger the full output will be if \code{TRUE} is selected.}
 }
 \value{
-This function returns a matrix with 4 columns:
+a matrix with 4 columns:
 \itemize{
 \item x: identical to x_range
 \item median_pp: median predicted probability at given x

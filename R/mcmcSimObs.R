@@ -28,7 +28,7 @@
 #'the best approach to calculating predicted probabilities and marginal effects from 
 #'limited dependent variable models. American Journal of Political Science, 57(1), 
 #'263-277
-#'@return This function returns a matrix with 4 columns:
+#'@return a matrix with 4 columns:
 #'\itemize{
 #'\item predictor: identical to x_range
 #'\item median_pp: median predicted probability at given x
