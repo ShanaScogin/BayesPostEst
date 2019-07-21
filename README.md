@@ -419,7 +419,9 @@ p <- mcmcFDplot(fdfull = fdfull.jags, ROPE = c(-0.01, 0.01))
 p + labs(title = "First differences") + ggridges::theme_ridges()
 ```
 
-# Model fit: `mcmcRocPrc`
+# Model fit
+
+## `mcmcRocPrc`
 
 One way to assess model fit is to calculate the area under the Receiver Operating Characteristic (ROC) and Precision-Recall curves. A short description of these curves and their utility for model assessment is provided in [Beger (2016)](http://dx.doi.org/10.2139/ssrn.2765419). The `mcmcRocPrc` function produces an object with four elements: the area under the ROC curve, the area under the PR curve, and two dataframes to plot each curve. When `fullsims` is set to `FALSE`, the elements represent the median of the posterior distribution of each quantity.
 
