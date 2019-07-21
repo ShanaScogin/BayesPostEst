@@ -5,17 +5,23 @@
 #'@description Implements R function to calculate the predicted probabilities
 #'for "observed" cases after a Bayesian logit or probit model, following
 #'Hanmer & Kalkan (2013) <doi: 10.1111/j.1540-5907.2012.00602.x>.
-#'@param modelmatrix model matrix, including intercept. Create with 
-#'model.matrix(formula, data)
-#'@param mcmcout posterior distributions of all coefficients in matrix 
-#'form - can easily be created from rstan, MCMCpack, R2jags, R2OpenBUGS, etc.
-#'@param xcol column number of the explanatory variable for which to calculate 
-#'associated Pr(y = 1)
+#'@param modelmatrix model matrix, including intercept. Create with model.matrix(formula, data).
+#'**Note: the order of columns in the model matrix must correspond to the order of columns 
+#'in the matrix of posterior draws in the the \code{mcmcout} argument.**
+#'@param mcmcout posterior distributions of all logit coefficients, 
+#'in matrix form. This can be created from rstan, MCMCpack, R2jags, etc. and transformed
+#'into a matrix using the function as.mcmc() from the coda package for \code{jags} class
+#'objects, as.matrix() from base R for \code{mcmc}, \code{mcmc.list}, \code{stanreg}, and 
+#'\code{stanfit} class objects, and \code{object$sims.matrix} for a \code{bugs} class object.
+#'**Note: the order of columns in this matrix must correspond to the order of columns 
+#'in the model matrix.**
+#'@param xcol posterior draws (\code{mcmcout}) column number of the explanatory 
+#'variable for which to calculate associated Pr(y = 1)
 #'@param xrange name of the vector with the range of relevant values of the 
 #'explanatory variable for which to calculate associated Pr(y = 1)
-#'@param xinterest name of the explanatory variable for which to calculate 
-#'associated Pr(y = 1). If \code{xcol} is supplied, this is not needed. If both
-#'are supplied, the function defaults to this argument and xcol is ignored
+#'@param xinterest semi-optional argument. Name of the explanatory variable for which 
+#'to calculate associated Pr(y = 1). If \code{xcol} is supplied, this is not needed. 
+#'If both are supplied, the function defaults to \code{xcol} and this argument is ignored
 #'@param link type of model. It is a character vector set to 
 #'"logit" (default) or "probit"
 #'@param ci the bounds of the credible interval. Default is \code{c(0.05, 0.95)}.
@@ -120,11 +126,11 @@ mcmcObsProb <- function(modelmatrix,
   X <- matrix(rep(t(modelmatrix), length(xrange)), 
               ncol = ncol(modelmatrix), byrow = TRUE )
   colnames(X) <- variable.names(modelmatrix)
-  if(!missing(xinterest)) {
+  if(!missing(xcol)) {
+    X[, xcol] <- sort(rep(xrange, times = nrow(X) / length(xrange)))
+  } else {
     X[ , grepl( xinterest , variable.names( X ) ) ] <- 
       sort(rep(xrange, times = nrow(X) / length(xrange)))
-  } else {
-    X[, xcol] <- sort(rep(xrange, times = nrow(X) / length(xrange)))
   }
   
   if(link == "logit"){

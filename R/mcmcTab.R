@@ -10,6 +10,13 @@
 #'returns \% of posterior to the left/right of ROPE. ## ADD MORE CITATIONS HERE ##.
 #'Note: For this quantity to be meaningful, all parameters must be on the same scale 
 #'(e.g. standardized coefficients or first differences).
+#'#'@param mcmcout semi-optional argument. Posterior distributions of all logit coefficients, 
+#'in matrix form. This can be created from rstan, MCMCpack, R2jags, etc. and transformed
+#'into a matrix using the function as.mcmc() from the coda package for \code{jags} class
+#'objects, as.matrix() from base R for \code{mcmc}, \code{mcmc.list}, \code{stanreg}, and 
+#'\code{stanfit} class objects, and \code{object$sims.matrix} for a \code{bugs} class object.
+#'If this is included, the sims argument may be left empty. If both are provided, function
+#'defaults to the \code{sims} argument
 #'@return an data frame containing MCMC summary statistics
 #'@examples
 #' \donttest{

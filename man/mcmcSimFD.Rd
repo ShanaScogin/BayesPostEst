@@ -11,7 +11,7 @@ mcmcSimFD(formula, data, sims, link = "logit", ci = c(0.025, 0.975),
 }
 \arguments{
 \item{formula}{A formula object, with the dependent variable on the
-left of a ~ operator, and the independent variables on the right.}
+left of a ~ operator, and the independent variables on the right}
 
 \item{data}{A data frame, list or environment (or object coercible by
 as.data.frame to a data frame) containing the variables in the model.}

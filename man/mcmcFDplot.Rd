@@ -7,16 +7,20 @@
 mcmcFDplot(fdfull, ROPE = NULL)
 }
 \arguments{
-\item{fdfull}{Output generated from mcmcFD(..., full_sims = TRUE)}
+\item{fdfull}{Output generated from \code{mcmcFD(..., full_sims = TRUE)}}
 
 \item{ROPE}{numeric vector of length two, defining the Region of Practical 
-Equivalence around 0. Defaults to NULL}
+Equivalence around 0. Defaults to NULL. See Kruschke (2013, Journal of Experimental 
+Psychology 143(2): 573-603) for more.}
 }
 \value{
-output
+a plot of the differences in probabilities
 }
 \description{
-R function to plot first differences generated from MCMC output
+R function to plot first differences generated from MCMC output.
+For more on this method, see the documentation for \code{mcmcFD()}, Long (1997, 
+Sage Publications), and King, Tomz, and Wittenberg (2000, American Journal 
+of Political Science 44(2): 347-361)
 }
 \details{
 An R function to plot first differences after a Bayesian logit or probit model.
@@ -79,5 +83,16 @@ full <- mcmcFD(modelmatrix = xmat,
                fullsims = TRUE)
 mcmcFDplot(full)
 
+}
+}
+\references{
+\itemize{
+\item King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most of Statistical 
+Analyses: Improving Interpretation and Presentation.” American Journal of Political Science 
+44 (2): 347–61. http://www.jstor.org/stable/2669316.
+\item Kruschke, John K. 2013. “Bayesian Estimation Supersedes the T-Test.” Journal of 
+Experimental Psychology: General 142 (2): 573–603. https://doi.org/10.1037/a0029146.
+\item Long, J. Scott. 1997. Regression Models for Categorial and Limited Dependent Variables. 
+Thousand Oaks: Sage Publications.
 }
 }

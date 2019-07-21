@@ -1,10 +1,24 @@
 #'An R function to plot first differences after a Bayesian logit or probit model.
 #'@title Plot First Differences from MCMC output 
-#'@description R function to plot first differences generated from MCMC output
-#'@param fdfull Output generated from mcmcFD(..., full_sims = TRUE)
+#'@description R function to plot first differences generated from MCMC output.
+#'For more on this method, see the documentation for \code{mcmcFD()}, Long (1997, 
+#'Sage Publications), and King, Tomz, and Wittenberg (2000, American Journal 
+#'of Political Science 44(2): 347-361)
+#'@param fdfull Output generated from \code{mcmcFD(..., full_sims = TRUE)}
 #'@param ROPE numeric vector of length two, defining the Region of Practical 
-#'Equivalence around 0. Defaults to NULL
-#'@return output
+#'Equivalence around 0. Defaults to NULL. See Kruschke (2013, Journal of Experimental 
+#'Psychology 143(2): 573-603) for more. 
+#'@references 
+#'\itemize{
+#'\item King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most of Statistical 
+#'Analyses: Improving Interpretation and Presentation.” American Journal of Political Science 
+#'44 (2): 347–61. http://www.jstor.org/stable/2669316.
+#'\item Kruschke, John K. 2013. “Bayesian Estimation Supersedes the T-Test.” Journal of 
+#'Experimental Psychology: General 142 (2): 573–603. https://doi.org/10.1037/a0029146.
+#'\item Long, J. Scott. 1997. Regression Models for Categorial and Limited Dependent Variables. 
+#'Thousand Oaks: Sage Publications.
+#'}
+#'@return a plot of the differences in probabilities
 #'@examples
 #' \donttest{
 #' ## simulating data
@@ -132,5 +146,7 @@ mcmcFDplot <- function(fdfull,
                 color = "black", nudge_y = 0.1, size = 4)
     
   }
+  
   fd_plot
+  
 }

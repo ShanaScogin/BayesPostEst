@@ -122,7 +122,6 @@ test_that("Simple probit model runs with mcmcFD", {
   full <- mcmcFD(modelmatrix = xmat,
                  mcmcout = mcmc_mat,
                  fullsims = TRUE) # first running mcmcFD with full output
-  mcmcFDplot(full)
-  
+  expect_silent(mcmcFDplot(full))
   
 })

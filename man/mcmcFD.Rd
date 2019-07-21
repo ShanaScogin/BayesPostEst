@@ -8,10 +8,17 @@ mcmcFD(modelmatrix, mcmcout, link = "logit", ci = c(0.025, 0.975),
   percentiles = c(0.25, 0.75), fullsims = FALSE)
 }
 \arguments{
-\item{modelmatrix}{model matrix, including intercept. Create with model.matrix(formula, data)}
+\item{modelmatrix}{model matrix, including intercept. Create with model.matrix(formula, data).
+**Note: the order of columns in the model matrix must correspond to the order of columns 
+in the matrix of posterior draws in the the \code{mcmcout} argument.**}
 
 \item{mcmcout}{posterior distributions of all logit coefficients, 
-in matrix form - can easily be created from rstan, MCMCpack, R2jags, etc.}
+in matrix form. This can be created from rstan, MCMCpack, R2jags, etc. and transformed
+into a matrix using the function as.mcmc() from the coda package for \code{jags} class
+objects, as.matrix() from base R for \code{mcmc}, \code{mcmc.list}, \code{stanreg}, and 
+\code{stanfit} class objects, and \code{object$sims.matrix} for a \code{bugs} class object.
+**Note: the order of columns in this matrix must correspond to the order of columns 
+in the model matrix.**}
 
 \item{link}{type of model. It is a character vector set to 
 "logit" (default) or "probit"}
@@ -24,10 +31,16 @@ in matrix form - can easily be created from rstan, MCMCpack, R2jags, etc.}
 rather than average) will be returned. Default is \code{FALSE}}
 }
 \value{
-output
+an object of class \code{matrix} with the first differences for each
+covariate
 }
 \description{
-R function to calculate first differences after a Bayesian logit or probit model
+R function to calculate first differences after a Bayesian logit or probit model.
+First differences are a method to summarize effects across covariates. This quantity represents
+the difference in predicted probabilities for each covariate for cases with low and high values 
+of the respective covariate. For each of these differences, all other variables are held constant 
+at their median. For more, see Long (1997, Sage Publications) and King, Tomz, and Wittenberg (2000, 
+American Journal of Political Science 44(2): 347-361)
 }
 \examples{
 \donttest{
@@ -83,5 +96,16 @@ mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
 object <- mcmcFD(modelmatrix = xmat,
                  mcmcout = mcmc_mat)
 object
+}
+}
+\references{
+\itemize{
+\item King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most of Statistical 
+Analyses: Improving Interpretation and Presentation.” American Journal of Political Science 
+44 (2): 347–61. http://www.jstor.org/stable/2669316.
+\item Kruschke, John K. 2013. “Bayesian Estimation Supersedes the T-Test.” Journal of 
+Experimental Psychology: General 142 (2): 573–603. https://doi.org/10.1037/a0029146.
+\item Long, J. Scott. 1997. Regression Models for Categorial and Limited Dependent Variables. 
+Thousand Oaks: Sage Publications.
 }
 }
