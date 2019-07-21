@@ -36,7 +36,7 @@ rather than average) will be returned. Default is \code{FALSE}. A note: The long
 \value{
 This function returns a matrix with 4 columns:
 \itemize{
-\item predictor: identical to x_range
+\item x: identical to x_range
 \item median_pp: median predicted probability at given x
 \item lower_pp: lower bound of credible interval of predicted probability at given x
 \item upper_pp: upper bound of credible interval of predicted probability at given x
