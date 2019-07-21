@@ -9,9 +9,11 @@ mcmcFDplot(fdfull, ROPE = NULL)
 \arguments{
 \item{fdfull}{Output generated from \code{mcmcFD(..., full_sims = TRUE)}}
 
-\item{ROPE}{numeric vector of length two, defining the Region of Practical 
-Equivalence around 0. Defaults to NULL. See Kruschke (2013, Journal of Experimental 
-Psychology 143(2): 573-603) for more.}
+\item{ROPE}{defaults to NULL. If not NULL, a numeric vector of length two, 
+defining the Region of Practical Equivalence around 0. For this quantity to be 
+meaningful, all parameters must be on the same scale (e.g. standardized coefficients 
+or first differences. See Kruschke (2013, Journal of Experimental 
+Psychology 143(2): 573-603) for more on the ROPE.}
 }
 \value{
 a plot of the differences in probabilities

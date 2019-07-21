@@ -5,9 +5,11 @@
 #'Sage Publications), and King, Tomz, and Wittenberg (2000, American Journal 
 #'of Political Science 44(2): 347-361)
 #'@param fdfull Output generated from \code{mcmcFD(..., full_sims = TRUE)}
-#'@param ROPE numeric vector of length two, defining the Region of Practical 
-#'Equivalence around 0. Defaults to NULL. See Kruschke (2013, Journal of Experimental 
-#'Psychology 143(2): 573-603) for more. 
+#'@param ROPE defaults to NULL. If not NULL, a numeric vector of length two, 
+#'defining the Region of Practical Equivalence around 0. For this quantity to be 
+#'meaningful, all parameters must be on the same scale (e.g. standardized coefficients 
+#'or first differences. See Kruschke (2013, Journal of Experimental 
+#'Psychology 143(2): 573-603) for more on the ROPE. 
 #'@references 
 #'\itemize{
 #'\item King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most of Statistical 
@@ -89,6 +91,11 @@ mcmcFDplot <- function(fdfull,
   # create first plot
   
   if(is.null(ROPE) == FALSE){
+    
+    message("This table contains an estimate for parameter values outside of the region of 
+    practical equivalence (ROPE). For this quantity to be meaningful, all parameters 
+    must be on the same scale (e.g. standardized coefficients or first differences).")
+    
   fd_plot <- ggplot2::ggplot(data = fd_dat, aes(x = .data$value, y = .data$key)) + 
     ggplot2::geom_rect(xmin = ROPE[1], xmax = ROPE[2], ymin = 0, ymax = Inf, fill = "black") + 
     ggridges::stat_density_ridges(quantile_lines = TRUE, 
