@@ -3,7 +3,7 @@ An R package implementing functions to assist in Bayesian analysis.
 
 # Introduction
 
-`BayesPostEst` contains functions to generate postestimation quantities after estimating Bayesian regression models. The package combines functions written originally for [Johannes Karreth](http://www.jkarreth.net)'s workshop on Bayesian modeling at the [ICPSR Summer program](https://www.icpsr.umich.edu/icpsrweb/sumprog/). For now, the package focuses mostly on generalized linear regression models for binary outcomes (logistic and probit regression).
+BayesPostEst contains functions to generate postestimation quantities after estimating Bayesian regression models. The package combines functions written originally for [Johannes Karreth](http://www.jkarreth.net)'s workshop on Bayesian modeling at the [ICPSR Summer program](https://www.icpsr.umich.edu/icpsrweb/sumprog/). For now, the package focuses mostly on generalized linear regression models for binary outcomes (logistic and probit regression).
 
 # Installation
 
@@ -33,7 +33,7 @@ Most functions in this package work with posterior distributions of parameters. 
 
 # Example data
 
-This vignette uses the `Cowles` dataset ([Cowles and Davis 1987, British Journal of Social Psychology 26(2): 97-102](https://doi.org/10.1111/j.2044-8309.1987.tb00769.x)) from the [`carData` package](https://CRAN.R-project.org/package=carData). 
+This vignette uses the `Cowles` dataset ([Cowles and Davis 1987, British Journal of Social Psychology 26(2): 97-102](https://doi.org/10.1111/j.2044-8309.1987.tb00769.x)) from the [carData package](https://CRAN.R-project.org/package=carData). 
 
 ```{r}
 df <- carData::Cowles
@@ -61,11 +61,11 @@ $$
 Pr(\text{Volunteering}_i) = \text{logit}^{-1}(\beta_1 + \beta_2 \text{Female}_i +  \beta_3 \text{Neuroticism}_i + \beta_4 \text{Extraversion}_i)
 $$
 
-`BayesPostEst` functions accommodate GLM estimates for both logit and probit link functions. The examples proceed with the logit link function. If we had estimated a probit regression, the corresponding argument `link` in relevant function calls would need to be set to `link = "probit"`. Otherwise, it is set to `link = "logit"` by default.
+BayesPostEst functions accommodate GLM estimates for both logit and probit link functions. The examples proceed with the logit link function. If we had estimated a probit regression, the corresponding argument `link` in relevant function calls would need to be set to `link = "probit"`. Otherwise, it is set to `link = "logit"` by default.
 
 # Model estimation
 
-To use `BayesPostEst`, we first estimate a Bayesian regression model. This vignette demonstrates four tools for doing so: JAGS (via the [`R2jags` package](https://cran.r-project.org/web/packages/R2jags/index.html)), [`MCMCpack`](https://cran.r-project.org/web/packages/MCMCpack/index.html), and the two Stan interfaces [`rstan`](https://cran.r-project.org/web/packages/rstan/index.html) and [`rstanarm`](https://cran.r-project.org/web/packages/rstanarm/index.html).
+To use BayesPostEst, we first estimate a Bayesian regression model. This vignette demonstrates four tools for doing so: JAGS (via the [`R2jags` package](https://cran.r-project.org/web/packages/R2jags/index.html)), [`MCMCpack`](https://cran.r-project.org/web/packages/MCMCpack/index.html), and the two Stan interfaces [`rstan`](https://cran.r-project.org/web/packages/rstan/index.html) and [`rstanarm`](https://cran.r-project.org/web/packages/rstanarm/index.html).
 
 ## JAGS
 
@@ -117,7 +117,7 @@ fit.jags <- jags(data = dl, inits = inits.jags,
 
 ## MCMCpack
 
-We estimate the same model using [`MCMCpack`](https://cran.r-project.org/web/packages/MCMCpack/index.html) (Martin, Quinn, and Park 2011, Journal of Statistical Software 42(9): 1-22).
+We estimate the same model using [MCMCpack](https://cran.r-project.org/web/packages/MCMCpack/index.html) (Martin, Quinn, and Park 2011, Journal of Statistical Software 42(9): 1-22).
 
 ```{r}
 library("MCMCpack")
@@ -153,7 +153,7 @@ model {
 writeLines(mod.stan, "mod.stan")	
 ```
 
-We then load [`rstan`](https://cran.r-project.org/web/packages/rstan/index.html)...
+We then load [rstan](https://cran.r-project.org/web/packages/rstan/index.html)...
 
 ```{r}
 library("rstan")
@@ -174,7 +174,7 @@ fit.stan <- stan(file = "mod.stan",
 
 ## rstanarm
 
-Lastly, we use the [`rstanarm`](https://cran.r-project.org/web/packages/rstanarm/index.html) interface (Goodrich, Gabry, Ali, and Brilleman 2019) to estimate the same model again.
+Lastly, we use the [rstanarm](https://cran.r-project.org/web/packages/rstanarm/index.html) interface (Goodrich, Gabry, Ali, and Brilleman 2019) to estimate the same model again.
 
 ```{r}
 library("rstanarm")
@@ -190,7 +190,7 @@ fit.rstanarm <- stan_glm(volunteer ~ female + neuroticism + extraversion,
 
 # Tables of regression coefficients and other parameters
 
-`mcmcTab` generates a table summarizing the posterior distributions of all parameters contained in the model object. This table can then be used to summarize parameter quantities. The function can directly process objects created by the following packages: `R2jags`, `runjags`, `rjags`, `R2WinBUGS`, `MCMCpack`, `rstan`, `rstanarm`. This includes the following object classes: `jags`, `rjags`, `bugs`, `mcmc`, `mcmc.list`, `stanreg`, `stanfit`. By default, `mcmcTab` generates a dataframe with one row per parameter and columns containing the median, standard deviation, and 95% credible interval of each parameter's posterior distribution.
+`mcmcTab` generates a table summarizing the posterior distributions of all parameters contained in the model object. This table can then be used to summarize parameter quantities. The function can directly process objects created by the following packages: R2jags, runjags, rjags, R2WinBUGS, MCMCpack, rstan, rstanarm. This includes the following object classes: `jags`, `rjags`, `bugs`, `mcmc`, `mcmc.list`, `stanreg`, `stanfit`. By default, `mcmcTab` generates a dataframe with one row per parameter and columns containing the median, standard deviation, and 95% credible interval of each parameter's posterior distribution.
 
 
 ```{r}
@@ -266,7 +266,7 @@ aveprob.female.jags <- mcmcAveProb(modelmatrix = mm,
             fullsims = TRUE)
 ```
 
-Users can then visualize this posterior distribution using the ggplot2 and `ggridges` packages.
+Users can then visualize this posterior distribution using the ggplot2 and ggridges packages.
 
 ```{r}
 library("ggplot2")
@@ -341,7 +341,7 @@ ggplot(data = obsprob.female.jags,
 
 ### Extraversion
 
-For this continuous predictor, we use `fullsims = FALSE.
+For this continuous predictor, we use `fullsims = FALSE`.
 
 ```{r}
 obsprob.extra.jags <- mcmcObsProb(modelmatrix = mm,
@@ -498,7 +498,7 @@ Please contact sscogin@nd.edu if you encounter any bugs with the package or have
 # References
 Beger, Andreas. 2016. “Precision-Recall Curves.” Available at SSRN: Https://Ssrn.com/Abstract=2765419. http://dx.doi.org/10.2139/ssrn.2765419.
 
-Cowles, Michael, and Caroline Davis. 1987. “The Subject Matter of Psychology: Volunteers.” British Journal of Social Psychology 26 (2): 97–102. doi:10.1111/j.2044-8309.1987.tb00769.x.
+Cowles, Michael, and Caroline Davis. 1987. “The Subject Matter of Psychology: Volunteers.” British Journal of Social Psychology 26 (2): 97–102. https://doi.org/10.1111/j.2044-8309.1987.tb00769.x.
 
 Fox, John, Sanford Weisberg, and Brad Price. 2018. CarData: Companion to Applied Regression Data Sets. https://CRAN.R-project.org/package=carData.
 
@@ -506,13 +506,13 @@ Gelman, Andrew, and Jennifer Hill. 2007. Data Analysis Using Regression and Mult
 
 Goodrich, Ben, Jonah Gabry, Imad Ali, and Sam Brilleman. 2019. Rstanarm: Bayesian Applied Regression Modeling via Stan. http://mc-stan.org/.
 
-Hanmer, Michael J., and Kerem Ozan Kalkan. 2013. “Behind the Curve: Clarifying the Best Approach to Calculating Predicted Probabilities and Marginal Effects from Limited Dependent Variable Models.” American Journal of Political Science 57 (1): 263–77. doi:10.1111/j.1540-5907.2012.00602.x.
+Hanmer, Michael J., and Kerem Ozan Kalkan. 2013. “Behind the Curve: Clarifying the Best Approach to Calculating Predicted Probabilities and Marginal Effects from Limited Dependent Variable Models.” American Journal of Political Science 57 (1): 263–77. https://doi.org/10.1111/j.1540-5907.2012.00602.x.
 
-Karreth, Johannes. 2018. “The Economic Leverage of International Organizations in Interstate Disputes.” International Interactions 44 (3): 463–90. doi:10.1080/03050629.2018.1389728.
+Karreth, Johannes. 2018. “The Economic Leverage of International Organizations in Interstate Disputes.” International Interactions 44 (3): 463–90. https://doi.org/10.1080/03050629.2018.1389728.
 
 King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most of Statistical Analyses: Improving Interpretation and Presentation.” American Journal of Political Science 44 (2): 347–61. http://www.jstor.org/stable/2669316.
 
-Kruschke, John K. 2013. “Bayesian Estimation Supersedes the T-Test.” Journal of Experimental Psychology: General 142 (2): 573–603. doi:10.1037/a0029146.
+Kruschke, John K. 2013. “Bayesian Estimation Supersedes the T-Test.” Journal of Experimental Psychology: General 142 (2): 573–603. https://doi.org/10.1037/a0029146.
 
 Long, J. Scott. 1997. Regression Models for Categorial and Limited Dependent Variables. Thousand Oaks: Sage Publications.
 
