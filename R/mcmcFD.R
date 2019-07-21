@@ -25,11 +25,11 @@
 #'\itemize{
 #'\item King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most of Statistical 
 #'Analyses: Improving Interpretation and Presentation.” American Journal of Political Science 
-#'44 (2): 347–61. http://www.jstor.org/stable/2669316.
+#'44 (2): 347–61. http://www.jstor.org/stable/2669316
 #'\item Kruschke, John K. 2013. “Bayesian Estimation Supersedes the T-Test.” Journal of 
-#'Experimental Psychology: General 142 (2): 573–603. https://doi.org/10.1037/a0029146.
+#'Experimental Psychology: General 142 (2): 573–603. https://doi.org/10.1037/a0029146
 #'\item Long, J. Scott. 1997. Regression Models for Categorial and Limited Dependent Variables. 
-#'Thousand Oaks: Sage Publications.
+#'Thousand Oaks: Sage Publications
 #'}
 #'@return an object of class \code{matrix} with the first differences for each
 #'covariate

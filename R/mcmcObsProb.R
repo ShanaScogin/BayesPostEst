@@ -1,6 +1,7 @@
 #'This function calculates predicted probabilities for 
 #'"observed" cases after a Bayesian logit or probit model
-#'following Hanmer & Kalkan (2013) <doi: 10.1111/j.1540-5907.2012.00602.x>.
+#'following Hanmer and Kalkan (2013, American Journal of 
+#'Political Science 57(1): 263-277)
 #'@title Bayesian MCMC Observed Values Predicted Probablities
 #'@description Implements R function to calculate the predicted probabilities
 #'for "observed" cases after a Bayesian logit or probit model, following
@@ -31,7 +32,7 @@
 #'@references Hanmer, M. J., & Ozan Kalkan, K. (2013). Behind the curve: Clarifying 
 #'the best approach to calculating predicted probabilities and marginal effects from 
 #'limited dependent variable models. American Journal of Political Science, 57(1), 
-#'263-277.
+#'263-277. https://doi.org/10.1111/j.1540-5907.2012.00602.x
 #'@return This function returns a matrix with 4 columns:
 #'\itemize{
 #'\item x: identical to x_range
@@ -104,9 +105,9 @@
 #'
 mcmcObsProb <- function(modelmatrix,
                         mcmcout, 
-                        xinterest, 
+                        xcol, 
                         xrange, 
-                        xcol,
+                        xinterest,
                         link = "logit", 
                         ci = c(0.025, 0.975),
                         fullsims = FALSE){

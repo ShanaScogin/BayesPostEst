@@ -1,10 +1,11 @@
 #'This function calculates predicted probabilities for "average" cases after a Bayesian 
 #'logit or probit model. For an explanation of predicted probabilities for "average" cases,
-#'see e.g. King, Tomz & Wittenberg (2000) <doi: 10.2307/2669316>
+#'see e.g. King, Tomz & Wittenberg (2000, American Journal of Political Science 44(2): 347-361)
 #'@title Bayesian MCMC Predicted Probablities for the 'Average' Case
 #'@description This function calculates predicted probabilities for "average" cases after 
 #'a Bayesian logit or probit model. For an explanation of predicted probabilities for 
-#'"average" cases, see e.g. King, Tomz & Wittenberg (2000) <doi: 10.2307/2669316>
+#'"average" cases, see e.g. King, Tomz & Wittenberg (2000, American Journal of 
+#'Political Science 44(2): 347-361)
 #'@param modelmatrix model matrix, including intercept. Create with model.matrix(formula, data).
 #'**Note: the order of columns in the model matrix must correspond to the order of columns 
 #'in the matrix of posterior draws in the the \code{mcmcout} argument.**
@@ -28,9 +29,9 @@
 #'@param fullsims logical indicator of whether full object (based on all MCMC draws 
 #'rather than average) will be returned. Default is \code{FALSE}. A note: The longer 
 #'\code{xrange} is, the larger the full output will be if \code{TRUE} is selected
-#'@references King, G., Tomz, M., & Wittenberg, J. (2000). Making the most of 
-#'statistical analyses: Improving interpretation and presentation. Available at 
-#'SSRN 1083738. <doi: 10.2307/2669316>
+#'@references King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most 
+#'of Statistical Analyses: Improving Interpretation and Presentation.” American Journal 
+#'of Political Science 44 (2): 347–61. http://www.jstor.org/stable/2669316
 #'@return This function returns a matrix with 4 columns:
 #'\itemize{
 #'\item predictor: identical to x_range

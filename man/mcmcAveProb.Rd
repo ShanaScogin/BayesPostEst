@@ -51,12 +51,13 @@ This function returns a matrix with 4 columns:
 \description{
 This function calculates predicted probabilities for "average" cases after 
 a Bayesian logit or probit model. For an explanation of predicted probabilities for 
-"average" cases, see e.g. King, Tomz & Wittenberg (2000) <doi: 10.2307/2669316>
+"average" cases, see e.g. King, Tomz & Wittenberg (2000, American Journal of 
+Political Science 44(2): 347-361)
 }
 \details{
 This function calculates predicted probabilities for "average" cases after a Bayesian 
 logit or probit model. For an explanation of predicted probabilities for "average" cases,
-see e.g. King, Tomz & Wittenberg (2000) <doi: 10.2307/2669316>
+see e.g. King, Tomz & Wittenberg (2000, American Journal of Political Science 44(2): 347-361)
 }
 \examples{
 \donttest{
@@ -121,7 +122,7 @@ ave_prob <- mcmcAveProb(modelmatrix = xmat,
 }
 }
 \references{
-King, G., Tomz, M., & Wittenberg, J. (2000). Making the most of 
-statistical analyses: Improving interpretation and presentation. Available at 
-SSRN 1083738. <doi: 10.2307/2669316>
+King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most 
+of Statistical Analyses: Improving Interpretation and Presentation.” American Journal 
+of Political Science 44 (2): 347–61. http://www.jstor.org/stable/2669316
 }

@@ -4,7 +4,7 @@
 \alias{mcmcObsProb}
 \title{Bayesian MCMC Observed Values Predicted Probablities}
 \usage{
-mcmcObsProb(modelmatrix, mcmcout, xinterest, xrange, xcol,
+mcmcObsProb(modelmatrix, mcmcout, xcol, xrange, xinterest,
   link = "logit", ci = c(0.025, 0.975), fullsims = FALSE)
 }
 \arguments{
@@ -20,15 +20,15 @@ objects, as.matrix() from base R for \code{mcmc}, \code{mcmc.list}, \code{stanre
 **Note: the order of columns in this matrix must correspond to the order of columns 
 in the model matrix.**}
 
-\item{xinterest}{semi-optional argument. Name of the explanatory variable for which 
-to calculate associated Pr(y = 1). If \code{xcol} is supplied, this is not needed. 
-If both are supplied, the function defaults to \code{xcol} and this argument is ignored}
+\item{xcol}{posterior draws (\code{mcmcout}) column number of the explanatory 
+variable for which to calculate associated Pr(y = 1)}
 
 \item{xrange}{name of the vector with the range of relevant values of the 
 explanatory variable for which to calculate associated Pr(y = 1)}
 
-\item{xcol}{posterior draws (\code{mcmcout}) column number of the explanatory 
-variable for which to calculate associated Pr(y = 1)}
+\item{xinterest}{semi-optional argument. Name of the explanatory variable for which 
+to calculate associated Pr(y = 1). If \code{xcol} is supplied, this is not needed. 
+If both are supplied, the function defaults to \code{xcol} and this argument is ignored}
 
 \item{link}{type of model. It is a character vector set to 
 "logit" (default) or "probit"}
@@ -56,7 +56,8 @@ Hanmer & Kalkan (2013) <doi: 10.1111/j.1540-5907.2012.00602.x>.
 \details{
 This function calculates predicted probabilities for 
 "observed" cases after a Bayesian logit or probit model
-following Hanmer & Kalkan (2013) <doi: 10.1111/j.1540-5907.2012.00602.x>.
+following Hanmer and Kalkan (2013, American Journal of 
+Political Science 57(1): 263-277)
 }
 \examples{
 \donttest{
@@ -124,5 +125,5 @@ obs_prob <- mcmcObsProb(modelmatrix = xmat,
 Hanmer, M. J., & Ozan Kalkan, K. (2013). Behind the curve: Clarifying 
 the best approach to calculating predicted probabilities and marginal effects from 
 limited dependent variable models. American Journal of Political Science, 57(1), 
-263-277.
+263-277. https://doi.org/10.1111/j.1540-5907.2012.00602.x
 }
