@@ -10,7 +10,10 @@ mcmcAveProb(modelmatrix, mcmcout, xcol, xrange, xinterest,
 \arguments{
 \item{modelmatrix}{model matrix, including intercept. Create with model.matrix(formula, data).
 **Note: the order of columns in the model matrix must correspond to the order of columns 
-in the matrix of posterior draws in the the \code{mcmcout} argument.**}
+in the matrix of posterior draws in the the \code{mcmcout} argument. One way to check this is 
+to examine the model matrix and the matrix output of your posterior distributions and 
+sort them in a way that matches. One useful function for sorting as you create the 
+matrix the matrix of posterior distributions is \code{mixedsort()} fom the gtools package.**}
 
 \item{mcmcout}{posterior distributions of all logit coefficients, 
 in matrix form. This can be created from rstan, MCMCpack, R2jags, etc. and transformed
@@ -18,7 +21,10 @@ into a matrix using the function as.mcmc() from the coda package for \code{jags}
 objects, as.matrix() from base R for \code{mcmc}, \code{mcmc.list}, \code{stanreg}, and 
 \code{stanfit} class objects, and \code{object$sims.matrix} for a \code{bugs} class object.
 **Note: the order of columns in this matrix must correspond to the order of columns 
-in the model matrix.**}
+in the model matrix. One way to check this is to examine the model matrix and the 
+matrix output of your posterior distributions and sort them in a way that matches. 
+One useful function for sorting as you create the matrix of posterior
+distributions is \code{mixedsort()} fom the gtools package.**}
 
 \item{xcol}{column number of the posterior draws (\code{mcmcout}) and model matrices 
 that corresponds to the explanatory variable for which to calculate associated Pr(y = 1).
