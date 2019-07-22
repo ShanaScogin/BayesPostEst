@@ -1,4 +1,4 @@
-test_that("Simple model runs with mcmcAveProb", {
+test_that("Simple model runs with mcmcRocPrc", {
   skip_on_cran()
   ## this test is longer than CRAN allows
 
@@ -22,9 +22,19 @@ test_that("Simple model runs with mcmcAveProb", {
                 family = binomial(link = "logit"))
   
   ## using mcmcRocPrc with median draws
-  fit_sum <- mcmcRocPrc(sims = m,
+  fit_sum2 <- mcmcRocPrc(sims = m,
                         modelframe = model.frame(m),
                         fullsims = FALSE)
+  
+  ## using mcmcRocPrc generalized function
+  mm <- model.matrix(Y ~ X1 + X2, data = data)
+  xframe_stan <- as.matrix(model.frame(m))
+  mcmc_stan <- as.matrix(m)[, 1:3]
+  mcmc_mat_stan <- as.matrix(mcmc_stan)[, 1:ncol(xframe_stan)]
+  fit_sum3 <- mcmcRocPrctest(modelmatrix = mm,
+                             modelframe = xframe_stan,
+                             mcmcout = mcmc_stan,
+                             fullsims = FALSE)
   
   ## testing
   value <- fit_sum$prc_dat[156, 2]

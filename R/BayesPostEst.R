@@ -13,7 +13,7 @@ NULL
 NULL
 
 #' @importFrom stats median pnorm model.matrix quantile
-#' sd variable.names
+#' sd variable.names plogis
 NULL
 
 #' @importFrom ggplot2 ggplot geom_rect xlab ylab geom_vline scale_x_continuous
