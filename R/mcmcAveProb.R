@@ -6,22 +6,20 @@
 #'a Bayesian logit or probit model. For an explanation of predicted probabilities for 
 #'"average" cases, see e.g. King, Tomz & Wittenberg (2000, American Journal of 
 #'Political Science 44(2): 347-361)
-#'@param modelmatrix model matrix, including intercept. Create with model.matrix(formula, data).
-#'**Note: the order of columns in the model matrix must correspond to the order of columns 
-#'in the matrix of posterior draws in the the \code{mcmcout} argument. One way to check this is 
-#'to examine the model matrix and the matrix output of your posterior distributions and 
-#'sort them in a way that matches. One useful function for sorting as you create the 
-#'matrix the matrix of posterior distributions is \code{mixedsort()} fom the gtools package.**
+#'@param modelmatrix model matrix, including intercept (if the intercept is among the
+#'parameters of interest from the model). Create with model.matrix(formula, data).
+#'Note: the order of columns in the model matrix must correspond to the order of columns 
+#'in the matrix of posterior draws in the the \code{mcmcout} argument. See the \code{mcmcout}
+#'argument for more
 #'@param mcmcout posterior distributions of all logit coefficients, 
 #'in matrix form. This can be created from rstan, MCMCpack, R2jags, etc. and transformed
 #'into a matrix using the function as.mcmc() from the coda package for \code{jags} class
 #'objects, as.matrix() from base R for \code{mcmc}, \code{mcmc.list}, \code{stanreg}, and 
-#'\code{stanfit} class objects, and \code{object$sims.matrix} for a \code{bugs} class object.
-#'**Note: the order of columns in this matrix must correspond to the order of columns 
-#'in the model matrix. One way to check this is to examine the model matrix and the 
-#'matrix output of your posterior distributions and sort them in a way that matches. 
-#'One useful function for sorting as you create the matrix of posterior
-#'distributions is \code{mixedsort()} fom the gtools package.**
+#'\code{stanfit} class objects, and \code{object$sims.matrix} for \code{bugs} class objects.
+#'Note: the order of columns in this matrix must correspond to the order of columns 
+#'in the model matrix. One can do this by examining the posterior distribution matrix and listing the 
+#'variables in the order of this matrix when creating the matrix model. A useful function for sorting as 
+#'you create the matrix of posterior distributions is \code{mixedsort()} fom the gtools package
 #'@param xcol column number of the posterior draws (\code{mcmcout}) and model matrices 
 #'that corresponds to the explanatory variable for which to calculate associated Pr(y = 1).
 #'Note that the columns in these matrices must match
