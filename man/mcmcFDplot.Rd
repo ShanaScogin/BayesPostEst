@@ -10,13 +10,12 @@ mcmcFDplot(fdfull, ROPE = NULL)
 \item{fdfull}{Output generated from \code{mcmcFD(..., full_sims = TRUE)}}
 
 \item{ROPE}{defaults to NULL. If not NULL, a numeric vector of length two, 
-defining the Region of Practical Equivalence around 0. For this quantity to be 
-meaningful, all parameters must be on the same scale (e.g. standardized coefficients 
-or first differences. See Kruschke (2013, Journal of Experimental 
-Psychology 143(2): 573-603) for more on the ROPE.}
+defining the Region of Practical Equivalence around 0. See Kruschke (2013, Journal of 
+Experimental Psychology 143(2): 573-603) for more on the ROPE.}
 }
 \value{
-a plot of the differences in probabilities
+a plot of the differences in probabilities. Plot is made with ggplot2 and can be
+passed to an object to customize
 }
 \description{
 R function to plot first differences generated from MCMC output.

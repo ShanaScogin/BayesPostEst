@@ -17,10 +17,11 @@ MCMCpack, rstan, rstanarm}
 
 \item{Pr}{print percent of posterior draws with same sign as median; defaults to FALSE}
 
-\item{ROPE}{vector of two values defining the region of practical equivalence ("ROPE"); 
-returns \% of posterior to the left/right of ROPE. ## ADD MORE CITATIONS HERE ##.
-Note: For this quantity to be meaningful, all parameters must be on the same scale 
-(e.g. standardized coefficients or first differences).
+\item{ROPE}{defaults to NULL. If not NULL, a vector of two values defining the region of 
+practical equivalence ("ROPE"); returns \% of posterior to the left/right of ROPE. For this quantity 
+to be meaningful, all parameters must be on the same scale (e.g. standardized coefficients 
+or first differences. See Kruschke (2013, Journal of Experimental 
+Psychology 143(2): 573-603) for more on the ROPE.
 #'@param mcmcout semi-optional argument. Posterior distributions of all logit coefficients, 
 in matrix form. This can be created from rstan, MCMCpack, R2jags, etc. and transformed
 into a matrix using the function as.mcmc() from the coda package for \code{jags} class

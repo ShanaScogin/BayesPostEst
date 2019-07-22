@@ -6,10 +6,11 @@
 #'@param ci desired level for credible intervals; defaults to c(0.025, 0.975)
 #'@param pars character vector of parameters to be printed; defaults to NULL (all parameters are printed)
 #'@param Pr print percent of posterior draws with same sign as median; defaults to FALSE
-#'@param ROPE vector of two values defining the region of practical equivalence ("ROPE"); 
-#'returns \% of posterior to the left/right of ROPE. ## ADD MORE CITATIONS HERE ##.
-#'Note: For this quantity to be meaningful, all parameters must be on the same scale 
-#'(e.g. standardized coefficients or first differences).
+#'@param ROPE defaults to NULL. If not NULL, a vector of two values defining the region of 
+#'practical equivalence ("ROPE"); returns \% of posterior to the left/right of ROPE. For this quantity 
+#'to be meaningful, all parameters must be on the same scale (e.g. standardized coefficients 
+#'or first differences. See Kruschke (2013, Journal of Experimental 
+#'Psychology 143(2): 573-603) for more on the ROPE.
 #'#'@param mcmcout semi-optional argument. Posterior distributions of all logit coefficients, 
 #'in matrix form. This can be created from rstan, MCMCpack, R2jags, etc. and transformed
 #'into a matrix using the function as.mcmc() from the coda package for \code{jags} class
@@ -82,14 +83,6 @@ mcmcTab <- function(sims,
                     ROPE = NULL) {# add warning that for ROPE to be meaningful, 
                                   # all coefs/quantities must be on the same scale
   
-  if(!is.null(ROPE)){
-    message("This table contains an estimate for parameter values outside of the region of 
-            practical equivalence (ROPE). For this quantity to be meaningful, all parameters 
-            must be on the same scale (e.g. standardized coefficients or first differences).")
-  }
-  
-  ### add message
-  
     if(class(sims)[1] == "jags" || class(sims)[1] == "rjags"){
       sims <- as.matrix(coda::as.mcmc(sims))
     }
@@ -139,7 +132,11 @@ mcmcTab <- function(sims,
                                      Upper = as.numeric(round(quantile(x, probs = ci[2]), digits = 3))))
     }
     
-    if(is.null(ROPE) == FALSE){
+    if(!is.null(ROPE)){
+      message("This table contains an estimate for parameter values outside of the region of 
+          practical equivalence (ROPE). For this quantity to be meaningful, all parameters 
+          must be on the same scale (e.g. standardized coefficients or first differences).")
+      
       mcmctab <- apply(dat_wide, 1, 
                        function(x) c(Median = round(median(x), digits = 3), # Posterior median
                                      SD = round(sd(x), digits = 3), # Posterior SD

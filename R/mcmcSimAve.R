@@ -1,5 +1,5 @@
 #'This function calculates predicted probabilities for "average" cases after a Bayesian 
-#'logit or probit model. It has the same functionality as \code{mcmcAveProb()}
+#'logit or probit model. It has the same main functionality as \code{mcmcAveProb()}
 #'function in this package; however, \code{mcmcSimAve()} automates the data preparation. 
 #'For an explanation of predicted probabilities for "average" cases,
 #'see e.g. King, Tomz & Wittenberg (2000) <doi: 10.2307/2669316>

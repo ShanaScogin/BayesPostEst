@@ -6,10 +6,8 @@
 #'of Political Science 44(2): 347-361)
 #'@param fdfull Output generated from \code{mcmcFD(..., full_sims = TRUE)}
 #'@param ROPE defaults to NULL. If not NULL, a numeric vector of length two, 
-#'defining the Region of Practical Equivalence around 0. For this quantity to be 
-#'meaningful, all parameters must be on the same scale (e.g. standardized coefficients 
-#'or first differences. See Kruschke (2013, Journal of Experimental 
-#'Psychology 143(2): 573-603) for more on the ROPE. 
+#'defining the Region of Practical Equivalence around 0. See Kruschke (2013, Journal of 
+#'Experimental Psychology 143(2): 573-603) for more on the ROPE. 
 #'@references 
 #'\itemize{
 #'\item King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most of Statistical 
@@ -20,7 +18,8 @@
 #'\item Long, J. Scott. 1997. Regression Models for Categorial and Limited Dependent Variables. 
 #'Thousand Oaks: Sage Publications.
 #'}
-#'@return a plot of the differences in probabilities
+#'@return a plot of the differences in probabilities. Plot is made with ggplot2 and can be
+#'passed to an object to customize
 #'@examples
 #' \donttest{
 #' ## simulating data
@@ -90,12 +89,7 @@ mcmcFDplot <- function(fdfull,
   
   # create first plot
   
-  if(is.null(ROPE) == FALSE){
-    
-    message("This table contains an estimate for parameter values outside of the region of 
-    practical equivalence (ROPE). For this quantity to be meaningful, all parameters 
-    must be on the same scale (e.g. standardized coefficients or first differences).")
-    
+  if(!is.null(ROPE)) {
   fd_plot <- ggplot2::ggplot(data = fd_dat, aes(x = .data$value, y = .data$key)) + 
     ggplot2::geom_rect(xmin = ROPE[1], xmax = ROPE[2], ymin = 0, ymax = Inf, fill = "black") + 
     ggridges::stat_density_ridges(quantile_lines = TRUE, 
@@ -121,9 +115,7 @@ mcmcFDplot <- function(fdfull,
   fd_plot <- fd_plot + 
     geom_text(data = fd_annotate, aes(x = .data$xpos, y = .data$ypos, label = .data$outROPE), 
                                  color = "black", nudge_y = 0.1, size = 4)
-  }
-  
-  if(is.null(ROPE) == TRUE){
+  } else {
   fd_plot <- ggplot2::ggplot(data = fd_dat,
                                aes(x = .data$value, y = .data$key)) + 
     ggplot2::geom_vline(xintercept = 0) + 
