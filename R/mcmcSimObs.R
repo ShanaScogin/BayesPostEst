@@ -88,7 +88,6 @@
 #'                            xinterest = c("X1"),
 #'                            sims = fit)
 #' }
-#'@export
 
 mcmcSimObs <- function(formula,
                        data,

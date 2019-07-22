@@ -93,7 +93,6 @@
 #'                         xinterest = c("X1"),
 #'                         sims = fit)
 #' }
-#'@export
 #'
 mcmcSimAve <- function(formula,
                        data,

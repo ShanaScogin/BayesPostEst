@@ -71,7 +71,6 @@
 #'                  sims = fit)
 #' object_fd_sim
 #' }
-#'@export
 
 mcmcSimFD <- function(formula,
                    data,
