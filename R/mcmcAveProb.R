@@ -28,8 +28,7 @@
 #'@param xinterest semi-optional argument. Name of the explanatory variable for which 
 #'to calculate associated Pr(y = 1). If \code{xcol} is supplied, this is not needed. 
 #'If both are supplied, the function defaults to \code{xcol} and this argument is ignored
-#'@param link type of model. It is a character vector set to 
-#'"logit" (default) or "probit"
+#'@param link type of model. It is a character vector set to "logit" (default) or "probit"
 #'@param ci the bounds of the credible interval. Default is \code{c(0.05, 0.95)}.
 #'@param fullsims logical indicator of whether full object (based on all MCMC draws 
 #'rather than average) will be returned. Default is \code{FALSE}. A note: The longer 
@@ -39,7 +38,7 @@
 #'of Political Science 44 (2): 347–61. http://www.jstor.org/stable/2669316
 #'@return a matrix with 4 columns:
 #'\itemize{
-#'\item predictor: identical to x_range
+#'\item x: identical to x_range
 #'\item median_pp: median predicted probability at given x
 #'\item lower_pp: lower bound of credible interval of predicted probability at given x
 #'\item upper_pp: upper bound of credible interval of predicted probability at given x
@@ -126,6 +125,10 @@ mcmcAveProb <- function(modelmatrix,
   if(!missing(xinterest)) {
     if(!(xinterest %in% variable.names(modelmatrix)))
       stop("Variable name does not match any in the matrix. Please enter another.")
+  }
+  
+  if(missing(modelmatrix) | missing(mcmcout) | missing(xrange)) {
+    stop("Please enter modelmatrix, mcmcout, and xrange arguments")
   }
   
   X <- matrix(rep(apply(X = modelmatrix,

@@ -124,4 +124,6 @@ test_that("Simple probit model runs with mcmcFD", {
                  fullsims = TRUE) # first running mcmcFD with full output
   expect_silent(mcmcFDplot(full))
   
+  mcmcFDplot(full)
+  
 })

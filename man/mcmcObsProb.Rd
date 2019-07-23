@@ -35,8 +35,7 @@ explanatory variable for which to calculate associated Pr(y = 1)}
 to calculate associated Pr(y = 1). If \code{xcol} is supplied, this is not needed. 
 If both are supplied, the function defaults to \code{xcol} and this argument is ignored}
 
-\item{link}{type of model. It is a character vector set to 
-"logit" (default) or "probit"}
+\item{link}{type of model. It is a character vector set to "logit" (default) or "probit"}
 
 \item{ci}{the bounds of the credible interval. Default is \code{c(0.05, 0.95)}.}
 
