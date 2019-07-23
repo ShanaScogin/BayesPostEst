@@ -487,15 +487,15 @@ fitstats.fullsims <- mcmcRocPrc(modelmatrix = mm,
 We can then plot the posterior density of the area under each curve.
 
 ```{r}
-ggplot(fitstats.fullsims, aes(x = area_under_roc)) + 
-  geom_density() + 
-  labs(title = "Area under the ROC curve")
+# ggplot(fitstats.fullsims, aes(x = area_under_roc)) + 
+#   geom_density() + 
+#   labs(title = "Area under the ROC curve")
 ```
 
 ```{r}
-ggplot(fitstats.fullsims, aes(x = area_under_prc)) + 
-  geom_density() + 
-  labs(title = "Area under the Precision-Recall curve")
+# ggplot(fitstats.fullsims, aes(x = area_under_prc)) + 
+#   geom_density() + 
+#   labs(title = "Area under the Precision-Recall curve")
 ```
 
 

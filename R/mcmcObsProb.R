@@ -179,7 +179,7 @@ mcmcObsProb <- function(modelmatrix,
   }
   
   if(fullsims == TRUE){
-    longFrame <- reshape2::melt(pp_mat, id.vars = .data::Var2)
+    longFrame <- reshape2::melt(pp_mat, id.vars = .data$Var2)
     names(longFrame) <- c("Iteration", "x", "pp")
     return(longFrame) 
   }
