@@ -8,7 +8,7 @@
 #'@param modelmatrix model matrix, including intercept (if the intercept is among the
 #'parameters of interest from the model). Create with model.matrix(formula, data).
 #'Note: the order of columns in the model matrix must correspond to the order of columns 
-#'in the matrix of posterior draws in the the \code{mcmcout} argument. See the \code{mcmcout}
+#'in the matrix of posterior draws in the \code{mcmcout} argument. See the \code{mcmcout}
 #'argument for more
 #'@param mcmcout posterior distributions of all logit coefficients, 
 #'in matrix form. This can be created from rstan, MCMCpack, R2jags, etc. and transformed
@@ -19,8 +19,7 @@
 #'in the model matrix. One can do this by examining the posterior distribution matrix and listing the 
 #'variables in the order of this matrix when creating the matrix model. A useful function for sorting as 
 #'you create the matrix of posterior distributions is \code{mixedsort()} fom the gtools package
-#'@param link type of model. It is a character vector set to 
-#'"logit" (default) or "probit"
+#'@param link type of model. It is a character vector set to \code{"logit"} (default) or \code{"probit"}
 #'@param ci the bounds of the credible interval. Default is \code{c(0.025, 0.975)}.
 #'@param percentiles default is \code{c(0.25, 0.75)}
 #'@param fullsims logical indicator of whether full object (based on all MCMC draws 

@@ -10,25 +10,25 @@
 #'<https://ssrn.com/abstract=2765419>
 #'@param modelmatrix model matrix. Create with model.matrix(formula, data).
 #'Note: the order of columns in the model matrix must correspond to the order of columns 
-#'in the matrix of posterior draws in the the `mcmcout` argument. See the `mcmcout`
+#'in the matrix of posterior draws in the\code{mcmcout} argument. See the \code{mcmcout}
 #'argument for more
 #'@param mcmcout posterior distributions of all logit coefficients, 
 #'in matrix form. This can be created from rstan, MCMCpack, R2jags, etc. and transformed
-#'into a matrix using the function as.mcmc() from the coda package for `jags` class
-#'objects, as.matrix() from base R for `mcmc`, `mcmc.list`, `stanreg`, and 
-#'`stanfit` class objects, and `object$sims.matrix` for `bugs` class objects.
+#'into a matrix using the function as.mcmc() from the coda package for \code{jags} class
+#'objects, as.matrix() from base R for \code{mcmc}, \code{mcmc.list}, \code{stanreg}, and 
+#'\code{stanfit} class objects, and \code{object$sims.matrix} for \code{bugs} class objects.
 #'Note: the order of columns in this matrix must correspond to the order of columns 
 #'in the model matrix. One can do this by examining the posterior distribution matrix and listing the 
 #'variables in the order of this matrix when creating the matrix model. A useful function for sorting as 
-#'you create the matrix of posterior distributions is `mixedsort()` fom the gtools package
+#'you create the matrix of posterior distributions is \code{mixedsort()} fom the gtools package
 #'@param modelframe model frame in matrix form. Can be created using 
 #'as.matrix(model.frame(formula, data))
 #'@param curves logical indicator of whether or not to return values for the 
-#'curves. If set to `FALSE`, results are returned as a list with out the extra
-#'values. Default is `FALSE`.
-#'@param link type of model. It is a character vector set to "logit" (default) or "probit"
+#'curves. If set to \code{FALSE}, results are returned as a list with out the extra
+#'values. Default is \code{FALSE}.
+#'@param link type of model. It is a character vector set to \code{"logit"} (default) or \code{"probit"}
 #'@param fullsims logical indicator of whether full object (based on all MCMC draws 
-#'rather than average) will be returned. Default is `FALSE`. Note: If `TRUE`
+#'rather than average) will be returned. Default is \code{FALSE}. Note: If \code{TRUE}
 #'is chosen, the function takes notably longer to run
 #'@references Beger, Andreas. 2016. “Precision-Recall Curves.” Available at SSRN: 
 #'https://ssrn.com/Abstract=2765419. http://dx.doi.org/10.2139/ssrn.2765419.

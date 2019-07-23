@@ -13,25 +13,19 @@ MCMCpack, rstan, rstanarm}
 
 \item{ci}{desired level for credible intervals; defaults to c(0.025, 0.975)}
 
-\item{pars}{character vector of parameters to be printed; defaults to NULL (all parameters are printed)}
+\item{pars}{character vector of parameters to be printed; defaults to \code{NULL} 
+(all parameters are printed)}
 
-\item{Pr}{print percent of posterior draws with same sign as median; defaults to FALSE}
+\item{Pr}{print percent of posterior draws with same sign as median; defaults to \code{FALSE}}
 
 \item{ROPE}{defaults to NULL. If not NULL, a vector of two values defining the region of 
 practical equivalence ("ROPE"); returns \% of posterior to the left/right of ROPE. For this quantity 
 to be meaningful, all parameters must be on the same scale (e.g. standardized coefficients 
 or first differences. See Kruschke (2013, Journal of Experimental 
-Psychology 143(2): 573-603) for more on the ROPE.
-#'@param mcmcout semi-optional argument. Posterior distributions of all logit coefficients, 
-in matrix form. This can be created from rstan, MCMCpack, R2jags, etc. and transformed
-into a matrix using the function as.mcmc() from the coda package for \code{jags} class
-objects, as.matrix() from base R for \code{mcmc}, \code{mcmc.list}, \code{stanreg}, and 
-\code{stanfit} class objects, and \code{object$sims.matrix} for a \code{bugs} class object.
-If this is included, the sims argument may be left empty. If both are provided, function
-defaults to the \code{sims} argument}
+Psychology 143(2): 573-603) for more on the ROPE.}
 }
 \value{
-an data frame containing MCMC summary statistics
+a data frame containing MCMC summary statistics
 }
 \description{
 R function for summarizing MCMC output in a regression-style table
@@ -94,4 +88,8 @@ object <- mcmcTab(fit,
           ROPE = NULL)
 object
 }
+}
+\references{
+Kruschke, John K. 2013. “Bayesian Estimation Supersedes the T-Test.” Journal of 
+Experimental Psychology: General 142 (2): 573–603. https://doi.org/10.1037/a0029146.
 }

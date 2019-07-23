@@ -427,30 +427,31 @@ One way to assess model fit is to calculate the area under the Receiver Operatin
 
 Because each of these measures relies on comparing the observed $y$ to $Pr(y = 1)$, the function requires both the posterior distribution of all regression coefficients as well as a model frame. This model frame contains all variables used to estimate the model, with the outcome variable in the first column and all other variables following thereafter.
 
-**Note: for now, this function requires a `stanfit` object, but it will soon accept a matrix of posterior draws (as the other functions do).**
 
 ```{r}
 mf <- model.frame(volunteer ~ female + neuroticism + extraversion, data = df)
-fitstats.rstanarm <- mcmcRocPrc(sims = fit.rstanarm,
-                                modelframe = mf,
-                                curves = TRUE,
-                                fullsims = FALSE)
+fitstats <- mcmcRocPrc(modelmatrix = mm,
+                       modelframe = mf,
+                       mcmcout = mcmcmat.jags[, 1:ncol(mm)],
+                       curves = TRUE,
+                       link = "logit",
+                       fullsims = FALSE)
 ```
 
 Users can then print the area under the each curve:
 
 ```{r}
-fitstats.rstanarm$area_under_roc
+fitstats$area_under_roc
 ```
 
 ```{r}
-fitstats.rstanarm$area_under_prc
+fitstats$area_under_prc
 ```
 
 Users can also plot the ROC curve... 
 
 ```{r}
-ggplot(data = fitstats.rstanarm$roc_dat, aes(x = x, y = y)) +
+ggplot(data = fitstats$roc_dat, aes(x = x, y = y)) +
   geom_line() + 
   geom_abline(intercept = 0, slope = 1, color = "gray") + 
   labs(title = "ROC curve") + 
@@ -461,7 +462,7 @@ ggplot(data = fitstats.rstanarm$roc_dat, aes(x = x, y = y)) +
 ... as well as the precision-recall curve.
 
 ```{r}
-ggplot(data = fitstats.rstanarm$prc_dat, aes(x = x, y = y)) +
+ggplot(data = fitstats$prc_dat, aes(x = x, y = y)) +
   geom_line() + 
   labs(title = "Precision-Recall curve") + 
   xlab("Recall") + 
@@ -471,22 +472,24 @@ ggplot(data = fitstats.rstanarm$prc_dat, aes(x = x, y = y)) +
 To plot the posterior distribution of the area under the curves, users set the `fullsims` argument to `TRUE`. Unless a user wishes to plot credible intervals around the ROC and PR curves themselves, we recommend keeping `curves` at `FALSE` to avoid long computation time. 
 
 ```{r}
-fitstats.fullsims.rstanarm <- mcmcRocPrc(sims = fit.rstanarm,
+fitstats.fullsims <- mcmcRocPrc(modelmatrix = mm,
                                 modelframe = mf,
-                                curves = FALSE,
+                                mcmcout = mcmcmat.jags[, 1:ncol(mm)],
+                                curves = TRUE,
+                                link = "logit",
                                 fullsims = TRUE)
 ```
 
 We can then plot the posterior density of the area under each curve.
 
 ```{r}
-ggplot(fitstats.fullsims.rstanarm, aes(x = area_under_roc)) + 
+ggplot(fitstats.fullsims, aes(x = area_under_roc)) + 
   geom_density() + 
   labs(title = "Area under the ROC curve")
 ```
 
 ```{r}
-ggplot(fitstats.fullsims.rstanarm, aes(x = area_under_prc)) + 
+ggplot(fitstats.fullsims, aes(x = area_under_prc)) + 
   geom_density() + 
   labs(title = "Area under the Precision-Recall curve")
 ```

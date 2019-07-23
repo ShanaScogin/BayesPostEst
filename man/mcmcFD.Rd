@@ -11,7 +11,7 @@ mcmcFD(modelmatrix, mcmcout, link = "logit", ci = c(0.025, 0.975),
 \item{modelmatrix}{model matrix, including intercept (if the intercept is among the
 parameters of interest from the model). Create with model.matrix(formula, data).
 Note: the order of columns in the model matrix must correspond to the order of columns 
-in the matrix of posterior draws in the the \code{mcmcout} argument. See the \code{mcmcout}
+in the matrix of posterior draws in the \code{mcmcout} argument. See the \code{mcmcout}
 argument for more}
 
 \item{mcmcout}{posterior distributions of all logit coefficients, 
@@ -24,8 +24,7 @@ in the model matrix. One can do this by examining the posterior distribution mat
 variables in the order of this matrix when creating the matrix model. A useful function for sorting as 
 you create the matrix of posterior distributions is \code{mixedsort()} fom the gtools package}
 
-\item{link}{type of model. It is a character vector set to 
-"logit" (default) or "probit"}
+\item{link}{type of model. It is a character vector set to \code{"logit"} (default) or \code{"probit"}}
 
 \item{ci}{the bounds of the credible interval. Default is \code{c(0.025, 0.975)}.}
 
