@@ -479,7 +479,7 @@ To plot the posterior distribution of the area under the curves, users set the `
 fitstats.fullsims <- mcmcRocPrc(modelmatrix = mm,
                                 modelframe = mf,
                                 mcmcout = mcmcmat.jags[, 1:ncol(mm)],
-                                curves = TRUE,
+                                curves = FALSE,
                                 link = "logit",
                                 fullsims = TRUE)
 ```
