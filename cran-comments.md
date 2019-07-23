@@ -4,8 +4,7 @@
 * win-builder (devel)
 
 ## R CMD check results
-There were no ERRORs or NOTEs. There was one WARNING with .data issues. 
-This WARNING is currently being worked on.
+There were no ERRORs, WARNINGs, or NOTEs.
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package.
