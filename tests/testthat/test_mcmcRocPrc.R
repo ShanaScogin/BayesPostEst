@@ -73,25 +73,6 @@ test_that("Simple model runs with mcmcRocPrc", {
   check_against_prc <- c(0.621)
   expect_equal(round(as.numeric(value_prc), 2), round(check_against_prc, 2))
   
-  ## using mcmcRocPrc with full draws
-  fit_full <- mcmcRocPrc(modelmatrix = mm,
-                            modelframe = xframe,
-                            mcmcout = mcmc_mat,
-                            curves = TRUE,
-                            fullsims = TRUE)
-  
-  ## testing
-  value_area_under_roc <- unlist(lapply(fit_full, '[[', 1))[986]
-  check_against_full_roc <- c(0.626)
-  expect_equal(round(as.numeric(value_area_under_roc), 2), 
-               round(check_against_full_roc, 2))
-  
-  
-  
-  value_area_under_prc <- unlist(lapply(fit_full, '[[', 2))[965]
-  check_against_full_prc <- c(0.620)
-  expect_equal(round(as.numeric(value_area_under_prc), 2), 
-               round(check_against_full_prc, 2))
 })
 
 test_that("Simple model runs with mcmcRocPrc Full", {
@@ -167,7 +148,7 @@ test_that("Simple model runs with mcmcRocPrc Full", {
   
   
   value_area_under_prc <- unlist(lapply(fit_full, '[[', 2))[965]
-  check_against_full_prc <- c(0.620)
+  check_against_full_prc <- c(0.61994)
   expect_equal(round(as.numeric(value_area_under_prc), 2), 
                round(check_against_full_prc, 2))
 })

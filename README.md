@@ -65,7 +65,7 @@ BayesPostEst functions accommodate GLM estimates for both logit and probit link 
 
 # Model estimation
 
-To use BayesPostEst, we first estimate a Bayesian regression model. This vignette demonstrates four tools for doing so: JAGS (via the [`R2jags` package](https://cran.r-project.org/web/packages/R2jags/index.html)), [`MCMCpack`](https://cran.r-project.org/web/packages/MCMCpack/index.html), and the two Stan interfaces [`rstan`](https://cran.r-project.org/web/packages/rstan/index.html) and [`rstanarm`](https://cran.r-project.org/web/packages/rstanarm/index.html).
+To use BayesPostEst, we first estimate a Bayesian regression model. This vignette demonstrates four tools for doing so: JAGS (via the [`R2jags` package](https://cran.r-project.org/package=R2jags)), [`MCMCpack`](https://cran.r-project.org/package=MCMCpack), and the two Stan interfaces [`rstan`](https://cran.r-project.org/package=rstan) and [`rstanarm`](https://cran.r-project.org/package=rstanarm).
 
 ## JAGS
 
@@ -117,7 +117,7 @@ fit.jags <- jags(data = dl, inits = inits.jags,
 
 ## MCMCpack
 
-We estimate the same model using [MCMCpack](https://cran.r-project.org/web/packages/MCMCpack/index.html) (Martin, Quinn, and Park 2011, Journal of Statistical Software 42(9): 1-22).
+We estimate the same model using [MCMCpack](https://cran.r-project.org/package=MCMCpack) (Martin, Quinn, and Park 2011, Journal of Statistical Software 42(9): 1-22).
 
 ```{r}
 library("MCMCpack")
@@ -153,7 +153,7 @@ model {
 writeLines(mod.stan, "mod.stan")	
 ```
 
-We then load [rstan](https://cran.r-project.org/web/packages/rstan/index.html)...
+We then load [rstan](https://cran.r-project.org/package=rstan)...
 
 ```{r}
 library("rstan")
@@ -174,7 +174,7 @@ fit.stan <- stan(file = "mod.stan",
 
 ## rstanarm
 
-Lastly, we use the [rstanarm](https://cran.r-project.org/web/packages/rstanarm/index.html) interface (Goodrich, Gabry, Ali, and Brilleman 2019) to estimate the same model again.
+Lastly, we use the [rstanarm](https://cran.r-project.org/package=rstanarm) interface (Goodrich, Gabry, Ali, and Brilleman 2019) to estimate the same model again.
 
 ```{r}
 library("rstanarm")

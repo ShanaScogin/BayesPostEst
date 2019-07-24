@@ -1,6 +1,6 @@
 Package: BayesPostEst
 Type: Package
-Title: Analyze and Present Bayesian Models
+Title: Generate and Plot Postestimation Quantities after Estimating Bayesian Regression Models Using MCMC
 Version: 0.0.0.9000
 Date: 2019-07-12
 Authors@R: 
@@ -10,7 +10,7 @@ Authors@R:
     "Neil Williams <snpwill@uga.edu> [ctb]",
     "Myunghee Lee <mlq38@mail.missouri.edu> [ctb]"
     ))
-Description: An implementation of functions to assist Bayesian analysis and results presentation.
+Description: An implementation of functions to generate and plot postestimation quantities after estimating Bayesian regression using MCMC.
 URL: https://github.com/ShanaScogin/BayesPostEst
 License: GPL-3
 Imports:
