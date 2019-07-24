@@ -10,8 +10,8 @@
 #' \item \code{mcmcRocPrc()}
 #' \item \code{mcmcTab()}
 #' }
-#' These functions can be used to generate postestimation quantities or to plot after 
-#' estimating Bayesian regression models. The package combines functions 
+#' These functions can be used to generate and plot postestimation quantities after 
+#' estimating Bayesian regression models using MCMC. The package combines functions 
 #' written originally for Johannes Karreth's workshop on Bayesian modeling at the 
 #' ICPSR Summer program. For now, the package focuses mostly on generalized linear 
 #' regression models for binary outcomes (logistic and probit regression). 
@@ -59,9 +59,6 @@ NULL
 NULL
 
 #' @importFrom coda as.mcmc
-NULL
-
-#' @importFrom rstanarm posterior_linpred
 NULL
 
 #' @importFrom R2jags jags

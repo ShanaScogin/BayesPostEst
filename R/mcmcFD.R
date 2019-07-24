@@ -4,38 +4,47 @@
 #'the difference in predicted probabilities for each covariate for cases with low and high values 
 #'of the respective covariate. For each of these differences, all other variables are held constant 
 #'at their median. For more, see Long (1997, Sage Publications) and King, Tomz, and Wittenberg (2000, 
-#'American Journal of Political Science 44(2): 347-361)
+#'American Journal of Political Science 44(2): 347-361).
 #'@param modelmatrix model matrix, including intercept (if the intercept is among the
-#'parameters of interest from the model). Create with model.matrix(formula, data).
+#'parameters estimated in the model). Create with model.matrix(formula, data).
 #'Note: the order of columns in the model matrix must correspond to the order of columns 
 #'in the matrix of posterior draws in the \code{mcmcout} argument. See the \code{mcmcout}
-#'argument for more
+#'argument for more.
 #'@param mcmcout posterior distributions of all logit coefficients, 
 #'in matrix form. This can be created from rstan, MCMCpack, R2jags, etc. and transformed
 #'into a matrix using the function as.mcmc() from the coda package for \code{jags} class
 #'objects, as.matrix() from base R for \code{mcmc}, \code{mcmc.list}, \code{stanreg}, and 
 #'\code{stanfit} class objects, and \code{object$sims.matrix} for \code{bugs} class objects.
 #'Note: the order of columns in this matrix must correspond to the order of columns 
-#'in the model matrix. One can do this by examining the posterior distribution matrix and listing the 
-#'variables in the order of this matrix when creating the matrix model. A useful function for sorting as 
-#'you create the matrix of posterior distributions is \code{mixedsort()} fom the gtools package
-#'@param link type of model. It is a character vector set to \code{"logit"} (default) or \code{"probit"}
-#'@param ci the bounds of the credible interval. Default is \code{c(0.025, 0.975)}.
-#'@param percentiles default is \code{c(0.25, 0.75)}
+#'in the model matrix. One can do this by examining the posterior distribution matrix and sorting the 
+#'variables in the order of this matrix when creating the model matrix. A useful function for sorting 
+#'column names containing both characters and numbers as 
+#'you create the matrix of posterior distributions is \code{mixedsort()} fom the gtools package.
+#'@param link type of generalized linear model; a character vector set to \code{"logit"} (default) or \code{"probit"}.
+#'@param ci the bounds of the credible interval. Default is \code{c(0.025, 0.975)} for the 95% credible interval.
+#'@param percentiles values of each predictor for which the difference in Pr(y = 1) 
+#'is to be calculated. Default is \code{c(0.25, 0.75)}, which will calculate the difference between Pr(y = 1) for 
+#'the 25th percentile and 75th percentile of the predictor. For binary predictors, the function automatically calculates 
+#'the difference between Pr(y = 1) for x = 0 and x = 1.
 #'@param fullsims logical indicator of whether full object (based on all MCMC draws 
-#'rather than average) will be returned. Default is \code{FALSE}
+#'rather than their average) will be returned. Default is \code{FALSE}. 
 #'@references 
 #'\itemize{
 #'\item King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most of Statistical 
 #'Analyses: Improving Interpretation and Presentation.” American Journal of Political Science 
 #'44 (2): 347–61. http://www.jstor.org/stable/2669316
-#'\item Kruschke, John K. 2013. “Bayesian Estimation Supersedes the T-Test.” Journal of 
-#'Experimental Psychology: General 142 (2): 573–603. https://doi.org/10.1037/a0029146
 #'\item Long, J. Scott. 1997. Regression Models for Categorial and Limited Dependent Variables. 
 #'Thousand Oaks: Sage Publications
 #'}
-#'@return an object of class \code{matrix} with the first differences for each
-#'covariate
+#'@return if \code{fullsims = FALSE} (default), a data frame with four columns:
+#'\itemize{
+#'\item median_fd: median first difference
+#'\item lower_fd: lower bound of credible interval of the first difference
+#'\item upper_fd: upper bound of credible interval of the first difference
+#'\item VarName: name of the variable as found in \code{modelmatrix}
+#'\item VarID: identifier of the variable, based on the order of columns in \code{modelmatrix} and \code{mcmcout}. Can be adjusted for plotting
+#'}
+#'if \code{fullsims = TRUE}, a data frame with as many columns as predictors in the model. Each row is the first difference for that variable based on one set of posterior draws. Column names are taken from the column names of \code{modelmatrix}.
 #'@examples
 #' \donttest{
 #' ## simulating data
@@ -129,8 +138,7 @@ mcmcFD <- function(modelmatrix,
     # X[, i] <- quantile(modelmatrix[, i], probs = percentiles)
 
     if(link == "logit") {
-      Xb <- t(X %*% t(mcmcout))
-    pp <- exp(Xb) / (1 + exp(Xb))
+      pp <- plogis(t(X %*% t(mcmcout)))
     } else if (link == "probit") {
       pp <- pnorm(t(X %*% t(mcmcout)))
     } else {
