@@ -7,21 +7,24 @@
 mcmcFDplot(fdfull, ROPE = NULL)
 }
 \arguments{
-\item{fdfull}{Output generated from \code{mcmcFD(..., full_sims = TRUE)}}
+\item{fdfull}{Output generated from \code{mcmcFD(..., full_sims = TRUE)}.}
 
 \item{ROPE}{defaults to NULL. If not NULL, a numeric vector of length two, 
 defining the Region of Practical Equivalence around 0. See Kruschke (2013, Journal of 
 Experimental Psychology 143(2): 573-603) for more on the ROPE.}
 }
 \value{
-a plot of the differences in probabilities. Plot is made with ggplot2 and can be
-passed to an object to customize
+a density plot of the differences in probabilities. The plot is made with ggplot2 and can be
+passed on as an object to customize. Annotated numbers show the percent of posterior draws with
+the same sign as the median estimate (if \code{ROPE = NULL}) or on the same side of the 
+ROPE as the median estimate (if \code{ROPE} is specified).
 }
 \description{
 R function to plot first differences generated from MCMC output.
 For more on this method, see the documentation for \code{mcmcFD()}, Long (1997, 
 Sage Publications), and King, Tomz, and Wittenberg (2000, American Journal 
-of Political Science 44(2): 347-361)
+of Political Science 44(2): 347-361). For a description of this type of plot,
+see Figure 1 in Karreth (2018, International Interactions 44(3): 463-90).
 }
 \details{
 An R function to plot first differences after a Bayesian logit or probit model.
@@ -88,6 +91,8 @@ mcmcFDplot(full)
 }
 \references{
 \itemize{
+\item Karreth, Johannes. 2018. “The Economic Leverage of International Organizations in Interstate Disputes.” 
+International Interactions 44 (3): 463-90. https://doi.org/10.1080/03050629.2018.1389728.
 \item King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most of Statistical 
 Analyses: Improving Interpretation and Presentation.” American Journal of Political Science 
 44 (2): 347–61. http://www.jstor.org/stable/2669316.

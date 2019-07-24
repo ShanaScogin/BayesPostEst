@@ -2,17 +2,17 @@
 % Please edit documentation in R/mcmcObsProb.R
 \name{mcmcObsProb}
 \alias{mcmcObsProb}
-\title{Bayesian MCMC Observed Values Predicted Probablities}
+\title{Predicted Probabilities using Bayesian MCMC estimates for the Average of Observed Cases}
 \usage{
 mcmcObsProb(modelmatrix, mcmcout, xcol, xrange, xinterest,
   link = "logit", ci = c(0.025, 0.975), fullsims = FALSE)
 }
 \arguments{
 \item{modelmatrix}{model matrix, including intercept (if the intercept is among the
-parameters of interest from the model). Create with model.matrix(formula, data).
+parameters estimated in the model). Create with model.matrix(formula, data).
 Note: the order of columns in the model matrix must correspond to the order of columns 
 in the matrix of posterior draws in the \code{mcmcout} argument. See the \code{mcmcout}
-argument for more}
+argument for more.}
 
 \item{mcmcout}{posterior distributions of all logit coefficients, 
 in matrix form. This can be created from rstan, MCMCpack, R2jags, etc. and transformed
@@ -20,42 +20,51 @@ into a matrix using the function as.mcmc() from the coda package for \code{jags}
 objects, as.matrix() from base R for \code{mcmc}, \code{mcmc.list}, \code{stanreg}, and 
 \code{stanfit} class objects, and \code{object$sims.matrix} for \code{bugs} class objects.
 Note: the order of columns in this matrix must correspond to the order of columns 
-in the model matrix. One can do this by examining the posterior distribution matrix and listing the 
-variables in the order of this matrix when creating the matrix model. A useful function for sorting as 
-you create the matrix of posterior distributions is \code{mixedsort()} fom the gtools package}
+in the model matrix. One can do this by examining the posterior distribution matrix and sorting the 
+variables in the order of this matrix when creating the model matrix. A useful function for sorting 
+column names containing both characters and numbers as 
+you create the matrix of posterior distributions is \code{mixedsort()} fom the gtools package.}
 
 \item{xcol}{column number of the posterior draws (\code{mcmcout}) and model matrices 
 that corresponds to the explanatory variable for which to calculate associated Pr(y = 1).
-Note that the columns in these matrices must match}
+Note that the columns in these matrices must match.}
 
 \item{xrange}{name of the vector with the range of relevant values of the 
-explanatory variable for which to calculate associated Pr(y = 1)}
+explanatory variable for which to calculate associated Pr(y = 1).}
 
 \item{xinterest}{semi-optional argument. Name of the explanatory variable for which 
 to calculate associated Pr(y = 1). If \code{xcol} is supplied, this is not needed. 
-If both are supplied, the function defaults to \code{xcol} and this argument is ignored}
+If both are supplied, the function defaults to \code{xcol} and this argument is ignored.}
 
-\item{link}{type of model. It is a character vector set to \code{"logit"} (default) or \code{"probit"}}
+\item{link}{type of generalized linear model; a character vector set to \code{"logit"} (default) 
+or \code{"probit"}.}
 
-\item{ci}{the bounds of the credible interval. Default is \code{c(0.05, 0.95)}.}
+\item{ci}{the bounds of the credible interval. Default is \code{c(0.025, 0.975)} for the 95\% 
+credible interval.}
 
 \item{fullsims}{logical indicator of whether full object (based on all MCMC draws 
-rather than average) will be returned. Default is \code{FALSE}. A note: The longer 
+rather than their average) will be returned. Default is \code{FALSE}. Note: The longer 
 \code{xrange} is, the larger the full output will be if \code{TRUE} is selected.}
 }
 \value{
-a matrix with 4 columns:
+if \code{fullsims = FALSE} (default), a tibble with 4 columns:
 \itemize{
-\item x: identical to x_range
-\item median_pp: median predicted probability at given x
+\item x: value of variable of interest, drawn from \code{xrange}
+\item median_pp: median predicted Pr(y = 1) when variable of interest is set to x
 \item lower_pp: lower bound of credible interval of predicted probability at given x
 \item upper_pp: upper bound of credible interval of predicted probability at given x
+}
+if \code{fullsims = TRUE}, a tibble with 3 columns:
+\itemize{
+\item Iteration: number of the posterior draw
+\item x: value of variable of interest, drawn from \code{xrange}
+\item pp: average predicted Pr(y = 1) of all observed cases when variable of interest is set to x
 }
 }
 \description{
 Implements R function to calculate the predicted probabilities
 for "observed" cases after a Bayesian logit or probit model, following
-Hanmer & Kalkan (2013) <doi: 10.1111/j.1540-5907.2012.00602.x>.
+Hanmer & Kalkan (2013) (2013, American Journal of Political Science 57(1): 263-277).
 }
 \details{
 This function calculates predicted probabilities for 
@@ -126,7 +135,7 @@ obs_prob <- mcmcObsProb(modelmatrix = xmat,
 }
 }
 \references{
-Hanmer, M. J., & Ozan Kalkan, K. (2013). Behind the curve: Clarifying 
+Hanmer, Michael J., & Ozan Kalkan, K. (2013). Behind the curve: Clarifying 
 the best approach to calculating predicted probabilities and marginal effects from 
 limited dependent variable models. American Journal of Political Science, 57(1), 
 263-277. https://doi.org/10.1111/j.1540-5907.2012.00602.x

@@ -20,12 +20,15 @@
 #'variables in the order of this matrix when creating the model matrix. A useful function for sorting 
 #'column names containing both characters and numbers as 
 #'you create the matrix of posterior distributions is \code{mixedsort()} fom the gtools package.
-#'@param link type of generalized linear model; a character vector set to \code{"logit"} (default) or \code{"probit"}.
-#'@param ci the bounds of the credible interval. Default is \code{c(0.025, 0.975)} for the 95% credible interval.
+#'@param link type of generalized linear model; a character vector set to \code{"logit"} (default) 
+#'or \code{"probit"}.
+#'@param ci the bounds of the credible interval. Default is \code{c(0.025, 0.975)} for the 95\% 
+#'credible interval.
 #'@param percentiles values of each predictor for which the difference in Pr(y = 1) 
-#'is to be calculated. Default is \code{c(0.25, 0.75)}, which will calculate the difference between Pr(y = 1) for 
-#'the 25th percentile and 75th percentile of the predictor. For binary predictors, the function automatically calculates 
-#'the difference between Pr(y = 1) for x = 0 and x = 1.
+#'is to be calculated. Default is \code{c(0.25, 0.75)}, which will calculate the difference 
+#'between Pr(y = 1) for the 25th percentile and 75th percentile of the predictor. For binary 
+#'predictors, the function automatically calculates the difference between Pr(y = 1) 
+#'for x = 0 and x = 1.
 #'@param fullsims logical indicator of whether full object (based on all MCMC draws 
 #'rather than their average) will be returned. Default is \code{FALSE}. 
 #'@references 

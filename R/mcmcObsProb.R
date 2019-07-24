@@ -29,8 +29,10 @@
 #'@param xinterest semi-optional argument. Name of the explanatory variable for which 
 #'to calculate associated Pr(y = 1). If \code{xcol} is supplied, this is not needed. 
 #'If both are supplied, the function defaults to \code{xcol} and this argument is ignored.
-#'@param link type of generalized linear model; a character vector set to \code{"logit"} (default) or \code{"probit"}.
-#'@param ci the bounds of the credible interval. Default is \code{c(0.025, 0.975)} for the 95% credible interval.
+#'@param link type of generalized linear model; a character vector set to \code{"logit"} (default) 
+#'or \code{"probit"}.
+#'@param ci the bounds of the credible interval. Default is \code{c(0.025, 0.975)} for the 95\% 
+#'credible interval.
 #'@param fullsims logical indicator of whether full object (based on all MCMC draws 
 #'rather than their average) will be returned. Default is \code{FALSE}. Note: The longer 
 #'\code{xrange} is, the larger the full output will be if \code{TRUE} is selected.

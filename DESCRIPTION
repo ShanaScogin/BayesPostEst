@@ -7,8 +7,8 @@ Authors@R:
     as.person(c(
     "Johannes Karreth <jkarreth@ursinus.edu> [aut]",
     "Shana Scogin <shanarscogin@gmail.com> [aut, cre]",
-    "Neil Williams <snpwill@uga.edu> [aut]",
-    "Myunghee Lee <mlq38@mail.missouri.edu> [aut]"
+    "Neil Williams <snpwill@uga.edu> [ctb]",
+    "Myunghee Lee <mlq38@mail.missouri.edu> [ctb]"
     ))
 Description: An implementation of functions to assist Bayesian analysis and results presentation.
 URL: https://github.com/ShanaScogin/BayesPostEst

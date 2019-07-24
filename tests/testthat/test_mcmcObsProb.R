@@ -1,5 +1,7 @@
 test_that("Simple model runs with mcmcObsProb", {
   
+  options(digits = 10)
+  
   ## simulating some data
   set.seed(123456)
   b0 <- 0.2 # true value for the intercept
@@ -59,11 +61,11 @@ test_that("Simple model runs with mcmcObsProb", {
   
   value <- obs_prob[1, 1]
   check_against <- c(-0.998)
-  expect_equal(round(as.numeric(value), 3), check_against)
+  expect_equal(round(as.numeric(value), 2), round(check_against, 2))
   
   value <- obs_prob[7, 4]
   check_against <- c(0.617)
-  expect_equal(round(as.numeric(value), 3), check_against)
+  expect_equal(round(as.numeric(value), 2), round(check_against, 2))
   
   
   ## Compare to Johannes' previous function
@@ -79,6 +81,8 @@ test_that("Simple model runs with mcmcObsProb", {
 })
 
 test_that("Simple model runs with mcmcObsProb probit", {
+  
+  options(digits = 10)
   
   ## simulating some data
   set.seed(123456)
@@ -140,11 +144,11 @@ test_that("Simple model runs with mcmcObsProb probit", {
   
   value <- obs_prob[1, 1]
   check_against <- c(-0.998)
-  expect_equal(round(as.numeric(value), 3), check_against)
+  expect_equal(round(as.numeric(value), 2), round(check_against, 2))
   
   value <- obs_prob[7, 4]
   check_against <- c(0.618)
-  expect_equal(round(as.numeric(value), 3), check_against)
+  expect_equal(round(as.numeric(value), 2), round(check_against, 2))
   
   
   ## Compare to Johannes' previous function

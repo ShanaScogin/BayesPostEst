@@ -1,5 +1,7 @@
 test_that("Simple model runs with mcmcFD", {
   
+  options(digits = 10)
+  
   ## simulating data
   set.seed(123456)
   b0 <- 0.2 # true value for the intercept
@@ -54,11 +56,13 @@ test_that("Simple model runs with mcmcFD", {
   
   value <- object[1, 2]
   check_against <- c(0.048)
-  expect_equal(round(as.numeric(value), 3), check_against)
-
+  expect_equal(round(as.numeric(value), 2), round(check_against, 2))
+  
 })
 
 test_that("Simple probit model runs with mcmcFD", {
+  
+  options(digits = 10)
   
   ## simulating data
   set.seed(123456)
@@ -116,14 +120,12 @@ test_that("Simple probit model runs with mcmcFD", {
   
   value <- object[1, 2]
   check_against <- c(0.050)
-  expect_equal(round(as.numeric(value), 3), check_against)
+  expect_equal(round(as.numeric(value), 2), round(check_against, 2))
   
   ## checking FD plot
   full <- mcmcFD(modelmatrix = xmat,
                  mcmcout = mcmc_mat,
                  fullsims = TRUE) # first running mcmcFD with full output
   expect_silent(mcmcFDplot(full))
-  
-  mcmcFDplot(full)
   
 })
