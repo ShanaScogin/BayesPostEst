@@ -57,9 +57,7 @@ df$neuroticism <- (df$neuroticism - mean(df$neuroticism)) / (2 * sd(df$neurotici
 
 We estimate a Bayesian generalized linear model with the inverrse logit link function, where
 
-$$
-Pr(\text{Volunteering}_i) = \text{logit}^{-1}(\beta_1 + \beta_2 \text{Female}_i +  \beta_3 \text{Neuroticism}_i + \beta_4 \text{Extraversion}_i)
-$$
+Pr(Volunteering)<sub>i</sub> = logit<sup>-1</sup> (&beta;<sub>1</sub> + &beta;<sub>2</sub>Female<sub>i</sub> + &beta;<sub>3</sub>Neuroticism<sub>i</sub> + &beta;<sub>4</sub>Extraversion<sub>i</sub>)
 
 BayesPostEst functions accommodate GLM estimates for both logit and probit link functions. The examples proceed with the logit link function. If we had estimated a probit regression, the corresponding argument `link` in relevant function calls would need to be set to `link = "probit"`. Otherwise, it is set to `link = "logit"` by default.
 
