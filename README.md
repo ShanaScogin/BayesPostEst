@@ -227,7 +227,7 @@ mcmcTab(fit.jags, pars = c("b[2]", "b[3]", "b[4]"), ROPE = c(-0.1, 0.1))
 
 ## `mcmcAveProb`
 
-To evaluate the relationship between covariates and a binary outcome, this function calculates the predicted probability ($Pr(y = 1)$) at pre-defined values of one covariate of interest ($x$), while all other covariates are held at a "typical" value. This follows suggestions outlined in [King, Tomz, and Wittenberg (2000, American Journal of Political Science 44(2): 347-361)](https://www-jstor-org.proxy.library.nd.edu/stable/2669316) and elsewhere, which are commonly adopted by users of GLMs. The `mcmcAveProb` function by default calculates the median value of all covariates other than $x$ as "typical" values. 
+To evaluate the relationship between covariates and a binary outcome, this function calculates the predicted probability (\emph{Pr(y = 1)}) at pre-defined values of one covariate of interest (\emph{x}), while all other covariates are held at a "typical" value. This follows suggestions outlined in [King, Tomz, and Wittenberg (2000, American Journal of Political Science 44(2): 347-361)](https://www-jstor-org.proxy.library.nd.edu/stable/2669316) and elsewhere, which are commonly adopted by users of GLMs. The `mcmcAveProb` function by default calculates the median value of all covariates other than \emph{x} as "typical" values. 
 
 Before moving on, we show how create a matrix of posterior draws of coefficients to pass onto these functions. Eventually, each function will contain code similar to the first section of `mcmcTab` to do this as part of the function.
 
@@ -252,7 +252,7 @@ We can now generate predicted probabilities for different values of a covariate 
 
 ### Sex
 
-First, we generate full posterior distributions of the predicted probability of volunteering for a typical female and a typical male. In this function and `mcmcObsProb`, users specify the range of $x$ (here 0 and 1) as well as the number of the column of $x$ in the matrix of posterior draws as well as the model matrix. 
+First, we generate full posterior distributions of the predicted probability of volunteering for a typical female and a typical male. In this function and `mcmcObsProb`, users specify the range of \emph{x} (here 0 and 1) as well as the number of the column of \emph{x} in the matrix of posterior draws as well as the model matrix. 
 
 ```{r}
 aveprob.female.jags <- mcmcAveProb(modelmatrix = mm,
@@ -281,7 +281,7 @@ ggplot(data = aveprob.female.jags,
 
 ### Extraversion
 
-For continuous variables of interest, users may want to set `fullsims = FALSE` to obtain the median predicted probability along the range of $x$ as well as a lower and upper bound of choice (here, the 95% credible interval).
+For continuous variables of interest, users may want to set `fullsims = FALSE` to obtain the median predicted probability along the range of \emph{x} as well as a lower and upper bound of choice (here, the 95% credible interval).
 
 ```{r}
 aveprob.extra.jags <- mcmcAveProb(modelmatrix = mm,
@@ -312,7 +312,7 @@ As an alternative to probabilities for "typical" cases, [Hanmer and Kalkan (2013
 
 ### Sex
 
-We first calculate the average "effect" of sex on volunteering, again generating a full posterior distribution. Again, `xcol` represents the position of the covariate of interest, and `xrange` specifies the values for which $Pr(y = 1)$ is to be calculated.
+We first calculate the average "effect" of sex on volunteering, again generating a full posterior distribution. Again, `xcol` represents the position of the covariate of interest, and `xrange` specifies the values for which \emph{Pr(y = 1)} is to be calculated.
 
 ```{r}
 obsprob.female.jags <- mcmcObsProb(modelmatrix = mm,
@@ -423,7 +423,7 @@ p + labs(title = "First differences") + ggridges::theme_ridges()
 
 One way to assess model fit is to calculate the area under the Receiver Operating Characteristic (ROC) and Precision-Recall curves. A short description of these curves and their utility for model assessment is provided in [Beger (2016)](http://dx.doi.org/10.2139/ssrn.2765419). The `mcmcRocPrc` function produces an object with four elements: the area under the ROC curve, the area under the PR curve, and two dataframes to plot each curve. When `fullsims` is set to `FALSE`, the elements represent the median of the posterior distribution of each quantity.
 
-Because each of these measures relies on comparing the observed $y$ to $Pr(y = 1)$, the function requires both the posterior distribution of all regression coefficients as well as a model frame. This model frame contains all variables used to estimate the model, with the outcome variable in the first column and all other variables following thereafter.
+Because each of these measures relies on comparing the observed \emph{y} to \emph{Pr(y = 1)}, the function requires both the posterior distribution of all regression coefficients as well as a model frame. This model frame contains all variables used to estimate the model, with the outcome variable in the first column and all other variables following thereafter.
 
 
 ```{r}
