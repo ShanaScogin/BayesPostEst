@@ -63,7 +63,7 @@ BayesPostEst functions accommodate GLM estimates for both logit and probit link 
 
 # Model estimation
 
-To use BayesPostEst, we first estimate a Bayesian regression model. This vignette demonstrates four tools for doing so: JAGS (via the [`R2jags` package](https://cran.r-project.org/package=R2jags)), [`MCMCpack`](https://cran.r-project.org/package=MCMCpack), and the two Stan interfaces [`rstan`](https://cran.r-project.org/package=rstan) and [`rstanarm`](https://cran.r-project.org/package=rstanarm).
+To use BayesPostEst, we first estimate a Bayesian regression model. This vignette demonstrates four tools for doing so: JAGS (via the [R2jags package](https://cran.r-project.org/package=R2jags)), [MCMCpack](https://cran.r-project.org/package=MCMCpack), and the two Stan interfaces [rstan](https://cran.r-project.org/package=rstan) and [rstanarm](https://cran.r-project.org/package=rstanarm).
 
 ## JAGS
 
