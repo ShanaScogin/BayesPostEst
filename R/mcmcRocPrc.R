@@ -1,17 +1,13 @@
 #'This function generates ROC and precision-recall curves 
-#'after fitting a Bayesian logit or probit model. For more,
-#'please see other area under the curve functions written by Andreas Beger
-#'<https://ssrn.com/abstract=2765419>
+#'after fitting a Bayesian logit or probit model. 
 #'@title ROC and Precision-Recall Curves using Bayesian MCMC estimates
 #'@description This function generates ROC and Precision-Recall curves 
-#'after fitting a Bayesian logit or probit regression . For more,
-#'please see other area under the curve functions written by Andreas Beger
-#'<https://ssrn.com/abstract=2765419>.
+#'after fitting a Bayesian logit or probit regression.
 #'@param modelmatrix model matrix, including intercept (if the intercept is among the
 #'parameters estimated in the model). Create with model.matrix(formula, data).
 #'Note: the order of columns in the model matrix must correspond to the order of columns 
 #'in the matrix of posterior draws in the \code{mcmcout} argument. See the \code{mcmcout}
-#'argument for more.
+#'argument for more and Beger (2016) for background.
 #'@param mcmcout posterior distributions of all logit coefficients, 
 #'in matrix form. This can be created from rstan, MCMCpack, R2jags, etc. and transformed
 #'into a matrix using the function as.mcmc() from the coda package for \code{jags} class
@@ -106,10 +102,7 @@ mcmcRocPrc <- function(modelmatrix,
     
     # Observed y and x
     pred_obs <- data.frame(y_pred = y_pred, y_obs = modelframe[, 1])             
-    
-    # For more on the area under the curve functions see Andreas Beger
-    # <https://ssrn.com/abstract=2765419>
-    
+        
     auc_roc <- function(obs, pred) {
       pred <- ROCR::prediction(pred, obs)
       auc  <- ROCR::performance(pred, "auc")@y.values[[1]]
@@ -182,9 +175,6 @@ mcmcRocPrc <- function(modelmatrix,
       
       # Observed y and x
       pred_obs <- data.frame(y_pred = pred_prob_vector, y_obs = modelframe[, 1])						 
-      
-      # For more on the area under the curve functions see Andreas Beger
-      # <https://ssrn.com/abstract=2765419>
       
       auc_roc <- function(obs, pred) {
         pred <- ROCR::prediction(pred, obs)
