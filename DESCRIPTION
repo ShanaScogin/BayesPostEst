@@ -1,7 +1,7 @@
 Package: BayesPostEst
 Type: Package
-Title: Generate and plot postestimation quantities after estimating Bayesian regression models using MCMC
-Version: 0.0.0.9000
+Title: Generate and Plot Postestimation Quantities after Estimating Bayesian Regression Models using MCMC
+Version: 0.0.1
 Date: 2019-07-24
 Authors@R: 
     c(person("Johannes", "Karreth", email = "jkarreth@ursinus.edu", role = c("aut")),

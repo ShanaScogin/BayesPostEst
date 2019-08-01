@@ -1,5 +1,5 @@
 # BayesPostEst [![Build Status](https://travis-ci.com/ShanaScogin/BayesPostEst.svg?branch=master)](https://travis-ci.com/ShanaScogin/BayesPostEst)
-An R package implementing functions to assist in presenting results from Bayesian estimation.
+An R package implementing functions to assist in generating and plotting postestimation quantities after estimating Bayesian regression models using MCMC.
 
 # Introduction
 
@@ -67,7 +67,7 @@ To use BayesPostEst, we first estimate a Bayesian regression model. This vignett
 
 ## JAGS
 
-First, we prepare the data for JAGS ([Plummer 2017](http://sourceforge.net/projects/mcmc-jags/files/Manuals/4.x/})). Users need to combine all variables into a list and specify any other elements, like in this case N, the number of observations.
+First, we prepare the data for JAGS ([Plummer 2017](http://mcmc-jags.sourceforge.net)). Users need to combine all variables into a list and specify any other elements, like in this case N, the number of observations.
 
 ```{r}
 dl <- as.list(df[, c("volunteer", "female", "neuroticism", "extraversion")])
@@ -493,7 +493,7 @@ ggplot(fitstats.fullsims, aes(x = area_under_prc)) +
 ```
 
 # What's Happening
-New functions and enhancements to current functions are currently in the works. Please check back for more. 
+New functions and enhancements to current functions are currently in the works. Please check back for more or email us if you have suggestions.
 
 # Contact
 Please contact sscogin@nd.edu if you encounter any bugs with the package or have any comments. Feel free to check out [Johannes Karreth's website](http://www.jkarreth.net) for more resources on Bayesian analysis. 
@@ -521,7 +521,7 @@ Long, J. Scott. 1997. Regression Models for Categorial and Limited Dependent Var
 
 Martin, Andrew D., Kevin M. Quinn, and Jong Hee Park. 2011. “MCMCpack: Markov Chain Monte Carlo in R.” Journal of Statistical Software 42 (9): 22. http://www.jstatsoft.org/v42/i09/.
 
-Plummer, Martyn. 2017. “JAGS Version 4.3.0 User Manual.” http://sourceforge.net/projects/mcmc-jags/files/Manuals/4.x/.
+Plummer, Martyn. 2017. “JAGS Version 4.3.0 User Manual.” http://mcmc-jags.sourceforge.net.
 
 Stan Development Team. 2019. RStan: The R Interface to Stan. http://mc-stan.org/.
 
