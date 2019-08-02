@@ -12,7 +12,7 @@ mcmcRocPrc(modelmatrix, mcmcout, modelframe, curves = FALSE,
 parameters estimated in the model). Create with model.matrix(formula, data).
 Note: the order of columns in the model matrix must correspond to the order of columns 
 in the matrix of posterior draws in the \code{mcmcout} argument. See the \code{mcmcout}
-argument for more.}
+argument for more and Beger (2016) for background.}
 
 \item{mcmcout}{posterior distributions of all logit coefficients, 
 in matrix form. This can be created from rstan, MCMCpack, R2jags, etc. and transformed
@@ -49,19 +49,16 @@ This function returns a list with 4 elements:
 }
 \description{
 This function generates ROC and Precision-Recall curves 
-after fitting a Bayesian logit or probit regression . For more,
-please see other area under the curve functions written by Andreas Beger
-<https://ssrn.com/abstract=2765419>.
+after fitting a Bayesian logit or probit regression.
 }
 \details{
 This function generates ROC and precision-recall curves 
-after fitting a Bayesian logit or probit model. For more,
-please see other area under the curve functions written by Andreas Beger
-<https://ssrn.com/abstract=2765419>
+after fitting a Bayesian logit or probit model.
 }
 \examples{
 \donttest{
 # simulating data
+
 set.seed(123456)
 b0 <- 0.2 # true value for the intercept
 b1 <- 0.5 # true value for first beta
@@ -74,30 +71,50 @@ pr <- 1 / (1 + exp(-Z)) # inv logit function
 Y <- rbinom(n, 1, pr) 
 data <- data.frame(cbind(X1, X2, Y))
 
-## fitting with stan
-library("rstanarm")
-m <- rstanarm::stan_glm(Y ~ X1 + X2,
-                        data = data,
-                        family = binomial(link = "logit"))
+# formatting the data for jags
+datjags <- as.list(data)
+datjags$N <- length(datjags$Y)
 
-## using mcmcRocPrc with median draws
-fit_sum <- mcmcRocPrc(sims = m,
-                      modelframe = model.frame(m),
+# creating jags model
+model <- function()  {
+  
+  for(i in 1:N){
+    Y[i] ~ dbern(p[i])  ## Bernoulli distribution of y_i
+    logit(p[i]) <- mu[i]    ## Logit link function
+    mu[i] <- b[1] + 
+      b[2] * X1[i] + 
+      b[3] * X2[i]
+  }
+  
+  for(j in 1:3){
+    b[j] ~ dnorm(0, 0.001) ## Use a coefficient vector for simplicity
+  }
+  
+}
+
+params <- c("b")
+inits1 <- list("b" = rep(0, 3))
+inits2 <- list("b" = rep(0, 3))
+inits <- list(inits1, inits2)
+
+## fitting the model with R2jags
+set.seed(123)
+fit <- R2jags::jags(data = datjags, inits = inits, 
+                    parameters.to.save = params, n.chains = 2, n.iter = 2000, 
+                    n.burnin = 1000, model.file = model)
+
+# processing the data
+mm <- model.matrix(Y ~ X1 + X2, data = data)
+xframe <- as.matrix(model.frame(Y ~ X1 + X2, data = data))
+mcmc <- coda::as.mcmc(fit)
+mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xframe)]
+
+# using mcmcRocPrc
+fit_sum <- mcmcRocPrc(modelmatrix = mm,
+                      modelframe = xframe,
+                      mcmcout = mcmc_mat,
+                      curves = TRUE,
                       fullsims = FALSE)
-
-fit_sum$area_under_roc
-plot(x = fit_sum$roc_dat$x, 
-     y = fit_sum$roc_dat$y, 
-     type = "l", 
-     main = "ROC")
-abline(a = 0, b = 1)
-
-fit_sum$area_under_prc
-plot(x = fit_sum$prc_dat$x, 
-     y = fit_sum$prc_dat$y, 
-     type = "l", 
-     main = "PRC")
-
 }
 }
 \references{
