@@ -10,6 +10,21 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+<!-- --- -->
+<!-- title: "BayesPostEst package vignette" -->
+<!-- author: "Johannes Karreth" -->
+<!-- date: "7/18/2019" -->
+<!-- output: -->
+<!--   html_document: -->
+<!--     theme: cosmo -->
+<!--     highlight: tango -->
+<!--     toc: true -->
+<!--     toc_float: true -->
+<!-- bibliography: "references.bib" -->
+<!-- editor_options:  -->
+<!--   chunk_output_type: console -->
+<!-- --- -->
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
@@ -487,15 +502,15 @@ fitstats.fullsims <- mcmcRocPrc(modelmatrix = mm,
 We can then plot the posterior density of the area under each curve.
 
 ```{r}
-# ggplot(fitstats.fullsims, aes(x = area_under_roc)) + 
-#   geom_density() + 
-#   labs(title = "Area under the ROC curve")
+ggplot(fitstats.fullsims, aes(x = area_under_roc)) +
+  geom_density() +
+  labs(title = "Area under the ROC curve")
 ```
 
 ```{r}
-# ggplot(fitstats.fullsims, aes(x = area_under_prc)) + 
-#   geom_density() + 
-#   labs(title = "Area under the Precision-Recall curve")
+ggplot(fitstats.fullsims, aes(x = area_under_prc)) +
+  geom_density() +
+  labs(title = "Area under the Precision-Recall curve")
 ```
 
 
