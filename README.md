@@ -496,7 +496,7 @@ ggplot(fitstats.fullsims, aes(x = area_under_prc)) +
 New functions and enhancements to current functions are currently in the works. Please check back for more or email us if you have suggestions.
 
 # Contact
-Please contact sscogin@nd.edu if you encounter any bugs with the package or have any comments. Feel free to check out [Johannes Karreth's website](http://www.jkarreth.net) for more resources on Bayesian analysis. 
+Please submit an issue if you encounter any bugs with the package or have any comments. Feel free to check out [Johannes Karreth's website](http://www.jkarreth.net) for more resources on Bayesian estimation. 
 
 # References
 Beger, Andreas. 2016. “Precision-Recall Curves.” Available at SSRN: https://ssrn.com/Abstract=2765419. http://dx.doi.org/10.2139/ssrn.2765419.
