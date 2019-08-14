@@ -235,7 +235,7 @@ mcmcTab(fit.jags, Pr = TRUE)
 
 ## ROPE
 
-Users can also define a "region of practical equivalence" (ROPE; @Kruschke2013). This region is a band of values around 0 that are "practically equivalent" to 0 or no effect. For this to be useful, all parameters (e.g. regression coefficients) must be on the same scale because mcmcTab accepts only one definition of ROPE for all parameters. Users can standardize regression coefficients to achieve this. Because we standardized variables earlier, the coefficients (except the intercept) are on a similar scale and we define the ROPE to be between -0.1 and 0.1.
+Users can also define a "region of practical equivalence" (ROPE; @Kruschke2013; Kruschke2018). This region is a band of values around 0 that are "practically equivalent" to 0 or no effect. For this to be useful, all parameters (e.g. regression coefficients) must be on the same scale because mcmcTab accepts only one definition of ROPE for all parameters. Users can standardize regression coefficients to achieve this. Because we standardized variables earlier, the coefficients (except the intercept) are on a similar scale and we define the ROPE to be between -0.1 and 0.1.
 
 ```{r}
 mcmcTab(fit.jags, pars = c("b[2]", "b[3]", "b[4]"), ROPE = c(-0.1, 0.1))
