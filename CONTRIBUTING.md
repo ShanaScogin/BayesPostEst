@@ -1,6 +1,6 @@
 # Contributing to `BayesPostEst`
 
-We appreciate your interest in contributing to our project. This document contains guidelines for the contributing process. We welcome contributions from all, regardless of your level of experience.
+We appreciate your interest in contributing to our project. This document contains general guidelines for this process. We welcome contributions from all, regardless of your level of experience. To see the enhancements we have planned or are working on, check out our current [ issues](https://github.com/ShanaScogin/modeLLtest/issues). [Johannes Karreth's website](http://www.jkarreth.net) has more resources on Bayesian estimation that might help you gain an idea of what this package offers and where it might go in the future.
 
 By participating in this project, you agree to abide by the [code of conduct](CODE_OF_CONDUCT.md).
 

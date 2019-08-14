@@ -494,10 +494,10 @@ ggplot(fitstats.fullsims, aes(x = area_under_prc)) +
 ```
 
 # What's Happening
-New functions and enhancements to current functions are currently in the works. Please check back for more or email us if you have suggestions.
+New functions and enhancements to current functions are in the works. Feel free to browse the [issues](https://github.com/ShanaScogin/modeLLtest/issues) to see what we are working on or submit an [enhancement issue](https://github.com/ShanaScogin/modeLLtest/issues) of your own. Our [contributing](CONTRIBUTING.md) document has more information on ways to contribute.
 
 # Contact
-Please submit an issue if you encounter any bugs with the package or have any comments. Feel free to check out [Johannes Karreth's website](http://www.jkarreth.net) for more resources on Bayesian estimation. 
+Please submit an [issue](https://github.com/ShanaScogin/modeLLtest/issues) if you encounter any bugs or problems with the package. Feel free to check out [Johannes Karreth's website](http://www.jkarreth.net) for more resources on Bayesian estimation. 
 
 # References
 Beger, Andreas. 2016. “Precision-Recall Curves.” Available at SSRN: https://ssrn.com/Abstract=2765419. http://dx.doi.org/10.2139/ssrn.2765419.
