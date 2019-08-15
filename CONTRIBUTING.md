@@ -14,6 +14,6 @@ Contributions can come in many forms. This includes (but is not limited to!):
 - Fixing bugs ([open a Pull Request](https://github.com/ShanaScogin/modeLLtest/pulls))
 
 # Code formatting
-- In general, BayesPostEst uses camelCase for function names.
+- In general, `BayesPostEst` uses camelCase for function names.
 - Functions are generally named with lowercase `mcmc` followed by a description of its functionality, such as `mcmcFD` for the first differences of a Bayesian logit or probit model estimation or `mcmcRocPrc` for the ROC and precision-recall curves of a Bayesian logit or probit model estimation.
 - For coding style within functions other than naming, BayesPostEst currently defaults to the [tidyverse style](https://style.tidyverse.org/). A more detailed design philosophy will be available in the near future.
