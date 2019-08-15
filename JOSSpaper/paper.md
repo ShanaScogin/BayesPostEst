@@ -22,9 +22,9 @@ affiliations:
     index: 1
   - name: University of Notre Dame
     index: 2
-  - name: 
+  - name: Predictive Heuristics
   	index: 3
-date: 31 August 2019
+date: 15 August 2019
 bibliography: paper.bib
 ---
 
@@ -34,12 +34,12 @@ BayesPostEst is an R [@R] package with convenience functions to generate and pre
 
 The package contains six functions:
 
-- `mcmcTab`: Summarize Bayesian MCMC Output
-- `mcmcAveProb`: Predicted Probabilities using Bayesian MCMC estimates for the "Average" Case
-- `mcmcObsProb`: Predicted Probabilities using Bayesian MCMC estimates for the Average of Observed Cases
-- `mcmcFD`: First Differences of a Bayesian Logit or Probit model
-- `mcmcFDplot`: Plot First Differences from MCMC output
-- `mcmcRocPrc`: ROC and Precision-Recall Curves using Bayesian MCMC estimates
+- `mcmcTab`: Summarize Bayesian MCMC output
+- `mcmcAveProb`: Predicted probabilities using Bayesian MCMC estimates for the "Average Case"
+- `mcmcObsProb`: Predicted probabilities using Bayesian MCMC estimates using the "Observed Value" approach, calculating probabilities for the average of observed cases
+- `mcmcFD`: First differences of a Bayesian logit or probit model
+- `mcmcFDplot`: Plot first differences from MCMC output
+- `mcmcRocPrc`: ROC and precision-recall curves using Bayesian MCMC estimates
 
 # Need and applications
 
