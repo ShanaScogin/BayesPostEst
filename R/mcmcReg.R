@@ -108,18 +108,47 @@ mcmcReg <- function(mod, pars, point.est = 'mean', ci = .95, hpdi = F,
     coef_names <- lapply(samps, colnames)
     
   }
-
-  ## extract samples and variable names from stanfit object
-  if (lapply(mod, inherits, 'stanfit')[[1]]) {
-
-    ## extract coefficient names from list of model ojects
-    coef_names <- mapply(function(x, y) rownames(rstan::summary(x, pars = y)$summary),
-                         mod, pars, SIMPLIFY = F)
-
+  
+  ## extract samples and variable names from bugs object
+  if (lapply(mod, inherits, 'bugs')[[1]]) {
+    
+    ## extract samples
+    samps <- lapply(mod, function(x) x$sims.matrix)
+    
+    ## limit samples to parameters in model
+    samps <- mapply(function(x, y) x[, grepl(x = colnames(x), pattern = paste(y, collapse = '|'))],
+                    samps, pars, SIMPLIFY = F)
+    
+    ## extract coefficient names from dataframe(s)
+    coef_names <- lapply(samps, colnames)
+    
+  }
+  
+  ## extract samples and variable names from mcmc.list object
+  if (lapply(mod, inherits, 'mcmc.list')[[1]]) {
+    
     ## extract posterior samples from list of model objects
-    samps <- mapply(function(x, y) as.data.frame(rstan::extract(x, pars = y)),
+    samps <- lapply(mod, function(x) as.data.frame(Reduce("+", x) / length(x)))
+    
+    ## drop columns not in pars
+    samps <- mapply(function(x, y) x[, colnames(x) %in% y], samps, pars,
+                    SIMPLIFY = F)
+    
+    ## extract coefficient names from dataframe(s)
+    coef_names <- lapply(samps, colnames)
+    
+  }
+  
+  ## extract samples and variable names from mcmc object
+  if (lapply(mod, inherits, 'mcmc')[[1]]) {
+    
+    ## extract posterior samples from list of model objects
+    samps <- mapply(function(x) coda:::as.data.frame.mcmc(x, vars = y),
                     mod, pars, SIMPLIFY = F)
-
+    
+    ## extract coefficient names from dataframe(s)
+    coef_names <- lapply(samps, colnames)
+    
   }
   
   ## extract samples and variable names from stanreg object
@@ -131,6 +160,19 @@ mcmcReg <- function(mod, pars, point.est = 'mean', ci = .95, hpdi = F,
     
     ## extract posterior samples from list of model objects
     samps <- mapply(function(x, y) as.data.frame(rstan::extract(x$stanfit, pars = y)),
+                    mod, pars, SIMPLIFY = F)
+    
+  }
+  
+  ## extract samples and variable names from stanfit object
+  if (lapply(mod, inherits, 'stanfit')[[1]]) {
+    
+    ## extract coefficient names from list of model ojects
+    coef_names <- mapply(function(x, y) rownames(rstan::summary(x, pars = y)$summary),
+                         mod, pars, SIMPLIFY = F)
+    
+    ## extract posterior samples from list of model objects
+    samps <- mapply(function(x, y) as.data.frame(rstan::extract(x, pars = y)),
                     mod, pars, SIMPLIFY = F)
     
   }
@@ -157,33 +199,6 @@ mcmcReg <- function(mod, pars, point.est = 'mean', ci = .95, hpdi = F,
 
     ## average over chains and convert to dataframe
     samps <- lapply(samps, function(x) as.data.frame(Reduce("+", x) / length(x)))
-
-    ## extract coefficient names from dataframe(s)
-    coef_names <- lapply(samps, colnames)
-
-  }
-
-  ## extract samples and variable names from mcmc.list object
-  if (lapply(mod, inherits, 'mcmc.list')[[1]]) {
-
-    ## extract posterior samples from list of model objects
-    samps <- lapply(mod, function(x) as.data.frame(Reduce("+", x) / length(x)))
-
-    ## drop columns not in pars
-    samps <- mapply(function(x, y) x[, colnames(x) %in% y], samps, pars,
-                    SIMPLIFY = F)
-
-    ## extract coefficient names from dataframe(s)
-    coef_names <- lapply(samps, colnames)
-
-  }
-
-  ## extract samples and variable names from mcmc object
-  if (lapply(mod, inherits, 'mcmc')[[1]]) {
-
-    ## extract posterior samples from list of model objects
-    samps <- mapply(function(x) coda:::as.data.frame.mcmc(x, vars = y),
-                    mod, pars, SIMPLIFY = F)
 
     ## extract coefficient names from dataframe(s)
     coef_names <- lapply(samps, colnames)
