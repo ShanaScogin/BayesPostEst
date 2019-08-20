@@ -75,7 +75,7 @@
 #' fit2 <- brm(mpg ~ cyl + disp + hp + (1 | gear),
 #'             data = mtcars, family = gaussian())
 #' mcmcreg(fit2, pars = c('b_Intercept', 'b'))
-mcmcreg <- function(mod, pars, point.est = 'mean', ci = .95, hpdi = F,
+mcmcReg <- function(mod, pars, point.est = 'mean', ci = .95, hpdi = F,
                     brms.re = F, custom.coef.names = NULL, gof = numeric(0),
                     custom.gof.names = character(0),
                     format = 'latex', file, ...) {
@@ -94,6 +94,22 @@ mcmcreg <- function(mod, pars, point.est = 'mean', ci = .95, hpdi = F,
 
   ## if only one gof statistic name scalar or vector, coerce to a list
   if (class(custom.gof.names) != 'list') custom.gof.names <- list(custom.gof.names)
+  
+  
+  ## extract samples and variable names from jags or rjags object
+  if (lapply(mod, inherits, 'jags')[[1]] || lapply(mod, inherits, 'rjags')[[1]]) {
+    
+    ## extract samples
+    samps <- lapply(mod, function(x) as.matrix(coda::as.mcmc(x)))
+    
+    ## limit samples to parameters in model
+    samps <- mapply(function(x, y) x[, grepl(x = colnames(x), pattern = paste(y, collapse = '|'))],
+                    samps, pars, SIMPLIFY = F)
+    
+    ## extract coefficient names from dataframe(s)
+    coef_names <- lapply(samps, colnames)
+    
+  }
 
   ## extract samples and variable names from stanfit object
   if (lapply(mod, inherits, 'stanfit')[[1]]) {
@@ -137,7 +153,7 @@ mcmcreg <- function(mod, pars, point.est = 'mean', ci = .95, hpdi = F,
     ## average over chains and convert to dataframe
     samps <- lapply(samps, function(x) as.data.frame(Reduce("+", x) / length(x)))
 
-    ## extract coefficient names from dataframe
+    ## extract coefficient names from dataframe(s)
     coef_names <- lapply(samps, colnames)
 
   }
@@ -152,7 +168,7 @@ mcmcreg <- function(mod, pars, point.est = 'mean', ci = .95, hpdi = F,
     samps <- mapply(function(x, y) x[, colnames(x) %in% y], samps, pars,
                     SIMPLIFY = F)
 
-    ## extract coefficient names from dataframe
+    ## extract coefficient names from dataframe(s)
     coef_names <- lapply(samps, colnames)
 
   }
@@ -164,7 +180,7 @@ mcmcreg <- function(mod, pars, point.est = 'mean', ci = .95, hpdi = F,
     samps <- mapply(function(x) coda:::as.data.frame.mcmc(x, vars = y),
                     mod, pars, SIMPLIFY = F)
 
-    ## extract coefficient names from dataframe
+    ## extract coefficient names from dataframe(s)
     coef_names <- lapply(samps, colnames)
 
   }
