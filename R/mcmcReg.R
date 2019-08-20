@@ -19,8 +19,6 @@
 #' @param ci a scalar indicating the confidence level of the uncertainty intervals.
 #' @param hpdi a logical indicating whether to use highest posterior density intervals
 #' or equal tailed credible intervals to capture uncertainty.
-#' @param brms.re a logical indicating whether to include random effect estimates
-#' from `brms` models.
 #' @param custom.coef.names an optional vector or list of vectors containing parameter
 #' names for each model. If there are multiple models, the list must have the same
 #' number of elements as there are models, and the vector of names in each list
@@ -76,7 +74,7 @@
 #'             data = mtcars, family = gaussian())
 #' mcmcreg(fit2, pars = c('b_Intercept', 'b'))
 mcmcReg <- function(mod, pars, point.est = 'mean', ci = .95, hpdi = F,
-                    brms.re = F, custom.coef.names = NULL, gof = numeric(0),
+                    custom.coef.names = NULL, gof = numeric(0),
                     custom.gof.names = character(0),
                     format = 'latex', file, ...) {
 
@@ -139,12 +137,6 @@ mcmcReg <- function(mod, pars, point.est = 'mean', ci = .95, hpdi = F,
 
   ## extract samples and variable names from brmsfit object
   if (lapply(mod, inherits, 'brmsfit')[[1]]) {
-
-    ## check for random effects parameters
-    mod_ranefs <- lapply(mod, function(x) x$fit@model_pars[grep('r_', x$fit@model_pars)])
-
-    ## concatenate random effects parameter names to pars
-    if (brms.re) pars <- mapply(c, pars, mod_ranefs, SIMPLIFY = F)
 
     ## extract coefficient names from list of model ojects
     coef_names <- mapply(function(x, y) rownames(rstan::summary(x$fit, pars = y)$summary),
