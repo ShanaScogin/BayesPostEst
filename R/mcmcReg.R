@@ -123,6 +123,19 @@ mcmcReg <- function(mod, pars, point.est = 'mean', ci = .95, hpdi = F,
                     mod, pars, SIMPLIFY = F)
 
   }
+  
+  ## extract samples and variable names from stanreg object
+  if (lapply(mod, inherits, 'stanreg')[[1]]) {
+    
+    ## extract coefficient names from list of model ojects
+    coef_names <- mapply(function(x, y) rownames(rstan::summary(x$stanfit, pars = y)$summary),
+                         mod, pars, SIMPLIFY = F)
+    
+    ## extract posterior samples from list of model objects
+    samps <- mapply(function(x, y) as.data.frame(rstan::extract(x$stanfit, pars = y)),
+                    mod, pars, SIMPLIFY = F)
+    
+  }
 
   ## extract samples and variable names from brmsfit object
   if (lapply(mod, inherits, 'brmsfit')[[1]]) {
