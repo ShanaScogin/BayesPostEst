@@ -26,6 +26,7 @@ Imports:
     rlang,
     ROCR,
     stats,
+    texreg,
     tidyr (>= 0.5.1)
 Depends:
     R (>= 2.14.0)
