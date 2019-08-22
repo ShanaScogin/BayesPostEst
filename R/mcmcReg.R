@@ -75,9 +75,12 @@ mcmcReg <- function(mod, pars = NULL, point.est = 'mean', ci = .95, hpdi = F,
                     custom.coef.names = NULL, gof = numeric(0),
                     custom.gof.names = character(0),
                     format = 'latex', file, ...) {
-
+  
   ## if only one model object, coerce to a list
   if (all(class(mod) != 'list')) mod <- list(mod)
+  
+  ##
+  if (length(unique(lapply(mod, class))) > 1) stop('More than one object class supplied to argument mod')
 
   ## if only one custom coefficient names object, coerce to a list
   if (class(custom.coef.names) != 'list' & !is.null(custom.coef.names)) custom.coef.names <- list(custom.coef.names)
