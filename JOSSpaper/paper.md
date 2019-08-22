@@ -16,7 +16,10 @@ authors:
     affiliation: 2
   - name: Andreas Beger
     orcid: 0000-0003-1883-3169
-    affiliation: 3    
+    affiliation: 3
+  - name: Rob Williams
+    orcid: 0000-0001-9259-3883
+    affiliation: 4
 affiliations:
   - name: Ursinus College
     index: 1
@@ -24,7 +27,9 @@ affiliations:
     index: 2
   - name: Predictive Heuristics
   	index: 3
-date: 15 August 2019
+  - name: Washington University in St. Louis
+    index: 4
+date: 22 August 2019
 bibliography: paper.bib
 ---
 
@@ -57,7 +62,7 @@ Users can also define a "region of practical equivalence" [ROPE, see @Kruschke20
 
 To define a ROPE, it can be useful for all parameters (e.g. regression coefficients) to be on the same scale because `mcmcTab` accepts only one definition of ROPE for all parameters. Users can standardize continuous predictors to achieve this, for instance by dividing them by two standard deviations [@Gelman2008].
 
-The output from `mcmcTab` can be exported to a variety of document types using appropriate R packages, including flextable [@flextable], xtable [@xtable], or knitr [@knitr]. 
+The output from `mcmcTab` can be exported to a variety of document types using appropriate R packages, including flextable [@flextable], xtable [@xtable], or knitr [@knitr].
 
 # Predicted probabilities and first differences
 
