@@ -80,7 +80,7 @@ mcmcReg <- function(mod, pars = NULL, point.est = 'mean', ci = .95, hpdi = F,
   if (all(class(mod) != 'list')) mod <- list(mod)
   
   ##
-  if (length(unique(lapply(mod, class))) > 1) stop('More than one object class supplied to argument mod')
+  if (length(unique(lapply(mod, class))) > 1) stop('More than one object class supplied to argument "mod"')
 
   ## if only one custom coefficient names object, coerce to a list
   if (class(custom.coef.names) != 'list' & !is.null(custom.coef.names)) custom.coef.names <- list(custom.coef.names)
@@ -153,6 +153,14 @@ mcmcReg <- function(mod, pars = NULL, point.est = 'mean', ci = .95, hpdi = F,
     
   }
   
+  ## extract coefficient names from dataframe(s)
+  if (!is.null(pars)) {
+    
+    coef_names <- mapply(function(x, y) colnames(x)[grepl(x = colnames(x), pattern = paste(y, collapse = '|'))],
+                         samps, pars, SIMPLIFY = F)
+    
+  }
+  
   ## limit samples to supplied parameters
   if (!is.null(pars)) {
     
@@ -161,24 +169,21 @@ mcmcReg <- function(mod, pars = NULL, point.est = 'mean', ci = .95, hpdi = F,
     
   }
   
-  ## extract coefficient names from dataframe(s)
-  coef_names <- lapply(samps, colnames)
-
   ## calculate point estimate of posterior density
   if (point.est == 'mean') {
 
-    samps_pe <- lapply(samps, function(x) apply(x, 2, mean))
+    samps_pe <- lapply(samps, function(x) apply(as.matrix(x), 2, mean))
 
   } else {
 
-    samps_pe <- lapply(samps, function(x) apply(x, 2, median))
+    samps_pe <- lapply(samps, function(x) apply(as.matrix(x), 2, median))
 
   }
 
   ## calculate uncertainty interval for ci argument
   if (hpdi == F) {
 
-    samps_ci <- lapply(samps, function(x) apply(x, 2, quantile,
+    samps_ci <- lapply(samps, function(x) apply(as.matrix(x), 2, quantile,
                                                 probs = c(.5 - ci/2, .5 + ci/2)))
 
   } else {
