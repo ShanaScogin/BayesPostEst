@@ -10,7 +10,7 @@ BayesPostEst
 }
 \section{BayesPostEst functions}{
  This package currently has 
-six main functions 
+seven main functions 
 \itemize{
 \item \code{mcmcAveProb()}
 \item \code{mcmcObsProb()}
@@ -18,6 +18,7 @@ six main functions
 \item \code{mcmcFDplot()}
 \item \code{mcmcRocPrc()}
 \item \code{mcmcTab()}
+\item \code{mcmcReg()}
 }
 These functions can be used to generate and plot postestimation quantities after 
 estimating Bayesian regression models using MCMC. The package combines functions 

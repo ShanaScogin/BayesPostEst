@@ -4,7 +4,7 @@
 \alias{mcmcReg}
 \title{Regression Tables for MCMC Output}
 \usage{
-mcmcReg(mod, pars, point.est = "mean", ci = 0.95, hpdi = F,
+mcmcReg(mod, pars = NULL, point.est = "mean", ci = 0.95, hpdi = F,
   custom.coef.names = NULL, gof = numeric(0),
   custom.gof.names = character(0), format = "latex", file, ...)
 }
@@ -13,6 +13,9 @@ mcmcReg(mod, pars, point.est = "mean", ci = 0.95, hpdi = F,
 MCMCpack, rstan, rstanarm, and brms, or a list of model objects of the same class.}
 
 \item{pars}{a scalar or vector of the parameters you wish to include in the table.
+By default, \code{mcmcReg} includes all parameters saved in a model object. If a
+model has lots of samples and lots of saved parameters, not explicitly specifying
+a limited number of parameters to include via \code{pars} may take a long time.
 \code{pars} can either be a vector with the specific parameters to be included
 in the table e.g. \code{pars = c("beta[1]", "beta[2]", "beta[3]")}, or they can
 be partial names that will be matched using regular expressions e.g. \code{pars = "beta"}.
