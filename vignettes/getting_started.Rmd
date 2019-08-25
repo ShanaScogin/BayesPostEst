@@ -279,11 +279,11 @@ mcmcReg(fit.jags, pars = c('b', 'dev'), format = 'html', doctype = F)
 
 ### Custom coefficient names
 
-`mcmcReg` supports custom coefficient names to support publication-ready tables. The simplest option is via the `custom.coef.names` argument. Note that the number of parameters and the number of custom coefficient names must match, so it is a good idea to use `pars` in tandem with `custom.coef.names`.
+`mcmcReg` supports custom coefficient names to support publication-ready tables. The simplest option is via the `coefnames` argument. Note that the number of parameters and the number of custom coefficient names must match, so it is a good idea to use `pars` in tandem with `coefnames`.
 
 ```{r, results = 'asis'}
 mcmcReg(fit.jags, pars = 'b',
-        custom.coef.names = c('(Constant)', 'Female', 'Neuroticism', 'Extraversion'),
+        coefnames = c('(Constant)', 'Female', 'Neuroticism', 'Extraversion'),
         format = 'html', doctype = F)
 ```
 
