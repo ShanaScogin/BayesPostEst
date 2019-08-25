@@ -50,8 +50,6 @@
 #' these should be included in \code{par} if you wish to include the intercept in the
 #' table.
 #'
-#' @importFrom brms brm
-#'
 #' @return A formatted regression table in LaTeX or HTML format.
 #'
 #' @author Rob Williams, \email{jayrobwilliams@@gmail.com}
