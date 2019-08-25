@@ -59,13 +59,10 @@ NULL
 #' @importFrom caTools trapz
 NULL
 
-#' @importFrom coda as.mcmc as.data.frame.mcmc HPDinterval
+#' @importFrom coda as.mcmc HPDinterval
 NULL
 
 #' @importFrom R2jags jags
-NULL
-
-#' @importFrom runjags as.mcmc.list.runjags
 NULL
 
 #' @importFrom texreg createTexreg texreg htmlreg

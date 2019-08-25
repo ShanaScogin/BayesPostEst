@@ -36,7 +36,7 @@ Encoding: UTF-8
 LazyData: TRUE
 LazyLoad: TRUE
 Suggests: 
-    brm,
+    brms,
     datasets,
     knitr,
     MCMCpack,
