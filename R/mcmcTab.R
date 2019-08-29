@@ -95,6 +95,9 @@ mcmcTab <- function(sims,
     if(class(sims)[1] == "stanreg"){
       sims <- as.matrix(sims)
     } 
+    if(class(sims)[1] == "brmsfit"){
+      sims <- as.matrix(sims)
+    } 
     if(class(sims)[1] == "stanfit"){
       sims <- as.matrix(sims)
     }     
