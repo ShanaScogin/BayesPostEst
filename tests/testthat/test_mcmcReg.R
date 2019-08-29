@@ -1,8 +1,5 @@
 test_that("Simple model runs with mcmcReg", {
   
-  skip_on_cran()
-  ## this test is longer than CRAN allows
-  
   options(digits = 10)
   
   ## simulating data
@@ -57,3 +54,26 @@ test_that("Simple model runs with mcmcReg", {
   expect_match(value, '0.28')
 
 })
+
+dontrun(
+  test_that("Simple model runs with mcmcReg", {
+    
+    skip_on_cran()
+    ## this test is longer than CRAN allows
+    
+    library(datasets)
+    library(brms)
+    
+    # simple linear model
+    fit1 <- brm(mpg ~ cyl + disp + hp, data = mtcars,
+                family = gaussian())
+    mcmcReg(fit1, pars = c('b_Intercept', 'b'),
+            custom.coef.names = list('b_Intercept' = '(Constant)',
+                             'b_cyl' = 'Cylinders',
+                             'b_disp' = 'Displacement',
+                             'b_hp' = 'Horsepower'))
+    
+  })
+
+)
+

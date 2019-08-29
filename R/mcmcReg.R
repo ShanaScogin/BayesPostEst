@@ -111,30 +111,31 @@
 mcmcReg <- function(mod, 
                     pars = NULL, 
                     pointest = 'mean', 
-                    ci = 0.95, 
+                    ci = .95, 
                     hpdi = F,
-                    coefnames = NULL, 
+                    custom.coef.names = NULL, 
                     gof = numeric(0),
-                    gofnames = character(0),
-                    format = 'latex', file, ...) {
+                    custom.gof.names = character(0),
+                    format = 'latex', 
+                    file, ...) {
   
   ## if only one model object, coerce to a list
   if (all(class(mod) != 'list')) mod <- list(mod)
   
   ##
   if (length(unique(lapply(mod, class))) > 1) stop('More than one object class supplied to argument "mod"')
-
+  
   ## if only one custom coefficient names object, coerce to a list
-  if (class(coefnames) != 'list' & !is.null(coefnames)) coefnames <- list(coefnames)
-
+  if (class(custom.coef.names) != 'list' & !is.null(custom.coef.names)) custom.coef.names <- list(custom.coef.names)
+  
   ## if only one parameter vector, coerce to a list
   if (class(pars) != 'list') pars <- list(pars)
-
+  
   ## if only one gof statistic scalar or vector, coerce to a list
   if (class(gof) != 'list') gof <- list(rep(gof, times = length(mod)))
-
+  
   ## if only one gof statistic name scalar or vector, coerce to a list
-  if (class(gofnames) != 'list') gofnames <- list(gofnames)
+  if (class(custom.gof.names) != 'list') custom.gof.names <- list(custom.gof.names)
   
   ## extract samples and variable names from jags or rjags object
   if (lapply(mod, inherits, 'jags')[[1]] || lapply(mod, inherits, 'rjags')[[1]]) {
@@ -179,14 +180,14 @@ mcmcReg <- function(mod,
     samps <- lapply(mod, function(x) as.data.frame(x))
     
   }
-
+  
   ## extract samples and variable names from brmsfit object
   if (lapply(mod, inherits, 'brmsfit')[[1]]) {
     
     samps <- lapply(mod, function(x) as.data.frame(x$fit))
-
+    
   }
-
+  
   ## extract samples and variable names from runjags object
   if (lapply(mod, inherits, 'runjags')[[1]]) {
     
@@ -213,120 +214,120 @@ mcmcReg <- function(mod,
   
   ## calculate point estimate of posterior density
   if (pointest == 'mean') {
-
+    
     samps_pe <- lapply(samps, function(x) apply(as.matrix(x), 2, mean))
-
+    
   } else {
-
+    
     samps_pe <- lapply(samps, function(x) apply(as.matrix(x), 2, median))
-
+    
   }
-
+  
   ## calculate uncertainty interval for ci argument
   if (hpdi == F) {
-
+    
     samps_ci <- lapply(samps, function(x) apply(as.matrix(x), 2, quantile,
                                                 probs = c(.5 - ci/2, .5 + ci/2)))
-
+    
   } else {
-
+    
     samps_ci <- lapply(samps, function(x) t(coda::HPDinterval(coda::as.mcmc(x),
-                                                            prob = ci)))
-
+                                                              prob = ci)))
+    
   }
-
+  
   ## if coefficent names supplied, replace names from model object(s)
-  if (!is.null(coefnames) & !is.list(coefnames)) coef_names <- list(coefnames)
-  if (!is.null(coefnames)) coef_names <- coefnames
-
+  if (!is.null(custom.coef.names) & !is.list(custom.coef.names)) coef_names <- list(custom.coef.names)
+  if (!is.null(custom.coef.names)) coef_names <- custom.coef.names
+  
   ##
   if (length(mod) != length(coef_names)) {
-
+    
     stop('number of models does not match number of custom coefficient vectors')
-
+    
   }
-
+  
   ## create list of texreg object(s) with point estimates and interval
   tr_list <- mapply(function(v, w, x, y, z) texreg::createTexreg(coef.names = v,
-                                                           coef = w,
-                                                           ci.low = x[1, ],
-                                                           ci.up = x[2, ],
-                                                           gof = y,
-                                                           gof.names = z),
-                    coef_names, samps_pe, samps_ci, gof, gofnames)
-
+                                                                 coef = w,
+                                                                 ci.low = x[1, ],
+                                                                 ci.up = x[2, ],
+                                                                 gof = y,
+                                                                 gof.names = z),
+                    coef_names, samps_pe, samps_ci, gof, custom.gof.names)
+  
   ## create LaTeX output
   if (format == 'latex') {
-
+    
     ## create LaTeX code
     tr <- texreg::texreg(l = tr_list, ...)
-
+    
     ## replace confidence w/ credible or highest posterior density in texreg output
     if (hpdi == F) {
-
+      
       tr <- sub('outside the confidence interval',
                 paste('outside ', ci * 100 ,'\\\\% credible interval', sep = ''),
                 tr)
-
+      
     } else {
-
+      
       tr <- sub('outside the confidence interval',
                 paste('outside ', ci * 100 ,'\\\\% highest posterior density interval',
                       sep = ''), tr)
-
+      
     }
-
+    
     ## return LaTeX code to console or write to file
     if (missing(file)) {
-
+      
       return(tr)
-
+      
     } else {
-
+      
       ## remove newline at start of LaTeX code
       tr <- sub('^\\n', '', tr)
-
+      
       tex_file <- file(paste(file, 'tex', sep = '.'))
       writeLines(tr, tex_file, sep = '')
       close(tex_file)
-
+      
     }
-
+    
   }
-
+  
   ## create HTML output
   if (format == 'html') {
-
+    
     hr <- texreg::htmlreg(l = tr_list, ...)
-
+    
     ## replace confidence w/ credible or highest posterior density in texreg output
     if (hpdi == F) {
-
+      
       hr <- sub('outside the confidence interval',
                 paste('outside ', ci * 100, '% credible interval', sep = ''),
                 hr)
-
+      
     } else {
-
+      
       tr <- sub('outside the confidence interval',
                 paste('outside ', ci * 100, '% highest posterior density interval',
                       sep = ''), hr)
-
+      
     }
-
+    
     ## return html code to console or write to file
     if (missing(file)) {
-
+      
       return(hr)
-
+      
     } else {
-
+      
       hmtl_file <- file(paste(file, 'html', sep = '.'))
       writeLines(hr, html_file, sep = '')
       close(html_file)
-
+      
     }
-
+    
   }
-
+  
 }
