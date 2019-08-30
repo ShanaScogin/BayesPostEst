@@ -12,16 +12,17 @@ BayesPostEst contains functions to generate postestimation quantities after esti
 
 # Installation
 
-Currently the package can be downloaded with the devtools package in R from GitHub. To do this, install devtools by calling:
+To install the latest release on CRAN:
 
-```{r}
-install.packages("devtools")
+```r
+install.packages("BayesPostEst")
 ```
 
-Now we can install from GitHub with the following line:
+The latest development version on GitHub can be installed with:
 
-```{r}
-devtools::install_github("ShanaScogin/BayesPostEst")
+```r
+library("remotes")
+install_github("ShanaScogin/BayesPostEst")
 ```
 
 Once you have installed the package, you can access it by calling:
@@ -30,7 +31,6 @@ Once you have installed the package, you can access it by calling:
 library(BayesPostEst)
 ```
 After the package is loaded, check out the `?BayesPostEst` to see a help file.
-
 
 # General setup
 
