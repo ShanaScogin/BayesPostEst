@@ -45,7 +45,7 @@ mcmcTab <- function(sims,
   if (inherits(sims, what = "bugs")) {
     sims <- sims$sims.matrix
   }
-  if (inherits(sims, what = c("mcmc", "mcmc.list", "stanreg", "stanarm"))) {
+  if (inherits(sims, what = c("mcmc", "mcmc.list", "stanfit", "stanreg"))) {
     sims <- as.matrix(sims)
   }
   
