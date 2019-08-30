@@ -1,6 +1,9 @@
 ---
 title: "Getting Started with BayesPostEst"
-author: "Johannes Karreth"
+author: 
+  - "Johannes Karreth"
+  - "Shana Scogin"
+  - "Rob Williams"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 bibliography: "references.bib"
@@ -10,25 +13,20 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-<!-- --- -->
-<!-- title: "BayesPostEst package vignette" -->
-<!-- author: "Johannes Karreth" -->
-<!-- date: "7/18/2019" -->
-<!-- output: -->
-<!--   html_document: -->
-<!--     theme: cosmo -->
-<!--     highlight: tango -->
-<!--     toc: true -->
-<!--     toc_float: true -->
-<!-- bibliography: "references.bib" -->
-<!-- editor_options:  -->
-<!--   chunk_output_type: console -->
-<!-- --- -->
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  out.width = "90%", 
+  fig.align = "center", 
+  fig.width = 8, 
+  fig.height = 8,
+  comment = "#>"
+)
 ```
-
 
 # Introduction
 
@@ -206,12 +204,12 @@ fit.rstanarm <- stan_glm(volunteer ~ female + neuroticism + extraversion,
 
 # Tables of regression coefficients and other parameters
 
-BayesPostEst contains functions to generate regression tables fromobjects created by the following packages: R2jags, runjags, rjags, R2WinBUGS, MCMCpack, rstan, rstanarm. This includes the following object classes: `jags`, `rjags`, `bugs`, `mcmc`, `mcmc.list`, `stanreg`, `stanfit`. The package contains two different functions to produce regression tables:
+BayesPostEst contains functions to generate regression tables fromobjects created by the following packages: R2jags, runjags, rjags, R2WinBUGS, MCMCpack, rstan, rstanarm, and brms. This includes the following object classes: `jags`, `rjags`, `bugs`, `mcmc`, `mcmc.list`, `stanreg`, `stanfit`, `brmsfit`. The package contains two different functions to produce regression tables:
 
 - `mcmcTab`
 - `mcmcReg`
 
-Each has their own advantages and disadvantages which are discussed in-depth below.
+Each has its own advantages and disadvantages which we discuss in-depth below.
 
 ## Bayesian regression tables
 

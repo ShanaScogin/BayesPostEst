@@ -4,7 +4,7 @@
 \alias{mcmcReg}
 \title{LaTeX or HTML regression tables for MCMC Output}
 \usage{
-mcmcReg(mod, pars = NULL, point.est = "mean", ci = 0.95, hpdi = F,
+mcmcReg(mod, pars = NULL, pointest = "mean", ci = 0.95, hpdi = F,
   custom.coef.names = NULL, gof = numeric(0),
   custom.gof.names = character(0), format = "latex", file, ...)
 }
@@ -23,6 +23,9 @@ Both of these will include \code{beta[1]}, \code{beta[2]}, and \code{beta[3]}
 in the table. When combining models with different parameters in one table,
 this argument also accepts a list the length of the number of models.}
 
+\item{pointest}{a character indicating whether to use the mean or median for
+point estimates in the table.}
+
 \item{ci}{a scalar indicating the confidence level of the uncertainty intervals.}
 
 \item{hpdi}{a logical indicating whether to use highest posterior density intervals
@@ -36,9 +39,6 @@ or equal tailed credible intervals to capture uncertainty.}
 console.}
 
 \item{...}{optional arguments to \code{texreg}.}
-
-\item{pointest}{a character indicating whether to use the mean or median for
-point estimates in the table.}
 
 \item{coefnames}{an optional vector or list of vectors containing parameter
 names for each model. If there are multiple models, the list must have the same
