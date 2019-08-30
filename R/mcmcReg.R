@@ -20,7 +20,7 @@
 #' @param ci a scalar indicating the confidence level of the uncertainty intervals.
 #' @param hpdi a logical indicating whether to use highest posterior density intervals
 #' or equal tailed credible intervals to capture uncertainty.
-#' @param custom.coef.names an optional vector or list of vectors containing parameter
+#' @param coefnames an optional vector or list of vectors containing parameter
 #' names for each model. If there are multiple models, the list must have the same
 #' number of elements as there are models, and the vector of names in each list
 #' element must match the number of parameters. If not supplied, the function
@@ -29,8 +29,8 @@
 #' \code{extract} method for MCMC model objects, and many MCMC model objects do not
 #' have unique parameter names.
 #' @param gof a named list of goodness of fit statistics, or a list of such lists.
-#' @param custom.gof.names an optional vector or list of vectors containing
-#' goodness of fit statistic names for each model. Like \code{custom.coef.names}, this
+#' @param gofnames an optional vector or list of vectors containing
+#' goodness of fit statistic names for each model. Like \code{coefnames}, this
 #' replaces the standard \code{custom.gof.names} argument in \code{texreg}. If 
 #' there are multiple models, the list must have the same number of elements as
 #' there are models, and the vector of names in each list element must match the
@@ -242,9 +242,9 @@ mcmcReg <- function(mod,
   
   ##
   if (length(mod) != length(coef_names)) {
-
+    
     stop('number of models does not match number of custom coefficient vectors')
-
+    
   }
   
   ## create list of texreg object(s) with point estimates and interval
@@ -254,11 +254,7 @@ mcmcReg <- function(mod,
                                                                  ci.up = x[2, ],
                                                                  gof = y,
                                                                  gof.names = z),
-                    custom.coef.names = coef_names, 
-                    samps_pe, 
-                    samps_ci, 
-                    gof, 
-                    custom.gof.names = custom.gof.names)
+                    coef_names, samps_pe, samps_ci, gof, custom.gof.names)
   
   ## create LaTeX output
   if (format == 'latex') {

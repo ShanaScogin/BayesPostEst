@@ -52,28 +52,35 @@ test_that("Simple model runs with mcmcReg", {
   
   expect_match(value, '-0.08')
   expect_match(value, '0.28')
+  
+  object2 <- mcmcReg(fit, pars = c('b'))
+  
+  # object3 <- mcmcReg(fit, pars = c('b'),
+  #    custom.coef.names = list(
+  #                     'b[1]' = 'Cylinders',
+  #                     'b[2]' = 'Displacement',
+  #                     'b[3]' = 'Horsepower')
+  #                    )
+  
 
 })
 
-  test_that("Simple model runs with mcmcReg", {
-    
-    skip()
-    # skipping due to brms
-    
-    skip_on_cran()
-    ## this test is longer than CRAN allows
-    
-    library(datasets)
-    library(brms)
-    
-    # simple linear model
-    fit1 <- brm(mpg ~ cyl + disp + hp, data = mtcars,
-                family = gaussian())
-    mcmcReg(fit1, pars = c('b_Intercept', 'b'),
-            custom.coef.names = list('b_Intercept' = '(Constant)',
-                             'b_cyl' = 'Cylinders',
-                             'b_disp' = 'Displacement',
-                             'b_hp' = 'Horsepower'))
-    
-  })
+  # test_that("Simple model runs with mcmcReg", {
+  #   
+  #   skip_on_cran()
+  #   ## this test is longer than CRAN allows
+  #   
+  #   library(datasets)
+  #   library(brms)
+  #   
+  #   # simple linear model
+  #   fit1 <- brm(mpg ~ cyl + disp + hp, data = mtcars,
+  #               family = gaussian())
+  #   mcmcReg(fit1, pars = c('b_Intercept', 'b'),
+  #           custom.coef.names = list('b_Intercept' = '(Constant)',
+  #                            'b_cyl' = 'Cylinders',
+  #                            'b_disp' = 'Displacement',
+  #                            'b_hp' = 'Horsepower'))
+  #   
+  # })
 
