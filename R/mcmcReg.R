@@ -20,7 +20,7 @@
 #' @param ci a scalar indicating the confidence level of the uncertainty intervals.
 #' @param hpdi a logical indicating whether to use highest posterior density intervals
 #' or equal tailed credible intervals to capture uncertainty.
-#' @param coefnames an optional vector or list of vectors containing parameter
+#' @param custom.coef.names an optional vector or list of vectors containing parameter
 #' names for each model. If there are multiple models, the list must have the same
 #' number of elements as there are models, and the vector of names in each list
 #' element must match the number of parameters. If not supplied, the function
@@ -29,8 +29,8 @@
 #' \code{extract} method for MCMC model objects, and many MCMC model objects do not
 #' have unique parameter names.
 #' @param gof a named list of goodness of fit statistics, or a list of such lists.
-#' @param gofnames an optional vector or list of vectors containing
-#' goodness of fit statistic names for each model. Like \code{coefnames}, this
+#' @param custom.gof.names an optional vector or list of vectors containing
+#' goodness of fit statistic names for each model. Like \code{custom.coef.names}, this
 #' replaces the standard \code{custom.gof.names} argument in \code{texreg}. If 
 #' there are multiple models, the list must have the same number of elements as
 #' there are models, and the vector of names in each list element must match the
