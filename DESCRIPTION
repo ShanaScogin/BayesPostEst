@@ -1,7 +1,7 @@
 Package: BayesPostEst
 Type: Package
 Title: Generate Postestimation Quantities for Bayesian MCMC Estimation
-Version: 0.0.1
+Version: 0.0.1.9000
 Date: 2019-08-01
 Authors@R: 
     c(person("Johannes", "Karreth", email = "jkarreth@ursinus.edu", role = c("aut")),

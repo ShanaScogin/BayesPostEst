@@ -21,3 +21,4 @@
 ^CONTRIBUTING\.md$
 CONTRIBUTING.md
 ^codecov\.yml$
+^data-raw$
