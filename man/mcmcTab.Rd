@@ -37,10 +37,10 @@ Summarize Bayesian MCMC Output
 R function for summarizing MCMC output in a regression-style table.
 }
 \examples{
-data("jags_fit")
+data("jags_logit")
 
 ## printing out table
-object <- mcmcTab(fit, 
+object <- mcmcTab(jags_logit, 
           ci = c(0.025, 0.975), 
           pars = NULL, 
           Pr = FALSE,

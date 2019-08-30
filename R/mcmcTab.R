@@ -39,25 +39,18 @@ mcmcTab <- function(sims,
                     Pr = FALSE,
                     ROPE = NULL) {
   
-    if(class(sims)[1] == "jags" || class(sims)[1] == "rjags"){
-      sims <- as.matrix(coda::as.mcmc(sims))
-    }
-    if(class(sims)[1] == "bugs"){
-      sims <- sims$sims.matrix
-    }  
-    if(class(sims)[1] == "mcmc"){
-      sims <- as.matrix(sims)
-    }    
-    if(class(sims)[1] == "mcmc.list"){
-      sims <- as.matrix(sims)
-    }      
-    if(class(sims)[1] == "stanreg"){
-      sims <- as.matrix(sims)
-    } 
-    if(class(sims)[1] == "stanfit"){
-      sims <- as.matrix(sims)
-    }     
-    
+  if (inherits(sims, what = c("jags", "rjags"))) {
+    sims <- as.matrix(coda::as.mcmc(sims))
+  }
+  if (inherits(sims, what = "bugs")) {
+    sims <- sims$sims.matrix
+  }
+  if (inherits(sims, what = c("mcmc", "mcmc.list", "stanreg", "stanarm"))) {
+    sims <- as.matrix(sims)
+  }
+  
+  ROPE <- check_ROPE_argument(ROPE)
+  
     if(is.null(pars) == TRUE){
       dat <- sims
     }

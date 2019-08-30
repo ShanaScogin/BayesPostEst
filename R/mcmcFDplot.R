@@ -89,6 +89,8 @@
 mcmcFDplot <- function(fdfull, 
                        ROPE = NULL){
   
+  ROPE <- check_ROPE_argument(ROPE)
+  
   # convert fdfull to long data frame
   fd_dat <- tidyr::gather(as.data.frame(fdfull))
   

@@ -101,8 +101,9 @@ test_that("ROPE argument works", {
   )
   
   # invalid input; adjust the test at some point
-  # expect_error(
-  #   object <- mcmcTab(jags_logit, ROPE = 0)
-  # )
+  expect_error(
+    object <- mcmcTab(jags_logit, ROPE = 0),
+    "Invalid ROPE argument"
+  )
   
 })
