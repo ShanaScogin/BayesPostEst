@@ -241,11 +241,11 @@ mcmcReg <- function(mod,
   if (!is.null(custom.coef.names)) coef_names <- custom.coef.names
   
   ##
-  # if (length(mod) != length(coef_names)) {
-  #   
-  #   stop('number of models does not match number of custom coefficient vectors')
-  #   
-  # }
+  if (length(mod) != length(coef_names)) {
+
+    stop('number of models does not match number of custom coefficient vectors')
+
+  }
   
   ## create list of texreg object(s) with point estimates and interval
   tr_list <- mapply(function(v, w, x, y, z) texreg::createTexreg(coef.names = v,

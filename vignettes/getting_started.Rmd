@@ -251,60 +251,60 @@ mcmcTab(fit.jags, pars = c("b[2]", "b[3]", "b[4]"), ROPE = c(-0.1, 0.1))
 
 The `mcmcReg` function serves as an interface to `texreg` and produces more polished and publication-ready tables than `mcmcTab` in HTML or LaTeX format. `mcmcReg` can produce tables with multiple models with each model in a column and supports flexible renaming of parameters. However, these tables are more similar to standard frequentist regression tables, so they do not have a way to incorporate the percent of posterior draws that have the same sign as the median of the posterior distribution or a ROPE like `mcmcTab` is able to. Uncertainty intervals can be either standard credible intervals or highest posterior density intervals [@Kruschke2015] using the `hpdi` argument, and their level can be set with the `ci` argument (default 95%). Separately calculated goodness of fit statistics can be included with the `gof` argument.
 
-```{r, results = 'asis'}
-mcmcReg(fit.jags, format = 'html', doctype = F)
-```
+# ```{r, results = 'asis'}
+# mcmcReg(fit.jags, format = 'html', doctype = F)
+# ```
 
 ### Limiting output
 
 `mcmcReg` supports limiting the parameters included in the table via the `pars` argument. By default, all parameters saved in the model object will be included. In the case of `fit.jags`, this include the deviance estimate. If we wish to exclude it, we can specify `pars = 'b'` which will capture `b[1]`-`b[4]` using regular expression matching.
 
-```{r, results = 'asis'}
-mcmcReg(fit.jags, pars = 'b', format = 'html', doctype = F)
-```
+# ```{r, results = 'asis'}
+# mcmcReg(fit.jags, pars = 'b', format = 'html', doctype = F)
+# ```
 
 If we only wish to exclue the intercept, we can do this by explicitly specifying the parameters we wish to include as a vector. Note that in this example we have to escape the `[]`s in `pars` because they are a reserved character in regular expressions.
 
-```{r, results = 'asis'}
-mcmcReg(fit.jags, pars = c('b\\[1\\]', 'b\\[3\\]', 'b\\[4\\]'), format = 'html', doctype = F)
-```
+# ```{r, results = 'asis'}
+# mcmcReg(fit.jags, pars = c('b\\[1\\]', 'b\\[3\\]', 'b\\[4\\]'), format = 'html', doctype = F)
+# ```
 
 `mcmcReg` also supports partial regular expression matching of multiple parameter family names as demonstrated below.
 
-```{r, results = 'asis'}
-mcmcReg(fit.jags, pars = c('b', 'dev'), format = 'html', doctype = F)
-```
+# ```{r, results = 'asis'}
+# mcmcReg(fit.jags, pars = c('b', 'dev'), format = 'html', doctype = F)
+# ```
 
 ### Custom coefficient names
 
 `mcmcReg` supports custom coefficient names to support publication-ready tables. The simplest option is via the `coefnames` argument. Note that the number of parameters and the number of custom coefficient names must match, so it is a good idea to use `pars` in tandem with `coefnames`.
 
-```{r, results = 'asis'}
-mcmcReg(fit.jags, pars = 'b',
-        coefnames = c('(Constant)', 'Female', 'Neuroticism', 'Extraversion'),
-        format = 'html', doctype = F)
-```
+# ```{r, results = 'asis'}
+# mcmcReg(fit.jags, pars = 'b',
+#         coefnames = c('(Constant)', 'Female', 'Neuroticism', 'Extraversion'),
+#         format = 'html', doctype = F)
+# ```
 
 A more flexible way to include custom coefficient names is via the `custom.coef.map` argument, which accepts a named list, with names as parameter names in the model and values as the custom coefficient names.
 
-```{r, results = 'asis'}
-mcmcReg(fit.jags, pars = 'b',
-        custom.coef.map = list('b[1]' = '(Constant)',
-                               'b[2]' = 'Female',
-                               'b[3]' = 'Nueroticism',
-                               'b[4]' = 'Extraversion'),
-        format = 'html', doctype = F)
-```
+# ```{r, results = 'asis'}
+# mcmcReg(fit.jags, pars = 'b',
+#         custom.coef.map = list('b[1]' = '(Constant)',
+#                                'b[2]' = 'Female',
+#                                'b[3]' = 'Nueroticism',
+#                                'b[4]' = 'Extraversion'),
+#         format = 'html', doctype = F)
+# ```
 
 The advantage of `custom.coef.map` is that it can flexibly reorder and omit coefficients from the table based on their positions within the list. Notice in the code below that deviance does not have to be included in `pars` because its absence from `custom.coef.map` omits it from the resulting table.
 
-```{r, results = 'asis'}
-mcmcReg(fit.jags,
-        custom.coef.map = list('b[2]' = 'Female',
-                               'b[4]' = 'Extraversion',
-                               'b[1]' = '(Constant)'),
-        format = 'html', doctype = F)
-```
+# ```{r, results = 'asis'}
+# mcmcReg(fit.jags,
+#         custom.coef.map = list('b[2]' = 'Female',
+#                                'b[4]' = 'Extraversion',
+#                                'b[1]' = '(Constant)'),
+#         format = 'html', doctype = F)
+# ```
 
 However, it is important to remember that `mcmcReg` will look for the parameter names in the model object, so be sure to inspect it for the correct parameter names. This is important because `stan_glm` will produce a model object with variable names instead of indexed parameter names.
 
@@ -312,31 +312,31 @@ However, it is important to remember that `mcmcReg` will look for the parameter 
 
 `mcmcReg` accepts multiple model objects and will produce a table with one model per column. To produce a table from multiple models, pass a list of models as the `mod` argument to `mcmcReg`.
 
-```{r, results = 'asis'}
-mcmcReg(list(fit.stan, fit.stan), format = 'html', doctype = F)
-```
+<!-- ```{r, results = 'asis'} -->
+<!-- mcmcReg(list(fit.stan, fit.stan), format = 'html', doctype = F) -->
+<!-- ``` -->
 
 Note, however, that all model objects must be of the same class, so it is *not* possible to generate a table from a `jags` object and a `stanfit` object.
 
-```{r, error = T, results = 'asis'}
-mcmcReg(list(fit.jags, fit.stan), format = 'html', doctype = F)
-```
+# ```{r, error = T, results = 'asis'}
+# mcmcReg(list(fit.jags, fit.stan), format = 'html', doctype = F)
+# ```
 
 When including multiple models, supplying scalars or vectors to arguments will result in them being applied to each model equally. Treating models differentially is possible by supplying a list of scalars or vectors instead.
 
-```{r, results = 'asis'}
-mcmcReg(list(fit.rstanarm, fit.rstanarm),
-        pars = list(c('female', 'extraversion'), 'neuroticism'),
-        format = 'html', doctype = F)
-```
+# ```{r, results = 'asis'}
+# mcmcReg(list(fit.rstanarm, fit.rstanarm),
+#         pars = list(c('female', 'extraversion'), 'neuroticism'),
+#         format = 'html', doctype = F)
+# ```
 
 ### `Texreg` arguments
 
 Although `custom.coef.map` is not an argument to `mcmcReg`, it works because `mcmcReg` supports all standard `texreg` arguments (a few have been overridden, but they are explicit arguments to `mcmcReg`). This introduces a high level of control over the output of `mcmcReg`, as e.g. models can be renamed.
 
-```{r, results = 'asis'}
-mcmcReg(fit.rstanarm, custom.model.names = 'Binary Outcome', format = 'html', doctype = F)
-```
+# ```{r, results = 'asis'}
+# mcmcReg(fit.rstanarm, custom.model.names = 'Binary Outcome', format = 'html', doctype = F)
+# ```
 
 # Predicted probabilities
 

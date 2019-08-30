@@ -55,8 +55,10 @@ test_that("Simple model runs with mcmcReg", {
 
 })
 
-dontrun(
   test_that("Simple model runs with mcmcReg", {
+    
+    skip()
+    # skipping due to brms
     
     skip_on_cran()
     ## this test is longer than CRAN allows
@@ -74,6 +76,4 @@ dontrun(
                              'b_hp' = 'Horsepower'))
     
   })
-
-)
 
