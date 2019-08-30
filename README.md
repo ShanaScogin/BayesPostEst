@@ -1,4 +1,8 @@
-# BayesPostEst [![Build Status](https://travis-ci.com/ShanaScogin/BayesPostEst.svg?branch=master)](https://travis-ci.com/ShanaScogin/BayesPostEst)[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/BayesPostEst)](https://CRAN.R-project.org/package=BayesPostEst)
+# BayesPostEst 
+
+[![Build Status](https://travis-ci.com/ShanaScogin/BayesPostEst.svg?branch=master)](https://travis-ci.com/ShanaScogin/BayesPostEst)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/BayesPostEst)](https://CRAN.R-project.org/package=BayesPostEst)
+[![Codecov test coverage](https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg)](https://codecov.io/gh/ShanaScogin/BayesPostEst?branch=master)
 
 An R package implementing functions to assist in generating and plotting postestimation quantities after estimating Bayesian regression models using MCMC.
 
