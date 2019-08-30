@@ -31,16 +31,7 @@ point estimates in the table.}
 \item{hpdi}{a logical indicating whether to use highest posterior density intervals
 or equal tailed credible intervals to capture uncertainty.}
 
-\item{gof}{a named list of goodness of fit statistics, or a list of such lists.}
-
-\item{format}{a character indicating \code{latex} or \code{html} output.}
-
-\item{file}{optional file name to write table to file instead of printing to
-console.}
-
-\item{...}{optional arguments to \code{texreg}.}
-
-\item{coefnames}{an optional vector or list of vectors containing parameter
+\item{custom.coef.names}{an optional vector or list of vectors containing parameter
 names for each model. If there are multiple models, the list must have the same
 number of elements as there are models, and the vector of names in each list
 element must match the number of parameters. If not supplied, the function
@@ -49,12 +40,21 @@ the standard \code{custom.coef.names} argument in \code{texreg} because there is
 \code{extract} method for MCMC model objects, and many MCMC model objects do not
 have unique parameter names.}
 
-\item{gofnames}{an optional vector or list of vectors containing
-goodness of fit statistic names for each model. Like \code{coefnames}, this
+\item{gof}{a named list of goodness of fit statistics, or a list of such lists.}
+
+\item{custom.gof.names}{an optional vector or list of vectors containing
+goodness of fit statistic names for each model. Like \code{custom.coef.names}, this
 replaces the standard \code{custom.gof.names} argument in \code{texreg}. If 
 there are multiple models, the list must have the same number of elements as
 there are models, and the vector of names in each list element must match the
 number of goodness of fit statistics.}
+
+\item{format}{a character indicating \code{latex} or \code{html} output.}
+
+\item{file}{optional file name to write table to file instead of printing to
+console.}
+
+\item{...}{optional arguments to \code{texreg}.}
 }
 \value{
 A formatted regression table in LaTeX or HTML format.
