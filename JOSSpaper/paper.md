@@ -1,5 +1,5 @@
 ---
-title: 'BayesPostEst: Generate Postestimation Quantities for Bayesian MCMC Estimation'
+title: 'BayesPostEst: An R Package to Generate Postestimation Quantities for Bayesian MCMC Estimation'
 tags:
   - MCMC
   - Bayesian methods
