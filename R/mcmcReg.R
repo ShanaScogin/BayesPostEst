@@ -20,7 +20,7 @@
 #' @param ci a scalar indicating the confidence level of the uncertainty intervals.
 #' @param hpdi a logical indicating whether to use highest posterior density intervals
 #' or equal tailed credible intervals to capture uncertainty.
-#' @param custom.coef.names an optional vector or list of vectors containing parameter
+#' @param coefnames an optional vector or list of vectors containing parameter
 #' names for each model. If there are multiple models, the list must have the same
 #' number of elements as there are models, and the vector of names in each list
 #' element must match the number of parameters. If not supplied, the function
@@ -29,8 +29,9 @@
 #' \code{extract} method for MCMC model objects, and many MCMC model objects do not
 #' have unique parameter names.
 #' @param gof a named list of goodness of fit statistics, or a list of such lists.
-#' @param custom.gof.names an optional vector or list of vectors containing
-#' goodness of fit statistic names for each model. Like \code{custom.coef.names}, this
+#' @param gofnames an optional vector or list of vectors containing
+#' goodness of fit statistic names for each model. Like \code{coefnames} in this function
+#' (which replaces the \code{custom.coef.names} argument in \code{texreg}), \code{gofnames}
 #' replaces the standard \code{custom.gof.names} argument in \code{texreg}. If 
 #' there are multiple models, the list must have the same number of elements as
 #' there are models, and the vector of names in each list element must match the
@@ -106,11 +107,11 @@
 #' mcmcReg(fit)
 #' 
 #' ## generating regression table with only betas and custom coefficent names
-#' mcmcReg(fit, pars = c('b'), custom.coef.names = c('Variable 1', 'Variable 2',
-#'                                                   'Variable 3')))
+#' mcmcReg(fit, pars = c('b'), coefnames = c('Variable 1', 'Variable 2',
+#'                                                   'Variable 3'))
 #' ## generating regression tables with all betas and custom names
-#' mcmcReg(fit, custom.coef.names = c('Variable 1', 'Variable 2',
-#'                                    'Variable 3', 'deviance')))
+#' mcmcReg(fit, coefnames = c('Variable 1', 'Variable 2',
+#'                                    'Variable 3', 'deviance'))
 #' }
 #' 
 #' @export
@@ -120,11 +121,16 @@ mcmcReg <- function(mod,
                     pointest = 'mean', 
                     ci = .95, 
                     hpdi = F,
-                    custom.coef.names = NULL, 
+                    coefnames = NULL, 
                     gof = numeric(0),
-                    custom.gof.names = character(0),
+                    gofnames = character(0),
                     format = 'latex', 
                     file, ...) {
+  
+  ## pull in unexported functions from other packages
+  ## other options for future versions might include lifting this and adding authors as copr holders
+  coda.as.data.frame.mcmc = getFromNamespace("as.data.frame.mcmc", "coda")
+  runjags.as.mcmc.list.runjags = getFromNamespace("as.mcmc.list.runjags", "runjags")
   
   ## if only one model object, coerce to a list
   if (all(class(mod) != 'list')) mod <- list(mod)
@@ -133,7 +139,7 @@ mcmcReg <- function(mod,
   if (length(unique(lapply(mod, class))) > 1) stop('More than one object class supplied to argument "mod"')
   
   ## if only one custom coefficient names object, coerce to a list
-  if (class(custom.coef.names) != 'list' & !is.null(custom.coef.names)) custom.coef.names <- list(custom.coef.names)
+  if (class(coefnames) != 'list' & !is.null(coefnames)) coefnames <- list(coefnames)
   
   ## if only one parameter vector, coerce to a list
   if (class(pars) != 'list') pars <- list(pars)
@@ -142,7 +148,7 @@ mcmcReg <- function(mod,
   if (class(gof) != 'list') gof <- list(rep(gof, times = length(mod)))
   
   ## if only one gof statistic name scalar or vector, coerce to a list
-  if (class(custom.gof.names) != 'list') custom.gof.names <- list(custom.gof.names)
+  if (class(gofnames) != 'list') gofnames <- list(gofnames)
   
   ## extract samples and variable names from jags or rjags object
   if (lapply(mod, inherits, 'jags')[[1]] || lapply(mod, inherits, 'rjags')[[1]]) {
@@ -170,7 +176,7 @@ mcmcReg <- function(mod,
   ## extract samples and variable names from mcmc object
   if (lapply(mod, inherits, 'mcmc')[[1]]) {
     
-    samps <- mapply(mod, function(x) coda:::as.data.frame.mcmc(x))
+    samps <- mapply(mod, function(x) coda.as.data.frame.mcmc(x))
     
   }
   
@@ -198,7 +204,7 @@ mcmcReg <- function(mod,
   ## extract samples and variable names from runjags object
   if (lapply(mod, inherits, 'runjags')[[1]]) {
     
-    samps <- lapply(mod, function(x) runjags:::as.mcmc.list.runjags(x))
+    samps <- lapply(mod, function(x) runjags.as.mcmc.list.runjags(x))
     samps <- lapply(samps, function(x) as.data.frame(Reduce("+", x) / length(x)))
     
   }
@@ -244,8 +250,8 @@ mcmcReg <- function(mod,
   }
   
   ## if coefficent names supplied, replace names from model object(s)
-  if (!is.null(custom.coef.names) & !is.list(custom.coef.names)) coef_names <- list(custom.coef.names)
-  if (!is.null(custom.coef.names)) coef_names <- custom.coef.names
+  if (!is.null(coefnames) & !is.list(coefnames)) coef_names <- list(coefnames)
+  if (!is.null(coefnames)) coef_names <- coefnames
   
   ##
   if (length(mod) != length(coef_names)) {
@@ -261,7 +267,7 @@ mcmcReg <- function(mod,
                                                                  ci.up = x[2, ],
                                                                  gof = y,
                                                                  gof.names = z),
-                    coef_names, samps_pe, samps_ci, gof, custom.gof.names)
+                    coef_names, samps_pe, samps_ci, gof, gofnames)
   
   ## create LaTeX output
   if (format == 'latex') {
@@ -329,7 +335,7 @@ mcmcReg <- function(mod,
       
     } else {
       
-      hmtl_file <- file(paste(file, 'html', sep = '.'))
+      html_file <- file(paste(file, 'html', sep = '.'))
       writeLines(hr, html_file, sep = '')
       close(html_file)
       

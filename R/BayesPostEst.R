@@ -68,4 +68,7 @@ NULL
 #' @importFrom texreg createTexreg texreg htmlreg
 NULL
 
+#' @importFrom utils getFromNamespace
+NULL
+
 #> NULL

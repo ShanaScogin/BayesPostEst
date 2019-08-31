@@ -66,24 +66,4 @@ test_that("Simple model runs with mcmcReg", {
 
 })
 
-test_that("Simple model runs with mcmcReg", {
-  
-  skip("skipping test for brms")
-
-  skip_on_cran()
-  ## this test is longer than CRAN allows
-
-  library(datasets)
-  library(brms)
-
-  # simple linear model
-  fit1 <- brm(mpg ~ cyl + disp + hp, data = mtcars,
-              family = gaussian())
-  mcmcReg(fit1, pars = c('b_Intercept', 'b'),
-          custom.coef.names = list('b_Intercept' = '(Constant)',
-                           'b_cyl' = 'Cylinders',
-                           'b_disp' = 'Displacement',
-                           'b_hp' = 'Horsepower'))
-
-})
 
