@@ -48,19 +48,15 @@ test_that("Simple model runs with mcmcReg", {
                       n.burnin = 1000, model.file = model)
   
   expect_silent(mcmcReg(fit))
-  # value <- strsplit(object, '\n')[[1]][9]
-  # 
-  # expect_match(value, '-0.08')
-  # expect_match(value, '0.28')
-  # 
-  # object2 <- mcmcReg(fit, pars = c('b'))
-  
-  # object3 <- mcmcReg(fit, pars = c('b'),
-  #    custom.coef.names = list(
-  #                     'b[1]' = 'Cylinders',
-  #                     'b[2]' = 'Displacement',
-  #                     'b[3]' = 'Horsepower')
-  #                    )
+
+  object2 <- mcmcReg(fit, pars = c('b'))
+
+  object3 <- mcmcReg(fit, pars = c('b'),
+     custom.coef.names = list(
+                      'b[1]' = 'Cylinders',
+                      'b[2]' = 'Displacement',
+                      'b[3]' = 'Horsepower')
+                     )
   
 
 })
