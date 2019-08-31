@@ -49,14 +49,19 @@ test_that("Simple model runs with mcmcReg", {
   
   expect_silent(mcmcReg(fit))
 
-  object2 <- mcmcReg(fit, pars = c('b'))
+  expect_silent(mcmcReg(fit, pars = c('b')))
 
-  object3 <- mcmcReg(fit, pars = c('b'),
-     custom.coef.names = list(
-                      'b[1]' = 'Cylinders',
-                      'b[2]' = 'Displacement',
-                      'b[3]' = 'Horsepower')
-                     )
+  expect_silent(object3 <- mcmcReg(fit, pars = c('b'),
+     custom.coef.names = c(
+                      'Variable 1',
+                      'Variable 2',
+                      'Variable 3')))
+  
+  expect_silent(mcmcReg(fit, custom.coef.names = c(
+                       'Variable 1',
+                       'Variable 2',
+                       'Variable 3',
+                       'deviance')))
   
 
 })

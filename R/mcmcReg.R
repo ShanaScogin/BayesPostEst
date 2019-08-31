@@ -102,8 +102,15 @@
 #'                     parameters.to.save = params, n.chains = 2, n.iter = 2000,
 #'                     n.burnin = 1000, model.file = model)
 #' 
-#' ## generating regression table
+#' ## generating regression table with all parameters
 #' mcmcReg(fit)
+#' 
+#' ## generating regression table with only betas and custom coefficent names
+#' mcmcReg(fit, pars = c('b'), custom.coef.names = c('Variable 1', 'Variable 2',
+#'                                                   'Variable 3')))
+#' ## generating regression tables with all betas and custom names
+#' mcmcReg(fit, custom.coef.names = c('Variable 1', 'Variable 2',
+#'                                    'Variable 3', 'deviance')))
 #' }
 #' 
 #' @export
@@ -242,9 +249,9 @@ mcmcReg <- function(mod,
   
   ##
   if (length(mod) != length(coef_names)) {
-    
+
     stop('number of models does not match number of custom coefficient vectors')
-    
+
   }
   
   ## create list of texreg object(s) with point estimates and interval
