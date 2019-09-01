@@ -39,11 +39,11 @@ Suggests:
     datasets,
     knitr,
     MCMCpack,
-    rmarkdown,    
+    rmarkdown,
     rstan (>= 2.10.1),
     rstanarm,
-    testthat
+    testthat,
+    covr
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net)
-
