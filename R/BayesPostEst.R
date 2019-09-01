@@ -1,7 +1,7 @@
 #' BayesPostEst
 #'
 #' @section BayesPostEst functions: This package currently has 
-#' six main functions 
+#' seven main functions 
 #' \itemize{
 #' \item \code{mcmcAveProb()}
 #' \item \code{mcmcObsProb()}
@@ -9,6 +9,7 @@
 #' \item \code{mcmcFDplot()}
 #' \item \code{mcmcRocPrc()}
 #' \item \code{mcmcTab()}
+#' \item \code{mcmcReg()}
 #' }
 #' These functions can be used to generate and plot postestimation quantities after 
 #' estimating Bayesian regression models using MCMC. The package combines functions 
@@ -58,10 +59,16 @@ NULL
 #' @importFrom caTools trapz
 NULL
 
-#' @importFrom coda as.mcmc
+#' @importFrom coda as.mcmc HPDinterval
 NULL
 
 #' @importFrom R2jags jags
+NULL
+
+#' @importFrom texreg createTexreg texreg htmlreg
+NULL
+
+#' @importFrom utils getFromNamespace
 NULL
 
 #> NULL

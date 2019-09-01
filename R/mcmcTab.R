@@ -45,60 +45,61 @@ mcmcTab <- function(sims,
   if (inherits(sims, what = "bugs")) {
     sims <- sims$sims.matrix
   }
-  if (inherits(sims, what = c("mcmc", "mcmc.list", "stanfit", "stanreg"))) {
+  if (inherits(sims, what = c("mcmc", "mcmc.list", "stanfit", "stanreg",
+                              "brmsfit"))) {
     sims <- as.matrix(sims)
   }
   
   ROPE <- check_ROPE_argument(ROPE)
   
-    if(is.null(pars) == TRUE){
-      dat <- sims
-    }
-    
-    if(is.null(pars) == FALSE & length(pars) == 1){
-      dat <- sims[, grepl(x = colnames(sims), pattern = pars)]
-    }
-    
-    if(is.null(pars) == FALSE & length(pars) > 1){
-      dat <- sims[, pars]
-    }
-    
-    dat_wide <- t(dat)
+  if(is.null(pars) == TRUE){
+    dat <- sims
+  }
+  
+  if(is.null(pars) == FALSE & length(pars) == 1){
+    dat <- sims[, grepl(x = colnames(sims), pattern = pars)]
+  }
+  
+  if(is.null(pars) == FALSE & length(pars) > 1){
+    dat <- sims[, pars]
+  }
+  
+  dat_wide <- t(dat)
+  
+  mcmctab <- apply(dat_wide, 1, 
+                   function(x) c(Median = round(median(x), digits = 3), # Posterior median
+                                 SD = round(sd(x), digits = 3), # Posterior SD
+                                 Lower = as.numeric(round(quantile(x, probs = ci[1]), digits = 3)), # Lower CI of posterior
+                                 Upper = as.numeric(round(quantile(x, probs = ci[2]), digits = 3)), # Upper CI of posterior
+                                 Pr = round(ifelse(median(x) > 0, length(x[x > 0]) / length(x), length(x[x < 0]) / length(x)), digits = 3) # % of posterior draws with same sign as median
+                   ))
+  
+  if(Pr == FALSE){
+    mcmctab <- apply(dat_wide, 1, 
+                     function(x) c(Median = round(median(x), digits = 3), # Posterior median
+                                   SD = round(sd(x), digits = 3), # Posterior SD
+                                   Lower = as.numeric(round(quantile(x, probs = ci[1]), digits = 3)), # Lower CI of posterior
+                                   Upper = as.numeric(round(quantile(x, probs = ci[2]), digits = 3))))
+  }
+  
+  if(!is.null(ROPE)){
+    message("This table contains an estimate for parameter values outside of the region of 
+          practical equivalence (ROPE). For this quantity to be meaningful, all parameters 
+          must be on the same scale (e.g. standardized coefficients or first differences).")
     
     mcmctab <- apply(dat_wide, 1, 
                      function(x) c(Median = round(median(x), digits = 3), # Posterior median
                                    SD = round(sd(x), digits = 3), # Posterior SD
                                    Lower = as.numeric(round(quantile(x, probs = ci[1]), digits = 3)), # Lower CI of posterior
-                                   Upper = as.numeric(round(quantile(x, probs = ci[2]), digits = 3)), # Upper CI of posterior
-                                   Pr = round(ifelse(median(x) > 0, length(x[x > 0]) / length(x), length(x[x < 0]) / length(x)), digits = 3) # % of posterior draws with same sign as median
-                     ))
-    
-    if(Pr == FALSE){
-      mcmctab <- apply(dat_wide, 1, 
-                       function(x) c(Median = round(median(x), digits = 3), # Posterior median
-                                     SD = round(sd(x), digits = 3), # Posterior SD
-                                     Lower = as.numeric(round(quantile(x, probs = ci[1]), digits = 3)), # Lower CI of posterior
-                                     Upper = as.numeric(round(quantile(x, probs = ci[2]), digits = 3))))
-    }
-    
-    if(!is.null(ROPE)){
-      message("This table contains an estimate for parameter values outside of the region of 
-          practical equivalence (ROPE). For this quantity to be meaningful, all parameters 
-          must be on the same scale (e.g. standardized coefficients or first differences).")
-      
-      mcmctab <- apply(dat_wide, 1, 
-                       function(x) c(Median = round(median(x), digits = 3), # Posterior median
-                                     SD = round(sd(x), digits = 3), # Posterior SD
-                                     Lower = as.numeric(round(quantile(x, probs = ci[1]), digits = 3)), # Lower CI of posterior
-                                     Upper = as.numeric(round(quantile(x, probs = ci[2]), digits = 3)),
-                                     PrOutROPE = round(ifelse(median(x) > 0, length(x[x > ROPE[2]]) / length(x), length(x[x < ROPE[1]]) / length(x)), digits = 3)))
-    }
-    
-    # return(t(mcmctab))
-    out_dat <- data.frame("Variable" = colnames(mcmctab), 
-                          t(mcmctab),
-                          row.names = NULL)
-    
-    return(out_dat)
+                                   Upper = as.numeric(round(quantile(x, probs = ci[2]), digits = 3)),
+                                   PrOutROPE = round(ifelse(median(x) > 0, length(x[x > ROPE[2]]) / length(x), length(x[x < ROPE[1]]) / length(x)), digits = 3)))
+  }
+  
+  # return(t(mcmctab))
+  out_dat <- data.frame("Variable" = colnames(mcmctab), 
+                        t(mcmctab),
+                        row.names = NULL)
+  
+  return(out_dat)
   
 } 

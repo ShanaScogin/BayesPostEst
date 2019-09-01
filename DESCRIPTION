@@ -1,11 +1,12 @@
 Package: BayesPostEst
 Type: Package
 Title: Generate Postestimation Quantities for Bayesian MCMC Estimation
-Version: 0.0.1.9000
-Date: 2019-08-01
+Version: 0.1.0
+Date: 2019-09-01
 Authors@R: 
     c(person("Johannes", "Karreth", email = "jkarreth@ursinus.edu", role = c("aut")),
     person("Shana", "Scogin", email = "shanarscogin@gmail.com", role = c("aut", "cre")),
+    person("Rob", "Williams", email = "jayrobwilliams@gmail.com", role = c("aut")),
     person("Andreas", "Beger", email = "adbeger@gmail.com", role = c("aut")),
     person("Myunghee", "Lee", email = "mlq38@mail.missouri.edu", role = c("ctb")),
     person("Neil", "Williams", email = "snpwill@uga.edu", role = c("ctb")))
@@ -26,6 +27,8 @@ Imports:
     rlang,
     ROCR,
     stats,
+    texreg,
+    runjags,
     tidyr (>= 0.5.1)
 Depends:
     R (>= 2.14.0)
@@ -33,6 +36,7 @@ Encoding: UTF-8
 LazyData: TRUE
 LazyLoad: TRUE
 Suggests: 
+    datasets,
     knitr,
     MCMCpack,
     rmarkdown,
