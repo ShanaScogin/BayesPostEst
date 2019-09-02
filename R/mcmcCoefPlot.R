@@ -31,12 +31,18 @@
 #' 
 #' @export
 mcmcCoefPlot <- function(mod, pars = NULL, pointest = 'mean', ci = .95, hpdi = F, plot = T) {
-
+  
+  ## pull in unexported functions from other packages
+  ## other options for future versions might include lifting this and adding authors as copr holders
+  runjags.as.mcmc.list.runjags = getFromNamespace("as.mcmc.list.runjags", "runjags")
   if (inherits(mod, what = c("jags", "rjags"))) {
     samps <- as.matrix(coda::as.mcmc(mod))
   }
   if (inherits(mod, what = "bugs")) {
     samps <- mod$sims.matrix
+  }
+  if (inherits(mod, what = "runjags")) {
+    samps <- as.matrix(runjags.as.mcmc.list.runjags(mod))
   }
   if (inherits(mod, what = c("mcmc", "mcmc.list", "stanfit", "stanreg",
                               "brmsfit"))) {
