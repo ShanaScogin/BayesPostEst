@@ -1,6 +1,7 @@
 
 dontrun <- function() {
-  library("profvis")
+  #comment this  otherwise R check complains
+  #library("profvis")
   library("BayesPostEst")
   data("jags_logit")
   

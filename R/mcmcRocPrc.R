@@ -31,7 +31,7 @@
 #'   Note:  If `TRUE` is chosen, the function takes notably longer to execute.
 #' 
 #' @references Beger, Andreas. 2016. “Precision-Recall Curves.” Available at 
-#'   SSRN: [http://dx.doi.org/10.2139/ssrn.2765419]
+#'   SSRN: [http://dx.doi.org/10.2139/ssrn.2765419](http://dx.doi.org/10.2139/ssrn.2765419)
 #' 
 #' @return This function returns a list with 4 elements:
 #'  - area_under_roc: area under ROC curve (scalar)
