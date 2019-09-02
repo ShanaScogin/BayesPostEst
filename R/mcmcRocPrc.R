@@ -261,10 +261,6 @@ mcmcRocPrc2 <- function(object, yname, xnames, curves, fullsims) {
     
   }
   
-  # Compute AUC-ROC values
-  v_auc_roc <- apply(pred_prob, MARGIN = 2, function(x) auc_roc(obs = yvec, pred = x))
-  v_auc_pr  <- apply(pred_prob, MARGIN = 2, function(x) auc_pr(obs = yvec, pred = x))
-  
   if (isTRUE(curves)) {
     
     pred_prob  <- as.data.frame(pred_prob)
@@ -287,6 +283,20 @@ mcmcRocPrc2 <- function(object, yname, xnames, curves, fullsims) {
     })
     prc_dat <- lapply(curve_data, `[[`, "prc_dat")
     roc_dat <- lapply(curve_data, `[[`, "roc_dat")
+  }
+  
+  # Compute AUC-ROC values
+  if (isTRUE(curves)) {
+    v_auc_roc <- sapply(roc_dat, function(xy) {
+      caTools::trapz(xy$x, xy$y)
+    })
+    v_auc_pr  <- sapply(prc_dat, function(xy) {
+      xy <- subset(xy, !is.nan(xy$y))
+      caTools::trapz(xy$x, xy$y)
+    })
+  } else {
+    v_auc_roc <- apply(pred_prob, MARGIN = 2, function(x) auc_roc(obs = yvec, pred = x))
+    v_auc_pr  <- apply(pred_prob, MARGIN = 2, function(x) auc_pr(obs = yvec, pred = x)) 
   }
   
   # Recreate original output formats

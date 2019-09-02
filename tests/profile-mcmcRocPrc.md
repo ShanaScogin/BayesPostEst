@@ -15,122 +15,83 @@ to extract data). It also uses `lapply` for the internal curve
 computations.
 
 ``` r
-mcmcRocPrc2 <- function(object, yname, xnames, curves, fullsims) {
-  
-  link_logit  <- any(grepl("logit", object$model$model()))
-  link_probit <- any(grepl("probit", object$model$model()))
-  
-  mdl_data <- object$model$data()
-  stopifnot(all(xnames %in% names(mdl_data)))
-  stopifnot(all(yname %in% names(mdl_data)))
-  
-  # add intercept by default, maybe revisit this
-  xdata <- as.matrix(cbind(X0 = 1L, as.data.frame(mdl_data[xnames])))
-  yvec <- mdl_data[[yname]]
-  
-  pardraws <- as.matrix(coda::as.mcmc(object))
-  # this is not very robust, assumes pars are 'b[x]'
-  # for both this and the intercept addition above, maybe a more robust solution
-  # down the road would be to dig into the object$model$model() string
-  betadraws <- pardraws[, c(sprintf("b[%s]", 1:ncol(xdata - 1)))]
-    
-  if(isTRUE(link_logit)) {
-    pred_prob <- plogis(xdata %*% t(betadraws))  
-  } else if (isTRUE(link_probit)) {
-    pred_prob <- pnorm(xdata %*% t(betadraws))
-  } else {
-    stop("Could not identify model link function")
-  }
-  
-  # pred_prob is a [N, iter] matrix, i.e. each column are preds from one 
-  # set of posterior samples
-  # if not using fullsims, summarize accross columns
-  if (isFALSE(fullsims)) {
-    
-    pred_prob <- as.matrix(apply(pred_prob, MARGIN = 1, median))
-    
-  }
-  
-  # Compute AUC-ROC values
-  v_auc_roc <- apply(pred_prob, MARGIN = 2, function(x) auc_roc(obs = yvec, pred = x))
-  v_auc_pr  <- apply(pred_prob, MARGIN = 2, function(x) auc_pr(obs = yvec, pred = x))
-  
-  if (isTRUE(curves)) {
-    
-    pred_prob  <- as.data.frame(pred_prob)
-    curve_data <- lapply(pred_prob, yy = yvec, FUN = function(x, yy) {
-      rocr_pred <- ROCR::prediction(predictions = x, labels = yy)
-      rocr_prc  <- ROCR::performance(prediction.obj = rocr_pred,
-                                     measure = "prec",
-                                     x.measure = "rec")
-      prc_data <- data.frame(x = rocr_prc@x.values[[1]],
-                             y = rocr_prc@y.values[[1]])
-      rocr_roc  <- ROCR::performance(prediction.obj = rocr_pred,
-                                     measure = "tpr",
-                                     x.measure = "fpr")
-      roc_data <- data.frame(x = rocr_roc@x.values[[1]],
-                             y = rocr_roc@y.values[[1]])
-      list(
-        prc_dat = prc_data,
-        roc_dat = roc_data
-      )
-    })
-    prc_dat <- lapply(curve_data, `[[`, "prc_dat")
-    roc_dat <- lapply(curve_data, `[[`, "roc_dat")
-  }
-  
-  # Recreate original output formats
-  if (curves & fullsims) {
-    out <- list(
-      area_under_roc = v_auc_roc,
-      area_under_prc = v_auc_pr,
-      prc_dat = prc_dat,
-      roc_dat = roc_dat
-    )
-  }
-  if (curves & !fullsims) {
-    out <- list(
-      area_under_roc = v_auc_roc,
-      area_under_prc = v_auc_pr,
-      prc_dat = prc_dat[[1]],
-      roc_dat = roc_dat[[1]]
-    )
-  }
-  if (!curves & !fullsims) {
-    out <- list(
-      area_under_roc = v_auc_roc,
-      area_under_prc = v_auc_pr
-    )
-  }
-  if (!curves & fullsims) {
-    out <- data.frame(
-      area_under_roc = v_auc_roc,
-      area_under_prc = v_auc_pr
-    )
-  }
-  out
-}
-
-
-auc_roc <- function(obs, pred) {
-  pred <- ROCR::prediction(pred, obs)
-  auc  <- ROCR::performance(pred, "auc")@y.values[[1]]
-  return(auc)
-}
-
-auc_pr <- function(obs, pred) {
-  xx.df <- ROCR::prediction(pred, obs)
-  perf  <- ROCR::performance(xx.df, "prec", "rec")
-  xy    <- data.frame(recall = perf@x.values[[1]], 
-                      precision = perf@y.values[[1]])
-  
-  # take out division by 0 for lowest threshold
-  xy <- subset(xy, !is.nan(xy$precision))
-  
-  res   <- caTools::trapz(xy$recall, xy$precision)
-  res
-}
+source("../R/mcmcRocPrc.R")
+mcmcRocPrc2
 ```
+
+    ## function (object, yname, xnames, curves, fullsims) 
+    ## {
+    ##     link_logit <- any(grepl("logit", object$model$model()))
+    ##     link_probit <- any(grepl("probit", object$model$model()))
+    ##     mdl_data <- object$model$data()
+    ##     stopifnot(all(xnames %in% names(mdl_data)))
+    ##     stopifnot(all(yname %in% names(mdl_data)))
+    ##     xdata <- as.matrix(cbind(X0 = 1L, as.data.frame(mdl_data[xnames])))
+    ##     yvec <- mdl_data[[yname]]
+    ##     pardraws <- as.matrix(coda::as.mcmc(object))
+    ##     betadraws <- pardraws[, c(sprintf("b[%s]", 1:ncol(xdata - 
+    ##         1)))]
+    ##     if (isTRUE(link_logit)) {
+    ##         pred_prob <- plogis(xdata %*% t(betadraws))
+    ##     }
+    ##     else if (isTRUE(link_probit)) {
+    ##         pred_prob <- pnorm(xdata %*% t(betadraws))
+    ##     }
+    ##     else {
+    ##         stop("Could not identify model link function")
+    ##     }
+    ##     if (isFALSE(fullsims)) {
+    ##         pred_prob <- as.matrix(apply(pred_prob, MARGIN = 1, median))
+    ##     }
+    ##     if (isTRUE(curves)) {
+    ##         pred_prob <- as.data.frame(pred_prob)
+    ##         curve_data <- lapply(pred_prob, yy = yvec, FUN = function(x, 
+    ##             yy) {
+    ##             rocr_pred <- ROCR::prediction(predictions = x, labels = yy)
+    ##             rocr_prc <- ROCR::performance(prediction.obj = rocr_pred, 
+    ##                 measure = "prec", x.measure = "rec")
+    ##             prc_data <- data.frame(x = rocr_prc@x.values[[1]], 
+    ##                 y = rocr_prc@y.values[[1]])
+    ##             rocr_roc <- ROCR::performance(prediction.obj = rocr_pred, 
+    ##                 measure = "tpr", x.measure = "fpr")
+    ##             roc_data <- data.frame(x = rocr_roc@x.values[[1]], 
+    ##                 y = rocr_roc@y.values[[1]])
+    ##             list(prc_dat = prc_data, roc_dat = roc_data)
+    ##         })
+    ##         prc_dat <- lapply(curve_data, `[[`, "prc_dat")
+    ##         roc_dat <- lapply(curve_data, `[[`, "roc_dat")
+    ##     }
+    ##     if (isTRUE(curves)) {
+    ##         v_auc_roc <- sapply(roc_dat, function(xy) {
+    ##             caTools::trapz(xy$x, xy$y)
+    ##         })
+    ##         v_auc_pr <- sapply(prc_dat, function(xy) {
+    ##             xy <- subset(xy, !is.nan(xy$y))
+    ##             caTools::trapz(xy$x, xy$y)
+    ##         })
+    ##     }
+    ##     else {
+    ##         v_auc_roc <- apply(pred_prob, MARGIN = 2, function(x) auc_roc(obs = yvec, 
+    ##             pred = x))
+    ##         v_auc_pr <- apply(pred_prob, MARGIN = 2, function(x) auc_pr(obs = yvec, 
+    ##             pred = x))
+    ##     }
+    ##     if (curves & fullsims) {
+    ##         out <- list(area_under_roc = v_auc_roc, area_under_prc = v_auc_pr, 
+    ##             prc_dat = prc_dat, roc_dat = roc_dat)
+    ##     }
+    ##     if (curves & !fullsims) {
+    ##         out <- list(area_under_roc = v_auc_roc, area_under_prc = v_auc_pr, 
+    ##             prc_dat = prc_dat[[1]], roc_dat = roc_dat[[1]])
+    ##     }
+    ##     if (!curves & !fullsims) {
+    ##         out <- list(area_under_roc = v_auc_roc, area_under_prc = v_auc_pr)
+    ##     }
+    ##     if (!curves & fullsims) {
+    ##         out <- data.frame(area_under_roc = v_auc_roc, area_under_prc = v_auc_pr)
+    ##     }
+    ##     out
+    ## }
 
 ``` r
 data("sim_data")
@@ -164,9 +125,9 @@ microbenchmark(
 ```
 
     ## Unit: milliseconds
-    ##  expr      min       lq     mean   median       uq      max neval cld
-    ##  f1() 92.50397 98.23218 126.6359 106.2386 162.1159 193.7190    50   a
-    ##  f2() 87.42921 93.93193 122.3208 100.1355 157.5583 210.7985    50   a
+    ##  expr      min        lq     mean   median       uq      max neval cld
+    ##  f1() 93.95821 101.00755 129.1437 115.6837 163.7863 208.5383    50   a
+    ##  f2() 86.85721  94.96569 123.8703 104.6500 158.9830 200.1702    50   a
 
 ## curves = TRUE, fullsims = FALSE
 
@@ -197,9 +158,9 @@ microbenchmark(
 ```
 
     ## Unit: milliseconds
-    ##  expr      min       lq     mean   median       uq      max neval cld
-    ##  f1() 86.40022 106.7506 159.8728 120.3832 238.7542 271.4987    50   a
-    ##  f2() 82.12333 100.7199 155.9313 117.7260 234.4008 268.7429    50   a
+    ##  expr      min        lq     mean   median       uq      max neval cld
+    ##  f1() 91.79774 108.44734 173.8986 139.7944 242.0546 324.8251    50   b
+    ##  f2() 81.56758  96.16492 140.8706 113.8619 181.0781 268.2639    50  a
 
 ## curves = FALSE, fullsims = TRUE
 
@@ -229,9 +190,9 @@ microbenchmark(
 ```
 
     ## Unit: seconds
-    ##  expr      min       lq     mean   median       uq      max neval cld
-    ##  f1() 11.06219 11.47752 12.14336 12.29647 12.72197 12.95722    10   b
-    ##  f2() 10.42508 10.91673 11.39540 11.36660 11.80724 12.71077    10  a
+    ##  expr       min       lq     mean   median       uq      max neval cld
+    ##  f1() 10.453441 11.21028 11.74057 11.55878 12.03372 14.28089    10   a
+    ##  f2()  9.863609 10.91968 11.11132 11.01028 11.36222 12.75854    10   a
 
 ## curves = TRUE, fullsims = TRUE
 
@@ -261,6 +222,6 @@ microbenchmark(
 ```
 
     ## Unit: seconds
-    ##  expr      min       lq     mean   median       uq      max neval cld
-    ##  f1() 20.85823 22.25647 23.29981 23.28911 24.65257 25.57629    10   b
-    ##  f2() 19.14039 19.59245 20.36273 20.13533 20.83402 22.78937    10  a
+    ##  expr       min        lq      mean    median       uq      max neval cld
+    ##  f1() 21.238577 21.542162 22.141907 21.809533 23.07233 23.34445    10   b
+    ##  f2()  9.393025  9.680966  9.873146  9.821037 10.14483 10.36802    10  a
