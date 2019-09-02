@@ -198,18 +198,18 @@ mcmcReg <- function(mod,
   ## calculate point estimate of posterior density
   if (pointest == 'mean') {
     
-    samps_pe <- lapply(samps, function(x) apply(x, 2, mean))
+    samps_pe <- lapply(samps, function(x) apply(as.matrix(x), 2, mean))
     
   } else {
     
-    samps_pe <- lapply(samps, function(x) apply(x, 2, median))
+    samps_pe <- lapply(samps, function(x) apply(as.matrix(x), 2, median))
     
   }
   
   ## calculate uncertainty interval for ci argument
   if (hpdi == F) {
     
-    samps_ci <- lapply(samps, function(x) apply(x, 2, quantile,
+    samps_ci <- lapply(samps, function(x) apply(as.matrix(x), 2, quantile,
                                                 probs = c(.5 - ci/2, .5 + ci/2)))
     
   } else {
