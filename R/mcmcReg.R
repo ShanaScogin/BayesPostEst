@@ -129,7 +129,6 @@ mcmcReg <- function(mod,
   
   ## pull in unexported functions from other packages
   ## other options for future versions might include lifting this and adding authors as copr holders
-  coda.as.data.frame.mcmc = getFromNamespace("as.data.frame.mcmc", "coda")
   runjags.as.mcmc.list.runjags = getFromNamespace("as.mcmc.list.runjags", "runjags")
   
   ## if only one model object, coerce to a list
