@@ -8,35 +8,37 @@ mcmcRocPrc(modelmatrix, mcmcout, modelframe, curves = FALSE,
   link = "logit", fullsims = FALSE)
 }
 \arguments{
-\item{modelmatrix}{model matrix, including intercept (if the intercept is among the
-parameters estimated in the model). Create with model.matrix(formula, data).
-Note: the order of columns in the model matrix must correspond to the order of columns 
-in the matrix of posterior draws in the \code{mcmcout} argument. See the \code{mcmcout}
-argument for more and Beger (2016) for background.}
+\item{modelmatrix}{model matrix, including intercept (if the intercept is
+among the parameters estimated in the model). Create with
+\code{model.matrix(formula, data)}. Note: the order of columns in the model
+matrix must correspond to the order of columns in the matrix of posterior
+draws in the \code{mcmcout} argument. See the `mcmcout`` argument for
+more and Beger (2016) for background.}
 
-\item{mcmcout}{posterior distributions of all logit coefficients, 
-in matrix form. This can be created from rstan, MCMCpack, R2jags, etc. and transformed
-into a matrix using the function as.mcmc() from the coda package for \code{jags} class
-objects, as.matrix() from base R for \code{mcmc}, \code{mcmc.list}, \code{stanreg}, and 
+\item{mcmcout}{posterior distributions of all logit coefficients, in matrix
+form. This can be created from rstan, MCMCpack, R2jags, etc. and
+transformed into a matrix using the function \code{\link[coda:as.mcmc]{coda::as.mcmc()}} from the
+coda package for `jags`` class objects, as.matrix() from base R for \code{mcmc}, \code{mcmc.list}, \code{stanreg}, and
 \code{stanfit} class objects, and \code{object$sims.matrix} for \code{bugs} class objects.
-Note: the order of columns in this matrix must correspond to the order of columns 
-in the model matrix. One can do this by examining the posterior distribution matrix and sorting the 
-variables in the order of this matrix when creating the model matrix. A useful function for sorting 
-column names containing both characters and numbers as 
+Note: the order of columns in this matrix must correspond to the order of columns
+in the model matrix. One can do this by examining the posterior distribution matrix and sorting the
+variables in the order of this matrix when creating the model matrix. A useful function for sorting
+column names containing both characters and numbers as
 you create the matrix of posterior distributions is \code{mixedsort()} fom the gtools package.}
 
-\item{modelframe}{model frame in matrix form. Can be created using 
-as.matrix(model.frame(formula, data))}
+\item{modelframe}{model frame in matrix form. Can be created using
+\code{as.matrix(model.frame(formula, data))}.}
 
-\item{curves}{logical indicator of whether or not to return values to plot the ROC or Precision-Recall 
+\item{curves}{logical indicator of whether or not to return values to plot the ROC or Precision-Recall
 curves. If set to \code{FALSE} (default), results are returned as a list without the extra
 values.}
 
-\item{link}{type of generalized linear model; a character vector set to \code{"logit"} (default) or \code{"probit"}.}
+\item{link}{type of generalized linear model; a character vector set to
+\code{"logit"} (default) or \code{"probit"}.}
 
-\item{fullsims}{logical indicator of whether full object (based on all MCMC draws 
-rather than their average) will be returned. Default is \code{FALSE}. Note:  If \code{TRUE}
-is chosen, the function takes notably longer to execute.}
+\item{fullsims}{logical indicator of whether full object (based on all MCMC
+draws rather than their average) will be returned. Default is \code{FALSE}.
+Note:  If \code{TRUE} is chosen, the function takes notably longer to execute.}
 }
 \value{
 This function returns a list with 4 elements:
@@ -48,12 +50,8 @@ This function returns a list with 4 elements:
 }
 }
 \description{
-This function generates ROC and Precision-Recall curves 
-after fitting a Bayesian logit or probit regression.
-}
-\details{
-This function generates ROC and precision-recall curves 
-after fitting a Bayesian logit or probit model.
+Generate ROC and Precision-Recall curves after fitting a Bayesian logit or
+probit regression.
 }
 \examples{
 \donttest{
@@ -118,6 +116,6 @@ fit_sum <- mcmcRocPrc(modelmatrix = mm,
 }
 }
 \references{
-Beger, Andreas. 2016. “Precision-Recall Curves.” Available at SSRN: 
-https://ssrn.com/Abstract=2765419. http://dx.doi.org/10.2139/ssrn.2765419.
+Beger, Andreas. 2016. “Precision-Recall Curves.” Available at
+SSRN: \link{http://dx.doi.org/10.2139/ssrn.2765419}
 }
