@@ -53,13 +53,17 @@ mcmcMargEff <- function(mod, main, int, moderator, pointest = 'mean', seq = 100,
     marg_pe <- apply(marg, 2, mean)
   } else if (pointest == 'median') {
     marg_pe <- apply(marg, 2, median)
+  } else {
+    stop("pointest must be either 'mean' or 'median'")
   }
   
   ## calculate marginal effect for mean
-  if (hpdi) {
+  if (!hpdi) {
+    marg_ci<- t(apply(marg, 2, quantile, probs = c(.5 - ci/2, .5 + ci/2)))
+  } else if (hpdi) {
     marg_ci <- t(apply(marg, 2, HDInterval::hdi, credMass = ci))
   } else {
-    marg_ci<- t(apply(marg, 2, quantile, probs = c(.5 - ci/2, .5 + ci/2)))
+    stop("hpdi must be either true or false")
   }
 
   ## create dataframe for plotting
