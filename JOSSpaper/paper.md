@@ -137,4 +137,8 @@ The following packages provide functions similar (concretely or in spirit) to Ba
 - The ggmcmc [@ggmcmc] package contains a function to plot the ROC curve after a regression model for binary outcomes.
 - The brms [@brms] package offers a variety of convenient postestimation commands, including predicted probabilities, for Bayesian models estimated directly in brms.
 
+# Future developments
+
+Plans for future work include extending existing methods in this package to a broader class of models, including generalized linear models with other link functions (e.g. models for ordered, categorical, and count outcomes) and multilevel/hierarchical generalized linear models. 
+
 # References
