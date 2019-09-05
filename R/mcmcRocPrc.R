@@ -263,17 +263,8 @@ mcmcRocPrc2 <- function(object, yname, xnames, curves, fullsims) {
   
   pred_prob  <- as.data.frame(pred_prob)
   curve_data <- lapply(pred_prob, yy = yvec, FUN = function(x, yy) {
-    rocr_pred <- ROCR::prediction(predictions = x, labels = yy)
-    rocr_prc  <- ROCR::performance(prediction.obj = rocr_pred,
-                                   measure = "prec",
-                                   x.measure = "rec")
-    prc_data <- data.frame(x = rocr_prc@x.values[[1]],
-                           y = rocr_prc@y.values[[1]])
-    rocr_roc  <- ROCR::performance(prediction.obj = rocr_pred,
-                                   measure = "tpr",
-                                   x.measure = "fpr")
-    roc_data <- data.frame(x = rocr_roc@x.values[[1]],
-                           y = rocr_roc@y.values[[1]])
+    prc_data <- compute_pr(yvec = yy, pvec = x)
+    roc_data <- compute_roc(yvec = yy, pvec = x)
     list(
       prc_dat = prc_data,
       roc_dat = roc_data
@@ -324,23 +315,62 @@ mcmcRocPrc2 <- function(object, yname, xnames, curves, fullsims) {
 }
 
 
+compute_roc <- function(yvec, pvec) {
+  porder <- order(pvec, decreasing = TRUE)
+  yvecs  <- yvec[porder]
+  pvecs  <- pvec[porder]
+  p      <- sum(yvecs)
+  n      <- length(yvecs) - p
+  tp     <- cumsum(yvecs)
+  tpr    <- tp/p
+  fp     <- 1:length(yvecs) - tp
+  fpr    <- fp/n
+  
+  dup_pred  <- rev(duplicated(pvecs))
+  dup_stats <- duplicated(tpr) & duplicated(fpr)
+  dups <- dup_pred | dup_stats
+  
+  fpr <- c(0, fpr[!dups])
+  tpr <- c(0, tpr[!dups])
+  
+  roc_data <- data.frame(x = fpr,
+                         y = tpr)
+  roc_data
+}
+
+compute_pr <- function(yvec, pvec) {
+  porder <- order(pvec, decreasing = TRUE)
+  yvecs  <- yvec[porder]
+  pvecs  <- pvec[porder]
+  p      <- sum(yvecs)
+  n      <- length(yvecs) - p
+  tp     <- cumsum(yvecs)
+  tpr    <- tp/p
+  pp     <- 1:length(yvecs) 
+  prec   <- tp/pp
+  
+  dup_pred  <- rev(duplicated(pvecs))
+  dup_stats <- duplicated(tpr) & duplicated(prec)
+  dups <- dup_pred | dup_stats
+  
+  prec <- c(NaN, prec[!dups])
+  tpr <- c(0, tpr[!dups])
+  
+  prc_data <- data.frame(x = tpr,
+                         y = prec)
+  prc_data
+}
+
+
+# auc_roc and auc_pr are not really used, but keep around just in case
 auc_roc <- function(obs, pred) {
-  pred <- ROCR::prediction(pred, obs)
-  auc  <- ROCR::performance(pred, "auc")@y.values[[1]]
-  return(auc)
+  values <- compute_roc(obs, pred)
+  caTools::trapz(values$x, values$y)
 }
 
 auc_pr <- function(obs, pred) {
-  xx.df <- ROCR::prediction(pred, obs)
-  perf  <- ROCR::performance(xx.df, "prec", "rec")
-  xy    <- data.frame(recall = perf@x.values[[1]], 
-                      precision = perf@y.values[[1]])
-  
-  # take out division by 0 for lowest threshold
-  xy <- subset(xy, !is.nan(xy$precision))
-  
-  res   <- caTools::trapz(xy$recall, xy$precision)
-  res
+  values <- compute_pr(obs, pred)
+  caTools::trapz(values$x, values$y)
 }
 
 

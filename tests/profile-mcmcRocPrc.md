@@ -11,8 +11,198 @@ library("BayesPostEst")
     ##   +.gg   ggplot2
 
 Below is a 2nd version that works with less input (and no pre-processing
-to extract data). It also uses `lapply` for the internal curve
-computations.
+to extract data). For speed improvements it has:
+
+  - uses a custom curve calculation
+  - uses `lapply` for the internal curve computations
+  - uses a custom AUC calculation
+
+## Verify the ROC/PR curve calculations are identical to ROCR
+
+### ROC
+
+First, ROC. `f1()` uses ROCR to calculate the curve. `f2()` is a
+homebrew implementation. It has less checks but provided the inputs are
+non-missing, finite, numeric vectors, it should work correctly. It can
+handle duplicated predictions, e.g. an all constant prediction.
+
+``` r
+f1 <- function(pvec, yvec) {
+  rocr_pred <- ROCR::prediction(predictions = pvec, labels = yvec)
+  rocr_roc  <- ROCR::performance(prediction.obj = rocr_pred,
+                                 measure = "tpr",
+                                 x.measure = "fpr")
+  roc_data <- data.frame(x = rocr_roc@x.values[[1]],
+                         y = rocr_roc@y.values[[1]])
+  roc_data
+}
+
+f2 <- function(pvec, yvec) {
+  porder <- order(pvec, decreasing = TRUE)
+  yvecs  <- yvec[porder]
+  pvecs  <- pvec[porder]
+  p      <- sum(yvecs)
+  n      <- length(yvecs) - p
+  tp     <- cumsum(yvecs)
+  tpr    <- tp/p
+  fp     <- 1:length(yvecs) - tp
+  fpr    <- fp/n
+  
+  dup_pred  <- rev(duplicated(pvecs))
+  dup_stats <- duplicated(tpr) & duplicated(fpr)
+  dups <- dup_pred | dup_stats
+  
+  fpr <- c(0, fpr[!dups])
+  tpr <- c(0, tpr[!dups])
+  
+  roc_data <- data.frame(x = fpr,
+                         y = tpr)
+  roc_data
+}
+```
+
+Simple example to show duplicated values are correctly handled:
+
+``` r
+set.seed(1234)
+pvec <- sample(c(rep(.2, 5), rep(.5, 5), rep(.8, 5)), size = 15)
+yvec <- rbinom(n = 15, size = 1, prob = pvec)
+
+out1 <- f1(pvec, yvec)
+out2 <- f2(pvec, yvec)
+testthat::expect_identical(out1, out2)
+out1
+```
+
+    ##       x         y
+    ## 1 0.000 0.0000000
+    ## 2 0.125 0.5714286
+    ## 3 0.500 0.8571429
+    ## 4 1.000 1.0000000
+
+``` r
+out2
+```
+
+    ##       x         y
+    ## 1 0.000 0.0000000
+    ## 2 0.125 0.5714286
+    ## 3 0.500 0.8571429
+    ## 4 1.000 1.0000000
+
+This data is captured from inside `mcmcRocPrc2()` just prior to the
+curve calculations when `fullsims = TRUE`. Use one column (MCMC sample)
+for testing.
+
+``` r
+pred_prob <- readRDS("pred-prob.rds")
+pvec <- pred_prob[, 1]
+yvec <- jags_logit$model$data()$Y
+
+microbenchmark::microbenchmark(
+  f1(pvec, yvec),
+  f2(pvec, yvec),
+  times = 200
+)
+```
+
+    ## Unit: microseconds
+    ##            expr      min        lq     mean    median       uq      max
+    ##  f1(pvec, yvec) 2542.544 2760.9825 3651.107 3234.8870 3966.595 9496.122
+    ##  f2(pvec, yvec)  241.980  263.4415  366.836  312.4295  397.426 1236.010
+    ##  neval cld
+    ##    200   b
+    ##    200  a
+
+### Homebrew PR curve calculation.
+
+``` r
+f1 <- function(pvec, yvec) {
+  rocr_pred <- ROCR::prediction(predictions = pvec, labels = yvec)
+  rocr_prc  <- ROCR::performance(prediction.obj = rocr_pred,
+                                 measure = "prec",
+                                 x.measure = "rec")
+  prc_data <- data.frame(x = rocr_prc@x.values[[1]],
+                         y = rocr_prc@y.values[[1]])
+  prc_data
+}
+
+f2 <- function(pvec, yvec) {
+  porder <- order(pvec, decreasing = TRUE)
+  yvecs  <- yvec[porder]
+  pvecs  <- pvec[porder]
+  p      <- sum(yvecs)
+  n      <- length(yvecs) - p
+  tp     <- cumsum(yvecs)
+  tpr    <- tp/p
+  pp     <- 1:length(yvecs) 
+  prec   <- tp/pp
+  
+  dup_pred  <- rev(duplicated(pvecs))
+  dup_stats <- duplicated(tpr) & duplicated(prec)
+  dups <- dup_pred | dup_stats
+  
+  prec <- c(NaN, prec[!dups])
+  tpr <- c(0, tpr[!dups])
+  
+  prc_data <- data.frame(x = tpr,
+                         y = prec)
+  prc_data
+}
+```
+
+Simple example to show duplicated values are correctly handled:
+
+``` r
+set.seed(1234)
+pvec <- sample(c(rep(.2, 5), rep(.5, 5), rep(.8, 5)), size = 15)
+yvec <- rbinom(n = 15, size = 1, prob = pvec)
+
+out1 <- f1(pvec, yvec)
+out2 <- f2(pvec, yvec)
+testthat::expect_identical(out1, out2)
+out1
+```
+
+    ##           x         y
+    ## 1 0.0000000       NaN
+    ## 2 0.5714286 0.8000000
+    ## 3 0.8571429 0.6000000
+    ## 4 1.0000000 0.4666667
+
+``` r
+out2
+```
+
+    ##           x         y
+    ## 1 0.0000000       NaN
+    ## 2 0.5714286 0.8000000
+    ## 3 0.8571429 0.6000000
+    ## 4 1.0000000 0.4666667
+
+Benchmark on full example.
+
+``` r
+pred_prob <- readRDS("pred-prob.rds")
+pvec <- pred_prob[, 1]
+yvec <- jags_logit$model$data()$Y
+
+microbenchmark::microbenchmark(
+  f1(pvec, yvec),
+  f2(pvec, yvec),
+  times = 200
+)
+```
+
+    ## Unit: microseconds
+    ##            expr      min        lq      mean    median        uq       max
+    ##  f1(pvec, yvec) 2340.147 2690.9105 3737.4873 3052.9975 3996.9930 17462.926
+    ##  f2(pvec, yvec)  222.451  253.1455  380.2105  299.5875  360.8485  4636.517
+    ##  neval cld
+    ##    200   b
+    ##    200  a
+
+## Source code for v2
 
 ``` r
 source("../R/mcmcRocPrc.R")
@@ -46,13 +236,8 @@ mcmcRocPrc2
     ##     pred_prob <- as.data.frame(pred_prob)
     ##     curve_data <- lapply(pred_prob, yy = yvec, FUN = function(x, 
     ##         yy) {
-    ##         rocr_pred <- ROCR::prediction(predictions = x, labels = yy)
-    ##         rocr_prc <- ROCR::performance(prediction.obj = rocr_pred, 
-    ##             measure = "prec", x.measure = "rec")
-    ##         prc_data <- data.frame(x = rocr_prc@x.values[[1]], y = rocr_prc@y.values[[1]])
-    ##         rocr_roc <- ROCR::performance(prediction.obj = rocr_pred, 
-    ##             measure = "tpr", x.measure = "fpr")
-    ##         roc_data <- data.frame(x = rocr_roc@x.values[[1]], y = rocr_roc@y.values[[1]])
+    ##         prc_data <- compute_pr(yvec = yy, pvec = x)
+    ##         roc_data <- compute_roc(yvec = yy, pvec = x)
     ##         list(prc_dat = prc_data, roc_dat = roc_data)
     ##     })
     ##     prc_dat <- lapply(curve_data, `[[`, "prc_dat")
@@ -113,9 +298,9 @@ microbenchmark(
 ```
 
     ## Unit: milliseconds
-    ##  expr      min        lq     mean   median       uq      max neval cld
-    ##  f1() 91.18153 100.42942 141.2742 149.4513 171.1633 279.7083    50   a
-    ##  f2() 86.93011  93.65343 126.3213 101.2978 159.1457 271.2318    50   a
+    ##  expr      min       lq     mean   median       uq      max neval cld
+    ##  f1() 90.52845 94.71293 128.9952 101.7767 119.1933 376.0458    50   a
+    ##  f2() 80.82302 87.51398 124.9077  90.8229 170.7834 240.5487    50   a
 
 ## curves = TRUE, fullsims = FALSE
 
@@ -146,9 +331,9 @@ microbenchmark(
 ```
 
     ## Unit: milliseconds
-    ##  expr       min       lq     mean   median       uq      max neval cld
-    ##  f1() 103.58151 118.3493 204.7809 164.4192 259.8980 424.7429    50   a
-    ##  f2()  91.27746 104.9720 173.4229 135.5493 244.0321 464.5473    50   a
+    ##  expr      min        lq     mean    median       uq      max neval cld
+    ##  f1() 95.27485 102.20693 133.9310 104.68096 116.1674 257.3876    50   a
+    ##  f2() 80.37629  86.68496 120.7663  90.39335 102.6267 258.2799    50   a
 
 ## curves = FALSE, fullsims = TRUE
 
@@ -178,9 +363,9 @@ microbenchmark(
 ```
 
     ## Unit: seconds
-    ##  expr       min        lq     mean   median       uq      max neval cld
-    ##  f1() 11.516062 11.618626 12.23036 12.04608 12.82930 13.19144    10   b
-    ##  f2()  9.870121  9.992884 10.61025 10.15661 11.64885 12.35606    10  a
+    ##  expr       min        lq     mean    median        uq      max neval cld
+    ##  f1() 11.280333 11.350524 11.50423 11.543556 11.629966 11.72832    10   b
+    ##  f2()  1.501663  1.687164  1.69418  1.705164  1.728044  1.77488    10  a
 
 ## curves = TRUE, fullsims = TRUE
 
@@ -210,6 +395,9 @@ microbenchmark(
 ```
 
     ## Unit: seconds
-    ##  expr       min        lq     mean   median       uq      max neval cld
-    ##  f1() 21.008057 22.306516 23.15792 22.76411 23.93977 25.72352    10   b
-    ##  f2()  9.096411  9.169684 10.36366 10.38649 11.22912 11.77002    10  a
+    ##  expr       min        lq      mean    median        uq       max neval
+    ##  f1() 22.428992 26.025205 27.193896 27.083906 27.977556 33.280823    10
+    ##  f2()  1.597306  1.734178  1.903603  1.822698  1.971806  2.548052    10
+    ##  cld
+    ##    b
+    ##   a
