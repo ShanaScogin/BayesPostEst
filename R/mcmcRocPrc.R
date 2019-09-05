@@ -261,43 +261,35 @@ mcmcRocPrc2 <- function(object, yname, xnames, curves, fullsims) {
     
   }
   
-  if (isTRUE(curves)) {
-    
-    pred_prob  <- as.data.frame(pred_prob)
-    curve_data <- lapply(pred_prob, yy = yvec, FUN = function(x, yy) {
-      rocr_pred <- ROCR::prediction(predictions = x, labels = yy)
-      rocr_prc  <- ROCR::performance(prediction.obj = rocr_pred,
-                                     measure = "prec",
-                                     x.measure = "rec")
-      prc_data <- data.frame(x = rocr_prc@x.values[[1]],
-                             y = rocr_prc@y.values[[1]])
-      rocr_roc  <- ROCR::performance(prediction.obj = rocr_pred,
-                                     measure = "tpr",
-                                     x.measure = "fpr")
-      roc_data <- data.frame(x = rocr_roc@x.values[[1]],
-                             y = rocr_roc@y.values[[1]])
-      list(
-        prc_dat = prc_data,
-        roc_dat = roc_data
-      )
-    })
-    prc_dat <- lapply(curve_data, `[[`, "prc_dat")
-    roc_dat <- lapply(curve_data, `[[`, "roc_dat")
-  }
+  pred_prob  <- as.data.frame(pred_prob)
+  curve_data <- lapply(pred_prob, yy = yvec, FUN = function(x, yy) {
+    rocr_pred <- ROCR::prediction(predictions = x, labels = yy)
+    rocr_prc  <- ROCR::performance(prediction.obj = rocr_pred,
+                                   measure = "prec",
+                                   x.measure = "rec")
+    prc_data <- data.frame(x = rocr_prc@x.values[[1]],
+                           y = rocr_prc@y.values[[1]])
+    rocr_roc  <- ROCR::performance(prediction.obj = rocr_pred,
+                                   measure = "tpr",
+                                   x.measure = "fpr")
+    roc_data <- data.frame(x = rocr_roc@x.values[[1]],
+                           y = rocr_roc@y.values[[1]])
+    list(
+      prc_dat = prc_data,
+      roc_dat = roc_data
+    )
+  })
+  prc_dat <- lapply(curve_data, `[[`, "prc_dat")
+  roc_dat <- lapply(curve_data, `[[`, "roc_dat")
   
   # Compute AUC-ROC values
-  if (isTRUE(curves)) {
-    v_auc_roc <- sapply(roc_dat, function(xy) {
-      caTools::trapz(xy$x, xy$y)
-    })
-    v_auc_pr  <- sapply(prc_dat, function(xy) {
-      xy <- subset(xy, !is.nan(xy$y))
-      caTools::trapz(xy$x, xy$y)
-    })
-  } else {
-    v_auc_roc <- apply(pred_prob, MARGIN = 2, function(x) auc_roc(obs = yvec, pred = x))
-    v_auc_pr  <- apply(pred_prob, MARGIN = 2, function(x) auc_pr(obs = yvec, pred = x)) 
-  }
+  v_auc_roc <- sapply(roc_dat, function(xy) {
+    caTools::trapz(xy$x, xy$y)
+  })
+  v_auc_pr  <- sapply(prc_dat, function(xy) {
+    xy <- subset(xy, !is.nan(xy$y))
+    caTools::trapz(xy$x, xy$y)
+  })
   
   # Recreate original output formats
   if (curves & fullsims) {
@@ -318,8 +310,8 @@ mcmcRocPrc2 <- function(object, yname, xnames, curves, fullsims) {
   }
   if (!curves & !fullsims) {
     out <- list(
-      area_under_roc = v_auc_roc,
-      area_under_prc = v_auc_pr
+      area_under_roc = v_auc_roc[[1]],
+      area_under_prc = v_auc_pr[[1]]
     )
   }
   if (!curves & fullsims) {
