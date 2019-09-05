@@ -22,7 +22,7 @@
 #'
 #' @examples
 mcmcMargEff <- function(mod, main, int, moderator, pointest = 'mean', seq = 100,
-                        ci = .95, plot = T) {
+                        ci = .95, hpdi = F, plot = T) {
 
   ## pull in unexported functions from other packages
   ## other options for future versions might include lifting this and adding authors as copr holders
@@ -48,36 +48,30 @@ mcmcMargEff <- function(mod, main, int, moderator, pointest = 'mean', seq = 100,
 
   ## compute marginal effect for each sample
   marg <- rep(samps[, 1], seq) + samps[, 2] %o% mod_range
-
-  ## calculate marginal effect for mean
-  marg_mean <- apply(marg, 2, mean)
-
-  ## calculate marginal effect for median and ci
-  marg_med <- t(apply(marg, 2, quantile, probs = c(.5 - ci/2, .5,
-                                                   .5 + ci/2)))
-
-  ## create dataframe for plotting
-  marg_gg <- data.frame(mod = mod_range, mean = marg_mean, median = marg_med[, 2],
-                        lo = marg_med[, 1], hi = marg_med[, 3])
-
-  ## use mean for point estimate
+  
   if (pointest == 'mean') {
-
-    mep <- ggplot(data = marg_gg, aes(x = mod_range, y = mean, ymin = lo, ymax = hi)) +
-      geom_ribbon(alpha = .25) +
-      geom_hline(yintercept = 0, lty = 2, color = 'gray40', lwd = .5) +
-      geom_line()
-
+    marg_pe <- apply(marg, 2, mean)
   } else if (pointest == 'median') {
-
-    mep <- ggplot(data = marg_gg, aes(x = mod_range, y = median, ymin = lo, ymax = hi)) +
-      geom_ribbon(alpha = .25) +
-      geom_hline(yintercept = 0, lty = 2, color = 'gray40', lwd = .5) +
-      geom_line()
-
+    marg_pe <- apply(marg, 2, median)
+  }
+  
+  ## calculate marginal effect for mean
+  if (hpdi) {
+    marg_ci <- t(apply(marg, 2, HDInterval::hdi, credMass = ci))
+  } else {
+    marg_ci<- t(apply(marg, 2, quantile, probs = c(.5 - ci/2, .5 + ci/2)))
   }
 
+  ## create dataframe for plotting
+  marg_gg <- data.frame(mod = mod_range, pe = marg_pe,
+                        lo = marg_ci[, 1], hi = marg_ci[, 2])
+
+  mep <- ggplot(data = marg_gg, aes(x = mod_range, y = pe, ymin = lo, ymax = hi)) +
+    geom_ribbon(alpha = .25) +
+    geom_hline(yintercept = 0, lty = 2, color = 'gray40', lwd = .5) +
+    geom_line()
+
   ## return plot
-  if (plot == T) mep else marg_gg
+  if (plot) mep else marg_gg
 
 }
