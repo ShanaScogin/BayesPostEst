@@ -53,16 +53,20 @@ mcmcCoefPlot <- function(mod, pars = NULL, pointest = 'mean', ci = .95, hpdi = F
     samps <- samps[, grepl(pattern = paste(pars, collapse = '|'), x = colnames(samps))]
   }
 
-  if (hpdi == F) {
+  if (!hpdi) {
     samps_ci <- t(apply(samps, 2, quantile, probs = c(.5 - ci/2, .5 + ci/2)))
-  } else {
+  } else if (hpdi) {
     samps_ci <- coda::HPDinterval(coda::as.mcmc(samps), probs = ci)
+  } else {
+    stop("hpdi must be either true or false")
   }
   
   if (pointest == 'mean') {
     samps_pe <- apply(samps, 2, mean)
-  } else {
+  } else if (pointest == 'median') {
     samps_pe <- apply(samps, 2, median)
+  } else {
+    stop("pointest must be either 'mean' or 'median'")
   }
   
   coefs <- data.frame(pe = samps_pe, samps_ci)
