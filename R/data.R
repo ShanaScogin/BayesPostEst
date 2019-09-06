@@ -94,6 +94,62 @@
 #' @docType data
 "jags_probit"
 
+#' Fitted JAGS probit model
+#' 
+#' A fitted JAGS linear model with interaction term generated with
+#' [R2jags::jags()]. See the example  code below for how it was created. Used
+#' in examples and for testing. 
+#' 
+#' @format A class "rjags" object created by [R2jags::jags()]
+#' 
+#' @examples 
+#' \donttest{
+#' data("sim_data_linear")
+#' 
+#' ## formatting the data for jags
+#' datjags <- as.list(data)
+#' datjags$N <- length(datjags$Y)
+#' 
+#' ## creating jags model
+#' model <- function()  {
+#'   
+#'   for(i in 1:N){
+#'     Y[i] ~ dnorm(mu[i], sigma)  ## Bernoulli distribution of y_i
+#'     
+#'     mu[i] <- b[1] + 
+#'       b[2] * X1[i] + 
+#'       b[3] * X2[i] +
+#'       b[4] * X1[i] * X2[i]
+#'     
+#'   }
+#'   
+#'   for(j in 1:4){
+#'     b[j] ~ dnorm(0, 0.001) ## Use a coefficient vector for simplicity
+#'   }
+#'   
+#'   sigma ~ dexp(1)
+#'   
+#' }
+#' 
+#' params <- c("b")
+#' inits1 <- list("b" = rep(0, 4))
+#' inits2 <- list("b" = rep(0, 4))
+#' inits <- list(inits1, inits2)
+#' 
+#' ## fitting the model with R2jags
+#' set.seed(123)
+#' fit <- R2jags::jags(data = datjags, inits = inits, 
+#'                     parameters.to.save = params, n.chains = 2, n.iter = 2000, 
+#'                     n.burnin = 1000, model.file = model)
+#' 
+#' jags_interactive <- fit
+#' usethis::use_data(jags_interactive, overwrite = TRUE)
+#' 
+#' }
+#' 
+#' @docType data
+"jags_interactive"
+
 
 #' Simulated data for examples
 #' 
@@ -116,3 +172,22 @@
 #' sim_data <- data.frame(cbind(X1, X2, Y))
 "sim_data"
 
+#' Simulated data for examples
+#' 
+#' Simulated data to fit example models against
+#' 
+#' @format a data.frame
+#' 
+#' @examples 
+#' ## simulating data
+#' set.seed(123456)
+#' b0 <- 0.2 # true value for the intercept
+#' b1 <- 0.5 # true value for first beta
+#' b2 <- 0.7 # true value for second beta
+#' n <- 500 # sample size
+#' X1 <- runif(n, -1, 1)
+#' X2 <- runif(n, -1, 1)
+#' Z <- b0 + b1 * X1 + b2 * X2
+#' Y_linear <- rnorm(n, Z, 1)
+#' sim_data_linear<- data.frame(cbind(X1, X2, Y = Y_linear))
+"sim_data_linear"

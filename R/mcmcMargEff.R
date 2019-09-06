@@ -14,13 +14,74 @@
 #' @param seq a numeric giving the number of moderator values used to generate
 #' the marginal effects plot.
 #' @param ci a scalar indicating the confidence level of the uncertainty intervals.
+#' @param hpdi a logical indicating whether to use highest posterior density intervals
+#' or equal tailed credible intervals to capture uncertainty.
 #' @param plot logical indicating whether to return a `ggplot` object or the
 #' underlying tidy DataFrame.
 #'
 #' @return a `ggplot` object or a tidy DataFrame.
-#' @export
 #'
 #' @examples
+#' \donttest{
+#' ## simulating data
+#' set.seed(123456)
+#' b0 <- 0.2 # true value for the intercept
+#' b1 <- 0.5 # true value for first beta
+#' b2 <- 0.7 # true value for second beta
+#' n <- 500 # sample size
+#' X1 <- runif(n, -1, 1)
+#' X2 <- runif(n, -1, 1)
+#' Z <- b0 + b1 * X1 + b2 * X2
+#'
+#' ## linear model data
+#' Y_linear <- rnorm(n, Z, 1)
+#' data <- data.frame(cbind(X1, X2, Y = Y_linear))
+#' 
+#' ## formatting the data for jags
+#' datjags <- as.list(data)
+#' datjags$N <- length(datjags$Y)
+#' 
+#' ## creating jags model
+#' model <- function()  {
+#'   
+#'   for(i in 1:N){
+#'     Y[i] ~ dnorm(mu[i], sigma)  ## Bernoulli distribution of y_i
+#'     
+#'     mu[i] <- b[1] + 
+#'       b[2] * X1[i] + 
+#'       b[3] * X2[i] +
+#'       b[4] * X1[i] * X2[i]
+#'     
+#'   }
+#'   
+#'   for(j in 1:4){
+#'     b[j] ~ dnorm(0, 0.001) ## Use a coefficient vector for simplicity
+#'   }
+#'   
+#'   sigma ~ dexp(1)
+#'   
+#' }
+#' 
+#' params <- c("b")
+#' inits1 <- list("b" = rep(0, 4))
+#' inits2 <- list("b" = rep(0, 4))
+#' inits <- list(inits1, inits2)
+#' 
+#' ## fitting the model with R2jags
+#' set.seed(123)
+#' fit <- R2jags::jags(data = datjags, inits = inits, 
+#'                     parameters.to.save = params, n.chains = 2, n.iter = 2000, 
+#'                     n.burnin = 1000, model.file = model)
+#'
+#' mcmcMargEff(mod = fit,
+#' main = 'b[2]',
+#' int = 'b[4]',
+#' moderator = sim_data_linear$X2,
+#' plot = F)
+#' }
+#' 
+#' @export
+#' 
 mcmcMargEff <- function(mod, main, int, moderator, pointest = 'mean', seq = 100,
                         ci = .95, hpdi = F, plot = T) {
 
@@ -70,10 +131,10 @@ mcmcMargEff <- function(mod, main, int, moderator, pointest = 'mean', seq = 100,
   marg_gg <- data.frame(mod = mod_range, pe = marg_pe,
                         lo = marg_ci[, 1], hi = marg_ci[, 2])
 
-  mep <- ggplot(data = marg_gg, aes(x = mod_range, y = pe, ymin = lo, ymax = hi)) +
-    geom_ribbon(alpha = .25) +
-    geom_hline(yintercept = 0, lty = 2, color = 'gray40', lwd = .5) +
-    geom_line()
+  mep <- ggplot2::ggplot(data = marg_gg, aes(x = mod_range, y = pe, ymin = lo, ymax = hi)) +
+    ggplot2::geom_ribbon(alpha = .25) +
+    ggplot2::geom_hline(yintercept = 0, lty = 2, color = 'gray40', lwd = .5) +
+    ggplot2::geom_line()
 
   ## return plot
   if (plot) mep else marg_gg

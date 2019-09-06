@@ -16,3 +16,8 @@ Y <- rbinom(n, 1, pr)
 sim_data <- data.frame(cbind(X1, X2, Y))
 
 usethis::use_data(sim_data, overwrite = TRUE)
+
+## linear model data
+Y_linear <- rnorm(n, Z, 1)
+sim_data_linear <- data.frame(cbind(X1, X2, Y = Y_linear))
+usethis::use_data(sim_data_linear, overwrite = TRUE)
