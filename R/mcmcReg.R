@@ -129,7 +129,6 @@ mcmcReg <- function(mod,
   
   ## pull in unexported functions from other packages
   ## other options for future versions might include lifting this and adding authors as copr holders
-  coda.as.data.frame.mcmc = getFromNamespace("as.data.frame.mcmc", "coda")
   runjags.as.mcmc.list.runjags = getFromNamespace("as.mcmc.list.runjags", "runjags")
   
   ## if only one model object, coerce to a list
@@ -150,8 +149,8 @@ mcmcReg <- function(mod,
   ## if only one gof statistic name scalar or vector, coerce to a list
   if (class(gofnames) != 'list') gofnames <- list(gofnames)
   
-  ## extract samples and variable names from jags or rjags object
-  if (lapply(mod, inherits, 'jags')[[1]] || lapply(mod, inherits, 'rjags')[[1]]) {
+  ## extract samples and variable names from jags or rjags objects
+  if (lapply(mod, inherits, what = c('jags', 'rjags'))[[1]]) {
     
     ## extract posterior samples from list of model objects
     samps <- lapply(mod, function(x) as.matrix(coda::as.mcmc(x)))
@@ -159,54 +158,25 @@ mcmcReg <- function(mod,
   }
   
   ## extract samples and variable names from bugs object
-  if (lapply(mod, inherits, 'bugs')[[1]]) {
+  if (lapply(mod, inherits, what = 'bugs')[[1]]) {
     
     ## extract posterior samples from list of model objects
     samps <- lapply(mod, function(x) x$sims.matrix)
     
   }
   
-  ## extract samples and variable names from mcmc.list object
-  if (lapply(mod, inherits, 'mcmc.list')[[1]]) {
-    
-    samps <- lapply(mod, function(x) as.data.frame(Reduce("+", x) / length(x)))
-    
-  }
-  
-  ## extract samples and variable names from mcmc object
-  if (lapply(mod, inherits, 'mcmc')[[1]]) {
-    
-    samps <- mapply(mod, function(x) coda.as.data.frame.mcmc(x))
-    
-  }
-  
-  ## extract samples and variable names from stanreg object
-  if (lapply(mod, inherits, 'stanreg')[[1]]) {
-    
-    samps <- lapply(mod, function(x) as.data.frame(x$stanfit))
-    
-  }
-  
-  ## extract samples and variable names from stanfit object
-  if (lapply(mod, inherits, 'stanfit')[[1]]) {
-    
-    samps <- lapply(mod, function(x) as.data.frame(x))
-    
-  }
-  
-  ## extract samples and variable names from brmsfit object
-  if (lapply(mod, inherits, 'brmsfit')[[1]]) {
-    
-    samps <- lapply(mod, function(x) as.data.frame(x$fit))
-    
-  }
-  
   ## extract samples and variable names from runjags object
-  if (lapply(mod, inherits, 'runjags')[[1]]) {
+  if (lapply(mod, inherits, what = 'runjags')[[1]]) {
     
-    samps <- lapply(mod, function(x) runjags.as.mcmc.list.runjags(x))
-    samps <- lapply(samps, function(x) as.data.frame(Reduce("+", x) / length(x)))
+    samps <- lapply(mod, function(x) as.matrix(runjags.as.mcmc.list.runjags(x)))
     
+  }
+  
+  ## extract samples and variable names from remaining objects
+  if (lapply(mod, inherits, what = c("mcmc", "mcmc.list", "stanfit", "stanreg",
+                                     "brmsfit"))[[1]]) {
+    
+    samps <- lapply(mod, function(x) as.matrix(x))
   }
   
   ## extract coefficient names from dataframe(s)
