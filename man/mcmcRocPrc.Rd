@@ -4,74 +4,46 @@
 \alias{mcmcRocPrc}
 \title{ROC and Precision-Recall Curves using Bayesian MCMC estimates}
 \usage{
-mcmcRocPrc(modelmatrix, mcmcout, modelframe, curves = FALSE,
-  link = "logit", fullsims = FALSE)
+mcmcRocPrc(object, yname, xnames, curves, fullsims)
 }
 \arguments{
-\item{modelmatrix}{model matrix, including intercept (if the intercept is
-among the parameters estimated in the model). Create with
-\code{model.matrix(formula, data)}. Note: the order of columns in the model
-matrix must correspond to the order of columns in the matrix of posterior
-draws in the \code{mcmcout} argument. See the `mcmcout`` argument for
-more and Beger (2016) for background.}
+\item{object}{A "rjags" object (see \code{\link[R2jags:jags]{R2jags::jags()}}) for a fitted binary
+choice model.}
 
-\item{mcmcout}{posterior distributions of all logit coefficients, in matrix
-form. This can be created from rstan, MCMCpack, R2jags, etc. and
-transformed into a matrix using the function \code{\link[coda:as.mcmc]{coda::as.mcmc()}} from the
-coda package for `jags`` class objects, as.matrix() from base R for \code{mcmc}, \code{mcmc.list}, \code{stanreg}, and
-\code{stanfit} class objects, and \code{object$sims.matrix} for \code{bugs} class objects.
-Note: the order of columns in this matrix must correspond to the order of columns
-in the model matrix. One can do this by examining the posterior distribution matrix and sorting the
-variables in the order of this matrix when creating the model matrix. A useful function for sorting
-column names containing both characters and numbers as
-you create the matrix of posterior distributions is \code{mixedsort()} fom the gtools package.}
+\item{yname}{(\code{character(1)})\cr
+The name of the dependent variable, should match the variable name in the
+JAGS data object.}
 
-\item{modelframe}{model frame in matrix form. Can be created using
-\code{as.matrix(model.frame(formula, data))}.}
+\item{xnames}{(\code{\link[base:character]{base::character()}})\cr
+A character vector of the independent variable names, should match the
+corresponding names in the JAGS data object.}
 
-\item{curves}{logical indicator of whether or not to return values to plot the ROC or Precision-Recall
-curves. If set to \code{FALSE} (default), results are returned as a list without the extra
-values.}
-
-\item{link}{type of generalized linear model; a character vector set to
-\code{"logit"} (default) or \code{"probit"}.}
+\item{curves}{logical indicator of whether or not to return values to plot
+the ROC or Precision-Recall curves. If set to \code{FALSE} (default),
+results are returned as a list without the extra values.}
 
 \item{fullsims}{logical indicator of whether full object (based on all MCMC
 draws rather than their average) will be returned. Default is \code{FALSE}.
-Note:  If \code{TRUE} is chosen, the function takes notably longer to execute.}
+Note: If \code{TRUE} is chosen, the function takes notably longer to execute.}
 }
 \value{
-This function returns a list with 4 elements:
-\itemize{
-\item area_under_roc: area under ROC curve (scalar)
-\item area_under_prc: area under precision-recall curve (scalar)
-\item prc_dat: data to plot precision-recall curve (data frame)
-\item roc_dat: data to plot ROC curve (data frame)
-}
+Returns a list; the specific structure depends on the combination
+of the "curves" and "fullsims" argument values.
 }
 \description{
 Generate ROC and Precision-Recall curves after fitting a Bayesian logit or
 probit regression.
 }
 \examples{
-\donttest{
 # load simulated data and fitted model (see ?sim_data and ?jags_logit)
-data("sim_data")
 data("jags_logit")
 
-# processing the data
-mm <- model.matrix(Y ~ X1 + X2, data = sim_data)
-xframe <- as.matrix(model.frame(Y ~ X1 + X2, data = sim_data))
-mcmc <- coda::as.mcmc(fit)
-mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xframe)]
-
 # using mcmcRocPrc
-fit_sum <- mcmcRocPrc(modelmatrix = mm,
-                      modelframe = xframe,
-                      mcmcout = mcmc_mat,
+fit_sum <- mcmcRocPrc(jags_logit,
+                      yname = "Y",
+                      xnames = c("X1", "X2"),
                       curves = TRUE,
                       fullsims = FALSE)
-}
 
 }
 \references{
