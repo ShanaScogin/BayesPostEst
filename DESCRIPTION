@@ -47,7 +47,6 @@ Imports:
     R2jags,
     reshape2,
     rlang,
-    ROCR,
     stats,
     texreg,
     runjags,
