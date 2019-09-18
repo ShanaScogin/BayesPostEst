@@ -27,3 +27,14 @@ before_install:
 
 after_success:
   - Rscript -e 'covr::codecov()'
+
+# commented for now; this will not work until Travis has the GITHUB_PAT
+# environment variable, and so will error out the builds
+#deploy:
+#  provider: pages
+#  skip_cleanup: true
+#  github_token: $GITHUB_PAT
+#  keep_history: true
+#  local_dir: docs
+#  on:
+#    branch: master
