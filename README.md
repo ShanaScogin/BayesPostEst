@@ -14,13 +14,13 @@ BayesPostEst contains functions to generate postestimation quantities after esti
 
 To install the latest release on CRAN:
 
-```r
+```{r}
 install.packages("BayesPostEst")
 ```
 
 The latest development version on GitHub can be installed with:
 
-```r
+```{r}
 library("remotes")
 install_github("ShanaScogin/BayesPostEst")
 ```
@@ -28,7 +28,7 @@ install_github("ShanaScogin/BayesPostEst")
 Once you have installed the package, you can access it by calling:
 
 ```{r}
-library(BayesPostEst)
+library("BayesPostEst")
 ```
 After the package is loaded, check out the `?BayesPostEst` to see a help file.
 
@@ -519,16 +519,13 @@ p + labs(title = "First differences") + ggridges::theme_ridges()
 
 One way to assess model fit is to calculate the area under the Receiver Operating Characteristic (ROC) and Precision-Recall curves. A short description of these curves and their utility for model assessment is provided in [Beger (2016)](http://dx.doi.org/10.2139/ssrn.2765419). The `mcmcRocPrc` function produces an object with four elements: the area under the ROC curve, the area under the PR curve, and two dataframes to plot each curve. When `fullsims` is set to `FALSE`, the elements represent the median of the posterior distribution of each quantity.
 
-Because each of these measures relies on comparing the observed *y* to *Pr(y = 1)*, the function requires both the posterior distribution of all regression coefficients as well as a model frame. This model frame contains all variables used to estimate the model, with the outcome variable in the first column and all other variables following thereafter.
-
+`mcmcRocPrc` currently requires an "rjags" object (a model fitted in R2jags) as input. Future package versions will generalize this input to allow for model objects fit with any of the other packages used in BayesPostEst.
 
 ```{r}
-mf <- model.frame(volunteer ~ female + neuroticism + extraversion, data = df)
-fitstats <- mcmcRocPrc(modelmatrix = mm,
-                       modelframe = mf,
-                       mcmcout = mcmcmat.jags[, 1:ncol(mm)],
+fitstats <- mcmcRocPrc(object = fit.jags,
+                       yname  = "volunteer",
+                       xnames = c("female", "neuroticism", "extraversion"),
                        curves = TRUE,
-                       link = "logit",
                        fullsims = FALSE)
 ```
 
@@ -566,12 +563,11 @@ ggplot(data = fitstats$prc_dat, aes(x = x, y = y)) +
 To plot the posterior distribution of the area under the curves, users set the `fullsims` argument to `TRUE`. Unless a user wishes to plot credible intervals around the ROC and PR curves themselves, we recommend keeping `curves` at `FALSE` to avoid long computation time. 
 
 ```{r}
-fitstats.fullsims <- mcmcRocPrc(modelmatrix = mm,
-                                modelframe = mf,
-                                mcmcout = mcmcmat.jags[, 1:ncol(mm)],
-                                curves = FALSE,
-                                link = "logit",
-                                fullsims = TRUE)
+fitstats.fullsims <- mcmcRocPrc(object = fit.jags,
+                       yname  = "volunteer",
+                       xnames = c("female", "neuroticism", "extraversion"),
+                       curves = FALSE,
+                       fullsims = TRUE)
 ```
 
 We can then plot the posterior density of the area under each curve.
@@ -589,12 +585,13 @@ ggplot(fitstats.fullsims, aes(x = area_under_prc)) +
 ```
 
 # What's Happening
-New functions and enhancements to current functions are in the works. Feel free to browse the [issues](https://github.com/ShanaScogin/modeLLtest/issues) to see what we are working on or submit an [enhancement issue](https://github.com/ShanaScogin/modeLLtest/issues) of your own. Our [contributing](CONTRIBUTING.md) document has more information on ways to contribute.
+New functions and enhancements to current functions are in the works. Feel free to browse the [issues](https://github.com/ShanaScogin/BayesPostEst/issues) to see what we are working on or submit an [enhancement issue](https://github.com/ShanaScogin/BayesPostEst/issues) of your own. Our [contributing](CONTRIBUTING.md) document has more information on ways to contribute.
 
 # Contact
-Please submit an [issue](https://github.com/ShanaScogin/modeLLtest/issues) if you encounter any bugs or problems with the package. Feel free to check out [Johannes Karreth's website](http://www.jkarreth.net) for more resources on Bayesian estimation. 
+Please submit an [issue](https://github.com/ShanaScogin/BayesPostEst/issues) if you encounter any bugs or problems with the package. Feel free to check out [Johannes Karreth's website](http://www.jkarreth.net) for more resources on Bayesian estimation. 
 
 # References
+
 Beger, Andreas. 2016. “Precision-Recall Curves.” Available at SSRN: https://ssrn.com/Abstract=2765419. http://dx.doi.org/10.2139/ssrn.2765419.
 
 Cowles, Michael, and Caroline Davis. 1987. “The Subject Matter of Psychology: Volunteers.” British Journal of Social Psychology 26 (2): 97–102. https://doi.org/10.1111/j.2044-8309.1987.tb00769.x.
@@ -622,4 +619,3 @@ Martin, Andrew D., Kevin M. Quinn, and Jong Hee Park. 2011. “MCMCpack: Markov 
 Plummer, Martyn. 2017. “JAGS Version 4.3.0 User Manual.” http://mcmc-jags.sourceforge.net.
 
 Stan Development Team. 2019. RStan: The R Interface to Stan. http://mc-stan.org/.
-
