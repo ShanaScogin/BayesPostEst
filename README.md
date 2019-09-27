@@ -68,7 +68,7 @@ BayesPostEst functions accommodate GLM estimates for both logit and probit link 
 
 # Model estimation
 
-To use BayesPostEst, we first estimate a Bayesian regression model. This vignette demonstrates four tools for doing so: JAGS (via the [R2jags package](https://cran.r-project.org/package=R2jags)), [MCMCpack](https://cran.r-project.org/package=MCMCpack), and the two Stan interfaces [rstan](https://cran.r-project.org/package=rstan) and [rstanarm](https://cran.r-project.org/package=rstanarm).
+To use BayesPostEst, we first estimate a ayesian regression model. The vignette demonstrates five tools for doing so: JAGS (via the [R2jags](https://cran.r-project.org/package=R2jags) and [rjags](https://cran.r-project.org/package=rjags) packages), [MCMCpack](https://cran.r-project.org/package=MCMCpack), and the two Stan interfaces [rstan](https://cran.r-project.org/package=rstan) and [rstanarm](https://cran.r-project.org/package=rstanarm).
 
 ## JAGS
 
@@ -116,6 +116,17 @@ set.seed(123)
 fit.jags <- jags(data = dl, inits = inits.jags, 
   parameters.to.save = params.jags, n.chains = 4, n.iter = 2000, 
   n.burnin = 1000, model.file = "mod.jags")
+```
+
+The same data and model can be used to fit the model using the rjags package:
+
+```{r}
+library("rjags")
+mod.rjags <- jags.model(file = "mod.jags", data = dl, inits = inits.jags,
+                        n.chains = 4, n.adapt = 1000)
+fit.rjags <- coda.samples(model = mod.rjags,
+                          variable.names = params.jags,
+                          n.iter = 2000)
 ```
 
 ## MCMCpack
@@ -198,6 +209,10 @@ fit.rstanarm <- stan_glm(volunteer ~ female + neuroticism + extraversion,
 
 ```{r}
 mcmcTab(fit.jags)
+```
+
+```{r}
+mcmcTab(fit.rjags)
 ```
 
 ```{r}
