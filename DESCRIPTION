@@ -60,6 +60,7 @@ Suggests:
     datasets,
     knitr,
     MCMCpack,
+    rjags,
     rmarkdown,
     rstan (>= 2.10.1),
     rstanarm,
