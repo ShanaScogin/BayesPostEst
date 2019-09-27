@@ -27,7 +27,7 @@ affiliations:
     index: 2
   - name: Predictive Heuristics
     index: 3
-  - name: Washington University in St. Louis, USA
+  - name: Washington University in St. Louis, St. Louis, USA
     index: 4
 date: 4 September 2019
 bibliography: paper.bib
@@ -37,7 +37,7 @@ bibliography: paper.bib
 
 BayesPostEst is an R [@R] package with convenience functions to generate and present quantities of interest after estimating Bayesian regression models fit using MCMC via JAGS [@jags2017], Stan [@rstan2019], MCMCpack [@MCMCpack], or other MCMC samplers. Quantities of interest include predicted probabilities and changes in probabilities in generalized linear models and analyses of model fit using ROC curves and precision-recall curves. The package also contains two functions to create publication-ready tables summarizing model results with an assessment of substantively meaningful effect sizes.
 
-The package contains six functions:
+The package currently consists of six functions:
 
 - `mcmcTab`: Summarize Bayesian MCMC output in a table
 - `mcmcReg`: Create regression tables for multiple Bayesian MCMC models using `texreg`
@@ -140,5 +140,9 @@ The following packages provide functions similar (concretely or in spirit) to Ba
 # Future developments
 
 Plans for future work include extending existing methods in this package to a broader class of models, including generalized linear models with other link functions (e.g. models for ordered, categorical, and count outcomes) and multilevel/hierarchical generalized linear models. 
+
+# Contributions
+
+At the time of submission of this manuscript, the authors have contributed to the project as follows. S.S. created the package, improved functions, wrote function documentation, tested the package, and is the package maintainer. J.K. wrote most of the initial functions, the package vignette, and the JOSS manuscript. R.W. wrote the `mcmcReg` function and contributes to package development and optimization. A.B. rewrote the `mcmcRocPrc` function and reviewed code coverage.
 
 # References
