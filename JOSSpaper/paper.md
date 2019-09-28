@@ -37,7 +37,7 @@ bibliography: paper.bib
 
 BayesPostEst is an R [@R] package with convenience functions to generate and present quantities of interest after estimating Bayesian regression models fit using MCMC via JAGS [@jags2017], Stan [@rstan2019], MCMCpack [@MCMCpack], or other MCMC samplers. Quantities of interest include predicted probabilities and changes in probabilities in generalized linear models and analyses of model fit using ROC curves and precision-recall curves. The package also contains two functions to create publication-ready tables summarizing model results with an assessment of substantively meaningful effect sizes.
 
-The package currently consists of six functions:
+The package currently consists of seven functions:
 
 - `mcmcTab`: Summarize Bayesian MCMC output in a table
 - `mcmcReg`: Create regression tables for multiple Bayesian MCMC models using `texreg`
@@ -61,7 +61,7 @@ BayesPostEst provides two functions to summarize Bayesian model results in table
 
 First, `mcmcTab` generates a table summarizing the posterior distributions of all parameters contained in the model object. This table can then be used to summarize parameter quantities for one model in detail. By default, `mcmcTab` generates a dataframe with one row per parameter and columns containing the median, standard deviation, and 95% credible interval of each parameter's posterior distribution. Users can add a column to the table that calculates the percent of posterior draws that have the same sign as the median of the posterior distribution. 
 
-Users can also define a "region of practical equivalence" [ROPE, see @Kruschke2013; @Kruschke2018]. This region is a band of values around 0 that are "practically equivalent" to 0, or a "negligible" effect. As discussed in the online supplement to @Kruschke2018, in an example of analyzing individual responses of opinion polls, one can think of the ROPE capturing the range of a margin of error in an aggregate poll. If a common margin of error is $\pm0.03$, then for logistic regression coefficients in analyses of predictors of individual choice such a range of negligible coefficient values might be [-0.06; 0.06].
+Users can also define a "region of practical equivalence" [ROPE, see @Kruschke2013; @Kruschke2018]. This region is a band of values around 0 that are "practically equivalent" to 0, or a "negligible" effect. As discussed in the online supplement to @Kruschke2018, in an example of analyzing individual responses of opinion polls, one can think of the ROPE capturing the range of a margin of error in an aggregate poll. If a common margin of error is $\pm0.03$, then for logistic regression coefficients in analyses of predictors of individual choice such a range of negligible coefficient values might be $[-0.06; 0.06]$.
 
 ```
 mcmcTab(fit, 
@@ -134,6 +134,7 @@ The following packages provide functions similar (concretely or in spirit) to Ba
 - bayesplot [@bayesplot] offers various plotting options for posterior quantities, including posterior predictive checks.
 - bayestable [@bayestable] generates a regression table from MCMC estimates that can be passed on to the texreg package [@texreg] for printing.
 - The sjstats [@sjstats] and sjPlot [@sjPlot] suite of packages allows for a variety of postestimation commands, including predicted probabilities, marginal effects, and a function to evaluate estimates in relationship to a user-defined ROPE.
+- Similarly, bayestestR [@bayestestR] offers a broad set of functions to analyze and describe posterior distributions of coefficients, but not other post-estimation quantities of interest.
 - The ggmcmc [@ggmcmc] package contains a function to plot the ROC curve after a regression model for binary outcomes.
 - The brms [@brms] package offers a variety of convenient postestimation commands, including predicted probabilities, for Bayesian models estimated directly in brms.
 
