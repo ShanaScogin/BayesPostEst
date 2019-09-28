@@ -105,13 +105,13 @@ mcmcReg(mod = list(fit1, fit2),
 BayesPostEst builds on estimates from a Bayesian generalized linear model with $k$ covariates $x$ and the inverse logit (or probit) link function, where 
 
 $$
-Pr(y = 1 | x_{k}) = \text{logit}^{-1}(\beta_1 + \beta_2 x_{k})
+\text{Pr}(y = 1 | x_{k}) = \text{logit}^{-1}(\beta_1 + \beta_2 x_{k})
 $$
 
 or 
 
 $$
-Pr(y = 1 | x_{k}) = \Phi(\beta_1 + \beta_2 x_{k})
+\text{Pr}(y = 1 | x_{k}) = \Phi(\beta_1 + \beta_2 x_{k})
 $$
 
 To evaluate the relationship between covariates and a binary outcome, `mcmcAveProb` calculates the predicted probability ($Pr(y = 1)$) at pre-defined values of one covariate of interest ($x$), while all other covariates are held at a "typical" value. This follows suggestions outlined in @KingEtal2000 and elsewhere, which are commonly adopted by users of GLMs. The `mcmcAveProb` function by default calculates the median value of all covariates other than $x$ as "typical" values. Users can then access the full posterior distributions of the predicted probability at different values of $x$, or the median and a credible interval of the same quantity.
