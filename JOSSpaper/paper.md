@@ -21,15 +21,15 @@ authors:
     orcid: 0000-0001-9259-3883
     affiliation: 4    
 affiliations:
-  - name: University of Notre Dame, South Bend, USA
+  - name: University of Notre Dame, South Bend, IN, USA
     index: 1
-  - name: Ursinus College, Collegeville, USA
+  - name: Ursinus College, Collegeville, PA, USA
     index: 2
-  - name: Predictive Heuristics
+  - name: Predictive Heuristics, Bellevue, WA, USA
     index: 3
-  - name: Washington University in St. Louis, St. Louis, USA
+  - name: Washington University in St. Louis, St. Louis, MO, USA
     index: 4
-date: 4 September 2019
+date: 1 October 2019
 bibliography: paper.bib
 ---
 
@@ -70,16 +70,19 @@ mcmcTab(fit,
 ```
 
 ```
-## This table contains an estimate for parameter values outside of the region of 
-##           practical equivalence (ROPE). For this quantity to be meaningful, all parameters 
-##           must be on the same scale (e.g. standardized coefficients or first differences).
+## This table contains an estimate for parameter values 
+## outside of the region of practical equivalence (ROPE). 
+## For this quantity to be meaningful, all parameters 
+## must be on the same scale (e.g., standardized
+## coefficients or first differences).
+##
 ##       Variable Median    SD  Lower Upper PrOutROPE
 ## 1       female  0.237 0.111  0.023 0.462     0.886
 ## 2  neuroticism  0.055 0.108 -0.144 0.276     0.342
 ## 3 extraversion  0.518 0.112  0.296 0.733     1.000
 ```
 
-To define a ROPE, it can be useful for all parameters (e.g. regression coefficients) to be on the same scale because `mcmcTab` accepts only one definition of ROPE for all parameters. Users can standardize continuous predictors to achieve this, for instance by dividing them by two standard deviations [@Gelman2008].
+To define a ROPE, it can be useful for all parameters (e.g., regression coefficients) to be on the same scale because `mcmcTab` accepts only one definition of ROPE for all parameters. Users can standardize continuous predictors to achieve this, for instance by dividing them by two standard deviations [@Gelman2008].
 
 The output from `mcmcTab` can be exported to be inserted into a variety of document types using appropriate R packages, including flextable [@flextable], xtable [@xtable], or knitr [@knitr]. 
 
@@ -124,7 +127,7 @@ To summarize typical effects across covariates rather than full predicted probab
 
 # Model fit analyses using ROC and Precision-Recall curves
 
-One way to assess the fit of statistical models fit on binary outcomes is to calculate the area under the Receiver Operating Characteristic (ROC) and Precision-Recall curves. A short description of these curves and their utility for model assessment is provided in @Beger2016. Both methods assess the trade-off between true and false positives. ROC curves become less useful as outcomes of interest (or observed 1s) become rare; precision-recall curves are a more suitable tool for such rare outcomes. The `mcmcRocPrc` function produces an object with four elements: the area under the ROC curve, the area under the PR curve, and two dataframes to plot each curve. While the area under each curve can be a useful summary of model fit, plotting the curves can serve to assess the model's trade-off in more detail.
+One way to assess the fit of statistical models fit on binary outcomes is to calculate the area under the Receiver Operating Characteristic (ROC) and Precision-Recall curves. A short description of these curves and their utility for model assessment is provided in @Beger2016. Both methods assess the trade-off between true and false positives. ROC curves become less useful as outcomes of interest (or observed ones) become rare; precision-recall curves are a more suitable tool for such rare outcomes. The `mcmcRocPrc` function produces an object with four elements: the area under the ROC curve, the area under the PR curve, and two dataframes to plot each curve. While the area under each curve can be a useful summary of model fit, plotting the curves can serve to assess the model's trade-off in more detail.
 
 # Comparison to other packages
 
@@ -140,7 +143,7 @@ The following packages provide functions similar (concretely or in spirit) to Ba
 
 # Future developments
 
-Plans for future work include extending existing methods in this package to a broader class of models, including generalized linear models with other link functions (e.g. models for ordered, categorical, and count outcomes) and multilevel/hierarchical generalized linear models. 
+Plans for future work include extending existing methods in this package to a broader class of models, including generalized linear models with other link functions (e.g., models for ordered, categorical, and count outcomes) and multilevel/hierarchical generalized linear models. 
 
 # Contributions
 
