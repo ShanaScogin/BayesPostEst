@@ -53,9 +53,6 @@ NULL
 #' @importFrom reshape2 melt
 NULL
 
-#' @importFrom ROCR prediction performance
-NULL
-
 #' @importFrom caTools trapz
 NULL
 
