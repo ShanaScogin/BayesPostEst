@@ -61,7 +61,7 @@ df$extraversion <- (df$extraversion - mean(df$extraversion)) / (2 * sd(df$extrav
 df$neuroticism <- (df$neuroticism - mean(df$neuroticism)) / (2 * sd(df$neuroticism))
 ```
 
-We estimate a Bayesian generalized linear model with the inverrse logit link function, where
+We estimate a Bayesian generalized linear model with the inverse logit link function, where
 
 Pr(Volunteering)<sub>i</sub> = logit<sup>-1</sup> (&beta;<sub>1</sub> + &beta;<sub>2</sub>Female<sub>i</sub> + &beta;<sub>3</sub>Neuroticism<sub>i</sub> + &beta;<sub>4</sub>Extraversion<sub>i</sub>)
 
@@ -69,7 +69,7 @@ BayesPostEst functions accommodate GLM estimates for both logit and probit link 
 
 # Model estimation
 
-To use BayesPostEst, we first estimate a ayesian regression model. The vignette demonstrates five tools for doing so: JAGS (via the [R2jags](https://cran.r-project.org/package=R2jags) and [rjags](https://cran.r-project.org/package=rjags) packages), [MCMCpack](https://cran.r-project.org/package=MCMCpack), and the two Stan interfaces [rstan](https://cran.r-project.org/package=rstan) and [rstanarm](https://cran.r-project.org/package=rstanarm).
+To use BayesPostEst, we first estimate a Bayesian regression model. The vignette demonstrates five tools for doing so: JAGS (via the [R2jags](https://cran.r-project.org/package=R2jags) and [rjags](https://cran.r-project.org/package=rjags) packages), [MCMCpack](https://cran.r-project.org/package=MCMCpack), and the two Stan interfaces [rstan](https://cran.r-project.org/package=rstan) and [rstanarm](https://cran.r-project.org/package=rstanarm).
 
 ## JAGS
 
@@ -100,7 +100,7 @@ for(j in 1:4){
 writeLines(mod.jags, "mod.jags")	
 ```
 
-We then define the parameters for which we wish to retain posterior distributions and proivde starting values.
+We then define the parameters for which we wish to retain posterior distributions and provide starting values.
 
 ```{r}
 params.jags <- c("b")
@@ -260,7 +260,7 @@ mcmcReg(fit.jags, format = 'html', doctype = F)
 mcmcReg(fit.jags, pars = 'b', format = 'html', doctype = F)
 ```
 
-If we only wish to exclue the intercept, we can do this by explicitly specifying the parameters we wish to include as a vector. Note that in this example we have to escape the `[]`s in `pars` because they are a reserved character in regular expressions.
+If we only wish to exclude the intercept, we can do this by explicitly specifying the parameters we wish to include as a vector. Note that in this example we have to escape the `[]`s in `pars` because they are a reserved character in regular expressions.
 
 ```{r, results = 'asis'}
 mcmcReg(fit.jags, pars = c('b\\[1\\]', 'b\\[3\\]', 'b\\[4\\]'), format = 'html', doctype = F)

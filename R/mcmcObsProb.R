@@ -20,7 +20,7 @@
 #'in the model matrix. One can do this by examining the posterior distribution matrix and sorting the 
 #'variables in the order of this matrix when creating the model matrix. A useful function for sorting 
 #'column names containing both characters and numbers as 
-#'you create the matrix of posterior distributions is \code{mixedsort()} fom the gtools package.
+#'you create the matrix of posterior distributions is \code{mixedsort()} from the gtools package.
 #'@param xcol column number of the posterior draws (\code{mcmcout}) and model matrices 
 #'that corresponds to the explanatory variable for which to calculate associated Pr(y = 1).
 #'Note that the columns in these matrices must match.

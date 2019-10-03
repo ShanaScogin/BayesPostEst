@@ -75,7 +75,7 @@ This data frame contains information on 1421 individuals in the following variab
 - neuroticism: scale from Eysenck personality inventory.
 - extraversion: scale from Eysenck personality inventory.
 - sex: a factor with levels: female; male.
-- volunteer: volunteeing, a factor with levels: no; yes. This is the outcome variable for the running example in this vignette.
+- volunteer: volunteering, a factor with levels: no; yes. This is the outcome variable for the running example in this vignette.
 
 Before proceeding, we convert the two factor variables `sex` and `volunteer` into numeric variables. We also means-center and standardize the two continuous variables by dividing each by two standard deviations [@Gelman2007].
 
@@ -125,7 +125,7 @@ for(j in 1:4){
 writeLines(mod.jags, "mod.jags")	
 ```
 
-We then define the parameters for which we wish to retain posterior distributions and proivde starting values.
+We then define the parameters for which we wish to retain posterior distributions and provide starting values.
 
 ```{r}
 params.jags <- c("b")
@@ -228,7 +228,7 @@ fit.rstanarm <- stan_glm(volunteer ~ female + neuroticism + extraversion,
 
 # Tables of regression coefficients and other parameters
 
-BayesPostEst contains functions to generate regression tables fromobjects created by the following packages: R2jags, runjags, rjags, R2WinBUGS, MCMCpack, rstan, rstanarm, and brms. This includes the following object classes: `jags`, `rjags`, `bugs`, `mcmc`, `mcmc.list`, `stanreg`, `stanfit`, `brmsfit`. The package contains two different functions to produce regression tables:
+BayesPostEst contains functions to generate regression tables from objects created by the following packages: R2jags, runjags, rjags, R2WinBUGS, MCMCpack, rstan, rstanarm, and brms. This includes the following object classes: `jags`, `rjags`, `bugs`, `mcmc`, `mcmc.list`, `stanreg`, `stanfit`, `brmsfit`. The package contains two different functions to produce regression tables:
 
 - `mcmcTab`
 - `mcmcReg`
@@ -484,7 +484,7 @@ ggplot(data = obsprob.female.jags,
 
 ### Extraversion
 
-For this continuous predictor, we use `fullsims = FALSE.
+For this continuous predictor, we use `fullsims = FALSE`.
 ```{r}
 obsprob.extra.jags <- mcmcObsProb(modelmatrix = mm,
             mcmcout = mcmcmat.jags[, 1:ncol(mm)],
