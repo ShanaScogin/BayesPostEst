@@ -56,7 +56,7 @@ mcmcCoefPlot <- function(mod, pars = NULL, pointest = 'mean', ci = .95, hpdi = F
   if (!hpdi) {
     samps_ci <- t(apply(samps, 2, quantile, probs = c(.5 - ci/2, .5 + ci/2)))
   } else if (hpdi) {
-    samps_ci <- coda::HPDinterval(coda::as.mcmc(samps), probs = ci)
+    samps_ci <- coda::HPDinterval(coda::as.mcmc(samps), prob = ci)
   } else {
     stop("hpdi must be either true or false")
   }
@@ -72,14 +72,15 @@ mcmcCoefPlot <- function(mod, pars = NULL, pointest = 'mean', ci = .95, hpdi = F
   coefs <- data.frame(pe = samps_pe, samps_ci)
   coefs$variable <- factor(rownames(coefs), levels = rev(rownames(coefs)))
   colnames(coefs)[2:3] <- c('lo', 'hi')
-
-  ## coefficient plot
-  cp <- ggplot(coefs, aes(x = variable, y = pe, ymin = lo, ymax = hi)) +
-    geom_hline(yintercept = 0, lty = 2) +
-    geom_pointrange() +
-    coord_flip()
-
-  ## return plot or unerlying dataframe
-  if (plot == T) cp else coefs
-
+  
+  ## return coefficient plot or underlying dataframe
+  if (!plot) {
+    coefs
+  } else {
+    ggplot(coefs, aes(x = variable, y = pe, ymin = lo, ymax = hi)) +
+      geom_hline(yintercept = 0, lty = 2) +
+      geom_pointrange() +
+      coord_flip()
+  }
+  
 }
