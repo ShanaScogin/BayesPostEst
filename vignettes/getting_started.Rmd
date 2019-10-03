@@ -4,13 +4,16 @@ author:
   - "Johannes Karreth"
   - "Shana Scogin"
   - "Rob Williams"
+  - "Andreas Beger"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 bibliography: "references.bib"
 vignette: >
   %\VignetteIndexEntry{getting_started}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -51,7 +54,7 @@ Most functions in this package work with posterior distributions of parameters. 
 
 # Example data
 
-This vignette uses the `Cowles` dataset (@CowlesDavis1987) from the carData package (@carData2018). 
+This vignette uses the `Cowles` dataset [@CowlesDavis1987] from the carData package [@carData2018]. 
 
 ```{r}
 df <- carData::Cowles
@@ -83,11 +86,11 @@ $$
 
 # Model estimation
 
-To use `BayesPostEst`, we first estimate a Bayesian regression model. This vignette demonstrates four tools for doing so: JAGS (via the R2jags package), MCMCpack, and the two Stan interfaces rstan and rstanarm.
+To use `BayesPostEst`, we first estimate a Bayesian regression model. This vignette demonstrates five tools for doing so: JAGS (via the [R2jags](https://cran.r-project.org/package=R2jags) and [rjags](https://cran.r-project.org/package=rjags) packages), [MCMCpack](https://cran.r-project.org/package=MCMCpack), and the two Stan interfaces [rstan](https://cran.r-project.org/package=rstan) and [rstanarm](https://cran.r-project.org/package=rstanarm).
 
 ## JAGS
 
-First, we prepare the data for JAGS (@jags2017). Users need to combine all variables into a list and specify any other elements, like in this case N, the number of observations.
+First, we prepare the data for JAGS [@jags2017]. Users need to combine all variables into a list and specify any other elements, like in this case N, the number of observations.
 
 ```{r}
 dl <- as.list(df[, c("volunteer", "female", "neuroticism", "extraversion")])
@@ -120,7 +123,7 @@ inits1.jags <- list("b" = rep(0, 4))
 inits.jags <- list(inits1.jags, inits1.jags, inits1.jags, inits1.jags)
 ```
 
-Now, fit the model.
+Now, fit the model using the R2jags package. 
 
 ```{r}
 library("R2jags")
@@ -130,9 +133,20 @@ fit.jags <- jags(data = dl, inits = inits.jags,
   n.burnin = 1000, model.file = "mod.jags")
 ```
 
+The same data and model can be used to fit the model using the rjags package:
+
+```{r}
+library("rjags")
+mod.rjags <- jags.model(file = "mod.jags", data = dl, inits = inits.jags,
+                        n.chains = 4, n.adapt = 1000)
+fit.rjags <- coda.samples(model = mod.rjags,
+                          variable.names = params.jags,
+                          n.iter = 2000)
+```
+
 ## MCMCpack
 
-We estimate the same model using MCMCpack (@MCMCpack).
+We estimate the same model using MCMCpack [@MCMCpack].
 
 ```{r}
 library("MCMCpack")
@@ -183,7 +197,7 @@ fit.stan <- stan(file = "mod.stan",
            pars = c("b"),     
            chains = 4,        
            iter = 2000,       
-           seed = 123)        
+           seed = 123)    
 ```
 
 ## rstanarm
@@ -220,6 +234,10 @@ mcmcTab(fit.jags)
 ```
 
 ```{r}
+mcmcTab(fit.rjags)
+```
+
+```{r}
 mcmcTab(fit.MCMCpack)
 ```
 
@@ -241,7 +259,7 @@ mcmcTab(fit.jags, Pr = TRUE)
 
 ### ROPE
 
-Users can also define a "region of practical equivalence" (ROPE; @Kruschke2013; Kruschke2018). This region is a band of values around 0 that are "practically equivalent" to 0 or no effect. For this to be useful, all parameters (e.g. regression coefficients) must be on the same scale because mcmcTab accepts only one definition of ROPE for all parameters. Users can standardize regression coefficients to achieve this. Because we standardized variables earlier, the coefficients (except the intercept) are on a similar scale and we define the ROPE to be between -0.1 and 0.1.
+Users can also define a "region of practical equivalence" (ROPE; @Kruschke2013; @Kruschke2018). This region is a band of values around 0 that are "practically equivalent" to 0 or no effect. For this to be useful, all parameters (e.g. regression coefficients) must be on the same scale because mcmcTab accepts only one definition of ROPE for all parameters. Users can standardize regression coefficients to achieve this. Because we standardized variables earlier, the coefficients (except the intercept) are on a similar scale and we define the ROPE to be between -0.1 and 0.1.
 
 ```{r}
 mcmcTab(fit.jags, pars = c("b[2]", "b[3]", "b[4]"), ROPE = c(-0.1, 0.1))
@@ -536,15 +554,15 @@ p + labs(title = "First differences") + ggridges::theme_ridges()
 
 One way to assess model fit is to calculate the area under the Receiver Operating Characteristic (ROC) and Precision-Recall curves. A short description of these curves and their utility for model assessment is provided in @Beger2016. The `mcmcRocPrc` function produces an object with four elements: the area under the ROC curve, the area under the PR curve, and two dataframes to plot each curve. When `fullsims` is set to `FALSE`, the elements represent the median of the posterior distribution of each quantity.
 
-Because each of these measures relies on comparing the observed $y$ to $Pr(y = 1)$, the function requires both the posterior distribution of all regression coefficients as well as a model frame. This model frame contains all variables used to estimate the model, with the outcome variable in the first column and all other variables following thereafter.
+`mcmcRocPrc` currently requires an "rjags" object (a model fitted in R2jags) as input. Future package versions will generalize this input to allow for model objects fit with any of the other packages used in BayesPostEst.
+
+<!-- Because each of these measures relies on comparing the observed $y$ to $Pr(y = 1)$, the function requires both the posterior distribution of all regression coefficients as well as a model frame. This model frame contains all variables used to estimate the model, with the outcome variable in the first column and all other variables following thereafter. -->
 
 ```{r}
-mf <- model.frame(volunteer ~ female + neuroticism + extraversion, data = df)
-fitstats <- mcmcRocPrc(modelmatrix = mm,
-                       modelframe = mf,
-                       mcmcout = mcmcmat.jags[, 1:ncol(mm)],
+fitstats <- mcmcRocPrc(object = fit.jags,
+                       yname  = "volunteer",
+                       xnames = c("female", "neuroticism", "extraversion"),
                        curves = TRUE,
-                       link = "logit",
                        fullsims = FALSE)
 ```
 
@@ -582,12 +600,11 @@ ggplot(data = fitstats$prc_dat, aes(x = x, y = y)) +
 To plot the posterior distribution of the area under the curves, users set the `fullsims` argument to `TRUE`. Unless a user wishes to plot credible intervals around the ROC and PR curves themselves, we recommend keeping `curves` at `FALSE` to avoid long computation time. 
 
 ```{r}
-fitstats.fullsims <- mcmcRocPrc(modelmatrix = mm,
-                                modelframe = mf,
-                                mcmcout = mcmcmat.jags[, 1:ncol(mm)],
-                                curves = FALSE,
-                                link = "logit",
-                                fullsims = TRUE)
+fitstats.fullsims <- mcmcRocPrc(object = fit.jags,
+                       yname  = "volunteer",
+                       xnames = c("female", "neuroticism", "extraversion"),
+                       curves = FALSE,
+                       fullsims = TRUE)
 ```
 
 We can then plot the posterior density of the area under each curve.
