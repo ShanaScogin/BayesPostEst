@@ -77,10 +77,10 @@ mcmcCoefPlot <- function(mod, pars = NULL, pointest = 'mean', ci = .95, hpdi = F
   if (!plot) {
     coefs
   } else {
-    ggplot(coefs, aes(x = variable, y = pe, ymin = lo, ymax = hi)) +
-      geom_hline(yintercept = 0, lty = 2) +
-      geom_pointrange() +
-      coord_flip()
+    ggplot2::ggplot(coefs, aes(x = variable, y = pe, ymin = lo, ymax = hi)) +
+      ggplot2::geom_hline(yintercept = 0, lty = 2) +
+      ggplot2::geom_pointrange() +
+      ggplot2::coord_flip() + labs(x = '', y = '')
   }
   
 }
