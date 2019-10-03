@@ -45,8 +45,8 @@ install.packages("BayesPostEst")
 
 The latest development version on GitHub can be installed with:
 
-```{r}
-library("remotes")
+```{r eval=FALSE}
+library("devtools")
 install_github("ShanaScogin/BayesPostEst")
 ```
 
