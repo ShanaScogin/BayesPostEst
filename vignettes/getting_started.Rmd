@@ -45,7 +45,7 @@ install.packages("BayesPostEst")
 
 The latest development version on GitHub can be installed with:
 
-```{r eval=FALSE}
+```{r}
 library("remotes")
 install_github("ShanaScogin/BayesPostEst")
 ```
@@ -637,6 +637,7 @@ ggplot(fitstats.fullsims, aes(x = area_under_prc)) +
 ```{r echo=FALSE, results='hide',message=FALSE}
 rm(mod.jags)
 rm(mod.stan)
+rm(mod.rds)
 ```
 
 # References
