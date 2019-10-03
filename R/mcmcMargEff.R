@@ -18,6 +18,8 @@
 #' or equal tailed credible intervals to capture uncertainty.
 #' @param plot logical indicating whether to return a `ggplot` object or the
 #' underlying tidy DataFrame.
+#' @param xlab character giving x axis label if `plot = T`, default `"Moderator"`
+#' @param ylab character giving y axis label if `plot = T`, default `"Marginal Effect"`
 #'
 #' @return a `ggplot` object or a tidy DataFrame.
 #'
@@ -83,7 +85,8 @@
 #' @export
 #' 
 mcmcMargEff <- function(mod, main, int, moderator, pointest = 'mean', seq = 100,
-                        ci = .95, hpdi = F, plot = T) {
+                        ci = .95, hpdi = F, plot = T, xlab = 'Moderator',
+                        ylab = 'Marginal Effect') {
 
   ## pull in unexported functions from other packages
   ## other options for future versions might include lifting this and adding authors as copr holders
@@ -122,7 +125,7 @@ mcmcMargEff <- function(mod, main, int, moderator, pointest = 'mean', seq = 100,
   if (!hpdi) {
     marg_ci<- t(apply(marg, 2, quantile, probs = c(.5 - ci/2, .5 + ci/2)))
   } else if (hpdi) {
-    marg_ci <- t(apply(marg, 2, HDInterval::hdi, credMass = ci))
+    marg_ci <- t(apply(marg, 2, coda::HPDinterval, prob = ci))
   } else {
     stop("hpdi must be either true or false")
   }
@@ -130,13 +133,16 @@ mcmcMargEff <- function(mod, main, int, moderator, pointest = 'mean', seq = 100,
   ## create dataframe for plotting
   marg_gg <- data.frame(mod = mod_range, pe = marg_pe,
                         lo = marg_ci[, 1], hi = marg_ci[, 2])
-
-  mep <- ggplot2::ggplot(data = marg_gg, aes(x = mod_range, y = pe, ymin = lo, ymax = hi)) +
-    ggplot2::geom_ribbon(alpha = .25) +
-    ggplot2::geom_hline(yintercept = 0, lty = 2, color = 'gray40', lwd = .5) +
-    ggplot2::geom_line()
-
-  ## return plot
-  if (plot) mep else marg_gg
+  
+  ## return marginal effects plot or underlying dataframe
+  if (!plot) {
+    marg_gg
+  } else {
+    ggplot2::ggplot(data = marg_gg, aes(x = mod_range, y = pe, ymin = lo, ymax = hi)) +
+      ggplot2::geom_ribbon(alpha = .25) +
+      ggplot2::geom_hline(yintercept = 0, lty = 2, color = 'gray40', lwd = .5) +
+      ggplot2::geom_line() +
+      ggplot2::labs(x = xlab, y = ylab)
+  }
 
 }
