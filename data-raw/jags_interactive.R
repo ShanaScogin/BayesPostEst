@@ -2,7 +2,7 @@
 #  Generate an example JAGS probit fitted model
 #
 
-data("sim_data_linear")
+data("sim_data_interactive")
 
 ## formatting the data for jags
 datjags <- as.list(data)
