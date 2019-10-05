@@ -601,7 +601,7 @@ ggplot(fitstats.fullsims, aes(x = area_under_prc)) +
 ```
 
 # What's Happening
-New functions and enhancements to current functions are in the works. Feel free to browse the [issues](https://github.com/ShanaScogin/BayesPostEst/issues) to see what we are working on or submit an [enhancement issue](https://github.com/ShanaScogin/BayesPostEst/issues) of your own. Our [contributing](CONTRIBUTING.md) document has more information on ways to contribute.
+New functions and enhancements to current functions are in the works. Feel free to browse the [issues](https://github.com/ShanaScogin/BayesPostEst/issues) to see what we are working on or submit an [enhancement issue](https://github.com/ShanaScogin/BayesPostEst/issues) of your own. Our [contributing](https://github.com/ShanaScogin/BayesPostEst/blob/master/CONTRIBUTING.md) document has more information on ways to contribute.
 
 # Contact
 Please submit an [issue](https://github.com/ShanaScogin/BayesPostEst/issues) if you encounter any bugs or problems with the package. Feel free to check out [Johannes Karreth's website](http://www.jkarreth.net) for more resources on Bayesian estimation. 
