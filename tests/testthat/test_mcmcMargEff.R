@@ -17,8 +17,8 @@ test_that("Simple model runs with mcmcMargEff", {
   
   ## testing
   value <- fit_me[25, 3]
-  check_against <- 0.117912
-  expect_equal(round(as.numeric(value), 2), round(check_against, 2))
+  check_against <- 0.56214
+  expect_equal(value, check_against, tolerance = 1e-2)
   
 })
 
@@ -44,7 +44,7 @@ test_that("Simple model runs with mcmcMargEff with arguments", {
   
   ## testing
   value <- fit_me[87, 4]
-  check_against <- 0.7400673
-  expect_equal(round(as.numeric(value), 2), round(check_against, 2))
+  check_against <- 0.4656877
+  expect_equal(value, check_against, tolerance = 1e-2)
   
 })
