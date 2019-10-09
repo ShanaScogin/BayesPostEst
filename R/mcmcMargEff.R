@@ -141,7 +141,8 @@ mcmcMargEff <- function(mod, main, int, moderator, pointest = 'mean', seq = 100,
     marg_gg
   } else {
     ggplot2::ggplot(data = marg_gg,
-                    ggplot2::aes(x = mod_range, y = pe, ymin = lo, ymax = hi)) +
+                    ggplot2::aes(x = .data$mod_range, y = .data$pe,
+                                 ymin = .data$lo, ymax = .data$hi)) +
       ggplot2::geom_ribbon(alpha = .25) +
       ggplot2::geom_hline(yintercept = 0, lty = 2, color = 'gray40', lwd = .5) +
       ggplot2::geom_line() +
