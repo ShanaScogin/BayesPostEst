@@ -38,13 +38,36 @@ test_that("Simple model runs with mcmcMargEff with arguments", {
                         int = 'b[4]',
                         moderator = sim_data_interactive$X2,
                         pointest = 'median',
+                        seq = 50,
                         ci = .9,
                         hpdi = T,
                         plot = F)
   
   ## testing
-  value <- fit_me[87, 4]
-  check_against <- 0.4656877
+  value <- fit_me[37, 4]
+  check_against <- 0.6469992
   expect_equal(value, check_against, tolerance = 1e-2)
+  
+})
+
+test_that("Simple model runs with mcmcMargEff with plotting arguments", {
+  
+  data("jags_interactive")
+  fit <- jags_interactive
+  
+  data("sim_data_interactive")
+  
+  ## using mcmcMargEff
+  plot_me <- mcmcMargEff(mod = fit,
+                         main = 'b[2]',
+                         int = 'b[4]',
+                         moderator = sim_data_interactive$X2,
+                         plot = T,
+                         xlab = 'Moderating Variable',
+                         ylab = 'Marginal Effect of X1')
+  
+  ## check against expected axis labels
+  expect_equal(plot_me$labels$y, 'Marginal Effect of X1')
+  expect_equal(plot_me$labels$x, 'Moderating Variable')
   
 })
