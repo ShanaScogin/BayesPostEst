@@ -22,8 +22,7 @@
 CONTRIBUTING.md
 ^codecov\.yml$
 ^data-raw$
-
-# pkgdown-related
 ^docs$
 ^pkgdown$
 ^pkgdown/_pkgdown\.yml$
+^CRAN-RELEASE$
