@@ -1,5 +1,5 @@
-# BayesPostEst 0.1.1.9000
-
+# BayesPostEst 0.2.0.9000
+* Added functions `mcmcCoefPlot()` and `mcmcMargEff()`.
 
 # BayesPostEst 0.1.0
 
