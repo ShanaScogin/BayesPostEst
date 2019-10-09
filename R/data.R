@@ -142,7 +142,8 @@
 #'                                  parameters.to.save = params, n.chains = 2,
 #'                                  n.iter = 2000, n.burnin = 1000,
 #'                                  model.file = model)
-#' 
+#'                                  
+#' }
 #' @docType data
 "jags_interactive"
 

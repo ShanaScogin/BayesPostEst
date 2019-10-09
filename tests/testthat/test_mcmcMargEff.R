@@ -5,9 +5,6 @@ test_that("Simple model runs with mcmcMargEff", {
   
   data("sim_data_interactive")
   
-  ## processing the data
-  mcmc <- coda::as.mcmc(fit)
-  
   ## using mcmcMargEff
   fit_me <- mcmcMargEff(mod = fit,
                         main = 'b[2]',
@@ -17,7 +14,7 @@ test_that("Simple model runs with mcmcMargEff", {
   
   ## testing
   value <- fit_me[25, 3]
-  check_against <- 0.117192
+  check_against <- 0.56214
   expect_equal(value, check_against, tolerance = 1e-2)
   
 })
@@ -45,7 +42,7 @@ test_that("Simple model runs with mcmcMargEff with arguments", {
   
   ## testing
   value <- fit_me[37, 4]
-  check_against <- 0.6469992
+  check_against <- 0.5267605
   expect_equal(value, check_against, tolerance = 1e-2)
   
 })
