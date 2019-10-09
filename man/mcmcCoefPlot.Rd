@@ -38,9 +38,10 @@ underlying tidy DataFrame.}
 a `ggplot` object or a tidy DataFrame.
 }
 \description{
-Coefficient plots for MCMC output using `ggplot2`
+Coefficient plots for MCMC output using \code{ggplot2}
 }
 \examples{
+\donttest{
 ## simulating data
 set.seed(123456)
 b0 <- 0.2 # true value for the intercept
@@ -86,8 +87,9 @@ fit <- R2jags::jags(data = datjags, inits = inits,
                     parameters.to.save = params, n.chains = 2, n.iter = 2000,
                     n.burnin = 1000, model.file = model)
 
-## generating regression table with all parameters
-mcmcReg(fit)
+## generating coefficient plot with all non-auxiliary parameters
+coefplot(fit)
+}
 
 }
 \author{
