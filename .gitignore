@@ -16,3 +16,7 @@ man/mcmcPPlot.Rd
 man/mcmcSimAve.Rd
 man/mcmcSimFD.Rd
 man/mcmcSimObs.Rd
+
+# if a pkgdown site has been locally built, don't put it on git; 
+# Travis-CI will take care of deployment
+docs/
