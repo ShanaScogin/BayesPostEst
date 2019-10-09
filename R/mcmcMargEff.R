@@ -78,7 +78,7 @@
 #' mcmcMargEff(mod = fit,
 #' main = 'b[2]',
 #' int = 'b[4]',
-#' moderator = sim_data_linear$X2,
+#' moderator = sim_data_interactive$X2,
 #' plot = F)
 #' }
 #' 
@@ -91,6 +91,8 @@ mcmcMargEff <- function(mod, main, int, moderator, pointest = 'mean', seq = 100,
   ## pull in unexported functions from other packages
   ## other options for future versions might include lifting this and adding authors as copr holders
   runjags.as.mcmc.list.runjags = getFromNamespace("as.mcmc.list.runjags", "runjags")
+  coda.hpdinterval.mcmc = getFromNamespace("HPDinterval.mcmc", "coda")
+  
   if (inherits(mod, what = c("jags", "rjags"))) {
     samps <- as.matrix(coda::as.mcmc(mod))
   }
@@ -125,7 +127,7 @@ mcmcMargEff <- function(mod, main, int, moderator, pointest = 'mean', seq = 100,
   if (!hpdi) {
     marg_ci<- t(apply(marg, 2, quantile, probs = c(.5 - ci/2, .5 + ci/2)))
   } else if (hpdi) {
-    marg_ci <- t(apply(marg, 2, coda:::HPDinterval.mcmc, prob = ci))
+    marg_ci <- t(apply(marg, 2, coda.hpdinterval.mcmc, prob = ci))
   } else {
     stop("hpdi must be either true or false")
   }

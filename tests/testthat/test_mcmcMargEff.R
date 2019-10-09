@@ -3,7 +3,7 @@ test_that("Simple model runs with mcmcMargEff", {
   data("jags_interactive")
   fit <- jags_interactive
   
-  data("sim_data_linear")
+  data("sim_data_interactive")
   
   ## processing the data
   mcmc <- coda::as.mcmc(fit)
@@ -12,7 +12,7 @@ test_that("Simple model runs with mcmcMargEff", {
   fit_me <- mcmcMargEff(mod = fit,
                         main = 'b[2]',
                         int = 'b[4]',
-                        moderator = sim_data_linear$X2,
+                        moderator = sim_data_interactive$X2,
                         plot = F)
   
   ## testing
@@ -27,7 +27,7 @@ test_that("Simple model runs with mcmcMargEff with arguments", {
   data("jags_interactive")
   fit <- jags_interactive
   
-  data("sim_data_linear")
+  data("sim_data_interactive")
   
   ## processing the data
   mcmc <- coda::as.mcmc(fit)
@@ -36,7 +36,7 @@ test_that("Simple model runs with mcmcMargEff with arguments", {
   fit_me <- mcmcMargEff(mod = fit,
                         main = 'b[2]',
                         int = 'b[4]',
-                        moderator = sim_data_linear$X2,
+                        moderator = sim_data_interactive$X2,
                         pointest = 'median',
                         ci = .9,
                         hpdi = T,

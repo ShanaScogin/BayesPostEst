@@ -36,10 +36,10 @@ inits <- list(inits1, inits2)
 
 ## fitting the model with R2jags
 set.seed(123)
-fit <- R2jags::jags(data = datjags, inits = inits, 
-                    parameters.to.save = params, n.chains = 2, n.iter = 2000, 
-                    n.burnin = 1000, model.file = model)
+jags_interactive <- R2jags::jags(data = datjags, inits = inits, 
+                                 parameters.to.save = params, n.chains = 2,
+                                 n.iter = 2000, n.burnin = 1000,
+                                 model.file = model)
 
-jags_interactive <- fit
 usethis::use_data(jags_interactive, overwrite = TRUE)
 
