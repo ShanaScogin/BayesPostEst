@@ -23,7 +23,7 @@ Note: the order of columns in this matrix must correspond to the order of column
 in the model matrix. One can do this by examining the posterior distribution matrix and sorting the 
 variables in the order of this matrix when creating the model matrix. A useful function for sorting 
 column names containing both characters and numbers as 
-you create the matrix of posterior distributions is \code{mixedsort()} fom the gtools package.}
+you create the matrix of posterior distributions is \code{mixedsort()} from the gtools package.}
 
 \item{link}{type of generalized linear model; a character vector set to \code{"logit"} (default) 
 or \code{"probit"}.}
@@ -120,7 +120,7 @@ object
 \item King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most of Statistical 
 Analyses: Improving Interpretation and Presentation.” American Journal of Political Science 
 44 (2): 347–61. http://www.jstor.org/stable/2669316
-\item Long, J. Scott. 1997. Regression Models for Categorial and Limited Dependent Variables. 
+\item Long, J. Scott. 1997. Regression Models for Categorical and Limited Dependent Variables. 
 Thousand Oaks: Sage Publications
 }
 }
