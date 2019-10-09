@@ -22,6 +22,9 @@ test_that("Simple model runs with mcmcReg", {
   expect_silent(mcmcReg(fit, gof = 1234, gofnames = 'Fake Fit Statistic'))
   
   expect_silent(mcmcReg(fit, format = 'html', file = 'table'))
+  
+  ## remove table.html to avoid non-standard file note on check
+  if (file.exists('table.html')) file.remove('table.html')
 
 })
 
