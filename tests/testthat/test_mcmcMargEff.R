@@ -17,7 +17,7 @@ test_that("Simple model runs with mcmcMargEff", {
   
   ## testing
   value <- fit_me[25, 3]
-  check_against <- 0.56214
+  check_against <- 0.117192
   expect_equal(value, check_against, tolerance = 1e-2)
   
 })
