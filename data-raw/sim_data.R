@@ -2,7 +2,7 @@
 #   Generate simulated data used in examples
 #
 
-## simulating data
+## simulating binary model data
 set.seed(123456)
 b0 <- 0.2 # true value for the intercept
 b1 <- 0.5 # true value for first beta
@@ -16,3 +16,10 @@ Y <- rbinom(n, 1, pr)
 sim_data <- data.frame(cbind(X1, X2, Y))
 
 usethis::use_data(sim_data, overwrite = TRUE)
+
+## simulating interactive linear model data
+b3 <- -0.3 # true value for second beta
+Z_interactive <- b0 + b1 * X1 + b2 * X2 + b3 * (X1 * X2)
+Y_interactive <- rnorm(n, Z_interactive, 1)
+sim_data_interactive <- data.frame(cbind(X1, X2, Y = Y_interactive))
+usethis::use_data(sim_data_interactive, overwrite = TRUE)
