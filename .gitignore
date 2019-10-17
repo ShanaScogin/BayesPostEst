@@ -5,17 +5,6 @@
 .DS_Store
 doc
 Meta
-R/mcmcPPplot.R
-R/mcmcSimAve.R
-R/mcmcSimFD.R
-R/mcmcSimObs.R
-tests/testthat/test_mcmcSimAve.R
-tests/testthat/test_mcmcSimFD.R
-tests/testthat/test_mcmcSimObs.R
-man/mcmcPPlot.Rd
-man/mcmcSimAve.Rd
-man/mcmcSimFD.Rd
-man/mcmcSimObs.Rd
 
 # if a pkgdown site has been locally built, don't put it on git; 
 # Travis-CI will take care of deployment
