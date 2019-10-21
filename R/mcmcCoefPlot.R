@@ -19,11 +19,13 @@
 #' point estimates in the table.
 #' @param ci a scalar indicating the confidence level of the uncertainty intervals.
 #' @param hpdi a logical indicating whether to use highest posterior density intervals
-#' or equal tailed credible intervals to capture uncertainty.
-#' @param plot logical indicating whether to return a `ggplot` object or the
-#' underlying tidy DataFrame.
+#' or equal tailed credible intervals to capture uncertainty; default \code{FALSE}.
+#' @param sort logical indicating whether to sort the point estimates to produce
+#' a caterpillar or dot plot; default \code{FALSE}.
+#' @param plot logical indicating whether to return a \code{ggplot} object or the
+#' underlying tidy DataFrame; default \code{TRUE}.
 #'
-#' @return a `ggplot` object or a tidy DataFrame.
+#' @return a \code{ggplot} object or a tidy DataFrame.
 #' 
 #' @author Rob Williams, \email{jayrobwilliams@gmail.com}
 #'
@@ -79,7 +81,8 @@
 #' }
 #' 
 #' @export
-mcmcCoefPlot <- function(mod, pars = NULL, pointest = 'mean', ci = .95, hpdi = F, plot = T) {
+mcmcCoefPlot <- function(mod, pars = NULL, pointest = 'mean', ci = .95,
+                         hpdi = FALSE, sort = FALSE, plot = TRUE) {
   
   ## pull in unexported functions from other packages
   ## other options for future versions might include lifting this and adding authors as copr holders
@@ -121,7 +124,12 @@ mcmcCoefPlot <- function(mod, pars = NULL, pointest = 'mean', ci = .95, hpdi = F
   }
   
   coefs <- data.frame(pe = samps_pe, samps_ci)
-  coefs$variable <- factor(rownames(coefs), levels = rev(rownames(coefs)))
+  if (sort) {
+    coefs$variable <- factor(rownames(coefs),
+                             levels = rev(rownames(coefs)[order(coefs$pe, decreasing = T)])) 
+  } else {
+    coefs$variable <- factor(rownames(coefs), levels = rev(rownames(coefs)))
+  }
   colnames(coefs)[2:3] <- c('lo', 'hi')
   
   ## return coefficient plot or underlying dataframe
