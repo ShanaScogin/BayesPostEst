@@ -63,8 +63,31 @@ test_that("Simple model runs with mcmcMargEff with plotting arguments", {
                          xlab = 'Moderating Variable',
                          ylab = 'Marginal Effect of X1')
   
-  ## check against expected axis labels
+  ## testing
   expect_equal(plot_me$labels$y, 'Marginal Effect of X1')
   expect_equal(plot_me$labels$x, 'Moderating Variable')
+  
+})
+
+test_that("Simple model runs with mcmcMargEff with categorical moderator", {
+  
+  data("jags_interactive_cat")
+  fit <- jags_interactive_cat
+  
+  data("sim_data_interactive_cat")
+  
+  ## using mcmcMargEff
+  fit_me <- mcmcMargEff(mod = fit,
+                        main = 'b[2]',
+                        int = 'b[4]',
+                        moderator = sim_data_interactive_cat$X3,
+                        plot = F,
+                        xlab = 'Moderating Variable',
+                        ylab = 'Marginal Effect of X1')
+  
+  ## testing
+  value <- fit_me[4, 3]
+  check_against <- -0.91814
+  expect_equal(value, check_against, tolerance = 1e-2)
   
 })
