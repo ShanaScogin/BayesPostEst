@@ -113,8 +113,15 @@ mcmcMargEff <- function(mod, main, int, moderator, pointest = 'mean', seq = 100,
   samps <- samps[, c(main, int)]
 
   ## expand moderating variable to range of values
-  mod_range <- seq(min(moderator), max(moderator), length.out = seq)
-
+  if(!is.factor(moderator) & all(unique(moderator) %% 1 != 0)) {
+    mod_range <- seq(min(moderator), max(moderator), length.out = seq)
+    categorical <- F
+  } else if (is.factor(moderator) | all(unique(moderator) %% 1 == 0)) {
+    mod_range <- sort(unique(moderator))
+    seq = length(mod_range)
+    categorical <- T
+  }
+  
   ## compute marginal effect for each sample
   marg <- rep(samps[, 1], seq) + samps[, 2] %o% mod_range
   
@@ -143,13 +150,22 @@ mcmcMargEff <- function(mod, main, int, moderator, pointest = 'mean', seq = 100,
   if (!plot) {
     marg_gg
   } else {
-    ggplot2::ggplot(data = marg_gg,
-                    ggplot2::aes(x = .data$mod_range, y = .data$pe,
-                                 ymin = .data$lo, ymax = .data$hi)) +
-      ggplot2::geom_ribbon(alpha = .25) +
-      ggplot2::geom_hline(yintercept = 0, lty = 2, color = 'gray40', lwd = .5) +
-      ggplot2::geom_line() +
-      ggplot2::labs(x = xlab, y = ylab)
+    if (categorical) {
+      ggplot2::ggplot(data = marg_gg,
+                      ggplot2::aes(x = .data$mod, y = .data$pe,
+                                   ymin = .data$lo, ymax = .data$hi)) +
+        ggplot2::geom_linerange() +
+        ggplot2::geom_hline(yintercept = 0, lty = 2, color = 'gray40', lwd = .5) +
+        ggplot2::geom_point() +
+        ggplot2::labs(x = xlab, y = ylab)
+    } else {
+      ggplot2::ggplot(data = marg_gg,
+                      ggplot2::aes(x = .data$mod, y = .data$pe,
+                                   ymin = .data$lo, ymax = .data$hi)) +
+        ggplot2::geom_ribbon(alpha = .25) +
+        ggplot2::geom_hline(yintercept = 0, lty = 2, color = 'gray40', lwd = .5) +
+        ggplot2::geom_line() +
+        ggplot2::labs(x = xlab, y = ylab)
+    }
   }
-
 }
