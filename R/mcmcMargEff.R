@@ -90,7 +90,7 @@
 #' @export
 #' 
 mcmcMargEff <- function(mod, main, int, moderator, pointest = 'mean', seq = 100,
-                        ci = .95, hpdi = F, plot = T, xlab = 'Moderator',
+                        ci = .95, hpdi = FALSE, plot = TRUE, xlab = 'Moderator',
                         ylab = 'Marginal Effect') {
 
   ## pull in unexported functions from other packages
