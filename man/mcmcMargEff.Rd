@@ -5,7 +5,7 @@
 \title{Marginal Effects Plots for MCMC Output}
 \usage{
 mcmcMargEff(mod, main, int, moderator, pointest = "mean", seq = 100,
-  ci = 0.95, hpdi = F, plot = T, xlab = "Moderator",
+  ci = 0.95, hpdi = FALSE, plot = TRUE, xlab = "Moderator",
   ylab = "Marginal Effect")
 }
 \arguments{
@@ -32,15 +32,17 @@ the marginal effects plot.}
 \item{hpdi}{a logical indicating whether to use highest posterior density intervals
 or equal tailed credible intervals to capture uncertainty.}
 
-\item{plot}{logical indicating whether to return a `ggplot` object or the
-underlying tidy DataFrame.}
+\item{plot}{logical indicating whether to return a \code{ggplot} object or the
+underlying tidy DataFrame. By default, \code{mcmcMargEff} returns a line and
+ribbon plot for continuous variables, and a dot and line plot for factor
+variables and discrete variables with fewer than 25 unique values.}
 
-\item{xlab}{character giving x axis label if `plot = T`, default `"Moderator"`}
+\item{xlab}{character giving x axis label if \code{plot = TRUE}, default \code{"Moderator"}}
 
-\item{ylab}{character giving y axis label if `plot = T`, default `"Marginal Effect"`}
+\item{ylab}{character giving y axis label if \code{plot = TRUE}, default \code{"Marginal Effect"}}
 }
 \value{
-a `ggplot` object or a tidy DataFrame.
+a \code{ggplot} object or a tidy DataFrame.
 }
 \description{
 Marginal effects plots for MCMC output using \code{ggplot2}
