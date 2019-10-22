@@ -17,12 +17,14 @@
 #' @param ci a scalar indicating the confidence level of the uncertainty intervals.
 #' @param hpdi a logical indicating whether to use highest posterior density intervals
 #' or equal tailed credible intervals to capture uncertainty.
-#' @param plot logical indicating whether to return a `ggplot` object or the
-#' underlying tidy DataFrame.
-#' @param xlab character giving x axis label if `plot = T`, default `"Moderator"`
-#' @param ylab character giving y axis label if `plot = T`, default `"Marginal Effect"`
+#' @param plot logical indicating whether to return a \code{ggplot} object or the
+#' underlying tidy DataFrame. By default, \code{mcmcMargEff} returns a line and
+#' ribbon plot for continuous variables, and a dot and line plot for factor
+#' variables and discrete variables with fewer than 25 unique values.
+#' @param xlab character giving x axis label if \code{plot = TRUE}, default \code{"Moderator"}
+#' @param ylab character giving y axis label if \code{plot = TRUE}, default \code{"Marginal Effect"}
 #'
-#' @return a `ggplot` object or a tidy DataFrame.
+#' @return a \code{ggplot} object or a tidy DataFrame.
 #' 
 #' @author Rob Williams, \email{jayrobwilliams@gmail.com}
 #'
@@ -114,6 +116,10 @@ mcmcMargEff <- function(mod, main, int, moderator, pointest = 'mean', seq = 100,
 
   ## expand moderating variable to range of values
   if(!is.factor(moderator) & all(unique(moderator) %% 1 != 0)) {
+    mod_range <- seq(min(moderator), max(moderator), length.out = seq)
+    categorical <- F
+  } else if ((is.factor(moderator) | all(unique(moderator) %% 1 == 0)) &
+             length(unique(moderator)) >= 25) {
     mod_range <- seq(min(moderator), max(moderator), length.out = seq)
     categorical <- F
   } else if (is.factor(moderator) | all(unique(moderator) %% 1 == 0)) {
