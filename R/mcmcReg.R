@@ -240,7 +240,7 @@ mcmcReg <- function(mod,
                     coef_names, samps_pe, samps_ci, gof, gofnames)
   
   ## create LaTeX output
-  if (format == 'latex') {
+  if (grepl('tex$', format)) {
     
     ## create LaTeX code
     tr <- texreg::texreg(l = tr_list, ...)
@@ -270,7 +270,7 @@ mcmcReg <- function(mod,
       ## remove newline at start of LaTeX code
       tr <- sub('^\\n', '', tr)
       
-      tex_file <- file(paste(file, 'tex', sep = '.'))
+      tex_file <- file(paste(sub('\\.tex$', '', file), 'tex', sep = '.'))
       writeLines(tr, tex_file, sep = '')
       close(tex_file)
       
@@ -305,7 +305,7 @@ mcmcReg <- function(mod,
       
     } else {
       
-      html_file <- file(paste(file, 'html', sep = '.'))
+      html_file <- file(paste(sub('\\.html$', '', file), 'html', sep = '.'))
       writeLines(hr, html_file, sep = '')
       close(html_file)
       
