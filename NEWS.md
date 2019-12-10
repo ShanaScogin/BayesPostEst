@@ -1,6 +1,7 @@
 # BayesPostEst 0.2.0.9000
 * Added functions `mcmcCoefPlot()` and `mcmcMargEff()`.
 * Added corresponding website and static docs using pkgdown.
+* Added function `mcmcRocPrcGen()`.
 
 # BayesPostEst 0.1.0
 
