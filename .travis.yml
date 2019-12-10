@@ -25,19 +25,22 @@ before_install:
   - echo "CXX14FLAGS=-O3 -march=native -mtune=native -fPIC" >> ~/.R/Makevars
   - echo "CXX14=g++" >> ~/.R/Makevars
 
+r_packages:
+    - covr
+    - pkgdown
+
 after_success:
   - Rscript -e 'covr::codecov()'
+  - Rscript -e 'pkgdown::build_site()'
 
 before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
 
 deploy:
   provider: pages
   skip_cleanup: true
-  github_token: $GITHUB_TOKEN
+  github_token: $GITHUB_PAT
   keep_history: true
   local_dir: docs
-  provider: script ## added after
-  script: Rscript -e 'pkgdown::deploy_site_github()' ## added after
   on:
     branch: master
 
