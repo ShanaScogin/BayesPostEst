@@ -1,9 +1,9 @@
 #' ROC and Precision-Recall Curves using Bayesian MCMC estimates
 #' 
 #' Generate ROC and Precision-Recall curves after fitting a Bayesian logit or 
-#' probit regression.
+#' probit regression using \code{\link[R2jags]{jags}}
 #' 
-#' @param object A "rjags" object (see [R2jags::jags()]) for a fitted binary
+#' @param object A "rjags" object (see \code{\link[R2jags]{jags}}) for a fitted binary
 #'   choice model.
 #' @param yname (`character(1)`)\cr
 #'   The name of the dependent variable, should match the variable name in the 

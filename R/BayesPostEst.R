@@ -68,4 +68,7 @@ NULL
 #' @importFrom utils getFromNamespace
 NULL
 
+#' @importFrom ROCR prediction performance
+NULL
+
 #> NULL

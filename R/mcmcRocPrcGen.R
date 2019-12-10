@@ -2,7 +2,8 @@
 #'after fitting a Bayesian logit or probit model. 
 #'@title ROC and Precision-Recall Curves using Bayesian MCMC estimates generalized
 #'@description This function generates ROC and Precision-Recall curves 
-#'after fitting a Bayesian logit or probit regression.
+#'after fitting a Bayesian logit or probit regression. For fast calcuation for 
+#'from an "rjags" object use \code{\link{mcmcRocPrc}}
 #'@param modelmatrix model matrix, including intercept (if the intercept is among the
 #'parameters estimated in the model). Create with model.matrix(formula, data).
 #'Note: the order of columns in the model matrix must correspond to the order of columns 
@@ -125,14 +126,14 @@ mcmcRocPrcGen <- function(modelmatrix,
     pred_obs <- data.frame(y_pred = y_pred, y_obs = modelframe[, 1])             
     
     auc_roc <- function(obs, pred) {
-      pred <- ROCR::prediction(pred, obs)
-      auc  <- ROCR::performance(pred, "auc")@y.values[[1]]
+      pred <- prediction(pred, obs)
+      auc  <- performance(pred, "auc")@y.values[[1]]
       return(auc)
     }
     
     auc_pr <- function(obs, pred) {
-      xx.df <- ROCR::prediction(pred, obs)
-      perf  <- ROCR::performance(xx.df, "prec", "rec")
+      xx.df <- prediction(pred, obs)
+      perf  <- performance(xx.df, "prec", "rec")
       xy    <- data.frame(recall = perf@x.values[[1]], 
                           precision = perf@y.values[[1]])
       
@@ -158,10 +159,10 @@ mcmcRocPrcGen <- function(modelmatrix,
     
     if(curves == TRUE){
       
-      prediction_obj <- ROCR::prediction(predictions = pred_obs$y_pred,
+      prediction_obj <- prediction(predictions = pred_obs$y_pred,
                                          labels = pred_obs$y_obs)
       
-      prc_performance_obj <- ROCR::performance(prediction.obj = prediction_obj,
+      prc_performance_obj <- performance(prediction.obj = prediction_obj,
                                                measure = "prec",
                                                x.measure = "rec")
       
@@ -169,7 +170,7 @@ mcmcRocPrcGen <- function(modelmatrix,
                             y = prc_performance_obj@y.values)
       names(prc_dat) <- c("x", "y")
       
-      roc_performance_obj <- ROCR::performance(prediction.obj = prediction_obj,
+      roc_performance_obj <- performance(prediction.obj = prediction_obj,
                                                measure = "tpr",
                                                x.measure = "fpr")
       
@@ -198,14 +199,14 @@ mcmcRocPrcGen <- function(modelmatrix,
       pred_obs <- data.frame(y_pred = pred_prob_vector, y_obs = modelframe[, 1])						 
       
       auc_roc <- function(obs, pred) {
-        pred <- ROCR::prediction(pred, obs)
-        auc  <- ROCR::performance(pred, "auc")@y.values[[1]]
+        pred <- prediction(pred, obs)
+        auc  <- performance(pred, "auc")@y.values[[1]]
         return(auc)
       }
       
       auc_pr <- function(obs, pred) {
-        xx.df <- ROCR::prediction(pred, obs)
-        perf  <- ROCR::performance(xx.df, "prec", "rec")
+        xx.df <- prediction(pred, obs)
+        perf  <- performance(xx.df, "prec", "rec")
         xy    <- data.frame(recall = perf@x.values[[1]], 
                             precision = perf@y.values[[1]])
         
@@ -227,10 +228,10 @@ mcmcRocPrcGen <- function(modelmatrix,
       }
       
       if(curves == TRUE){
-        prediction_obj <- ROCR::prediction(predictions = pred_obs$y_pred,
+        prediction_obj <- prediction(predictions = pred_obs$y_pred,
                                            labels = pred_obs$y_obs)
         
-        prc_performance_obj <- ROCR::performance(prediction.obj = prediction_obj,
+        prc_performance_obj <- performance(prediction.obj = prediction_obj,
                                                  measure = "prec",
                                                  x.measure = "rec")
         
@@ -238,7 +239,7 @@ mcmcRocPrcGen <- function(modelmatrix,
                               y = prc_performance_obj@y.values)
         names(prc_dat) <- c("x", "y")
         
-        roc_performance_obj <- ROCR::performance(prediction.obj = prediction_obj,
+        roc_performance_obj <- performance(prediction.obj = prediction_obj,
                                                  measure = "tpr",
                                                  x.measure = "fpr")
         

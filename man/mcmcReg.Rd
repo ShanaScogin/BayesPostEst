@@ -36,7 +36,7 @@ names for each model. If there are multiple models, the list must have the same
 number of elements as there are models, and the vector of names in each list
 element must match the number of parameters. If not supplied, the function
 will use the parameter names in the model object(s). Note that this replaces
-the standard \code{custom.coef.names} argument in \code{texreg} because there is no
+the standard \code{custom.coef.names} argument in \code{\link[texreg]{texreg}} because there is no
 \code{extract} method for MCMC model objects, and many MCMC model objects do not
 have unique parameter names.}
 
@@ -44,8 +44,9 @@ have unique parameter names.}
 
 \item{gofnames}{an optional vector or list of vectors containing
 goodness of fit statistic names for each model. Like \code{coefnames} in this function
-(which replaces the \code{custom.coef.names} argument in \code{texreg}), \code{gofnames}
-replaces the standard \code{custom.gof.names} argument in \code{texreg}. If 
+(which replaces the \code{custom.coef.names} argument in \code{\link[texreg]{texreg}}),
+\code{gofnames} replaces the standard \code{custom.gof.names} argument in
+\code{\link[texreg]{texreg}}. If 
 there are multiple models, the list must have the same number of elements as
 there are models, and the vector of names in each list element must match the
 number of goodness of fit statistics.}
@@ -55,18 +56,18 @@ number of goodness of fit statistics.}
 \item{file}{optional file name to write table to file instead of printing to
 console.}
 
-\item{...}{optional arguments to \code{texreg}.}
+\item{...}{optional arguments to \code{\link[texreg]{texreg}}.}
 }
 \value{
 A formatted regression table in LaTeX or HTML format.
 }
 \description{
 This function creates LaTeX or HTML regression tables for MCMC Output using 
-the \code{texreg} function from the \code{texreg} R package.
+the \code{\link[texreg]{texreg}} function from the \code{\link[texreg:texreg-package]{texreg}} R package.
 }
 \details{
 This function creates LaTeX or HTML regression tables for MCMC Output using 
-the \code{texreg} function from the \code{texreg} R package
+the \code{texreg} function from the \code{\link[texreg:texreg-package]{texreg}} R package
 
 If using \code{custom.coef.map} with more than one model, you should rename
 the parameters in the model objects to ensure that different parameters with the

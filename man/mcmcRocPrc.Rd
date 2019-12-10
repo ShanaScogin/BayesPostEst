@@ -7,7 +7,7 @@
 mcmcRocPrc(object, yname, xnames, curves, fullsims)
 }
 \arguments{
-\item{object}{A "rjags" object (see \code{\link[R2jags:jags]{R2jags::jags()}}) for a fitted binary
+\item{object}{A "rjags" object (see \code{\link[R2jags]{jags}}) for a fitted binary
 choice model.}
 
 \item{yname}{(\code{character(1)})\cr
@@ -32,7 +32,7 @@ of the "curves" and "fullsims" argument values.
 }
 \description{
 Generate ROC and Precision-Recall curves after fitting a Bayesian logit or
-probit regression.
+probit regression using \code{\link[R2jags]{jags}}
 }
 \examples{
 # load simulated data and fitted model (see ?sim_data and ?jags_logit)

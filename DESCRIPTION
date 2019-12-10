@@ -51,7 +51,8 @@ Imports:
     texreg,
     runjags,
     tidyr (>= 0.5.1),
-    HDInterval
+    HDInterval,
+    ROCR
 Depends:
     R (>= 2.14.0)
 Encoding: UTF-8
