@@ -1,7 +1,7 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: r
-sudo: required
+sudo: false
 cache: packages
 
 # dependency for rjags
@@ -37,7 +37,7 @@ after_success:
 deploy:
   provider: pages
   skip_cleanup: true
-  github_token: $GITHUB_PAT
+  github_token: $GITHUB_TOKEN
   keep_history: true
   local_dir: docs
   on:
