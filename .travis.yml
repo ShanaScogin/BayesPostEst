@@ -39,7 +39,7 @@ before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
 deploy:
   provider: pages
   skip_cleanup: true
-  github_token: $GITHUB_PAT
+  github_token: $GITHUB_TOKEN
   keep_history: true
   local_dir: docs
   on:
