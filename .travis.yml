@@ -30,16 +30,14 @@ r_packages:
     - pkgdown
 
 after_success:
-  - Rscript -e 'covr::codecov()'
-  - R CMD INSTALL .
-  - Rscript -e 'pkgdown::build_site()'
-
-before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
+    - Rscript -e 'covr::codecov()'
+    - R CMD INSTALL .
+    - Rscript -e 'pkgdown::build_site()'
 
 deploy:
   provider: pages
   skip_cleanup: true
-  github_token: $GITHUB_TOKEN
+  github_token: $GITHUB_PAT
   keep_history: true
   local_dir: docs
   on:
