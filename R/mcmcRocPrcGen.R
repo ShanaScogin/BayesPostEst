@@ -2,7 +2,7 @@
 #'after fitting a Bayesian logit or probit model. 
 #'@title ROC and Precision-Recall Curves using Bayesian MCMC estimates generalized
 #'@description This function generates ROC and Precision-Recall curves 
-#'after fitting a Bayesian logit or probit regression. For fast calcuation for 
+#'after fitting a Bayesian logit or probit regression. For fast calculation for 
 #'from an "rjags" object use \code{\link{mcmcRocPrc}}
 #'@param modelmatrix model matrix, including intercept (if the intercept is among the
 #'parameters estimated in the model). Create with model.matrix(formula, data).
@@ -18,7 +18,7 @@
 #'in the model matrix. One can do this by examining the posterior distribution matrix and sorting the 
 #'variables in the order of this matrix when creating the model matrix. A useful function for sorting 
 #'column names containing both characters and numbers as 
-#'you create the matrix of posterior distributions is \code{mixedsort()} fom the gtools package.
+#'you create the matrix of posterior distributions is \code{mixedsort()} from the gtools package.
 #'@param modelframe model frame in matrix form. Can be created using 
 #'as.matrix(model.frame(formula, data))
 #'@param curves logical indicator of whether or not to return values to plot the ROC or Precision-Recall 

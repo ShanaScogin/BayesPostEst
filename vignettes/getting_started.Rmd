@@ -291,7 +291,7 @@ mcmcReg(fit.jags, format = 'html', doctype = F)
 mcmcReg(fit.jags, pars = 'b', format = 'html', doctype = F)
 ```
 
-If we only wish to exclue the intercept, we can do this by explicitly specifying the parameters we wish to include as a vector. Note that in this example we have to escape the `[]`s in `pars` because they are a reserved character in regular expressions.
+If we only wish to exclude the intercept, we can do this by explicitly specifying the parameters we wish to include as a vector. Note that in this example we have to escape the `[]`s in `pars` because they are a reserved character in regular expressions.
 
 ```{r, results = 'asis'}
 mcmcReg(fit.jags, pars = c('b\\[1\\]', 'b\\[3\\]', 'b\\[4\\]'), 

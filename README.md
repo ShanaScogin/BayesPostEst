@@ -628,7 +628,7 @@ Kruschke, John K. 2013. “Bayesian Estimation Supersedes the T-Test.” Journal
 
 Kruschke, John K. 2015. Doing Bayesian Data Analysis: A Tutorial with R, JAGS, and Stan. Amsterdam: Academic Press. 978-0-12-405888-0
 
-Long, J. Scott. 1997. Regression Models for Categorial and Limited Dependent Variables. Thousand Oaks: Sage Publications.
+Long, J. Scott. 1997. Regression Models for Categorical and Limited Dependent Variables. Thousand Oaks: Sage Publications.
 
 Martin, Andrew D., Kevin M. Quinn, and Jong Hee Park. 2011. “MCMCpack: Markov Chain Monte Carlo in R.” Journal of Statistical Software 42 (9): 22. http://www.jstatsoft.org/v42/i09/.
 

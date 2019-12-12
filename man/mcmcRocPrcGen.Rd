@@ -23,7 +23,7 @@ Note: the order of columns in this matrix must correspond to the order of column
 in the model matrix. One can do this by examining the posterior distribution matrix and sorting the 
 variables in the order of this matrix when creating the model matrix. A useful function for sorting 
 column names containing both characters and numbers as 
-you create the matrix of posterior distributions is \code{mixedsort()} fom the gtools package.}
+you create the matrix of posterior distributions is \code{mixedsort()} from the gtools package.}
 
 \item{modelframe}{model frame in matrix form. Can be created using 
 as.matrix(model.frame(formula, data))}
@@ -49,7 +49,7 @@ This function returns a list with 4 elements:
 }
 \description{
 This function generates ROC and Precision-Recall curves 
-after fitting a Bayesian logit or probit regression. For fast calcuation for 
+after fitting a Bayesian logit or probit regression. For fast calculation for 
 from an "rjags" object use \code{\link{mcmcRocPrc}}
 }
 \details{
