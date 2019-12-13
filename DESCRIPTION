@@ -54,7 +54,7 @@ Imports:
     HDInterval,
     ROCR
 Depends:
-    R (>= 2.14.0)
+    R (>= 3.5.0)
 Encoding: UTF-8
 LazyData: TRUE
 LazyLoad: TRUE
