@@ -42,6 +42,3 @@ deploy:
   local_dir: docs
   on:
     branch: master
-
-
-    
