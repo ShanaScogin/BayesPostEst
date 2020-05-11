@@ -1,4 +1,5 @@
 # BayesPostEst 0.3.0.9000
+* Fixed bug for reupload to CRAN
 
 # BayesPostEst 0.2.0
 * Added functions `mcmcCoefPlot()` and `mcmcMargEff()`.
