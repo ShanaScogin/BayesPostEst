@@ -99,7 +99,10 @@ mcmcTab <- function(sims,
   out_dat <- data.frame("Variable" = colnames(mcmctab), 
                         t(mcmctab),
                         row.names = NULL,
-                        stringsAsFactors = TRUE)
+                        stringsAsFactors = TRUE) # check this, new with R 4.0.0
+                                                 # recommended if sort order used 
+                                                 # in the string to factor conversion
+                                                 # does not matter
   
   return(out_dat)
   
