@@ -98,7 +98,8 @@ mcmcTab <- function(sims,
   # return(t(mcmctab))
   out_dat <- data.frame("Variable" = colnames(mcmctab), 
                         t(mcmctab),
-                        row.names = NULL)
+                        row.names = NULL,
+                        stringsAsFactors = TRUE)
   
   return(out_dat)
   

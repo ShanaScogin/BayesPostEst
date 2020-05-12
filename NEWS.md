@@ -1,5 +1,5 @@
 # BayesPostEst 0.3.0.9000
-* Fixed bug for reupload to CRAN
+* Added 'stringsAsFactors = TRUE' for new data.frame() default with R 4.0.0
 
 # BayesPostEst 0.2.0
 * Added functions `mcmcCoefPlot()` and `mcmcMargEff()`.
