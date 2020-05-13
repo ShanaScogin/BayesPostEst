@@ -27,3 +27,4 @@ CONTRIBUTING.md
 ^pkgdown/_pkgdown\.yml$
 ^CRAN-RELEASE$
 ^_pkgdown\.yml$
+^revdep$
