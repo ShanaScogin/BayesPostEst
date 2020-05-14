@@ -42,7 +42,7 @@ Imports:
     coda (>= 0.13),
     dplyr (>= 0.5.0),
     ggmcmc, 
-    ggplot2, 
+    ggplot2 (>= 3.3.0), 
     ggridges, 
     R2jags,
     reshape2,
