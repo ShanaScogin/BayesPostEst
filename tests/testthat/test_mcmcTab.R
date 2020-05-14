@@ -57,32 +57,34 @@ test_that("pars subsetting works", {
                     ci = c(0.025, 0.975), 
                     pars = "b", 
                     Pr = FALSE,
-                    ROPE = NULL)
+                    ROPE = NULL,
+                    regex = TRUE)
   expect_equal(
     object$Variable, 
     factor(c(sprintf("b[%s]", 1:3)))
   )
   
-  # however, this doesn't work (i guess regex complains)
-  # object <- mcmcTab(jags_logit,
-  #                   ci = c(0.025, 0.975),
-  #                   pars = "b[1]",
-  #                   Pr = FALSE,
-  #                   ROPE = NULL)
-  # expect_equal(
-  #   object$Variable, 
-  #   factor("b[1]")
-  # )
+  object <- mcmcTab(jags_logit, 
+                    ci = c(0.025, 0.975), 
+                    pars = c("b\\[1\\]", "b\\[2\\]"), 
+                    Pr = FALSE,
+                    ROPE = NULL,
+                    regex = TRUE)
+  
+  expect_equal(
+    object$Variable, 
+    factor(c(sprintf("b[%s]", 1:2)))
+  )
   
   object <- mcmcTab(jags_logit, 
                     ci = c(0.025, 0.975), 
-                    pars = c("b[1]", "b[2]"), 
+                    pars = c("b[1]", "b[3]"), 
                     Pr = FALSE,
                     ROPE = NULL)
   
   expect_equal(
     object$Variable, 
-    factor(c(sprintf("b[%s]", 1:2)))
+    factor(c(sprintf("b[%s]", c(1, 3))))
   )
   
 })
@@ -91,7 +93,7 @@ test_that("ROPE argument works", {
   
   # valid input
   expect_message(
-    object <- mcmcTab(jags_logit, pars = "b", ROPE = c(0, 1)),
+    object <- mcmcTab(jags_logit, pars = "b", ROPE = c(0, 1), regex = TRUE),
     "This table contains an estimate for parameter"
   )
   
