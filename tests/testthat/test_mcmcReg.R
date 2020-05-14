@@ -4,13 +4,23 @@ test_that("Simple model runs with mcmcReg", {
   fit <- jags_logit
   
   expect_silent(mcmcReg(fit))
-
-  expect_silent(mcmcReg(fit, pars = c('b')))
+  
+  expect_silent(mcmcReg(fit, pars = c('b[1]', 'b[3]')))
+  
+  expect_silent(mcmcReg(fit, pars = c('b[1]', 'b[3]'),
+                        coefnames = c('beta 1', 'beta 3')))
+  
+  expect_silent(mcmcReg(fit, pars = c('b'), coefnames = paste('beta', 1:3),
+                        regex = T))
+  
+  expect_silent(mcmcReg(fit, pars = c('b'), regex = T))
+  
+  expect_silent(mcmcReg(fit, pars = c('b\\[1\\]', 'b\\[3\\]'), regex = T))
 
   expect_silent(object3 <- mcmcReg(fit, pars = c('b'),
      custom.coef.names = c('Variable 1',
                            'Variable 2',
-                           'Variable 3')))
+                           'Variable 3'), regex = T))
   
   expect_silent(mcmcReg(fit, coefnames = c('Variable 1',
                                            'Variable 2',
@@ -27,5 +37,3 @@ test_that("Simple model runs with mcmcReg", {
   if (file.exists('table.html')) file.remove('table.html')
 
 })
-
-

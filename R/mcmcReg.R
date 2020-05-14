@@ -11,10 +11,11 @@
 #' a limited number of parameters to include via \code{pars} may take a long time.
 #' \code{pars} can either be a vector with the specific parameters to be included
 #' in the table e.g. \code{pars = c("beta[1]", "beta[2]", "beta[3]")}, or they can
-#' be partial names that will be matched using regular expressions e.g. \code{pars = "beta"}.
-#' Both of these will include \code{beta[1]}, \code{beta[2]}, and \code{beta[3]}
-#' in the table. When combining models with different parameters in one table,
-#' this argument also accepts a list the length of the number of models.
+#' be partial names that will be matched using regular expressions e.g.
+#' \code{pars = "beta"} if \code{regex = TRUE}. Both of these will include
+#' \code{beta[1]}, \code{beta[2]}, and \code{beta[3]} in the table. When
+#' combining models with different parameters in one table, this argument also
+#' accepts a list the length of the number of models.
 #' @param pointest a character indicating whether to use the mean or median for
 #' point estimates in the table.
 #' @param ci a scalar indicating the confidence level of the uncertainty intervals.
@@ -40,6 +41,7 @@
 #' @param format a character indicating \code{latex} or \code{html} output.
 #' @param file optional file name to write table to file instead of printing to
 #' console.
+#' @param regex use regular expression matching with \code{pars}?
 #' @param ... optional arguments to \code{\link[texreg]{texreg}}.
 #'
 #' @details If using \code{custom.coef.map} with more than one model, you should rename
@@ -126,7 +128,9 @@ mcmcReg <- function(mod,
                     gof = numeric(0),
                     gofnames = character(0),
                     format = 'latex', 
-                    file, ...) {
+                    file, 
+                    regex = F,
+                    ...) {
   
   ## pull in unexported functions from other packages
   ## other options for future versions might include lifting this and adding authors as copr holders
@@ -135,14 +139,14 @@ mcmcReg <- function(mod,
   ## if only one model object, coerce to a list
   if (all(class(mod) != 'list')) mod <- list(mod)
   
-  ##
+  ## check for heterogeneous model objects
   if (length(unique(lapply(mod, class))) > 1) stop('More than one object class supplied to argument "mod"')
   
-  ## if only one custom coefficient names object, coerce to a list
+  ## if only one custom coefficient names vector, coerce to a list
   if (class(coefnames) != 'list' & !is.null(coefnames)) coefnames <- list(coefnames)
   
   ## if only one parameter vector, coerce to a list
-  if (class(pars) != 'list') pars <- list(pars)
+  if (class(pars) != 'list' & !is.null(pars)) pars <- list(pars)
   
   ## if only one gof statistic scalar or vector, coerce to a list
   if (class(gof) != 'list') gof <- list(rep(gof, times = length(mod)))
@@ -180,20 +184,15 @@ mcmcReg <- function(mod,
     samps <- lapply(mod, function(x) as.matrix(x))
   }
   
-  ## extract coefficient names from dataframe(s)
-  if (!is.null(pars)) {
-    
-    coef_names <- mapply(function(x, y) colnames(x)[grepl(x = colnames(x), pattern = paste(y, collapse = '|'))],
-                         samps, pars, SIMPLIFY = F)
-    
-  }
-  
   ## limit samples to supplied parameters
-  if (!is.null(pars)) {
-    
-    samps <- mapply(function(x, y) x[, grepl(x = colnames(x), pattern = paste(y, collapse = '|'))],
+  if (regex) {
+    samps <- mapply(function(x, y) x[, grepl(x = colnames(x),
+                                            pattern = paste(y, collapse = '|'))],
+                      samps, pars, SIMPLIFY = F)
+  } else if (!is.null(pars)) {
+    samps <- mapply(function(x, y) matrix(x[, y], nrow = nrow(x),
+                                          dimnames = list(NULL, y)),
                     samps, pars, SIMPLIFY = F)
-    
   }
   
   ## calculate point estimate of posterior density
@@ -221,11 +220,18 @@ mcmcReg <- function(mod,
   }
   
   ## if coefficent names supplied, replace names from model object(s)
-  if (!is.null(coefnames) & !is.list(coefnames)) coef_names <- list(coefnames)
-  if (!is.null(coefnames)) coef_names <- coefnames
+  if (!is.null(coefnames) & !is.list(coefnames)) {
+    coefnames <- list(coefnames)
+  } else if (regex & is.null(coefnames)) {
+    coefnames <- mapply(function(x, y) colnames(x)[grepl(x = colnames(x),
+                                                          pattern = paste(y, collapse = '|'))],
+                         samps, pars, SIMPLIFY = F)
+  } else if (is.null(coefnames)) {
+    coefnames <- lapply(samps, colnames)
+  }
   
   ##
-  if (length(mod) != length(coef_names)) {
+  if (length(mod) != length(coefnames)) {
 
     stop('number of models does not match number of custom coefficient vectors')
 
@@ -238,7 +244,7 @@ mcmcReg <- function(mod,
                                                                  ci.up = x[2, ],
                                                                  gof = y,
                                                                  gof.names = z),
-                    coef_names, samps_pe, samps_ci, gof, gofnames)
+                    coefnames, samps_pe, samps_ci, gof, gofnames)
   
   ## create LaTeX output
   if (grepl('tex$', format)) {

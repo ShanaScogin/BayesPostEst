@@ -191,7 +191,7 @@ model {
 writeLines(mod.stan, "mod.stan")	
 ```
 
-We then load rstan (@rstan2019)...
+We then load rstan [@rstan2019]...
 
 ```{r}
 library("rstan")
@@ -288,21 +288,21 @@ mcmcReg(fit.jags, format = 'html', doctype = F)
 `mcmcReg` supports limiting the parameters included in the table via the `pars` argument. By default, all parameters saved in the model object will be included. In the case of `fit.jags`, this include the deviance estimate. If we wish to exclude it, we can specify `pars = 'b'` which will capture `b[1]`-`b[4]` using regular expression matching.
 
 ```{r, results = 'asis'}
-mcmcReg(fit.jags, pars = 'b', format = 'html', doctype = F)
+mcmcReg(fit.jags, pars = 'b', format = 'html', regex = T, doctype = F)
 ```
 
 If we only wish to exclude the intercept, we can do this by explicitly specifying the parameters we wish to include as a vector. Note that in this example we have to escape the `[]`s in `pars` because they are a reserved character in regular expressions.
 
 ```{r, results = 'asis'}
 mcmcReg(fit.jags, pars = c('b\\[1\\]', 'b\\[3\\]', 'b\\[4\\]'), 
-        format = 'html', doctype = F)
+        format = 'html', regex = T, doctype = F)
 ```
 
 `mcmcReg` also supports partial regular expression matching of multiple parameter family names as demonstrated below.
 
 ```{r, results = 'asis'}
 mcmcReg(fit.jags, pars = c('b', 'dev'), 
-        format = 'html', doctype = F)
+        format = 'html', regex = T, doctype = F)
 ```
 
 ### Custom coefficient names
@@ -312,7 +312,7 @@ mcmcReg(fit.jags, pars = c('b', 'dev'),
 ```{r, results = 'asis'}
 mcmcReg(fit.jags, pars = 'b',
         coefnames = c('(Constant)', 'Female', 'Neuroticism', 'Extraversion'),
-        format = 'html', doctype = F)
+        format = 'html', regex = T, doctype = F)
 ```
 
 A more flexible way to include custom coefficient names is via the `custom.coef.map` argument, which accepts a named list, with names as parameter names in the model and values as the custom coefficient names.
@@ -323,7 +323,7 @@ mcmcReg(fit.jags, pars = 'b',
                                'b[2]' = 'Female',
                                'b[3]' = 'Nueroticism',
                                'b[4]' = 'Extraversion'),
-        format = 'html', doctype = F)
+        format = 'html', regex = T, doctype = F)
 ```
 
 The advantage of `custom.coef.map` is that it can flexibly reorder and omit coefficients from the table based on their positions within the list. Notice in the code below that deviance does not have to be included in `pars` because its absence from `custom.coef.map` omits it from the resulting table.
