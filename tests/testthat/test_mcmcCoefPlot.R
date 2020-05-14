@@ -5,16 +5,6 @@ test_that("Simple model runs with mcmcCoefPlot", {
   
   expect_silent(mcmcCoefPlot(fit))
 
-  expect_silent(mcmcCoefPlot(fit, pars = 'b'))
-  
-  expect_silent(mcmcCoefPlot(fit, pars = 'b', ci = .9, hpdi = T))
-  
-  ## test
-  med_df <- mcmcCoefPlot(fit, pars = 'b', pointest = 'median', plot = F)
-  value <- med_df[2, 1]
-  check_against <- 0.5273031
-  expect_equal(value, check_against, tolerance = 1e-4)
-
 })
 
 test_that("Simple model runs with mcmcCoefPlot with arguments", {
@@ -24,12 +14,12 @@ test_that("Simple model runs with mcmcCoefPlot with arguments", {
   
   expect_silent(mcmcCoefPlot(fit))
   
-  expect_silent(mcmcCoefPlot(fit, pars = 'b'))
+  expect_silent(mcmcCoefPlot(fit, pars = 'b', regex = T))
   
-  expect_silent(mcmcCoefPlot(fit, pars = 'b', ci = .9, hpdi = T))
+  expect_silent(mcmcCoefPlot(fit, pars = 'b', ci = .9, hpdi = T, regex = T))
   
   ## test
-  med_df <- mcmcCoefPlot(fit, pars = 'b', pointest = 'median', plot = F)
+  med_df <- mcmcCoefPlot(fit, pars = 'b', pointest = 'median', plot = F, regex = T)
   value <- med_df[2, 1]
   check_against <- 0.5273031
   expect_equal(value, check_against, tolerance = 1e-4)
@@ -42,7 +32,7 @@ test_that("Simple model runs with mcmcCoefPlot with sorting", {
   fit <- jags_logit
   
   ## test
-  med_df <- mcmcCoefPlot(fit, pars = 'b', sort = T, plot = F)
+  med_df <- mcmcCoefPlot(fit, pars = 'b', sort = T, plot = F, regex = T)
   value <- med_df[3, 1]
   check_against <- 0.6335488
   expect_equal(value, check_against, tolerance = 1e-4)

@@ -11,10 +11,10 @@
 #' or produce an unreadable plot. \code{pars} can either be a vector with the
 #' specific parameters to be included in the table e.g. \code{pars = c("beta[1]",
 #' "beta[2]", "beta[3]")}, or they can be partial names that will be matched using
-#' regular expressions e.g. \code{pars = "beta"}. Both of these will include
-#' \code{beta[1]}, \code{beta[2]}, and \code{beta[3]} in the plot. If \code{pars}
-#' is left blank, \code{mcmcCoefPlot} will exclude auxiliary parameters such as
-#' \code{deviance} from JAGS or \code{lp__} from Stan.
+#' regular expressions e.g. \code{pars = "beta"} if \code{regex = TRUE}. Both of
+#' these will include \code{beta[1]}, \code{beta[2]}, and \code{beta[3]} in the
+#' plot. If \code{pars} is left blank, \code{mcmcCoefPlot} will exclude auxiliary
+#' parameters such as \code{deviance} from JAGS or \code{lp__} from Stan.
 #' @param pointest a character indicating whether to use the mean or median for
 #' point estimates in the table.
 #' @param ci a scalar indicating the confidence level of the uncertainty intervals.
@@ -24,6 +24,7 @@
 #' a caterpillar or dot plot; default \code{FALSE}.
 #' @param plot logical indicating whether to return a \code{ggplot} object or the
 #' underlying tidy DataFrame; default \code{TRUE}.
+#' @param regex use regular expression matching with \code{pars}?
 #'
 #' @return a \code{ggplot} object or a tidy DataFrame.
 #' 
@@ -82,7 +83,8 @@
 #' 
 #' @export
 mcmcCoefPlot <- function(mod, pars = NULL, pointest = 'mean', ci = .95,
-                         hpdi = FALSE, sort = FALSE, plot = TRUE) {
+                         hpdi = FALSE, sort = FALSE, plot = TRUE,
+                         regex = FALSE) {
   
   ## pull in unexported functions from other packages
   ## other options for future versions might include lifting this and adding authors as copr holders
@@ -101,10 +103,13 @@ mcmcCoefPlot <- function(mod, pars = NULL, pointest = 'mean', ci = .95,
     samps <- as.matrix(mod)
   }
   
-  if (!is.null(pars)) {
+  if (is.null(pars)) {
+    samps <- samps[, !grepl(pattern = 'deviance|lp__', x = colnames(samps))]
+  } else if (regex) {
     samps <- samps[, grepl(pattern = paste(pars, collapse = '|'), x = colnames(samps))]
   } else {
-    samps <- samps[, !grepl(pattern = 'deviance|lp__', x = colnames(samps))]
+    samps <- matrix(samps[, pars], nrow = nrow(samps), byrow = FALSE,
+                  dimnames = list(NULL, pars))
   }
 
   if (!hpdi) {
