@@ -123,13 +123,13 @@ mcmcReg <- function(mod,
                     pars = NULL, 
                     pointest = 'mean', 
                     ci = .95, 
-                    hpdi = F,
+                    hpdi = FALSE,
                     coefnames = NULL, 
                     gof = numeric(0),
                     gofnames = character(0),
                     format = 'latex', 
                     file, 
-                    regex = F,
+                    regex = FALSE,
                     ...) {
   
   ## pull in unexported functions from other packages
@@ -188,11 +188,11 @@ mcmcReg <- function(mod,
   if (regex) {
     samps <- mapply(function(x, y) x[, grepl(x = colnames(x),
                                             pattern = paste(y, collapse = '|'))],
-                      samps, pars, SIMPLIFY = F)
+                      samps, pars, SIMPLIFY = FALSE)
   } else if (!is.null(pars)) {
     samps <- mapply(function(x, y) matrix(x[, y], nrow = nrow(x),
                                           dimnames = list(NULL, y)),
-                    samps, pars, SIMPLIFY = F)
+                    samps, pars, SIMPLIFY = FALSE)
   }
   
   ## calculate point estimate of posterior density
@@ -207,7 +207,7 @@ mcmcReg <- function(mod,
   }
   
   ## calculate uncertainty interval for ci argument
-  if (hpdi == F) {
+  if (hpdi == FALSE) {
     
     samps_ci <- lapply(samps, function(x) apply(as.matrix(x), 2, quantile,
                                                 probs = c(.5 - ci/2, .5 + ci/2)))
@@ -225,7 +225,7 @@ mcmcReg <- function(mod,
   } else if (regex & is.null(coefnames)) {
     coefnames <- mapply(function(x, y) colnames(x)[grepl(x = colnames(x),
                                                           pattern = paste(y, collapse = '|'))],
-                         samps, pars, SIMPLIFY = F)
+                         samps, pars, SIMPLIFY = FALSE)
   } else if (is.null(coefnames)) {
     coefnames <- lapply(samps, colnames)
   }
@@ -253,7 +253,7 @@ mcmcReg <- function(mod,
     tr <- texreg::texreg(l = tr_list, ...)
     
     ## replace confidence w/ credible or highest posterior density in texreg output
-    if (hpdi == F) {
+    if (hpdi == FALSE) {
       
       tr <- sub('outside the confidence interval',
                 paste('outside ', ci * 100 ,'\\\\% credible interval', sep = ''),
@@ -291,7 +291,7 @@ mcmcReg <- function(mod,
     hr <- texreg::htmlreg(l = tr_list, ...)
     
     ## replace confidence w/ credible or highest posterior density in texreg output
-    if (hpdi == F) {
+    if (hpdi == FALSE) {
       
       hr <- sub('outside the confidence interval',
                 paste('outside ', ci * 100, '% credible interval', sep = ''),

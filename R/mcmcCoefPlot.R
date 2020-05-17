@@ -82,8 +82,12 @@
 #' }
 #' 
 #' @export
-mcmcCoefPlot <- function(mod, pars = NULL, pointest = 'mean', ci = .95,
-                         hpdi = FALSE, sort = FALSE, plot = TRUE,
+mcmcCoefPlot <- function(mod, pars = NULL, 
+                         pointest = 'mean', 
+                         ci = .95,
+                         hpdi = FALSE, 
+                         sort = FALSE, 
+                         plot = TRUE,
                          regex = FALSE) {
   
   ## pull in unexported functions from other packages
@@ -131,7 +135,8 @@ mcmcCoefPlot <- function(mod, pars = NULL, pointest = 'mean', ci = .95,
   coefs <- data.frame(pe = samps_pe, samps_ci)
   if (sort) {
     coefs$variable <- factor(rownames(coefs),
-                             levels = rev(rownames(coefs)[order(coefs$pe, decreasing = T)])) 
+                             levels = rev(rownames(coefs)[order(coefs$pe,
+                                                                decreasing = TRUE)])) 
   } else {
     coefs$variable <- factor(rownames(coefs), levels = rev(rownames(coefs)))
   }

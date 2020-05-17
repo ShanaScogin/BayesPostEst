@@ -37,7 +37,11 @@
 #' 
 #' @export
 #' @md
-mcmcRocPrc <- function(object, yname, xnames, curves, fullsims) {
+mcmcRocPrc <- function(object, 
+                       yname, 
+                       xnames, 
+                       curves, 
+                       fullsims) {
   
   link_logit  <- any(grepl("logit", object$model$model()))
   link_probit <- any(grepl("probit", object$model$model()))

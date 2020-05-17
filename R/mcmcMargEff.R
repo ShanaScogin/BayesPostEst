@@ -84,13 +84,21 @@
 #'             main = 'b[2]',
 #'             int = 'b[4]',
 #'             moderator = sim_data_interactive$X2,
-#'             plot = T)
+#'             plot = TRUE)
 #' }
 #' 
 #' @export
 #' 
-mcmcMargEff <- function(mod, main, int, moderator, pointest = 'mean', seq = 100,
-                        ci = .95, hpdi = FALSE, plot = TRUE, xlab = 'Moderator',
+mcmcMargEff <- function(mod, 
+                        main, 
+                        int, 
+                        moderator, 
+                        pointest = 'mean', 
+                        seq = 100,
+                        ci = .95, 
+                        hpdi = FALSE, 
+                        plot = TRUE, 
+                        xlab = 'Moderator',
                         ylab = 'Marginal Effect') {
 
   ## pull in unexported functions from other packages
