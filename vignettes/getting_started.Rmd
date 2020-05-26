@@ -634,7 +634,7 @@ ggplot(fitstats.fullsims, aes(x = area_under_prc)) +
   labs(title = "Area under the Precision-Recall curve")
 ```
 
-```{r echo=FALSE, results='hide',message=FALSE}
+```{r echo=FALSE, results='hide', message=FALSE}
 rm(mod.jags)
 rm(mod.stan)
 rm(mod.rds)

@@ -103,7 +103,7 @@ mcmcMargEff(mod = fit,
             main = 'b[2]',
             int = 'b[4]',
             moderator = sim_data_interactive$X2,
-            plot = T)
+            plot = TRUE)
 }
 
 }
