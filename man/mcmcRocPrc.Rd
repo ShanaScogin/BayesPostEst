@@ -35,6 +35,8 @@ Generate ROC and Precision-Recall curves after fitting a Bayesian logit or
 probit regression using \code{\link[R2jags]{jags}}
 }
 \examples{
+\dontshow{.old_wd <- setwd(tempdir())}
+\donttest{
 # load simulated data and fitted model (see ?sim_data and ?jags_logit)
 data("jags_logit")
 
@@ -44,7 +46,9 @@ fit_sum <- mcmcRocPrc(jags_logit,
                       xnames = c("X1", "X2"),
                       curves = TRUE,
                       fullsims = FALSE)
+}
 
+\dontshow{setwd(.old_wd)}
 }
 \references{
 Beger, Andreas. 2016. “Precision-Recall Curves.” Available at

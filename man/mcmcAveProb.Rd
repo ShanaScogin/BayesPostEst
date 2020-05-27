@@ -75,6 +75,7 @@ logit or probit model. For an explanation of predicted probabilities for "averag
 see e.g. King, Tomz & Wittenberg (2000, American Journal of Political Science 44(2): 347-361)
 }
 \examples{
+\dontshow{.old_wd <- setwd(tempdir())}
 \donttest{
   ## simulating data
   set.seed(123456)
@@ -135,6 +136,8 @@ ave_prob <- mcmcAveProb(modelmatrix = xmat,
                         xrange = X1_sim, 
                         xcol = 2)
 }
+
+\dontshow{setwd(.old_wd)}
 }
 \references{
 King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most 

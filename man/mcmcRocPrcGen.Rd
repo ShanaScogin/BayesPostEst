@@ -57,6 +57,7 @@ This function generates ROC and precision-recall curves
 after fitting a Bayesian logit or probit model.
 }
 \examples{
+\dontshow{.old_wd <- setwd(tempdir())}
 \donttest{
 # simulating data
 
@@ -117,6 +118,8 @@ fit_sum <- mcmcRocPrcGen(modelmatrix = mm,
                       curves = TRUE,
                       fullsims = FALSE)
 }
+
+\dontshow{setwd(.old_wd)}
 }
 \references{
 Beger, Andreas. 2016. “Precision-Recall Curves.” Available at SSRN: 

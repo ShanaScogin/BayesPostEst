@@ -47,9 +47,12 @@ if \code{fullsims = FALSE} (default), a data frame with four columns:
 \item lower_fd: lower bound of credible interval of the first difference
 \item upper_fd: upper bound of credible interval of the first difference
 \item VarName: name of the variable as found in \code{modelmatrix}
-\item VarID: identifier of the variable, based on the order of columns in \code{modelmatrix} and \code{mcmcout}. Can be adjusted for plotting
+\item VarID: identifier of the variable, based on the order of columns in \code{modelmatrix} and 
+\code{mcmcout}. Can be adjusted for plotting
 }
-if \code{fullsims = TRUE}, a data frame with as many columns as predictors in the model. Each row is the first difference for that variable based on one set of posterior draws. Column names are taken from the column names of \code{modelmatrix}.
+if \code{fullsims = TRUE}, a data frame with as many columns as predictors in the model. Each row 
+is the first difference for that variable based on one set of posterior draws. Column names are taken 
+from the column names of \code{modelmatrix}.
 }
 \description{
 R function to calculate first differences after a Bayesian logit or probit model.
@@ -60,6 +63,7 @@ at their median. For more, see Long (1997, Sage Publications) and King, Tomz, an
 American Journal of Political Science 44(2): 347-361).
 }
 \examples{
+\dontshow{.old_wd <- setwd(tempdir())}
 \donttest{
 ## simulating data
 set.seed(123456)
@@ -114,6 +118,8 @@ object <- mcmcFD(modelmatrix = xmat,
                  mcmcout = mcmc_mat)
 object
 }
+
+\dontshow{setwd(.old_wd)}
 }
 \references{
 \itemize{

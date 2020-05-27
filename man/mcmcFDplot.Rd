@@ -30,6 +30,7 @@ see Figure 1 in Karreth (2018, International Interactions 44(3): 463-90).
 An R function to plot first differences after a Bayesian logit or probit model.
 }
 \examples{
+\dontshow{.old_wd <- setwd(tempdir())}
 \donttest{
 ## simulating data
 set.seed(123456)
@@ -88,6 +89,8 @@ full <- mcmcFD(modelmatrix = xmat,
 mcmcFDplot(full)
 
 }
+
+\dontshow{setwd(.old_wd)}
 }
 \references{
 \itemize{

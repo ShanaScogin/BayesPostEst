@@ -73,6 +73,7 @@ following Hanmer and Kalkan (2013, American Journal of
 Political Science 57(1): 263-277)
 }
 \examples{
+\dontshow{.old_wd <- setwd(tempdir())}
 \donttest{
   ## simulating data
   set.seed(123456)
@@ -133,6 +134,8 @@ obs_prob <- mcmcObsProb(modelmatrix = xmat,
                         xrange = X1_sim,
                         xcol = 2)
 }
+
+\dontshow{setwd(.old_wd)}
 }
 \references{
 Hanmer, Michael J., & Ozan Kalkan, K. (2013). Behind the curve: Clarifying 
