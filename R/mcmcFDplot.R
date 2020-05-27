@@ -25,7 +25,9 @@
 #'passed on as an object to customize. Annotated numbers show the percent of posterior draws with
 #'the same sign as the median estimate (if \code{ROPE = NULL}) or on the same side of the 
 #'ROPE as the median estimate (if \code{ROPE} is specified).
+#'
 #'@examples
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' \donttest{
 #' ## simulating data
 #' set.seed(123456)
@@ -84,6 +86,8 @@
 #' mcmcFDplot(full)
 #' 
 #' }
+#' 
+#' \dontshow{setwd(.old_wd)}
 #' @export
 #'
 mcmcFDplot <- function(fdfull, 

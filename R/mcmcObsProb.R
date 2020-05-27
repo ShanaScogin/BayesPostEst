@@ -54,6 +54,7 @@
 #'\item pp: average predicted Pr(y = 1) of all observed cases when variable of interest is set to x
 #'}
 #'@examples
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' \donttest{
 #'   ## simulating data
 #'   set.seed(123456)
@@ -114,6 +115,8 @@
 #'                         xrange = X1_sim,
 #'                         xcol = 2)
 #' }
+#' 
+#' \dontshow{setwd(.old_wd)}
 #'@export
 #'
 mcmcObsProb <- function(modelmatrix,

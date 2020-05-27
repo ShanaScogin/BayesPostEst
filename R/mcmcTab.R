@@ -23,6 +23,8 @@
 #' @return a data frame containing MCMC summary statistics.
 #'
 #' @examples
+#' \dontshow{.old_wd <- setwd(tempdir())}
+#' \donttest{
 #' data("jags_logit")
 #' 
 #' ## printing out table
@@ -32,8 +34,11 @@
 #'           Pr = FALSE,
 #'           ROPE = NULL)
 #' object
+#' }
 #' 
+#' \dontshow{setwd(.old_wd)}
 #' @export
+
 mcmcTab <- function(sims, 
                     ci = c(0.025, 0.975), 
                     pars = NULL, 

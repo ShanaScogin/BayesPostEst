@@ -25,6 +25,8 @@
 #'   of the "curves" and "fullsims" argument values. 
 #'
 #' @examples
+#' \dontshow{.old_wd <- setwd(tempdir())}
+#' \donttest{
 #' # load simulated data and fitted model (see ?sim_data and ?jags_logit)
 #' data("jags_logit")
 #' 
@@ -34,9 +36,12 @@
 #'                       xnames = c("X1", "X2"),
 #'                       curves = TRUE,
 #'                       fullsims = FALSE)
+#' }
 #' 
+#' \dontshow{setwd(.old_wd)}
 #' @export
 #' @md
+
 mcmcRocPrc <- function(object, 
                        yname, 
                        xnames, 

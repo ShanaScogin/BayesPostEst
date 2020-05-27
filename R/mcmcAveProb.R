@@ -55,6 +55,7 @@
 #'\item pp: average predicted Pr(y = 1) when variable of interest is set to x, holding all other predictors to average (median) values
 #'}
 #'@examples
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' \donttest{
 #'   ## simulating data
 #'   set.seed(123456)
@@ -115,6 +116,8 @@
 #'                         xrange = X1_sim, 
 #'                         xcol = 2)
 #' }
+#' 
+#' \dontshow{setwd(.old_wd)}
 #'@export
 #'
 mcmcAveProb <- function(modelmatrix, 

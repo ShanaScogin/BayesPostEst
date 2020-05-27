@@ -85,6 +85,7 @@ these should be included in \code{par} if you wish to include the intercept in t
 table.
 }
 \examples{
+\dontshow{.old_wd <- setwd(tempdir())}
 \donttest{
 ## simulating data
 set.seed(123456)
@@ -142,6 +143,7 @@ mcmcReg(fit, coefnames = c('Variable 1', 'Variable 2',
                                    'Variable 3', 'deviance'))
 }
 
+\dontshow{setwd(.old_wd)}
 }
 \author{
 Rob Williams, \email{jayrobwilliams@gmail.com}

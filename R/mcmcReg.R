@@ -60,6 +60,7 @@
 #' @author Rob Williams, \email{jayrobwilliams@gmail.com}
 #'
 #' @examples
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' \donttest{
 #' ## simulating data
 #' set.seed(123456)
@@ -117,6 +118,7 @@
 #'                                    'Variable 3', 'deviance'))
 #' }
 #' 
+#' \dontshow{setwd(.old_wd)}
 #' @export
 #' 
 mcmcReg <- function(mod, 

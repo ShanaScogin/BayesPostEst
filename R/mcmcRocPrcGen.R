@@ -37,7 +37,9 @@
 #'\item prc_dat: data to plot precision-recall curve (data frame)
 #'\item roc_dat: data to plot ROC curve (data frame)
 #'}
+#'
 #'@examples
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' \donttest{
 #' # simulating data
 #'
@@ -98,6 +100,8 @@
 #'                       curves = TRUE,
 #'                       fullsims = FALSE)
 #' }
+#' 
+#' \dontshow{setwd(.old_wd)}
 #'@export
 
 mcmcRocPrcGen <- function(modelmatrix,

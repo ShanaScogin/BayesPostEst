@@ -29,6 +29,7 @@
 #' @author Rob Williams, \email{jayrobwilliams@gmail.com}
 #'
 #' @examples
+#' \dontshow{.old_wd <- setwd(tempdir())}
 #' \donttest{
 #' ## simulating data
 #' set.seed(123456)
@@ -87,6 +88,7 @@
 #'             plot = TRUE)
 #' }
 #' 
+#' \dontshow{setwd(.old_wd)}
 #' @export
 #' 
 mcmcMargEff <- function(mod, 
