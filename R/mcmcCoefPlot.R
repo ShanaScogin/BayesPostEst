@@ -148,10 +148,11 @@ mcmcCoefPlot <- function(mod, pars = NULL,
   if (!plot) {
     coefs
   } else {
-    ggplot2::ggplot(coefs, ggplot2::aes(x = .data$pe, y = .data$variable,
-                                        xmin = .data$lo, xmax = .data$hi)) +
-      ggplot2::geom_vline(xintercept = 0, lty = 2) +
+    ggplot2::ggplot(coefs, ggplot2::aes(x = .data$variable, y = .data$pe,
+                                        ymin = .data$lo, ymax = .data$hi)) +
+      ggplot2::geom_hline(yintercept = 0, lty = 2) +
       ggplot2::geom_pointrange() +
+      ggplot2::coord_flip() +
       ggplot2::labs(x = '', y = '')
   }
   
