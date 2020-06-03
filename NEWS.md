@@ -1,3 +1,5 @@
+# BayesPostEst 0.3.0
+
 # BayesPostEst 0.2.1
 * Added 'stringsAsFactors = TRUE' for new data.frame() default with R 4.0.0
 
