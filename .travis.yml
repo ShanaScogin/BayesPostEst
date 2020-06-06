@@ -32,16 +32,6 @@ r_packages:
 after_success:
     - Rscript -e 'covr::codecov()'
     - R CMD INSTALL .
-    - Rscript -e 'pkgdown::build_site()'
-
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_PAT
-  keep_history: true
-  local_dir: docs
-  on:
-    branch: master
     
 before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
 deploy:
@@ -55,8 +45,6 @@ matrix:
     - r: 3.3
     - r: 3.4
     - r: 3.5
-    - r: 3.6
-    - r: 4.0
     - r: release
       env: R_CODECOV=true
       before_cache: Rscript -e 'remotes::install_github("r-lib/pkgdown@fix/examples-dontshow")'
