@@ -37,5 +37,4 @@ matrix:
         script: Rscript -e 'pkgdown::deploy_site_github()'
         skip_cleanup: true
         on:
-          all_branches: true
-          condition: '"$TRAVIS_BRANCH" == "master" || -n "$TRAVIS_TAG"'
+          branch: master
