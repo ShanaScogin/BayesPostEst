@@ -25,13 +25,8 @@ before_install:
   - echo "CXX14FLAGS=-O3 -march=native -mtune=native -fPIC" >> ~/.R/Makevars
   - echo "CXX14=g++" >> ~/.R/Makevars
 
-r_packages:
-    - covr
-    - pkgdown
-
 after_success:
-    - Rscript -e 'covr::codecov()'
-    - R CMD INSTALL .
+  - Rscript -e 'covr::codecov()'
     
 before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
 deploy:
