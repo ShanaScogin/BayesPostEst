@@ -15,10 +15,13 @@ r_binary_packages:
   
 # install packages that were erroring in travis
 install: 
+  # packages formerly in binary install
   - R -e "install.packages('rstan')"
   - R -e "install.packages('rjags')"
   - R -e "install.packages('openssl')"  
   - R -e "install.packages('BH')"
+  # added after travis error
+  - R -e "install.packages('knitr')" 
 
 # set up vars for Stan
 before_install:
@@ -29,5 +32,4 @@ before_install:
 
 after_success:
   - Rscript -e 'covr::codecov()'
-  - R CMD INSTALL .
       
