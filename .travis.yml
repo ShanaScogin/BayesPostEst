@@ -13,6 +13,7 @@ r_binary_packages:
   - MCMCpack
   - igraph
   
+# install packages that were erroring in travis
 install: 
   - R -e "install.packages('rstan')"
   - R -e "install.packages('rjags')"
@@ -28,3 +29,5 @@ before_install:
 
 after_success:
   - Rscript -e 'covr::codecov()'
+  - R CMD INSTALL .
+      
