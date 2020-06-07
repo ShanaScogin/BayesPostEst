@@ -9,13 +9,15 @@ apt_packages:
   
 # install linux binary package versions to avoid travis too long log error
 r_binary_packages:
-  - rjags
-  - rstan
   - rstanarm
   - MCMCpack
-  - openssl
-  - BH
   - igraph
+  
+install: 
+  - R -e "install.packages('rstan')"
+  - R -e "install.packages('rjags')"
+  - R -e "install.packages('openssl')"  
+  - R -e "install.packages('BH')"
 
 # set up vars for Stan
 before_install:
