@@ -2,6 +2,7 @@
 
 language: r
 cache: packages
+dist: trusty
 
 # dependency for rjags
 apt_packages:
