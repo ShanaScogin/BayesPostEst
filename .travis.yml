@@ -22,6 +22,18 @@ install:
   - R -e "install.packages('BH')"
   # added after travis error
   - R -e "install.packages('knitr')" 
+  - R -e "install.packages('carData')"
+  - R -e "install.packages('caTools')"
+  - R -e "install.packages('dplyr')"
+  - R -e "install.packages('ggmcmc')"
+  - R -e "install.packages('ggridges')"
+  - R -e "install.packages('R2jags')"
+  - R -e "install.packages('reshape2')"
+  - R -e "install.packages('texreg')"
+  - R -e "install.packages('runjags')"
+  - R -e "install.packages('tidyr')"
+  - R -e "install.packages('HDInterval')"
+  - R -e "install.packages('ROCR')"
 
 # set up vars for Stan
 before_install:
