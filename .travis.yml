@@ -6,6 +6,16 @@ cache: packages
 # dependency for rjags
 apt_packages:
   - jags
+  
+# install linux binary package versions to avoid travis too long log error
+r_binary_packages:
+  - rjags
+  - rstan
+  - rstanarm
+  - MCMCpack
+  - openssl
+  - BH
+  - igraph
 
 # set up vars for Stan
 before_install:
