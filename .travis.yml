@@ -10,12 +10,6 @@ apt_packages:
   - R2jags
   - runjags
   
-# install linux binary package versions to avoid travis too long log error
-r_binary_packages:
-  - rstanarm
-  - MCMCpack
-  - igraph
-  
 # install packages that were erroring in travis
 install: 
   # packages formerly in binary install
@@ -23,6 +17,9 @@ install:
   - R -e "install.packages('rjags')"
   - R -e "install.packages('openssl')"  
   - R -e "install.packages('BH')"
+  - R -e "install.packages('rstanarm')"
+  - R -e "install.packages('MCMCpack')"
+  - R -e "install.packages('igraph')"
   # added after travis error
   - R -e "install.packages('knitr')" 
   - R -e "install.packages('carData')"
@@ -37,7 +34,7 @@ install:
   - R -e "install.packages('tidyr')"
   - R -e "install.packages('HDInterval')"
   - R -e "install.packages('ROCR')"
-  - R -e "install.packages('MCMCpack')"
+
 
 # set up vars for Stan
 before_install:
