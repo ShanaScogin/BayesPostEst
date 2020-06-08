@@ -7,44 +7,19 @@ cache: packages
 # dependency for rjags
 apt_packages:
   - jags
-  - R2jags
-  - runjags
   
-# install packages that were erroring in travis
-install: 
-  # packages formerly in binary install
-  - R -e "install.packages('rstan')"
-  - R -e "install.packages('rjags')"
-  - R -e "install.packages('openssl')"  
-  - R -e "install.packages('BH')"
-  - R -e "install.packages('rstanarm')"
-  - R -e "install.packages('MCMCpack')"
-  - R -e "install.packages('igraph')"
-  # added after travis errors
-  - R -e "install.packages('knitr')" 
-  - R -e "install.packages('carData')"
-  - R -e "install.packages('caTools')"
-  - R -e "install.packages('dplyr')"
-  - R -e "install.packages('ggmcmc')"
-  - R -e "install.packages('ggridges')"
-  - R -e "install.packages('R2jags')"
-  - R -e "install.packages('reshape2')"
-  - R -e "install.packages('texreg')"
-  - R -e "install.packages('runjags')"
-  - R -e "install.packages('tidyr')"
-  - R -e "install.packages('HDInterval')"
-  - R -e "install.packages('ROCR')"
-  - R -e "install.packages('rmarkdown')"
-  - R -e "install.packages('covr')"
+# install linux binary package versions to avoid travis too long log error
+r_binary_packages:
+  - rjags
+  - rstan
+  - rstanarm
+  - MCMCpack
+  - openssl
+  - BH
+  - igraph
 
 # set up vars for Stan
 before_install:
-  - sudo add-apt-repository ppa:marutter/c2d4u3.5 -y
-  - sudo apt-get update
-  - sudo add-apt-repository ppa:marutter/rrutter -y
-  - sudo apt-get install r-cran-rjags
-  - sudo apt-get -y install libxml2-dev
-  
   # from https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux
   - mkdir -p ~/.R
   - echo "CXX14FLAGS=-O3 -march=native -mtune=native -fPIC" >> ~/.R/Makevars
@@ -52,5 +27,4 @@ before_install:
 
 after_success:
   - Rscript -e 'covr::codecov()'
-  - R CMD INSTALL .
       
