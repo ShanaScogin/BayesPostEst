@@ -20,7 +20,7 @@ install:
   - R -e "install.packages('rstanarm')"
   - R -e "install.packages('MCMCpack')"
   - R -e "install.packages('igraph')"
-  # added after travis error
+  # added after travis errors
   - R -e "install.packages('knitr')" 
   - R -e "install.packages('carData')"
   - R -e "install.packages('caTools')"
@@ -34,7 +34,8 @@ install:
   - R -e "install.packages('tidyr')"
   - R -e "install.packages('HDInterval')"
   - R -e "install.packages('ROCR')"
-
+  - R -e "install.packages('rmarkdown')"
+  - R -e "install.packages('covr')"
 
 # set up vars for Stan
 before_install:
