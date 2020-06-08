@@ -7,6 +7,8 @@ cache: packages
 # dependency for rjags
 apt_packages:
   - jags
+  - R2jags
+  - runjags
   
 # install linux binary package versions to avoid travis too long log error
 r_binary_packages:
