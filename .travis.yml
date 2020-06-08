@@ -40,8 +40,9 @@ install:
 
 # set up vars for Stan
 before_install:
-  - sudo add-apt-repository ppa:marutter/c2d4u3.5
+  - sudo add-apt-repository ppa:marutter/c2d4u3.5 -y
   - sudo apt-get update
+  - sudo add-apt-repository ppa:marutter/rrutter -y
   - sudo apt-get install r-cran-rjags
   - sudo apt-get -y install libxml2-dev
   # from https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux
