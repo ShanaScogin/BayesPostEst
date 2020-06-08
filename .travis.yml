@@ -11,17 +11,21 @@ r_check_args: "--no-build-vignettes --ignore-vignettes"
 
 # set up vars for Stan
 before_install:
-  # from https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux
+# from https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux
   - mkdir -p ~/.R
   - echo "CXX14FLAGS=-O3 -march=native -mtune=native -fPIC" >> ~/.R/Makevars
   - echo "CXX14=g++" >> ~/.R/Makevars
 
 after_success:
   - Rscript -e 'covr::codecov()'
-  
+
+# set up for pkgdown
+# from https://gist.github.com/gaborcsardi/68960fb01bec74d89611bb9c2b0b7e5a
 before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
 deploy:
   provider: script
   script: Rscript -e 'pkgdown::deploy_site_github()'
   skip_cleanup: true
+  on:
+    branches: develop
       
