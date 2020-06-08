@@ -37,6 +37,7 @@ install:
   - R -e "install.packages('tidyr')"
   - R -e "install.packages('HDInterval')"
   - R -e "install.packages('ROCR')"
+  - R -e "install.packages('MCMCpack')"
 
 # set up vars for Stan
 before_install:
