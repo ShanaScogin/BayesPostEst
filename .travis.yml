@@ -24,7 +24,6 @@ install:
   - R -e "install.packages('openssl')"  
   - R -e "install.packages('BH')"
   # added after travis error
-  - R -e "install.packages('knitr')" 
   - R -e "install.packages('carData')"
   - R -e "install.packages('caTools')"
   - R -e "install.packages('dplyr')"
