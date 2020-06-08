@@ -40,6 +40,7 @@ install:
 
 # set up vars for Stan
 before_install:
+  - sudo add-apt-repository ppa:marutter/c2d4u3.5
   - sudo apt-get update
   - sudo add-apt-repository ppa:marutter/rrutter -y
   - sudo apt-get install r-cran-rjags
