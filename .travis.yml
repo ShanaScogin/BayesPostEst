@@ -24,6 +24,7 @@ install:
   - R -e "install.packages('openssl')"  
   - R -e "install.packages('BH')"
   # added after travis error
+  - R -e "install.packages('knitr')" 
   - R -e "install.packages('carData')"
   - R -e "install.packages('caTools')"
   - R -e "install.packages('dplyr')"
@@ -44,6 +45,7 @@ before_install:
   - sudo add-apt-repository ppa:marutter/rrutter -y
   - sudo apt-get install r-cran-rjags
   - sudo apt-get -y install libxml2-dev
+  
   # from https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux
   - mkdir -p ~/.R
   - echo "CXX14FLAGS=-O3 -march=native -mtune=native -fPIC" >> ~/.R/Makevars
