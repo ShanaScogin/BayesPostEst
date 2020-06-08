@@ -39,6 +39,7 @@ install:
 # set up vars for Stan
 before_install:
   - sudo apt-get update
+  - sudo apt-get -y install libxml2-dev
   # from https://github.com/stan-dev/rstan/wiki/Installing-RStan-on-Linux
   - mkdir -p ~/.R
   - echo "CXX14FLAGS=-O3 -march=native -mtune=native -fPIC" >> ~/.R/Makevars
