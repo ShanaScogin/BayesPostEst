@@ -28,4 +28,4 @@ deploy:
   skip_cleanup: true
   on:
     all_branches: true
-    branch: '"$TRAVIS_BRANCH" == "master" || -n "$TRAVIS_TAG"'
+    condition: '"$TRAVIS_BRANCH" == "master" || -n "$TRAVIS_TAG"'
