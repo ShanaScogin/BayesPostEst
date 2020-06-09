@@ -27,5 +27,5 @@ deploy:
   script: Rscript -e 'pkgdown::deploy_site_github()'
   skip_cleanup: true
   on:
-    branch: develop
+    branch: master
       
