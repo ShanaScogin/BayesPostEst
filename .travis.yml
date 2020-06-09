@@ -26,6 +26,6 @@ deploy:
   provider: script
   script: Rscript -e 'pkgdown::deploy_site_github()'
   skip_cleanup: true
-  github_token: $GITHUB_PAT 
   on:
-    branch: master
+    all_branches: true
+    branch: '"$TRAVIS_BRANCH" == "master" || -n "$TRAVIS_TAG"'
