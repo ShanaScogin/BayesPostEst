@@ -69,5 +69,5 @@ Suggests:
     testthat,
     covr
 VignetteBuilder: knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net)

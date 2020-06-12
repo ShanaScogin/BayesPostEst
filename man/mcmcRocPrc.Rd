@@ -2,9 +2,12 @@
 % Please edit documentation in R/mcmcRocPrc.R
 \name{mcmcRocPrc}
 \alias{mcmcRocPrc}
+\alias{plot.mcmcRocPrc}
 \title{ROC and Precision-Recall Curves using Bayesian MCMC estimates}
 \usage{
 mcmcRocPrc(object, yname, xnames, curves, fullsims)
+
+\method{plot}{mcmcRocPrc}(x, n = 40, alpha = 0.5, ...)
 }
 \arguments{
 \item{object}{A "rjags" object (see \code{\link[R2jags]{jags}}) for a fitted binary
@@ -25,18 +28,26 @@ results are returned as a list without the extra values.}
 \item{fullsims}{logical indicator of whether full object (based on all MCMC
 draws rather than their average) will be returned. Default is \code{FALSE}.
 Note: If \code{TRUE} is chosen, the function takes notably longer to execute.}
+
+\item{n}{plot method: if `fullsims = TRUE`, how many sample curves to draw?}
+
+\item{alpha}{plot method: alpha value for plotting sampled curves; between 0 and 1}
 }
 \value{
-Returns a list; the specific structure depends on the combination
-of the "curves" and "fullsims" argument values.
+Returns a list with length 2 or 4, depending on the on the "curves"
+and "fullsims" argument values:
+\itemize{
+\item "area_under_roc": \code{numeric(1)}
+\item "area_under_prc": \code{numeric(1)}
+\item "prc_dat": only if \code{curves = TRUE}; a list with length 1 if \code{fullsims = FALSE}, longer otherwise
+\item "roc_dat": only if \code{curves = TRUE}; a list with length 1 if \code{fullsims = FALSE}, longer otherwise
+}
 }
 \description{
 Generate ROC and Precision-Recall curves after fitting a Bayesian logit or
 probit regression using \code{\link[R2jags]{jags}}
 }
 \examples{
-\dontshow{.old_wd <- setwd(tempdir())}
-\donttest{
 # load simulated data and fitted model (see ?sim_data and ?jags_logit)
 data("jags_logit")
 
@@ -46,9 +57,8 @@ fit_sum <- mcmcRocPrc(jags_logit,
                       xnames = c("X1", "X2"),
                       curves = TRUE,
                       fullsims = FALSE)
-}
-
-\dontshow{setwd(.old_wd)}
+                      
+plot(fit_sum)
 }
 \references{
 Beger, Andreas. 2016. “Precision-Recall Curves.” Available at
