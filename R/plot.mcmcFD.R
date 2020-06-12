@@ -1,11 +1,10 @@
-#'An R function to plot first differences after a Bayesian logit or probit model.
-#'@title Plot First Differences from MCMC output 
-#'@description R function to plot first differences generated from MCMC output.
-#'For more on this method, see the documentation for \code{mcmcFD()}, Long (1997, 
-#'Sage Publications), and King, Tomz, and Wittenberg (2000, American Journal 
-#'of Political Science 44(2): 347-361). For a description of this type of plot,
-#'see Figure 1 in Karreth (2018, International Interactions 44(3): 463-90).
-#'@param fdfull Output generated from \code{mcmcFD(..., full_sims = TRUE)}.
+#'@title Plot Method for First Differences from MCMC output 
+#'@description The \code{plot} method for first differences generated from MCMC
+#'output by \code{\link{mcmcFD}}. For more on this method, see Long
+#'(1997, Sage Publications), and King, Tomz, and Wittenberg (2000, American
+#'Journal of Political Science 44(2): 347-361). For a description of this type
+#'of plot, see Figure 1 in Karreth (2018, International Interactions 44(3): 463-90).
+#'@param x Output generated from \code{mcmcFD(..., full_sims = TRUE)}.
 #'@param ROPE defaults to NULL. If not NULL, a numeric vector of length two, 
 #'defining the Region of Practical Equivalence around 0. See Kruschke (2013, Journal of 
 #'Experimental Psychology 143(2): 573-603) for more on the ROPE. 
@@ -25,6 +24,10 @@
 #'passed on as an object to customize. Annotated numbers show the percent of posterior draws with
 #'the same sign as the median estimate (if \code{ROPE = NULL}) or on the same side of the 
 #'ROPE as the median estimate (if \code{ROPE} is specified).
+#'
+#'@seealso \code{\link{mcmcFD}}
+#'
+#'@method plot mcmcFD
 #'
 #'@examples
 #' \dontshow{.old_wd <- setwd(tempdir())}
@@ -83,77 +86,84 @@
 #' full <- mcmcFD(modelmatrix = xmat,
 #'                mcmcout = mcmc_mat,
 #'                fullsims = TRUE)
-#' mcmcFDplot(full)
+#' plot(full)
 #' 
 #' }
 #' 
 #' \dontshow{setwd(.old_wd)}
 #' @export
 #'
-mcmcFDplot <- function(fdfull, 
-                       ROPE = NULL){
+plot.mcmcFD <- function(x,
+                        ROPE = NULL,
+                        ...){
+  
+  if (!attr(x, "fullsims")) {
+    stop("full simulations must be used to plot posterior distribution")
+  }
   
   ROPE <- check_ROPE_argument(ROPE)
   
-  # convert fdfull to long data frame
-  fd_dat <- tidyr::gather(as.data.frame(fdfull))
+  ## multiply by 100 for percentage point change in output
+  x <- x * 100
+  
+  # convert x to long data frame
+  fd_dat <- tidyr::gather(as.data.frame(x))
   
   # create first plot
   
   if(!is.null(ROPE)) {
-  fd_plot <- ggplot2::ggplot(data = fd_dat, aes(x = .data$value, y = .data$key)) + 
-    ggplot2::geom_rect(xmin = ROPE[1], xmax = ROPE[2], ymin = 0, ymax = Inf, fill = "black") + 
-    ggridges::stat_density_ridges(quantile_lines = TRUE, 
-                                  quantiles = c(0.025, 0.5, 0.975),
-                                  vline_color = "white") + 
-    ggplot2::scale_x_continuous(labels = function(x) x * 100) + 
-    ggplot2::xlab("Percentage point change in Pr(y = 1)") + 
-    ggplot2::ylab("")
-  
-  # calculate area left/right of ROPE
-  fd_outROPE <- apply(fdfull, 2, 
-                         function(x) ifelse(median(x) < 0, 
-                                            sum(x < ROPE[1]) / length(x), 
-                                            sum(x > ROPE[2]) / length(x)))
-  fd_annotate <- data.frame(xpos = apply(fdfull, 2, 
-                                           function(x) ifelse(median(x) < 0, 
-                                                              quantile(x, probs = 0.01) - 0.02, 
-                                                              quantile(x, probs = 0.99) + 0.02)), 
-                            ypos = as.factor(colnames(fdfull)), 
-                            outROPE = paste(round(fd_outROPE * 100, digits = 1), "%", sep = ""))
-    
-  # final plot
-  fd_plot <- fd_plot + 
-    geom_text(data = fd_annotate, aes(x = .data$xpos, y = .data$ypos, label = .data$outROPE), 
-                                 color = "black", nudge_y = 0.1, size = 4)
-  } else {
-  fd_plot <- ggplot2::ggplot(data = fd_dat,
-                               aes(x = .data$value, y = .data$key)) + 
-    ggplot2::geom_vline(xintercept = 0) + 
-    ggridges::stat_density_ridges(quantile_lines = TRUE, 
+    fd_plot <- ggplot2::ggplot(data = fd_dat, aes(x = .data$value, y = .data$key)) + 
+      ggplot2::geom_rect(xmin = ROPE[1], xmax = ROPE[2], ymin = 0, ymax = Inf, fill = "black") + 
+      ggridges::stat_density_ridges(quantile_lines = TRUE, 
                                     quantiles = c(0.025, 0.5, 0.975),
                                     vline_color = "white") + 
-    ggplot2::scale_x_continuous(labels = function(x) x*100) + 
-    ggplot2::xlab("Percentage point change in Pr(y = 1)") + 
-    ggplot2::ylab("")
+      ggplot2::scale_x_continuous(labels = function(x) x * 100) + 
+      ggplot2::xlab("Percentage point change in Pr(y = 1)") + 
+      ggplot2::ylab("")
     
-    # calculate area left/right of 0
-    fd_out0 <- apply(fdfull, 2, 
+    # calculate area left/right of ROPE
+    fd_outROPE <- apply(x, 2, 
                         function(x) ifelse(median(x) < 0, 
-                                           sum(x < 0) / length(x), 
-                                           sum(x > 0) / length(x)))
-    fd_annotate <- data.frame(xpos = apply(fdfull, 2, 
+                                           sum(x < ROPE[1]) / length(x), 
+                                           sum(x > ROPE[2]) / length(x)))
+    fd_annotate <- data.frame(xpos = apply(x, 2, 
                                            function(x) ifelse(median(x) < 0, 
                                                               quantile(x, probs = 0.01) - 0.02, 
                                                               quantile(x, probs = 0.99) + 0.02)), 
-                              ypos = as.factor(colnames(fdfull)), 
+                              ypos = as.factor(colnames(x)), 
+                              outROPE = paste(round(fd_outROPE * 100, digits = 1), "%", sep = ""))
+    
+    # final plot
+    fd_plot <- fd_plot + 
+      geom_text(data = fd_annotate, aes(x = .data$xpos, y = .data$ypos, label = .data$outROPE), 
+                color = "black", nudge_y = 0.1, size = 4)
+  } else {
+    fd_plot <- ggplot2::ggplot(data = fd_dat,
+                               aes(x = .data$value, y = .data$key)) + 
+      ggplot2::geom_vline(xintercept = 0) + 
+      ggridges::stat_density_ridges(quantile_lines = TRUE, 
+                                    quantiles = c(0.025, 0.5, 0.975),
+                                    vline_color = "white") + 
+      ggplot2::xlab("Percentage point change in Pr(y = 1)") + 
+      ggplot2::ylab("")
+    
+    # calculate area left/right of 0
+    fd_out0 <- apply(x, 2, 
+                     function(x) ifelse(median(x) < 0, 
+                                        sum(x < 0) / length(x), 
+                                        sum(x > 0) / length(x)))
+    fd_annotate <- data.frame(xpos = apply(x, 2, 
+                                           function(x) ifelse(median(x) < 0, 
+                                                              quantile(x, probs = 0.01) - 0.02, 
+                                                              quantile(x, probs = 0.99) + 0.02)), 
+                              ypos = as.factor(colnames(x)), 
                               out0 = paste(round(fd_out0 * 100, digits = 1), "%", sep = ""))
     
     # final plot
     fd_plot <- fd_plot + 
       ggplot2::geom_text(data = fd_annotate, 
                          aes(x = .data$xpos, y = .data$ypos, label = .data$out0), 
-                color = "black", nudge_y = 0.1, size = 4)
+                         color = "black", nudge_y = 0.1, size = 4)
     
   }
   

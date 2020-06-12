@@ -39,16 +39,17 @@
 #'\item Long, J. Scott. 1997. Regression Models for Categorical and Limited Dependent Variables. 
 #'Thousand Oaks: Sage Publications
 #'}
-#'@return if \code{fullsims = FALSE} (default), a data frame with four columns:
+#'@return An object of class \code{mcmcFD}. If \code{fullsims = FALSE} (default),
+#'a data frame with five columns:
 #'\itemize{
 #'\item median_fd: median first difference
 #'\item lower_fd: lower bound of credible interval of the first difference
 #'\item upper_fd: upper bound of credible interval of the first difference
 #'\item VarName: name of the variable as found in \code{modelmatrix}
-#'\item VarID: identifier of the variable, based on the order of columns in \code{modelmatrix} and 
-#'\code{mcmcout}. Can be adjusted for plotting
+#'\item VarID: identifier of the variable, based on the order of columns in
+#'\code{modelmatrix} and  \code{mcmcout}. Can be adjusted for plotting
 #'}
-#'if \code{fullsims = TRUE}, a data frame with as many columns as predictors in the model. Each row 
+#'If \code{fullsims = TRUE}, a matrix with as many columns as predictors in the model. Each row 
 #'is the first difference for that variable based on one set of posterior draws. Column names are taken 
 #'from the column names of \code{modelmatrix}.
 #'
@@ -169,13 +170,20 @@ mcmcFD <- function(modelmatrix,
   fddat <- as.data.frame(fdmat)
   fddat$VarName <- rownames(fdmat)
   fddat$VarID <- row(fdmat)[, 1]
-
-  if(fullsims == FALSE){
-    return(fddat)
-  }
-
-  if(fullsims == TRUE){
-    return(fdfull)
-  }
   
+  if (fullsims) {
+    return(structure(fdfull, fullsims = TRUE, class = c("mcmcFD", "matrix")))
+  } else {
+    return(structure(fddat, fullsims = FALSE, class = c("mcmcFD", "data.frame")))
+  }
+
+}
+
+#'@export
+print.mcmcFD <- function(x, ...) {
+  if (attr(x, "fullsims")) {
+    print.table(x)
+  } else {
+    print.data.frame(x)
+  }
 }
