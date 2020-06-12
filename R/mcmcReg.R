@@ -157,7 +157,7 @@ mcmcReg <- function(mod,
   if (length(unique(lapply(mod, class))) > 1) stop('More than one object class supplied to argument "mod"')
   
   ## if only one custom coefficient names vector, coerce to a list
-  if (class(coefnames) != 'list' & !is.null(coefnames)) coefnames <- list(coefnames)
+  if (!is.null(coefnames) & !is.list(coefnames)) coefnames <- list(coefnames)
   
   ## if only one parameter vector, coerce to a list
   if (class(pars) != 'list' & !is.null(pars)) pars <- list(pars)
@@ -236,9 +236,7 @@ mcmcReg <- function(mod,
   }
   
   ## if coefficent names supplied, replace names from model object(s)
-  if (!is.null(coefnames) & !is.list(coefnames)) {
-    coefnames <- list(coefnames)
-  } else if (regex & is.null(coefnames)) {
+  if (regex & is.null(coefnames)) {
     coefnames <- mapply(function(x, y) colnames(x)[grepl(x = colnames(x),
                                                           pattern = paste(y, collapse = '|'))],
                          samps, pars, SIMPLIFY = FALSE)
