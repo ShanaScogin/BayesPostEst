@@ -19,8 +19,12 @@
 #' @param pointest a character indicating whether to use the mean or median for
 #' point estimates in the table.
 #' @param ci a scalar indicating the confidence level of the uncertainty intervals.
-#' @param hpdi a logical indicating whether to use highest posterior density intervals
-#' or equal tailed credible intervals to capture uncertainty.
+#' @param hpdi a logical indicating whether to use highest posterior density
+#' intervals instead of equal tailed credible intervals to capture uncertainty
+#' (default \code{FALSE}).
+#' @param sd a logical indicating whether to report the standard deviation of
+#' posterior distributions instead of an uncertainty interval
+#' (default \code{FALSE}). If \code{TRUE}, overrides \code{ci} and \code{hpdi}.
 #' @param coefnames an optional vector or list of vectors containing parameter
 #' names for each model. If there are multiple models, the list must have the same
 #' number of elements as there are models, and the vector of names in each list
@@ -126,6 +130,7 @@ mcmcReg <- function(mod,
                     pointest = 'mean', 
                     ci = .95, 
                     hpdi = FALSE,
+                    sd = FALSE,
                     coefnames = NULL, 
                     gof = numeric(0),
                     gofnames = character(0),
@@ -208,8 +213,12 @@ mcmcReg <- function(mod,
     
   }
   
-  ## calculate uncertainty interval for ci argument
-  if (hpdi == FALSE) {
+  ## calculate uncertainty interval for or standard deviation
+  if (sd == TRUE) {
+    
+    samps_sd <- lapply(samps, function(x) apply(as.matrix(x), 2, sd))
+    
+  } else if (hpdi == FALSE) {
     
     samps_ci <- lapply(samps, function(x) apply(as.matrix(x), 2, quantile,
                                                 probs = c(.5 - ci/2, .5 + ci/2)))
@@ -240,33 +249,53 @@ mcmcReg <- function(mod,
   }
   
   ## create list of texreg object(s) with point estimates and interval
-  tr_list <- mapply(function(v, w, x, y, z) texreg::createTexreg(coef.names = v,
-                                                                 coef = w,
-                                                                 ci.low = x[1, ],
-                                                                 ci.up = x[2, ],
-                                                                 gof = y,
-                                                                 gof.names = z),
-                    coefnames, samps_pe, samps_ci, gof, gofnames)
+  if (sd == TRUE) {
+    
+    tr_list <- mapply(function(v, w, x, y, z) texreg::createTexreg(coef.names = v,
+                                                                   coef = w,
+                                                                   se = x,
+                                                                   gof = y,
+                                                                   gof.names = z),
+                      coefnames, samps_pe, samps_sd, gof, gofnames)
+    
+  } else {
+    
+    tr_list <- mapply(function(v, w, x, y, z) texreg::createTexreg(coef.names = v,
+                                                                   coef = w,
+                                                                   ci.low = x[1, ],
+                                                                   ci.up = x[2, ],
+                                                                   gof = y,
+                                                                   gof.names = z),
+                      coefnames, samps_pe, samps_ci, gof, gofnames)
+    
+  }
   
   ## create LaTeX output
   if (grepl('tex$', format)) {
     
     ## create LaTeX code
-    tr <- texreg::texreg(l = tr_list, ...)
-    
-    ## replace confidence w/ credible or highest posterior density in texreg output
-    if (hpdi == FALSE) {
+    if (sd == TRUE) {
       
-      tr <- sub('outside the confidence interval',
-                paste('outside ', ci * 100 ,'\\\\% credible interval', sep = ''),
-                tr)
+      tr <- texreg::texreg(l = tr_list, stars = NULL, ...)
       
     } else {
       
-      tr <- sub('outside the confidence interval',
-                paste('outside ', ci * 100 ,'\\\\% highest posterior density interval',
-                      sep = ''), tr)
+      tr <- texreg::texreg(l = tr_list, ...) 
       
+      ## replace confidence w/ credible or highest posterior density in texreg output
+      if (hpdi == FALSE) {
+        
+        tr <- sub('outside the confidence interval',
+                  paste('outside ', ci * 100 ,'\\\\% credible interval', sep = ''),
+                  tr)
+        
+      } else {
+        
+        tr <- sub('outside the confidence interval',
+                  paste('outside ', ci * 100 ,'\\\\% highest posterior density interval',
+                        sep = ''), tr)
+        
+      }
     }
     
     ## return LaTeX code to console or write to file
@@ -290,20 +319,28 @@ mcmcReg <- function(mod,
   ## create HTML output
   if (format == 'html') {
     
-    hr <- texreg::htmlreg(l = tr_list, ...)
-    
-    ## replace confidence w/ credible or highest posterior density in texreg output
-    if (hpdi == FALSE) {
+    if (sd == TRUE) {
       
-      hr <- sub('outside the confidence interval',
-                paste('outside ', ci * 100, '% credible interval', sep = ''),
-                hr)
+      hr <- texreg::htmlreg(l = tr_list, stars = NULL, ...)
       
     } else {
       
-      tr <- sub('outside the confidence interval',
-                paste('outside ', ci * 100, '% highest posterior density interval',
-                      sep = ''), hr)
+      hr <- texreg::htmlreg(l = tr_list, ...)
+      
+      ## replace confidence w/ credible or highest posterior density in texreg output
+      if (hpdi == FALSE) {
+        
+        hr <- sub('outside the confidence interval',
+                  paste('outside ', ci * 100, '% credible interval', sep = ''),
+                  hr)
+        
+      } else {
+        
+        tr <- sub('outside the confidence interval',
+                  paste('outside ', ci * 100, '% highest posterior density interval',
+                        sep = ''), hr)
+        
+      }
       
     }
     

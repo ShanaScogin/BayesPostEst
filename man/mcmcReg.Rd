@@ -5,7 +5,7 @@
 \title{LaTeX or HTML regression tables for MCMC Output}
 \usage{
 mcmcReg(mod, pars = NULL, pointest = "mean", ci = 0.95,
-  hpdi = FALSE, coefnames = NULL, gof = numeric(0),
+  hpdi = FALSE, sd = FALSE, coefnames = NULL, gof = numeric(0),
   gofnames = character(0), format = "latex", file, regex = FALSE,
   ...)
 }
@@ -30,8 +30,13 @@ point estimates in the table.}
 
 \item{ci}{a scalar indicating the confidence level of the uncertainty intervals.}
 
-\item{hpdi}{a logical indicating whether to use highest posterior density intervals
-or equal tailed credible intervals to capture uncertainty.}
+\item{hpdi}{a logical indicating whether to use highest posterior density
+intervals instead of equal tailed credible intervals to capture uncertainty
+(default \code{FALSE}).}
+
+\item{sd}{a logical indicating whether to report the standard deviation of
+posterior distributions instead of an uncertainty interval
+(default \code{FALSE}). If \code{TRUE}, overrides \code{ci} and \code{hpdi}.}
 
 \item{coefnames}{an optional vector or list of vectors containing parameter
 names for each model. If there are multiple models, the list must have the same
