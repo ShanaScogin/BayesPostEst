@@ -546,18 +546,18 @@ ggplot(data = fdsum.jags,
   ylab("")
 ```
 
-## `mcmcFDplot`
+## Plotting `mcmcFD` objects
 
-To make use of the full posterior distribution of first differences, we provide a dedicated plotting function. `mcmcFDplot` returns a ggplot2 object that can be further customized. The function is modeled after Figure 1 in @Karreth2018. Users can specify a region of practical equivalence and print the percent of posterior draws to the right or left of the ROPE. If ROPE is not specified, the figure automatically prints the percent of posterior draws to the left or right of 0.
+To make use of the full posterior distribution of first differences, we provide a dedicated plotting method, `plot.mcmcFD`, which returns a ggplot2 object that can be further customized. The function is modeled after Figure 1 in @Karreth2018. Users can specify a region of practical equivalence and print the percent of posterior draws to the right or left of the ROPE. If ROPE is not specified, the figure automatically prints the percent of posterior draws to the left or right of 0.
 
 ```{r}
-mcmcFDplot(fdfull = fdfull.jags, ROPE = c(-0.01, 0.01))
+plot(fdfull.jags, ROPE = c(-0.01, 0.01))
 ```
 
 The user can further customize the plot.
 
 ```{r}
-p <- mcmcFDplot(fdfull = fdfull.jags, ROPE = c(-0.01, 0.01))
+p <- plot(fdfull.jags, ROPE = c(-0.01, 0.01))
 p + labs(title = "First differences") + ggridges::theme_ridges()
 ```
 
