@@ -282,6 +282,7 @@ print.mcmcFD <- function(x, ...) {
 #' }
 #' 
 #' \dontshow{setwd(.old_wd)}
+#' 
 #' @export
 #'
 plot.mcmcFD <- function(x,
@@ -462,6 +463,10 @@ plot.mcmcFD <- function(x,
 #' @seealso \code{\link{BayesPostEst-deprecated}}
 #' @seealso \code{\link{mcmcFD}}
 #' @keywords internal
+#' 
+#' @rdname BayesPostEst-deprecated
+#' @section \code{mcmcFDplot}:
+#' For \code{mcmcFDplot}, use \code{\link{plot.mcmcFD}}.
 #' 
 #' @export
 #'
