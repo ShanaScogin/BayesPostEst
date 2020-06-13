@@ -1,10 +1,10 @@
+data("sim_data")
+data("jags_probit")
+data("jags_logit")
 
 test_that("Simple model runs with mcmcFD", {
   
-  data("jags_logit")
   fit <- jags_logit
-  
-  data("sim_data")
   
   ## running function with logit
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
@@ -21,10 +21,7 @@ test_that("Simple model runs with mcmcFD", {
 
 test_that("Simple probit model runs with mcmcFD", {
   
-  data("jags_probit")
   fit <- jags_probit
-  
-  data("sim_data")
   
   ## running function with probit
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
@@ -42,17 +39,14 @@ test_that("Simple probit model runs with mcmcFD", {
   full <- mcmcFD(modelmatrix = xmat,
                  mcmcout = mcmc_mat,
                  fullsims = TRUE) # first running mcmcFD with full output
-  expect_silent(mcmcFDplot(full))
+  expect_silent(plot(full))
   
 })
 
 
 test_that("ROPE version works", {
   
-  data("jags_probit")
   fit <- jags_probit
-  
-  data("sim_data")
   
   ## running function with probit
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
@@ -70,6 +64,6 @@ test_that("ROPE version works", {
   full <- mcmcFD(modelmatrix = xmat,
                  mcmcout = mcmc_mat,
                  fullsims = TRUE) # first running mcmcFD with full output
-  expect_silent(mcmcFDplot(full, ROPE = c(0.1, 0.15)))
+  expect_silent(plot(full, ROPE = c(0.1, 0.15)))
   
 })
