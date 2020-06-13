@@ -4,7 +4,9 @@
 \name{jags_interactive_cat}
 \alias{jags_interactive_cat}
 \title{Fitted JAGS interactive linear model with categorical moderator}
-\format{A class "rjags" object created by [R2jags::jags()]}
+\format{
+A class "rjags" object created by [R2jags::jags()]
+}
 \usage{
 jags_interactive_cat
 }

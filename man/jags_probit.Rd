@@ -4,7 +4,9 @@
 \name{jags_probit}
 \alias{jags_probit}
 \title{Fitted JAGS probit model}
-\format{A class "rjags" object created by [R2jags::jags()]}
+\format{
+A class "rjags" object created by [R2jags::jags()]
+}
 \usage{
 jags_probit
 }

@@ -4,7 +4,9 @@
 \name{sim_data_interactive}
 \alias{sim_data_interactive}
 \title{Simulated data for examples}
-\format{a data.frame}
+\format{
+a data.frame
+}
 \usage{
 sim_data_interactive
 }
