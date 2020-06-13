@@ -4,7 +4,9 @@
 \name{jags_interactive}
 \alias{jags_interactive}
 \title{Fitted JAGS interactive linear model}
-\format{A class "rjags" object created by [R2jags::jags()]}
+\format{
+A class "rjags" object created by [R2jags::jags()]
+}
 \usage{
 jags_interactive
 }

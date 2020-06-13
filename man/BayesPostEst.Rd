@@ -3,11 +3,7 @@
 \docType{package}
 \name{BayesPostEst}
 \alias{BayesPostEst}
-\alias{BayesPostEst-package}
 \title{BayesPostEst}
-\description{
-BayesPostEst
-}
 \section{BayesPostEst functions}{
  This package currently has 
 seven main functions 

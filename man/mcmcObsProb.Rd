@@ -4,8 +4,16 @@
 \alias{mcmcObsProb}
 \title{Predicted Probabilities using Bayesian MCMC estimates for the Average of Observed Cases}
 \usage{
-mcmcObsProb(modelmatrix, mcmcout, xcol, xrange, xinterest,
-  link = "logit", ci = c(0.025, 0.975), fullsims = FALSE)
+mcmcObsProb(
+  modelmatrix,
+  mcmcout,
+  xcol,
+  xrange,
+  xinterest,
+  link = "logit",
+  ci = c(0.025, 0.975),
+  fullsims = FALSE
+)
 }
 \arguments{
 \item{modelmatrix}{model matrix, including intercept (if the intercept is among the

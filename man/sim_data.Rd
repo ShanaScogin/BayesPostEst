@@ -4,7 +4,9 @@
 \name{sim_data}
 \alias{sim_data}
 \title{Simulated data for examples}
-\format{a data.frame}
+\format{
+a data.frame
+}
 \usage{
 sim_data
 }

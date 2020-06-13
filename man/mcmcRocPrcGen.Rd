@@ -4,8 +4,14 @@
 \alias{mcmcRocPrcGen}
 \title{ROC and Precision-Recall Curves using Bayesian MCMC estimates generalized}
 \usage{
-mcmcRocPrcGen(modelmatrix, mcmcout, modelframe, curves = FALSE,
-  link = "logit", fullsims = FALSE)
+mcmcRocPrcGen(
+  modelmatrix,
+  mcmcout,
+  modelframe,
+  curves = FALSE,
+  link = "logit",
+  fullsims = FALSE
+)
 }
 \arguments{
 \item{modelmatrix}{model matrix, including intercept (if the intercept is among the

@@ -4,7 +4,9 @@
 \name{jags_logit}
 \alias{jags_logit}
 \title{Fitted JAGS logit model}
-\format{A class "rjags" object created by [R2jags::jags()]}
+\format{
+A class "rjags" object created by [R2jags::jags()]
+}
 \usage{
 jags_logit
 }
