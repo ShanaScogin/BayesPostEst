@@ -132,9 +132,19 @@
     <p>Marginal effects plots for MCMC output using <code>ggplot2</code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>mcmcMargEff</span>(<span class='no'>mod</span>, <span class='no'>main</span>, <span class='no'>int</span>, <span class='no'>moderator</span>, <span class='kw'>pointest</span> <span class='kw'>=</span> <span class='st'>"mean"</span>, <span class='kw'>seq</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>hpdi</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Moderator"</span>,
-  <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"Marginal Effect"</span>)</pre>
+    <pre class="usage"><span class='fu'>mcmcMargEff</span>(
+  <span class='no'>mod</span>,
+  <span class='no'>main</span>,
+  <span class='no'>int</span>,
+  <span class='no'>moderator</span>,
+  <span class='kw'>pointest</span> <span class='kw'>=</span> <span class='st'>"mean"</span>,
+  <span class='kw'>seq</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
+  <span class='kw'>hpdi</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"Moderator"</span>,
+  <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"Marginal Effect"</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

@@ -136,8 +136,16 @@ for "observed" cases after a Bayesian logit or probit model, following
 Hanmer &amp; Kalkan (2013) (2013, American Journal of Political Science 57(1): 263-277).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mcmcObsProb</span>(<span class='no'>modelmatrix</span>, <span class='no'>mcmcout</span>, <span class='no'>xcol</span>, <span class='no'>xrange</span>, <span class='no'>xinterest</span>,
-  <span class='kw'>link</span> <span class='kw'>=</span> <span class='st'>"logit"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.025</span>, <span class='fl'>0.975</span>), <span class='kw'>fullsims</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>mcmcObsProb</span>(
+  <span class='no'>modelmatrix</span>,
+  <span class='no'>mcmcout</span>,
+  <span class='no'>xcol</span>,
+  <span class='no'>xrange</span>,
+  <span class='no'>xinterest</span>,
+  <span class='kw'>link</span> <span class='kw'>=</span> <span class='st'>"logit"</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.025</span>, <span class='fl'>0.975</span>),
+  <span class='kw'>fullsims</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

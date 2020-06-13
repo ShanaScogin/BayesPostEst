@@ -140,8 +140,14 @@ R function for summarizing MCMC output in a regression-style table.</h1>
 <p>R function for summarizing MCMC output in a regression-style table.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mcmcTab</span>(<span class='no'>sims</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.025</span>, <span class='fl'>0.975</span>), <span class='kw'>pars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>Pr</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>ROPE</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>regex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>mcmcTab</span>(
+  <span class='no'>sims</span>,
+  <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.025</span>, <span class='fl'>0.975</span>),
+  <span class='kw'>pars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>Pr</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ROPE</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>regex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
