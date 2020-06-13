@@ -16,12 +16,12 @@
 #' \item \code{mcmcAveProb()}
 #' \item \code{mcmcObsProb()}
 #' \item \code{mcmcFD()}
-#' \item \code{mcmcFDplot()}
 #' \item \code{mcmcMargEff()}
 #' \item \code{mcmcRocPrc()}
 #' \item \code{mcmcRocPrcGen()}
 #' \item \code{mcmcTab()}
 #' \item \code{mcmcReg()}
+#' \item \code{plot.mcmcFD()}
 #' }
 #'
 #' @docType package

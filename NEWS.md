@@ -1,5 +1,6 @@
 # BayesPostEst 0.3.0
 * Planned: Created website through pkgdown
+* Added: `plot` method for `mcmcFD` objects and warn that `mcmcFDplot` is deprecated
 
 # BayesPostEst 0.2.1
 * Added 'stringsAsFactors = TRUE' for new data.frame() default with R 4.0.0
