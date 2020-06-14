@@ -1,5 +1,5 @@
 # 
-#  Generate an example runjags linear fitted model
+#  Generate an example runjags interactive fitted model
 #
 
 data("sim_data_interactive")
