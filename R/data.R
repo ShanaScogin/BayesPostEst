@@ -147,6 +147,41 @@
 #' @docType data
 "jags_interactive"
 
+#' Fitted runjags interactive linear model
+#' 
+#' A fitted JAGS linear model with interaction term generated with
+#' [runjags::run.jags()]. See the example  code below for how it was created. Used
+#' in examples and for testing. 
+#' 
+#' @format A class "runjags" object created by [runjags::run.jags()]
+#' 
+#' @examples 
+#' \donttest{
+#' data("sim_data_interactive")
+#' 
+#' ## formatting the data for jags
+#' data <- list(X = model.matrix(~ X1 * X2, sim_data_interactive),
+#'              Y = sim_data_interactive[, 3],
+#'              N = nrow(sim_data_interactive))
+#' 
+#' ## creating jags model
+#' model <- "model { 
+#' for(i in 1 : N){ 
+#' 	Y[i] ~ dnorm(beta %*% X[i, ], tau);
+#' } 
+#' for(i in 1:4) {
+#'   beta[i] ~ dnorm(0, 0.001)
+#' }
+#' tau ~ dexp(1)
+#' }"
+#' 
+#' ## fitting the model with runjags
+#' runjags_interactive <- run.jags(model = model, monitor = c("beta", "tau"),
+#'                                 data = data, n.chains = 2, method = "rjags")
+#' }
+#' @docType data
+"runjags_interactive"
+
 #' Fitted JAGS interactive linear model with categorical moderator
 #' 
 #' A fitted JAGS linear model with interaction term generated with
