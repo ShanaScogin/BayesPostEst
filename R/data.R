@@ -235,6 +235,25 @@
 #' @docType data
 "jags_interactive_cat"
 
+#' Fitted MCMCpack  linear model
+#' 
+#' A fitted MCMCpack linear model with interaction term generated with
+#' [MCMCpack::MCMCregress()]. See the example code below for how it was created. Used
+#' in examples and for testing. 
+#' 
+#' @format A class "mcmc" object created by [MCMCpack::MCMCregress()]
+#' 
+#' @examples 
+#' \donttest{
+#' ## fitting the model with MCMCpack
+#' mcmcpack_linear <- MCMCpack::MCMCregress(Y ~ X, b0 = 0, B0 = 0.001,
+#'                                          sigma.mu = 5, sigma.var = 10,
+#'                                          data = list(X = rnorm(100),
+#'                                                      Y = rnorm(100, 5, 5)),
+#'                                          seed = 1)
+#' }
+#' @docType data
+"mcmcpack_linear"
 
 #' Simulated data for examples
 #' 

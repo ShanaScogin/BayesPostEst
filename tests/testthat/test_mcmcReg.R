@@ -1,5 +1,6 @@
 data("jags_logit")
 data("runjags_interactive")
+data("mcmcpack_linear")
 
 test_that("Simple model runs with mcmcReg", {
   
@@ -81,9 +82,22 @@ test_that("mcmcReg works with filenames", {
   
 })
 
-test_that("mcmcReg works runjags", {
+test_that("mcmcReg works with runjags", {
   
-  expect_match(mcmcReg(runjags_interactive, pointest = "median"),
-               "-0.55; -0.24")
+  expect_match(mcmcReg(runjags_interactive), "-0.55; -0.24")
+  
+})
+
+test_that("mcmcReg works with mcmc", {
+  
+  expect_match(mcmcReg(mcmcpack_linear), "3.99;  6.00")
+  
+})
+
+test_that("mcmcReg fails with multiple oject types", {
+  
+  expect_error(mcmcReg(list(jags_logit, runjags_interactive)))
+  expect_error(mcmcReg(list(jags_logit, mcmcpack_linear)))
+  expect_error(mcmcReg(list(runjags_interactive, mcmcpack_linear)))
   
 })
