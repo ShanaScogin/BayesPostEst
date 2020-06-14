@@ -147,6 +147,28 @@
 #' @docType data
 "jags_interactive"
 
+#' Fitted BUGS model
+#' 
+#' A fitted BUGS model with generated with
+#' [R2WinBUGS::as.bugs.array()]. See the example  code below for how it was created. Used
+#' in examples and for testing. 
+#' 
+#' @format A class "bugs" object created by [R2WinBUGS::as.bugs.array()]
+#' 
+#' @examples 
+#' \donttest{
+#' data(LINE, package = "rjags")
+#' LINE$recompile()
+#' 
+#' ## fitting the model with jags
+#' bugs_model <- rjags::coda.samples(LINE, c("alpha", "beta", "sigma"),
+#'                                   n.iter = 1000)
+#' 
+#' bugs_model <- R2WinBUGS::as.bugs.array(sims.array = as.array(bugs_model))
+#' }
+#' @docType data
+"bugs_model"
+
 #' Fitted runjags interactive linear model
 #' 
 #' A fitted JAGS linear model with interaction term generated with

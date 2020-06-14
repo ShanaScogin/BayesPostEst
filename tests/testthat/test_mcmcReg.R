@@ -94,6 +94,12 @@ test_that("mcmcReg works with mcmc", {
   
 })
 
+test_that("mcmcReg works with bugs", {
+  
+  expect_match(mcmcReg(bugs_model), "0.33; 3.64")
+  
+})
+
 test_that("mcmcReg fails with multiple oject types", {
   
   expect_error(mcmcReg(list(jags_logit, runjags_interactive)))
