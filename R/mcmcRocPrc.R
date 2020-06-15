@@ -364,7 +364,7 @@ as.data.frame.mcmcRocPrc <- function(x, row.names = NULL, optional = FALSE,
     
     # if curves was FALSE, there will be no curve data...
     if (is.null(x[[element]])) {
-      stop("No curve data; use mcmcRegPrc(..., curves = TRUE)")
+      stop("No curve data; use mcmcRocPrc(..., curves = TRUE)")
     }
     
     # Otherwise, there will be either one set of coordinates if mcmcmRegPrc()
