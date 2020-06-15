@@ -1,6 +1,7 @@
 data("jags_logit")
 data("runjags_interactive")
 data("mcmcpack_linear")
+data("bugs_model")
 
 test_that("Simple model runs with mcmcReg", {
   
