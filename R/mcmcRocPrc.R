@@ -1,7 +1,7 @@
 #' ROC and Precision-Recall Curves using Bayesian MCMC estimates
 #' 
 #' Generate ROC and Precision-Recall curves after fitting a Bayesian logit or 
-#' probit regression using \code{\link[R2jags]{jags}}
+#' probit regression using [R2jags::jags()]
 #' 
 #' @param object A "rjags" object (see \code{\link[R2jags]{jags}}) for a fitted binary
 #'   choice model.
@@ -77,7 +77,7 @@ mcmcRocPrc <- function(object,
   
   # pred_prob is a [N, iter] matrix, i.e. each column are preds from one 
   # set of posterior samples
-  # if not using fullsims, summarize accross columns
+  # if not using fullsims, summarize across columns
   if (isFALSE(fullsims)) {
     
     pred_prob <- as.matrix(apply(pred_prob, MARGIN = 1, median))
@@ -142,6 +142,23 @@ mcmcRocPrc <- function(object,
 }
 
 
+#' Compute ROC and PR curve points
+#' 
+#' Faster replacements for calculating ROC and PR curve data than with 
+#' [ROCR::prediction()] and [ROCR::performance()]
+#' 
+#' @details Replacements to use instead of a combination of [ROCR::prediction()] 
+#' and [ROCR::performance()] to calculate ROC and PR curves. These functions are
+#' about 10 to 20 times faster when using [mcmcRocPrc()] with `curves = TRUE` 
+#' and/or `fullsims = TRUE`. 
+#' 
+#' See this [issue on GH (ShanaScogin/BayesPostEst#25)](https://github.com/ShanaScogin/BayesPostEst/issues/25) for more general details.
+#' 
+#' And [here is a note](https://github.com/andybega/BayesPostEst/blob/f1da23b9db86461d4f9c671d9393265dd10578c5/tests/profile-mcmcRocPrc.md) with specific performance benchmarks, compared to the 
+#' old approach relying on ROCR.
+#' 
+#' @keywords internal
+#' @md
 compute_roc <- function(yvec, pvec) {
   porder <- order(pvec, decreasing = TRUE)
   yvecs  <- yvec[porder]
@@ -165,6 +182,8 @@ compute_roc <- function(yvec, pvec) {
   roc_data
 }
 
+#' @rdname compute_roc
+#' @aliases compute_pr
 compute_pr <- function(yvec, pvec) {
   porder <- order(pvec, decreasing = TRUE)
   yvecs  <- yvec[porder]

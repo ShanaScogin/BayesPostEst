@@ -45,7 +45,7 @@ and "fullsims" argument values:
 }
 \description{
 Generate ROC and Precision-Recall curves after fitting a Bayesian logit or
-probit regression using \code{\link[R2jags]{jags}}
+probit regression using \code{\link[R2jags:jags]{R2jags::jags()}}
 }
 \examples{
 # load simulated data and fitted model (see ?sim_data and ?jags_logit)
