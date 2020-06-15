@@ -1,5 +1,7 @@
-
 data("jags_logit")
+data("runjags_interactive")
+data("mcmcpack_linear")
+data("bugs_model")
 
 test_that("Simple model runs with mcmcTab", {
   
@@ -20,27 +22,19 @@ test_that("Simple model runs with mcmcTab", {
 
 })
 
-test_that("check with different sims input types", {
-  
-  data("jags_logit")
+test_that("mcmcTab works with different input types", {
   
   # rjags
-  expect_error(
-    mcmcTab(jags_logit),
-    NA
-  )
+  expect_equal(mcmcTab(jags_logit)[1,3], 0.09)
   
   # mcmc.list
-  expect_error(
-    mcmcTab(as.mcmc(jags_logit)),
-    NA
-  )
+  expect_equal(mcmcTab(coda::as.mcmc(jags_logit))[2,3], 0.166)
   
   # mcmc
-  expect_error(
-    mcmcTab(as.mcmc(jags_logit)[[1]]),
-    NA
-  )
+  expect_equal(mcmcTab(mcmcpack_linear)[2,3],0.485)
+  
+  # bugs
+  expect_equal(mcmcTab(bugs_model)[1,2], 1.031)
   
   # stanreg
   
