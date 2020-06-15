@@ -147,6 +147,63 @@
 #' @docType data
 "jags_interactive"
 
+#' Fitted BUGS model
+#' 
+#' A fitted BUGS model with generated with
+#' [R2WinBUGS::as.bugs.array()]. See the example  code below for how it was created. Used
+#' in examples and for testing. 
+#' 
+#' @format A class "bugs" object created by [R2WinBUGS::as.bugs.array()]
+#' 
+#' @examples 
+#' \donttest{
+#' data(LINE, package = "rjags")
+#' LINE$recompile()
+#' 
+#' ## fitting the model with jags
+#' bugs_model <- rjags::coda.samples(LINE, c("alpha", "beta", "sigma"),
+#'                                   n.iter = 1000)
+#' 
+#' bugs_model <- R2WinBUGS::as.bugs.array(sims.array = as.array(bugs_model))
+#' }
+#' @docType data
+"bugs_model"
+
+#' Fitted runjags interactive linear model
+#' 
+#' A fitted JAGS linear model with interaction term generated with
+#' [runjags::run.jags()]. See the example  code below for how it was created. Used
+#' in examples and for testing. 
+#' 
+#' @format A class "runjags" object created by [runjags::run.jags()]
+#' 
+#' @examples 
+#' \donttest{
+#' data("sim_data_interactive")
+#' 
+#' ## formatting the data for jags
+#' data <- list(X = model.matrix(~ X1 * X2, sim_data_interactive),
+#'              Y = sim_data_interactive[, 3],
+#'              N = nrow(sim_data_interactive))
+#' 
+#' ## creating jags model
+#' model <- "model { 
+#' for(i in 1 : N){ 
+#' 	Y[i] ~ dnorm(beta %*% X[i, ], tau);
+#' } 
+#' for(i in 1:4) {
+#'   beta[i] ~ dnorm(0, 0.001)
+#' }
+#' tau ~ dexp(1)
+#' }"
+#' 
+#' ## fitting the model with runjags
+#' runjags_interactive <- run.jags(model = model, monitor = c("beta", "tau"),
+#'                                 data = data, n.chains = 2, method = "rjags")
+#' }
+#' @docType data
+"runjags_interactive"
+
 #' Fitted JAGS interactive linear model with categorical moderator
 #' 
 #' A fitted JAGS linear model with interaction term generated with
@@ -200,6 +257,25 @@
 #' @docType data
 "jags_interactive_cat"
 
+#' Fitted MCMCpack  linear model
+#' 
+#' A fitted MCMCpack linear model with interaction term generated with
+#' [MCMCpack::MCMCregress()]. See the example code below for how it was created. Used
+#' in examples and for testing. 
+#' 
+#' @format A class "mcmc" object created by [MCMCpack::MCMCregress()]
+#' 
+#' @examples 
+#' \donttest{
+#' ## fitting the model with MCMCpack
+#' mcmcpack_linear <- MCMCpack::MCMCregress(Y ~ X, b0 = 0, B0 = 0.001,
+#'                                          sigma.mu = 5, sigma.var = 10,
+#'                                          data = list(X = rnorm(100),
+#'                                                      Y = rnorm(100, 5, 5)),
+#'                                          seed = 1)
+#' }
+#' @docType data
+"mcmcpack_linear"
 
 #' Simulated data for examples
 #' 
