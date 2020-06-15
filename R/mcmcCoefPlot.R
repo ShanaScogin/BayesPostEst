@@ -118,9 +118,9 @@ mcmcCoefPlot <- function(mod, pars = NULL,
                   dimnames = list(NULL, pars))
   }
 
-  if (!hpdi) {
+  if (hpdi == FALSE) {
     samps_ci <- t(apply(samps, 2, quantile, probs = c(.5 - ci/2, .5 + ci/2)))
-  } else if (hpdi) {
+  } else if (hpdi == TRUE) {
     samps_ci <- coda::HPDinterval(coda::as.mcmc(samps), prob = ci)
   } else {
     stop("hpdi must be either true or false")
