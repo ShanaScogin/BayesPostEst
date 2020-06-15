@@ -3,7 +3,7 @@
 #' Generate ROC and Precision-Recall curves after fitting a Bayesian logit or 
 #' probit regression using [R2jags::jags()]
 #' 
-#' @param object A "rjags" object (see \code{\link[R2jags]{jags}}) for a fitted binary
+#' @param object A "rjags" object (see [R2jags::jags()]) for a fitted binary
 #'   choice model.
 #' @param yname (`character(1)`)\cr
 #'   The name of the dependent variable, should match the variable name in the 
@@ -17,6 +17,8 @@
 #' @param fullsims logical indicator of whether full object (based on all MCMC
 #'   draws rather than their average) will be returned. Default is `FALSE`. 
 #'   Note: If `TRUE` is chosen, the function takes notably longer to execute.
+#' @param ... Used by methods
+#' @param x a `mcmcRocPrc()` object
 #' 
 #' @references Beger, Andreas. 2016. “Precision-Recall Curves.” Available at 
 #'   SSRN: [http://dx.doi.org/10.2139/ssrn.2765419](http://dx.doi.org/10.2139/ssrn.2765419)
@@ -39,7 +41,7 @@
 #'                       xnames = c("X1", "X2"),
 #'                       curves = TRUE,
 #'                       fullsims = FALSE)
-#'                       
+#' fit_sum                     
 #' plot(fit_sum)
 #' @export
 #' @md
@@ -220,6 +222,8 @@ auc_pr <- function(obs, pred) {
 }
 
 
+#' @rdname mcmcRocPrc
+#' 
 #' @export
 print.mcmcRocPrc <- function(x, ...) {
   
@@ -259,7 +263,6 @@ print.mcmcRocPrc <- function(x, ...) {
 #' @export
 plot.mcmcRocPrc <- function(x, n = 40, alpha = .5, ...) {
 
-  
   stopifnot(
     "Use mcmcRocPrc(..., curves = TRUE) to generate data for plots" = (!is.null(x$roc_dat)),
     "alpha must be between 0 and 1" = (alpha >= 0 & alpha <= 1),
@@ -271,20 +274,20 @@ plot.mcmcRocPrc <- function(x, n = 40, alpha = .5, ...) {
   
   if (!fullsims) {
     
-    par(mfrow = c(1, 2))
+    graphics::par(mfrow = c(1, 2))
     plot(obj$roc_dat[[1]], type = "s", xlab = "FPR", ylab = "TPR")
-    abline(a = 0, b = 1, lty = 3, col = "gray50")
+    graphics::abline(a = 0, b = 1, lty = 3, col = "gray50")
     
     prc_dat <- obj$prc_dat[[1]]
     # use first non-NaN y-value for y[1]
     prc_dat$y[1] <- prc_dat$y[2]
     plot(prc_dat, type = "l", xlab = "TPR", ylab = "Precision",
          ylim = c(0, 1))
-    abline(a = attr(x, "y_pos_rate"), b = 0, lty = 3, col = "gray50")
+    graphics::abline(a = attr(x, "y_pos_rate"), b = 0, lty = 3, col = "gray50")
     
   } else {
     
-    par(mfrow = c(1, 2))
+    graphics::par(mfrow = c(1, 2))
     
     roc_dat <- obj$roc_dat
     
@@ -302,10 +305,12 @@ plot.mcmcRocPrc <- function(x, n = 40, alpha = .5, ...) {
     plot(xavg, yavg, type = "n", xlab = "FPR", ylab = "TPR")
     samples <- sample(1:ncol(x), n)
     for (i in samples) {
-      lines(x[, i], y[, i], col = rgb(127, 127, 127, alpha = alpha*255, maxColorValue = 255),
-            type = "s")
+      graphics::lines(
+        x[, i], y[, i], type = "s",
+        col = grDevices::rgb(127, 127, 127, alpha = alpha*255, maxColorValue = 255)
+      )
     }
-    lines(xavg, yavg, type = "s")
+    graphics::lines(xavg, yavg, type = "s")
     
     # PRC
     # The elements of prc_dat have different lengths, unlike roc_dat, so we
@@ -325,11 +330,11 @@ plot.mcmcRocPrc <- function(x, n = 40, alpha = .5, ...) {
       x = unlist(x),
       y = unlist(y)
     )
-    point_cloud <- aggregate(point_cloud[, "y", drop = FALSE], 
-                             # factor implicitly encodes distinct values only,
-                             # since they will get the same labels
-                             by = list(x = as.factor(point_cloud$x)), 
-                             FUN = mean)
+    point_cloud <- stats::aggregate(point_cloud[, "y", drop = FALSE], 
+                                    # factor implicitly encodes distinct values only,
+                                    # since they will get the same labels
+                                    by = list(x = as.factor(point_cloud$x)), 
+                                    FUN = mean)
     point_cloud$x <- as.numeric(as.character(point_cloud$x))
     xavg <- point_cloud$x
     yavg <- point_cloud$y
@@ -337,13 +342,59 @@ plot.mcmcRocPrc <- function(x, n = 40, alpha = .5, ...) {
     plot(xavg, yavg, type = "n", xlab = "TPR", ylab = "Precision", ylim = c(0, 1))
     samples <- sample(1:length(prc_dat), n)
     for (i in samples) {
-      lines(x[[i]], y[[i]], col = rgb(127, 127, 127, alpha = alpha*255, maxColorValue = 255))
+      graphics::lines(
+        x[[i]], y[[i]], 
+        col = grDevices::rgb(127, 127, 127, alpha = alpha*255, maxColorValue = 255)
+      )
     }
-    lines(xavg, yavg)
+    graphics::lines(xavg, yavg)
     
   }
   
   invisible(x)
 }
 
+#' @rdname mcmcRocPrc
+#' 
+#' @param row.names see [base::as.data.frame()] 
+#' @param optional see [base::as.data.frame()]
+#' @param what which information to extract and convert to a data frame?
+#' 
+#' @export
+as.data.frame.mcmcRocPrc <- function(x, row.names = NULL, optional = FALSE,
+                                     what = c("auc", "roc", "prc"), ...) {
+  what <- match.arg(what)
+  if (what=="auc") {
+    # all 4 output types have AUC, so this should work across the board
+    return(as.data.frame(x[c("area_under_roc", "area_under_prc")]))
+    
+  } else if (what %in% c("roc", "prc")) {
+    if (what=="roc") element <- "roc_dat" else element <- "prc_dat"
+    
+    # if curves was FALSE, there will be no curve data...
+    if (is.null(x[[element]])) {
+      stop("No curve data; use mcmcRegPrc(..., curves = TRUE)")
+    }
+    
+    # Otherwise, there will be either one set of coordinates if mcmcmRegPrc()
+    # was called with fullsims = FALSE, or else N_sims curve data sets.
+    # If the latter, we can return a long data frame with an identifying 
+    # "sim" column to delineate the sim sets. To ensure consistency in output,
+    # also add this column when fullsims = FALSE.
+    
+    # averaged, single coordinate set
+    if (length(x[[element]])==1L) {
+      return(data.frame(sim = 1L, x[[element]][[1]]))
+    }
+    
+    # full sims
+    # add a unique ID to each coordinate set
+    outlist <- x[[element]]
+    outlist <- Map(cbind, sim = (1:length(outlist)), outlist)
+    # combine into long data frame
+    outdf <- do.call(rbind, outlist)
+    return(outdf)
+  } 
+  stop("Developer error (I should not be here): please file an issue on GitHub")  # nocov
+}
 

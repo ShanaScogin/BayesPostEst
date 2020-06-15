@@ -2,12 +2,24 @@
 % Please edit documentation in R/mcmcRocPrc.R
 \name{mcmcRocPrc}
 \alias{mcmcRocPrc}
+\alias{print.mcmcRocPrc}
 \alias{plot.mcmcRocPrc}
+\alias{as.data.frame.mcmcRocPrc}
 \title{ROC and Precision-Recall Curves using Bayesian MCMC estimates}
 \usage{
 mcmcRocPrc(object, yname, xnames, curves, fullsims)
 
+\method{print}{mcmcRocPrc}(x, ...)
+
 \method{plot}{mcmcRocPrc}(x, n = 40, alpha = 0.5, ...)
+
+\method{as.data.frame}{mcmcRocPrc}(
+  x,
+  row.names = NULL,
+  optional = FALSE,
+  what = c("auc", "roc", "prc"),
+  ...
+)
 }
 \arguments{
 \item{object}{A "rjags" object (see \code{\link[R2jags]{jags}}) for a fitted binary
@@ -29,9 +41,19 @@ results are returned as a list without the extra values.}
 draws rather than their average) will be returned. Default is \code{FALSE}.
 Note: If \code{TRUE} is chosen, the function takes notably longer to execute.}
 
+\item{x}{a \code{mcmcRocPrc()} object}
+
+\item{...}{Used by methods}
+
 \item{n}{plot method: if `fullsims = TRUE`, how many sample curves to draw?}
 
 \item{alpha}{plot method: alpha value for plotting sampled curves; between 0 and 1}
+
+\item{row.names}{see [base::as.data.frame()]}
+
+\item{optional}{see [base::as.data.frame()]}
+
+\item{what}{which information to extract and convert to a data frame?}
 }
 \value{
 Returns a list with length 2 or 4, depending on the on the "curves"

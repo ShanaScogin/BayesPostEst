@@ -125,3 +125,38 @@ test_that("plot method works", {
 # the plots from above will be sent to a Rplots.pdf file; clean that up
 unlink("Rplots.pdf")
 
+test_that("data frame conversion works with all 4 output sets", {
+  
+  # all 4 output types have AUC, so this should work across the board
+  # (auc is the default what argument)
+  expect_equal(nrow(as.data.frame(no_curves)), 1L)
+  expect_equal(nrow(as.data.frame(with_curves)), 1L)
+  expect_equal(nrow(as.data.frame(full_no_curves)), 2000L)
+  expect_equal(nrow(as.data.frame(full_with_curves)), 2000L)
+  
+  # when called without curves, there will be no data for what = "roc"/"prc"
+  expect_error(as.data.frame(no_curves, what = "roc"), "No curve data")
+  expect_error(as.data.frame(no_curves, what = "prc"), "No curve data")
+  expect_error(as.data.frame(full_no_curves, what = "roc"), "No curve data")
+  expect_error(as.data.frame(full_no_curves, what = "roc"), "No curve data")
+  
+  # Otherwise, roc/prc data will either be average across sims, or a curve
+  # for each sim. To ensure consistency in output, always return coordinate
+  # data with an identifying "sim" column
+  
+  expect_error(out <- as.data.frame(with_curves, what = "roc"), NA)
+  expect_s3_class(out, "data.frame")
+  expect_equal(colnames(out), c("sim", "x", "y"))
+  expect_equal(unique(out$sim), 1L)
+  expect_equal(nrow(out), 501L)
+  
+  # fullsims
+  expect_error(out <- as.data.frame(full_with_curves, what = "roc"), NA)
+  expect_s3_class(out, "data.frame")
+  expect_equal(colnames(out), c("sim", "x", "y"))
+  expect_equal(length(unique(out$sim)), 2000L)
+  expect_equal(nrow(out), 501L*2000L)
+  
+  
+})
+
