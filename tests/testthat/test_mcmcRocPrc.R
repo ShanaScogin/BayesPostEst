@@ -1,5 +1,5 @@
 
-test_that("Simple model runs with mcmcRocPrc", {
+test_that("JAGS logit input works", {
   
   data("jags_logit")
   
@@ -24,6 +24,35 @@ test_that("Simple model runs with mcmcRocPrc", {
   expect_equal(value_prc, check_against_prc, tolerance = 1e-2)
   
 })
+
+test_that("JAGS probit input works", {
+  
+  data("jags_probit")
+  
+  expect_error(
+    with_curves <- mcmcRocPrc(jags_probit,
+                              yname = "Y",
+                              xnames = c("X1", "X2"),
+                              curves = TRUE,
+                              fullsims = FALSE),
+    NA
+  )
+  
+})
+
+test_that("Non-logit/probit JAGS does not work", {
+  fake_jags <- structure(
+    list(model = list(model = function() "incompatible model")),
+    class = "rjags"
+  )
+  
+  expect_error(mcmcRocPrc(fake_jags, 
+                          yname = "Y",
+                          xnames = c("X1", "X2")),
+               "Could not identify model link function")
+  
+})
+
 
 test_that("Simple model runs with mcmcRocPrc Full", {
   
@@ -159,4 +188,12 @@ test_that("data frame conversion works with all 4 output sets", {
   
   
 })
+
+test_that("auc_roc and pr work", {
+  
+  expect_equal(auc_roc(c(0, 0, 1, 1), c(0, 0, 1, 1)), 1)
+  expect_equal(auc_pr(c(0, 0, 1, 1), c(0, 0, 1, 1)), NaN)
+  
+})
+
 

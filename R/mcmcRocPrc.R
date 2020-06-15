@@ -12,7 +12,7 @@
 #'   A character vector of the independent variable names, should match the 
 #'   corresponding names in the JAGS data object.
 #' @param curves logical indicator of whether or not to return values to plot 
-#'   the ROC or Precision-Recall curves. If set to \code{FALSE} (default), 
+#'   the ROC or Precision-Recall curves. If set to `FALSE` (default), 
 #'   results are returned as a list without the extra values. 
 #' @param fullsims logical indicator of whether full object (based on all MCMC
 #'   draws rather than their average) will be returned. Default is `FALSE`. 
@@ -49,11 +49,15 @@
 mcmcRocPrc <- function(object, 
                        yname, 
                        xnames, 
-                       curves, 
-                       fullsims) {
+                       curves = FALSE, 
+                       fullsims = FALSE) {
   
   link_logit  <- any(grepl("logit", object$model$model()))
   link_probit <- any(grepl("probit", object$model$model()))
+  
+  if (isFALSE(link_logit | link_probit)) {
+    stop("Could not identify model link function")
+  }
   
   mdl_data <- object$model$data()
   stopifnot(all(xnames %in% names(mdl_data)))
@@ -73,9 +77,7 @@ mcmcRocPrc <- function(object,
     pred_prob <- plogis(xdata %*% t(betadraws))  
   } else if (isTRUE(link_probit)) {
     pred_prob <- pnorm(xdata %*% t(betadraws))
-  } else {
-    stop("Could not identify model link function")
-  }
+  } 
   
   # pred_prob is a [N, iter] matrix, i.e. each column are preds from one 
   # set of posterior samples
@@ -209,17 +211,6 @@ compute_pr <- function(yvec, pvec) {
   prc_data
 }
 
-
-# auc_roc and auc_pr are not really used, but keep around just in case
-auc_roc <- function(obs, pred) {
-  values <- compute_roc(obs, pred)
-  caTools::trapz(values$x, values$y)
-}
-
-auc_pr <- function(obs, pred) {
-  values <- compute_pr(obs, pred)
-  caTools::trapz(values$x, values$y)
-}
 
 
 #' @rdname mcmcRocPrc
@@ -398,3 +389,15 @@ as.data.frame.mcmcRocPrc <- function(x, row.names = NULL, optional = FALSE,
   stop("Developer error (I should not be here): please file an issue on GitHub")  # nocov
 }
 
+
+
+# auc_roc and auc_pr are not really used, but keep around just in case
+auc_roc <- function(obs, pred) {
+  values <- compute_roc(obs, pred)
+  caTools::trapz(values$x, values$y)
+}
+
+auc_pr <- function(obs, pred) {
+  values <- compute_pr(obs, pred)
+  caTools::trapz(values$x, values$y)
+}

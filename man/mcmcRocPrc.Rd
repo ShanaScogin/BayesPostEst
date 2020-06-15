@@ -7,7 +7,7 @@
 \alias{as.data.frame.mcmcRocPrc}
 \title{ROC and Precision-Recall Curves using Bayesian MCMC estimates}
 \usage{
-mcmcRocPrc(object, yname, xnames, curves, fullsims)
+mcmcRocPrc(object, yname, xnames, curves = FALSE, fullsims = FALSE)
 
 \method{print}{mcmcRocPrc}(x, ...)
 
@@ -22,7 +22,7 @@ mcmcRocPrc(object, yname, xnames, curves, fullsims)
 )
 }
 \arguments{
-\item{object}{A "rjags" object (see \code{\link[R2jags]{jags}}) for a fitted binary
+\item{object}{A "rjags" object (see \code{\link[R2jags:jags]{R2jags::jags()}}) for a fitted binary
 choice model.}
 
 \item{yname}{(\code{character(1)})\cr
@@ -79,7 +79,7 @@ fit_sum <- mcmcRocPrc(jags_logit,
                       xnames = c("X1", "X2"),
                       curves = TRUE,
                       fullsims = FALSE)
-                      
+fit_sum                     
 plot(fit_sum)
 }
 \references{
