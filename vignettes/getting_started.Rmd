@@ -592,7 +592,7 @@ fitstats$area_under_prc
 Users can also plot the ROC curve... 
 
 ```{r}
-ggplot(data = fitstats$roc_dat, aes(x = x, y = y)) +
+ggplot(data = fitstats$roc_dat[[1]], aes(x = x, y = y)) +
   geom_line() + 
   geom_abline(intercept = 0, slope = 1, color = "gray") + 
   labs(title = "ROC curve") + 
@@ -603,7 +603,7 @@ ggplot(data = fitstats$roc_dat, aes(x = x, y = y)) +
 ... as well as the precision-recall curve.
 
 ```{r}
-ggplot(data = fitstats$prc_dat, aes(x = x, y = y)) +
+ggplot(data = fitstats$prc_dat[[1]], aes(x = x, y = y)) +
   geom_line() + 
   labs(title = "Precision-Recall curve") + 
   xlab("Recall") + 
