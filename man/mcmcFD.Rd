@@ -4,8 +4,14 @@
 \alias{mcmcFD}
 \title{First Differences of a Bayesian Logit or Probit model}
 \usage{
-mcmcFD(modelmatrix, mcmcout, link = "logit", ci = c(0.025, 0.975),
-  percentiles = c(0.25, 0.75), fullsims = FALSE)
+mcmcFD(
+  modelmatrix,
+  mcmcout,
+  link = "logit",
+  ci = c(0.025, 0.975),
+  percentiles = c(0.25, 0.75),
+  fullsims = FALSE
+)
 }
 \arguments{
 \item{modelmatrix}{model matrix, including intercept (if the intercept is among the

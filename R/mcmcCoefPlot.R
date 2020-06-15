@@ -79,7 +79,7 @@
 #'                     n.burnin = 1000, model.file = model)
 #' 
 #' ## generating coefficient plot with all non-auxiliary parameters
-#' coefplot(fit)
+#' mcmcCoefPlot(fit)
 #' }
 #' 
 #' \dontshow{setwd(.old_wd)}
