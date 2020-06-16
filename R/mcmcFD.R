@@ -67,10 +67,10 @@
 #' Z <- b0 + b1 * X1 + b2 * X2
 #' pr <- 1 / (1 + exp(-Z)) # inv logit function
 #' Y <- rbinom(n, 1, pr) 
-#' data <- data.frame(cbind(X1, X2, Y))
+#' df <- data.frame(cbind(X1, X2, Y))
 #' 
 #' ## formatting the data for jags
-#' datjags <- as.list(data)
+#' datjags <- as.list(df)
 #' datjags$N <- length(datjags$Y)
 #' 
 #' ## creating jags model
@@ -102,7 +102,7 @@
 #'                     n.burnin = 1000, model.file = model)
 #' 
 #' ## running function with logit
-#' xmat <- model.matrix(Y ~ X1 + X2, data = data)
+#' xmat <- model.matrix(Y ~ X1 + X2, data = df)
 #' mcmc <- coda::as.mcmc(fit)
 #' mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
 #' object <- mcmcFD(modelmatrix = xmat,
@@ -234,10 +234,10 @@ print.mcmcFD <- function(x, ...) {
 #' Z <- b0 + b1 * X1 + b2 * X2
 #' pr <- 1 / (1 + exp(-Z)) # inv logit function
 #' Y <- rbinom(n, 1, pr) 
-#' data <- data.frame(cbind(X1, X2, Y))
+#' df <- data.frame(cbind(X1, X2, Y))
 #' 
 #' ## formatting the data for jags
-#' datjags <- as.list(data)
+#' datjags <- as.list(df)
 #' datjags$N <- length(datjags$Y)
 #' 
 #' ## creating jags model
@@ -269,7 +269,7 @@ print.mcmcFD <- function(x, ...) {
 #'                     n.burnin = 1000, model.file = model)
 #' 
 #' ## preparing data for mcmcFD()
-#' xmat <- model.matrix(Y ~ X1 + X2, data = data)
+#' xmat <- model.matrix(Y ~ X1 + X2, data = df)
 #' mcmc <- coda::as.mcmc(fit)
 #' mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
 #' 
@@ -409,10 +409,10 @@ plot.mcmcFD <- function(x,
 #' Z <- b0 + b1 * X1 + b2 * X2
 #' pr <- 1 / (1 + exp(-Z)) # inv logit function
 #' Y <- rbinom(n, 1, pr) 
-#' data <- data.frame(cbind(X1, X2, Y))
+#' df <- data.frame(cbind(X1, X2, Y))
 #' 
 #' ## formatting the data for jags
-#' datjags <- as.list(data)
+#' datjags <- as.list(df)
 #' datjags$N <- length(datjags$Y)
 #' 
 #' ## creating jags model
@@ -444,7 +444,7 @@ plot.mcmcFD <- function(x,
 #'                     n.burnin = 1000, model.file = model)
 #' 
 #' ## preparing data for mcmcFD()
-#' xmat <- model.matrix(Y ~ X1 + X2, data = data)
+#' xmat <- model.matrix(Y ~ X1 + X2, data = df)
 #' mcmc <- coda::as.mcmc(fit)
 #' mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
 #' 
@@ -452,7 +452,8 @@ plot.mcmcFD <- function(x,
 #' full <- mcmcFD(modelmatrix = xmat,
 #'                mcmcout = mcmc_mat,
 #'                fullsims = TRUE)
-#' mcmcFDplot(full)
+#' # suppress deprecated warning for R check
+#' suppressWarnings(mcmcFDplot(full))
 #' 
 #' }
 #' 

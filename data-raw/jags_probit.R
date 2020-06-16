@@ -5,7 +5,7 @@
 data("sim_data")
 
 ## formatting the data for jags
-datjags <- as.list(data)
+datjags <- as.list(sim_data)
 datjags$N <- length(datjags$Y)
 
 ## creating jags model
