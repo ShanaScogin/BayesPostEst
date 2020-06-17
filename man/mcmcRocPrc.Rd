@@ -2,12 +2,27 @@
 % Please edit documentation in R/mcmcRocPrc.R
 \name{mcmcRocPrc}
 \alias{mcmcRocPrc}
+\alias{print.mcmcRocPrc}
+\alias{plot.mcmcRocPrc}
+\alias{as.data.frame.mcmcRocPrc}
 \title{ROC and Precision-Recall Curves using Bayesian MCMC estimates}
 \usage{
-mcmcRocPrc(object, yname, xnames, curves, fullsims)
+mcmcRocPrc(object, yname, xnames, curves = FALSE, fullsims = FALSE)
+
+\method{print}{mcmcRocPrc}(x, ...)
+
+\method{plot}{mcmcRocPrc}(x, n = 40, alpha = 0.5, ...)
+
+\method{as.data.frame}{mcmcRocPrc}(
+  x,
+  row.names = NULL,
+  optional = FALSE,
+  what = c("auc", "roc", "prc"),
+  ...
+)
 }
 \arguments{
-\item{object}{A "rjags" object (see \code{\link[R2jags]{jags}}) for a fitted binary
+\item{object}{A "rjags" object (see \code{\link[R2jags:jags]{R2jags::jags()}}) for a fitted binary
 choice model.}
 
 \item{yname}{(\code{character(1)})\cr
@@ -25,18 +40,36 @@ results are returned as a list without the extra values.}
 \item{fullsims}{logical indicator of whether full object (based on all MCMC
 draws rather than their average) will be returned. Default is \code{FALSE}.
 Note: If \code{TRUE} is chosen, the function takes notably longer to execute.}
+
+\item{x}{a \code{mcmcRocPrc()} object}
+
+\item{...}{Used by methods}
+
+\item{n}{plot method: if `fullsims = TRUE`, how many sample curves to draw?}
+
+\item{alpha}{plot method: alpha value for plotting sampled curves; between 0 and 1}
+
+\item{row.names}{see [base::as.data.frame()]}
+
+\item{optional}{see [base::as.data.frame()]}
+
+\item{what}{which information to extract and convert to a data frame?}
 }
 \value{
-Returns a list; the specific structure depends on the combination
-of the "curves" and "fullsims" argument values.
+Returns a list with length 2 or 4, depending on the on the "curves"
+and "fullsims" argument values:
+\itemize{
+\item "area_under_roc": \code{numeric(1)}
+\item "area_under_prc": \code{numeric(1)}
+\item "prc_dat": only if \code{curves = TRUE}; a list with length 1 if \code{fullsims = FALSE}, longer otherwise
+\item "roc_dat": only if \code{curves = TRUE}; a list with length 1 if \code{fullsims = FALSE}, longer otherwise
+}
 }
 \description{
 Generate ROC and Precision-Recall curves after fitting a Bayesian logit or
-probit regression using \code{\link[R2jags]{jags}}
+probit regression using \code{\link[R2jags:jags]{R2jags::jags()}}
 }
 \examples{
-\dontshow{.old_wd <- setwd(tempdir())}
-\donttest{
 # load simulated data and fitted model (see ?sim_data and ?jags_logit)
 data("jags_logit")
 
@@ -46,9 +79,8 @@ fit_sum <- mcmcRocPrc(jags_logit,
                       xnames = c("X1", "X2"),
                       curves = TRUE,
                       fullsims = FALSE)
-}
-
-\dontshow{setwd(.old_wd)}
+fit_sum                     
+plot(fit_sum)
 }
 \references{
 Beger, Andreas. 2016. “Precision-Recall Curves.” Available at

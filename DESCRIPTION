@@ -41,9 +41,9 @@ Imports:
     caTools,
     coda (>= 0.13),
     dplyr (>= 0.5.0),
-    ggmcmc, 
-    ggplot2, 
-    ggridges, 
+    ggmcmc,
+    ggplot2,
+    ggridges,
     R2jags,
     reshape2,
     rlang,
@@ -52,7 +52,9 @@ Imports:
     runjags,
     tidyr (>= 0.5.1),
     HDInterval,
-    ROCR
+    ROCR,
+    graphics,
+    grDevices
 Depends:
     R (>= 3.5.0)
 Encoding: UTF-8

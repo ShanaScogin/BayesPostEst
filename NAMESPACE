@@ -2,6 +2,9 @@
 
 S3method(plot,mcmcFD)
 S3method(print,mcmcFD)
+S3method(as.data.frame,mcmcRocPrc)
+S3method(plot,mcmcRocPrc)
+S3method(print,mcmcRocPrc)
 export(mcmcAveProb)
 export(mcmcCoefPlot)
 export(mcmcFD)

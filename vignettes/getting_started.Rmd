@@ -592,7 +592,7 @@ fitstats$area_under_prc
 Users can also plot the ROC curve... 
 
 ```{r}
-ggplot(data = fitstats$roc_dat, aes(x = x, y = y)) +
+ggplot(data = as.data.frame(fitstats, what = "roc"), aes(x = x, y = y)) +
   geom_line() + 
   geom_abline(intercept = 0, slope = 1, color = "gray") + 
   labs(title = "ROC curve") + 
@@ -603,7 +603,7 @@ ggplot(data = fitstats$roc_dat, aes(x = x, y = y)) +
 ... as well as the precision-recall curve.
 
 ```{r}
-ggplot(data = fitstats$prc_dat, aes(x = x, y = y)) +
+ggplot(data = as.data.frame(fitstats, what = "prc"), aes(x = x, y = y)) +
   geom_line() + 
   labs(title = "Precision-Recall curve") + 
   xlab("Recall") + 
@@ -623,13 +623,15 @@ fitstats.fullsims <- mcmcRocPrc(object = fit.jags,
 We can then plot the posterior density of the area under each curve.
 
 ```{r}
-ggplot(fitstats.fullsims, aes(x = area_under_roc)) +
+ggplot(as.data.frame(fitstats.fullsims), 
+       aes(x = area_under_roc)) +
   geom_density() +
   labs(title = "Area under the ROC curve")
 ```
 
 ```{r}
-ggplot(fitstats.fullsims, aes(x = area_under_prc)) +
+ggplot(as.data.frame(fitstats.fullsims), 
+       aes(x = area_under_prc)) +
   geom_density() +
   labs(title = "Area under the Precision-Recall curve")
 ```
