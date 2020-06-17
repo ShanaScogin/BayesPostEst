@@ -29,4 +29,5 @@ X3 <- rbinom(n, 5, .23) # categorical X
 Z_interactive_cat <- b0 + b1 * X1 + b2 * X3 + b3 * (X1 * X3)
 Y_interactive_cat <- rnorm(n, Z_interactive_cat, 1)
 sim_data_interactive_cat <- data.frame(cbind(X1, X3, Y = Y_interactive_cat))
+
 usethis::use_data(sim_data_interactive_cat, overwrite = TRUE)

@@ -10,7 +10,7 @@
 #' data("sim_data")
 #'   
 #' ## formatting the data for jags
-#' datjags <- as.list(data)
+#' datjags <- as.list(sim_data)
 #' datjags$N <- length(datjags$Y)
 #' 
 #' ## creating jags model
@@ -58,7 +58,7 @@
 #' data("sim_data")
 #'   
 #' ## formatting the data for jags
-#' datjags <- as.list(data)
+#' datjags <- as.list(sim_data)
 #' datjags$N <- length(datjags$Y)
 #' 
 #' ## creating jags model
@@ -107,7 +107,7 @@
 #' data("sim_data_interactive")
 #' 
 #' ## formatting the data for jags
-#' datjags <- as.list(data)
+#' datjags <- as.list(sim_data_interactive)
 #' datjags$N <- length(datjags$Y)
 #' 
 #' ## creating jags model
@@ -179,12 +179,14 @@
 #' 
 #' @examples 
 #' \donttest{
+#' library(runjags)
+#' 
 #' data("sim_data_interactive")
 #' 
 #' ## formatting the data for jags
-#' data <- list(X = model.matrix(~ X1 * X2, sim_data_interactive),
-#'              Y = sim_data_interactive[, 3],
-#'              N = nrow(sim_data_interactive))
+#' datalist <- list(X = model.matrix(~ X1 * X2, sim_data_interactive),
+#'                  Y = sim_data_interactive[, 3],
+#'                  N = nrow(sim_data_interactive))
 #' 
 #' ## creating jags model
 #' model <- "model { 
@@ -199,10 +201,12 @@
 #' 
 #' ## fitting the model with runjags
 #' runjags_interactive <- run.jags(model = model, monitor = c("beta", "tau"),
-#'                                 data = data, n.chains = 2, method = "rjags")
+#'                                 data = datalist, n.chains = 2, method = "rjags")
 #' }
 #' @docType data
 "runjags_interactive"
+
+# jags_interactive_cat ----------------------------------------------------
 
 #' Fitted JAGS interactive linear model with categorical moderator
 #' 
@@ -217,7 +221,7 @@
 #' data("sim_data_interactive_cat")
 #' 
 #' ## formatting the data for jags
-#' datjags <- as.list(data)
+#' datjags <- as.list(sim_data_interactive_cat)
 #' datjags$N <- length(datjags$Y)
 #' 
 #' ## creating jags model

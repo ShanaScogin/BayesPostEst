@@ -118,10 +118,10 @@ X2 <- runif(n, -1, 1)
 Z <- b0 + b1 * X1 + b2 * X2
 pr <- 1 / (1 + exp(-Z)) # inv logit function
 Y <- rbinom(n, 1, pr)
-data <- data.frame(cbind(X1, X2, Y))
+df <- data.frame(cbind(X1, X2, Y))
 
 ## formatting the data for jags
-datjags <- as.list(data)
+datjags <- as.list(df)
 datjags$N <- length(datjags$Y)
 
 ## creating jags model
@@ -160,7 +160,8 @@ mcmcReg(fit)
 ## generating regression table with only betas and custom coefficent names
 mcmcReg(fit, pars = c('b'), coefnames = c('Variable 1',
                                           'Variable 2',
-                                          'Variable 3'))
+                                          'Variable 3'),
+        regex = TRUE)
 ## generating regression tables with all betas and custom names
 mcmcReg(fit, coefnames = c('Variable 1', 'Variable 2',
                            'Variable 3', 'deviance'))

@@ -43,10 +43,10 @@
 #'
 #' ## linear model data
 #' Y_linear <- rnorm(n, Z, 1)
-#' data <- data.frame(cbind(X1, X2, Y = Y_linear))
+#' df <- data.frame(cbind(X1, X2, Y = Y_linear))
 #' 
 #' ## formatting the data for jags
-#' datjags <- as.list(data)
+#' datjags <- as.list(df)
 #' datjags$N <- length(datjags$Y)
 #' 
 #' ## creating jags model
