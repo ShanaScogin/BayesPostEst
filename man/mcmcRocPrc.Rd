@@ -71,6 +71,7 @@ probit regression using \code{\link[R2jags:jags]{R2jags::jags()}}
 }
 \examples{
 # load simulated data and fitted model (see ?sim_data and ?jags_logit)
+library(R2jags)
 data("jags_logit")
 
 # using mcmcRocPrc

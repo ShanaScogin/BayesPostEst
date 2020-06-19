@@ -1,3 +1,4 @@
+
 test_that("Simple model runs with mcmcAveProb", {
   
   data("jags_logit")
