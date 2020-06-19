@@ -61,9 +61,6 @@ NULL
 #' @importFrom coda as.mcmc HPDinterval
 NULL
 
-#' @importFrom R2jags jags
-NULL
-
 #' @importFrom texreg createTexreg texreg htmlreg
 NULL
 

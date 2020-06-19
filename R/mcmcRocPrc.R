@@ -33,6 +33,7 @@
 #'
 #' @examples
 #' # load simulated data and fitted model (see ?sim_data and ?jags_logit)
+#' library(R2jags)
 #' data("jags_logit")
 #' 
 #' # using mcmcRocPrc
