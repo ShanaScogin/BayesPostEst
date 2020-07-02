@@ -468,7 +468,7 @@ mcmcRocPrc.brmsfit <- function(object, curves = FALSE, fullsims = FALSE, ...) {
   # posterior_epred returns a matrix in which data cases are columns, and 
   # MCMC samples are row; we need to transpose this so that columns are samples
   pred_prob <- t(pred_prob)
-  yvec <- model.response(model.frame(object))
+  yvec <- stats::model.response(stats::model.frame(object))
   
   new_mcmcRocPrc(pred_prob = pred_prob, yvec = yvec, curves = curves, 
                  fullsims = fullsims)
