@@ -20,6 +20,7 @@
 #' @param xnames ([base::character()])\cr
 #'   A character vector of the independent variable names, should match the 
 #'   corresponding names in the JAGS data object.
+#' @param posterior_samples a "mcmc" object with the posterior samples
 #' @param ... Used by methods
 #' @param x a `mcmcRocPrc()` object
 #' 
@@ -290,25 +291,21 @@ auc_pr <- function(obs, pred) {
 #' @rdname mcmcRocPrc
 #' 
 #' @export
-mcmcRocPrc.rjags <- function(object, 
-                             curves = FALSE, 
-                             fullsims = FALSE,
-                             yname, 
-                             xnames, 
-                             ...) {
+mcmcRocPrc.jags <- function(object, curves = FALSE, fullsims = FALSE, yname, 
+                            xnames, posterior_samples, ...) {
   
-  if (!requireNamespace("R2jags", quietly = TRUE)) {
-    stop("Package \"R2jags\" is needed for this function to work. Please install it.", call. = FALSE)  # nocov
-  }
+  stopifnot(
+    inherits(posterior_samples, c("mcmc", "mcmc.list"))
+  )
   
-  link_logit  <- any(grepl("logit", object$model$model()))
-  link_probit <- any(grepl("probit", object$model$model()))
+  link_logit  <- any(grepl("logit", object$model()))
+  link_probit <- any(grepl("probit", object$model()))
   
   if (isFALSE(link_logit | link_probit)) {
     stop("Could not identify model link function")
   }
   
-  mdl_data <- object$model$data()
+  mdl_data <- object$data()
   stopifnot(all(xnames %in% names(mdl_data)))
   stopifnot(all(yname %in% names(mdl_data)))
   
@@ -316,7 +313,7 @@ mcmcRocPrc.rjags <- function(object,
   xdata <- as.matrix(cbind(X0 = 1L, as.data.frame(mdl_data[xnames])))
   yvec  <- mdl_data[[yname]]
   
-  pardraws <- as.matrix(coda::as.mcmc(object))
+  pardraws <- as.matrix(posterior_samples)
   # this is not very robust, assumes pars are 'b[x]'
   # for both this and the intercept addition above, maybe a more robust solution
   # down the road would be to dig into the object$model$model() string
@@ -331,6 +328,40 @@ mcmcRocPrc.rjags <- function(object,
   new_mcmcRocPrc(pred_prob = pred_prob, yvec = yvec, curves = curves, 
                  fullsims = fullsims)
 }
+
+#' @rdname mcmcRocPrc
+#' 
+#' @export
+mcmcRocPrc.rjags <- function(object, curves = FALSE, fullsims = FALSE, yname, 
+                             xnames, ...) {
+  
+  if (!requireNamespace("R2jags", quietly = TRUE)) {
+    stop("Package \"R2jags\" is needed for this function to work. Please install it.", call. = FALSE)  # nocov
+  }
+  
+  jags_object <- object$model
+  pardraws    <- coda::as.mcmc(object)
+  
+  # pass it on to the "jags" method
+  mcmcRocPrc(object = jags_object, curves = curves, fullsims = fullsims, 
+             yname = yname, xnames = xnames, posterior_samples = pardraws, ...)
+}
+
+#' @rdname mcmcRocPrc
+#' 
+#' @export
+mcmcRocPrc.runjags <- function(object, curves = FALSE, fullsims = FALSE, yname, 
+                               xnames, ...) {
+  jags_object <- runjags::as.jags(object, quiet = TRUE)
+  # as.mcmc.runjags will issue a warning when converting multiple chains
+  # because it combines them
+  pardraws    <- suppressWarnings(coda::as.mcmc(object))
+  
+  # pass it on to the "jags" method
+  mcmcRocPrc(object = jags_object, curves = curves, fullsims = fullsims, 
+             yname = yname, xnames = xnames, posterior_samples = pardraws, ...)
+}
+
 
 #' @rdname mcmcRocPrc
 #' 
@@ -474,8 +505,6 @@ mcmcRocPrc.mcmc <- function(object, curves = FALSE, fullsims = FALSE, data,
   new_mcmcRocPrc(pred_prob = pred_prob, yvec = yvec, curves = curves, 
                  fullsims = fullsims)
 }
-
-
 
 
 # mcmcRocPrc methods for other generics -----------------------------------

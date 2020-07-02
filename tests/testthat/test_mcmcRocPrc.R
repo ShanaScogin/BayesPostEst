@@ -56,18 +56,40 @@ test_that(".default method rejects invalid input", {
 })
 
 
-# jags input --------------------------------------------------------------
+# jags-like input -----------------------------------------------------------
+
+test_that("class 'jags' input works", {
+  # both the "runjags" and "rjags" classes produced by jags(), run.jags(),
+  # from packages R2jags and runjags include "jags" classes that are model 
+  # definitions without posterior samples (see rjags::jags.model()). Both 
+  # include underlying "jags" classes in them
+  data("jags_logit")
+  jags_object       <- jags_logit$model
+  posterior_samples <- as.mcmc(jags_logit)
+  
+  expect_error(
+    out <- mcmcRocPrc(jags_object, curves = FALSE, fullsims = FALSE, 
+                      yname = "Y", xnames = c("X1", "X2"), 
+                      posterior_samples = posterior_samples),
+    NA
+  )
+  
+  
+})
 
 test_that("JAGS logit input works", {
   
   data("jags_logit")
   
   ## using mcmcRocPrc
-  with_curves <- mcmcRocPrc(jags_logit,
-                            yname = "Y",
-                            xnames = c("X1", "X2"),
-                            curves = TRUE,
-                            fullsims = FALSE)
+  expect_error(
+    with_curves <- mcmcRocPrc(jags_logit,
+                              yname = "Y",
+                              xnames = c("X1", "X2"),
+                              curves = TRUE,
+                              fullsims = FALSE),
+    NA
+  )
   
   ## testing
   value <- with_curves$prc_dat[[1]][156, 2]
@@ -100,8 +122,16 @@ test_that("JAGS probit input works", {
 })
 
 test_that("Non-logit/probit JAGS does not work", {
+  
+  data(jags_logit)
+  
   fake_jags <- structure(
-    list(model = list(model = function() "incompatible model")),
+    list(
+      model = structure(
+        list(model = function() "incompatible model"), 
+        class = "jags"
+      ),
+      BUGSoutput = jags_logit$BUGSoutput),
     class = "rjags"
   )
   
@@ -111,6 +141,21 @@ test_that("Non-logit/probit JAGS does not work", {
                "Could not identify model link function")
   
 })
+
+
+
+test_that("runjags input works", {
+  
+  runjags_logit <- readRDS("../testdata/runjags-logit.rds")
+  
+  expect_error(
+    out <- mcmcRocPrc(runjags_logit, FALSE, FALSE, yname = "Y", 
+                      xnames = c("X1", "X2")),
+    NA
+  )
+
+})
+
 
 # rstan input -------------------------------------------------------------
 #
@@ -278,11 +323,6 @@ test_that("Simple model runs with mcmcRocPrc Full", {
   expect_equal(value_area_under_prc, check_against_full_prc, tolerance = 1e-2)
   
 })
-
-test_that("runjags input works", {
-  skip("need example runjags object")
-})
-
 
 # Test methods for print, plot, etc. --------------------------------------
 

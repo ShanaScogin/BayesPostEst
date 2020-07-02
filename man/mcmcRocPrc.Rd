@@ -3,7 +3,9 @@
 \name{mcmcRocPrc}
 \alias{mcmcRocPrc}
 \alias{mcmcRocPrc.default}
+\alias{mcmcRocPrc.jags}
 \alias{mcmcRocPrc.rjags}
+\alias{mcmcRocPrc.runjags}
 \alias{mcmcRocPrc.stanfit}
 \alias{mcmcRocPrc.stanreg}
 \alias{mcmcRocPrc.mcmc}
@@ -16,7 +18,19 @@ mcmcRocPrc(object, curves = FALSE, fullsims = FALSE, ...)
 
 \method{mcmcRocPrc}{default}(object, curves, fullsims, yvec, ...)
 
+\method{mcmcRocPrc}{jags}(
+  object,
+  curves = FALSE,
+  fullsims = FALSE,
+  yname,
+  xnames,
+  posterior_samples,
+  ...
+)
+
 \method{mcmcRocPrc}{rjags}(object, curves = FALSE, fullsims = FALSE, yname, xnames, ...)
+
+\method{mcmcRocPrc}{runjags}(object, curves = FALSE, fullsims = FALSE, yname, xnames, ...)
 
 \method{mcmcRocPrc}{stanfit}(object, curves = FALSE, fullsims = FALSE, data, xnames, yname, ...)
 
@@ -69,6 +83,8 @@ JAGS data object.}
 \item{xnames}{(\code{\link[base:character]{base::character()}})\cr
 A character vector of the independent variable names, should match the
 corresponding names in the JAGS data object.}
+
+\item{posterior_samples}{a "mcmc" object with the posterior samples}
 
 \item{data}{the data that was used in the `stan(data = ?, ...)` call}
 
