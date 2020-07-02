@@ -55,8 +55,30 @@ test_that(".default method rejects invalid input", {
   
 })
 
+test_that("Simple model runs with mcmcRocPrc Full", {
+  
+  data("jags_logit")
+  
+  ## using mcmcRocPrc with full draws
+  full_with_curves <- mcmcRocPrc(jags_logit,
+                                 yname = "Y",
+                                 xnames = c("X1", "X2"),
+                                 curves = TRUE,
+                                 fullsims = TRUE)
+  
+  ## testing
+  value_area_under_roc <- as.numeric(full_with_curves$area_under_roc[986])
+  check_against_full_roc <- c(0.626)
+  expect_equal(value_area_under_roc, check_against_full_roc, tolerance = 1e-2)
+  
+  value_area_under_prc <- as.numeric(full_with_curves$area_under_prc[965])
+  check_against_full_prc <- c(0.61994)
+  expect_equal(value_area_under_prc, check_against_full_prc, tolerance = 1e-2)
+  
+})
 
-# jags-like input -----------------------------------------------------------
+
+# JAGS-like input (rjags, R2jags, runjags) --------------------------------
 
 test_that("class 'jags' input works", {
   # both the "runjags" and "rjags" classes produced by jags(), run.jags(),
@@ -157,7 +179,10 @@ test_that("runjags input works", {
 })
 
 
-# rstan input -------------------------------------------------------------
+# STAN-like input (rstan, rstanarm, brms) ---------------------------------
+
+#
+#   rstan input
 #
 #   The next couple of tests build up to checking if rstan input works
 #
@@ -208,8 +233,9 @@ test_that("RStan input works", {
   )
 })
 
-
-# rstanarm input ----------------------------------------------------------
+#
+#   rstanarm input
+#
 
 test_that("rstanarm input works", {
   rstanarm_logit <- readRDS("../testdata/rstanarm-logit.rds")
@@ -228,6 +254,34 @@ test_that("rstanarm input works", {
   )
   
 })
+
+#
+#   brms input
+#
+
+test_that("brms input works", {
+  
+  brms_logit <- readRDS("../testdata/brms-logit.rds")
+  
+  expect_error(
+    out <- mcmcRocPrc(brms_logit, FALSE, FALSE),
+    NA
+  )
+  
+  # non-binomial models are rejected
+  dummy_model <- brms_logit
+  dummy_model$formula$family <- gaussian()
+  expect_error(
+    mcmcRocPrc(dummy_model),
+    "does not seem to be a binary choice model"
+  )
+  
+})
+
+
+# Other types of input (MCMpack, BUGS) ------------------------------------
+
+
 
 test_that("BUGS input works", {
   skip("not implemented yet")
@@ -293,34 +347,6 @@ test_that("MCMCpack input works", {
                force = TRUE),
     NA
   )
-  
-})
-
-
-
-test_that("brms input works", {
-  skip("Need example brms object")
-})
-
-test_that("Simple model runs with mcmcRocPrc Full", {
-  
-  data("jags_logit")
-  
-  ## using mcmcRocPrc with full draws
-  full_with_curves <- mcmcRocPrc(jags_logit,
-                                 yname = "Y",
-                                 xnames = c("X1", "X2"),
-                                 curves = TRUE,
-                                 fullsims = TRUE)
-  
-  ## testing
-  value_area_under_roc <- as.numeric(full_with_curves$area_under_roc[986])
-  check_against_full_roc <- c(0.626)
-  expect_equal(value_area_under_roc, check_against_full_roc, tolerance = 1e-2)
-  
-  value_area_under_prc <- as.numeric(full_with_curves$area_under_prc[965])
-  check_against_full_prc <- c(0.61994)
-  expect_equal(value_area_under_prc, check_against_full_prc, tolerance = 1e-2)
   
 })
 

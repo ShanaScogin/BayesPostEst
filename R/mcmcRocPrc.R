@@ -453,6 +453,27 @@ mcmcRocPrc.stanreg <- function(object, curves = FALSE, fullsims = FALSE, ...) {
                  fullsims = fullsims)
 }
 
+#' @rdname mcmcRocPrc
+#' 
+#' @export
+mcmcRocPrc.brmsfit <- function(object, curves = FALSE, fullsims = FALSE, ...) {
+  if (!requireNamespace("brms", quietly = TRUE)) {
+    stop("Package \"brms\" is needed for this function to work. Please install it.", call. = FALSE)  # nocov
+  }
+  if (!stats::family(object)$family=="bernoulli") {
+    stop("the input model does not seem to be a binary choice model; should be like 'obj <- brm(family = bernoulli(), ...)'") 
+  }
+  
+  pred_prob <- brms::posterior_epred(object)
+  # posterior_epred returns a matrix in which data cases are columns, and 
+  # MCMC samples are row; we need to transpose this so that columns are samples
+  pred_prob <- t(pred_prob)
+  yvec <- model.response(model.frame(object))
+  
+  new_mcmcRocPrc(pred_prob = pred_prob, yvec = yvec, curves = curves, 
+                 fullsims = fullsims)
+}
+
 #' #' @rdname mcmcRocPrc
 #' #'
 #' #' @export

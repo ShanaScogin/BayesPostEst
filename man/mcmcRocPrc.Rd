@@ -8,6 +8,7 @@
 \alias{mcmcRocPrc.runjags}
 \alias{mcmcRocPrc.stanfit}
 \alias{mcmcRocPrc.stanreg}
+\alias{mcmcRocPrc.brmsfit}
 \alias{mcmcRocPrc.mcmc}
 \alias{print.mcmcRocPrc}
 \alias{plot.mcmcRocPrc}
@@ -35,6 +36,8 @@ mcmcRocPrc(object, curves = FALSE, fullsims = FALSE, ...)
 \method{mcmcRocPrc}{stanfit}(object, curves = FALSE, fullsims = FALSE, data, xnames, yname, ...)
 
 \method{mcmcRocPrc}{stanreg}(object, curves = FALSE, fullsims = FALSE, ...)
+
+\method{mcmcRocPrc}{brmsfit}(object, curves = FALSE, fullsims = FALSE, ...)
 
 \method{mcmcRocPrc}{mcmc}(
   object,
