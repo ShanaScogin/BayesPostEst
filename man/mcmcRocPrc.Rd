@@ -2,12 +2,54 @@
 % Please edit documentation in R/mcmcRocPrc.R
 \name{mcmcRocPrc}
 \alias{mcmcRocPrc}
+\alias{mcmcRocPrc.default}
+\alias{mcmcRocPrc.jags}
+\alias{mcmcRocPrc.rjags}
+\alias{mcmcRocPrc.runjags}
+\alias{mcmcRocPrc.stanfit}
+\alias{mcmcRocPrc.stanreg}
+\alias{mcmcRocPrc.brmsfit}
+\alias{mcmcRocPrc.mcmc}
 \alias{print.mcmcRocPrc}
 \alias{plot.mcmcRocPrc}
 \alias{as.data.frame.mcmcRocPrc}
 \title{ROC and Precision-Recall Curves using Bayesian MCMC estimates}
 \usage{
-mcmcRocPrc(object, yname, xnames, curves = FALSE, fullsims = FALSE)
+mcmcRocPrc(object, curves = FALSE, fullsims = FALSE, ...)
+
+\method{mcmcRocPrc}{default}(object, curves, fullsims, yvec, ...)
+
+\method{mcmcRocPrc}{jags}(
+  object,
+  curves = FALSE,
+  fullsims = FALSE,
+  yname,
+  xnames,
+  posterior_samples,
+  ...
+)
+
+\method{mcmcRocPrc}{rjags}(object, curves = FALSE, fullsims = FALSE, yname, xnames, ...)
+
+\method{mcmcRocPrc}{runjags}(object, curves = FALSE, fullsims = FALSE, yname, xnames, ...)
+
+\method{mcmcRocPrc}{stanfit}(object, curves = FALSE, fullsims = FALSE, data, xnames, yname, ...)
+
+\method{mcmcRocPrc}{stanreg}(object, curves = FALSE, fullsims = FALSE, ...)
+
+\method{mcmcRocPrc}{brmsfit}(object, curves = FALSE, fullsims = FALSE, ...)
+
+\method{mcmcRocPrc}{mcmc}(
+  object,
+  curves = FALSE,
+  fullsims = FALSE,
+  data,
+  xnames,
+  yname,
+  type = c("logit", "probit"),
+  force = FALSE,
+  ...
+)
 
 \method{print}{mcmcRocPrc}(x, ...)
 
@@ -22,16 +64,8 @@ mcmcRocPrc(object, yname, xnames, curves = FALSE, fullsims = FALSE)
 )
 }
 \arguments{
-\item{object}{A "rjags" object (see \code{\link[R2jags:jags]{R2jags::jags()}}) for a fitted binary
-choice model.}
-
-\item{yname}{(\code{character(1)})\cr
-The name of the dependent variable, should match the variable name in the
-JAGS data object.}
-
-\item{xnames}{(\code{\link[base:character]{base::character()}})\cr
-A character vector of the independent variable names, should match the
-corresponding names in the JAGS data object.}
+\item{object}{A fitted binary choice model, e.g. "rjags" object
+(see \code{\link[R2jags:jags]{R2jags::jags()}}), or a \verb{[N, iter]} matrix of predicted probabilites.}
 
 \item{curves}{logical indicator of whether or not to return values to plot
 the ROC or Precision-Recall curves. If set to \code{FALSE} (default),
@@ -41,9 +75,28 @@ results are returned as a list without the extra values.}
 draws rather than their average) will be returned. Default is \code{FALSE}.
 Note: If \code{TRUE} is chosen, the function takes notably longer to execute.}
 
-\item{x}{a \code{mcmcRocPrc()} object}
-
 \item{...}{Used by methods}
+
+\item{yvec}{A \code{numeric(N)} vector of observed outcomes.}
+
+\item{yname}{(\code{character(1)})\cr
+The name of the dependent variable, should match the variable name in the
+JAGS data object.}
+
+\item{xnames}{(\code{\link[base:character]{base::character()}})\cr
+A character vector of the independent variable names, should match the
+corresponding names in the JAGS data object.}
+
+\item{posterior_samples}{a "mcmc" object with the posterior samples}
+
+\item{data}{the data that was used in the `stan(data = ?, ...)` call}
+
+\item{type}{"logit" or "probit"}
+
+\item{force}{for MCMCpack models, suppress warning if the model does not 
+appear to be a binary choice model?}
+
+\item{x}{a \code{mcmcRocPrc()} object}
 
 \item{n}{plot method: if `fullsims = TRUE`, how many sample curves to draw?}
 
@@ -59,19 +112,48 @@ Note: If \code{TRUE} is chosen, the function takes notably longer to execute.}
 Returns a list with length 2 or 4, depending on the on the "curves"
 and "fullsims" argument values:
 \itemize{
-\item "area_under_roc": \code{numeric(1)}
-\item "area_under_prc": \code{numeric(1)}
-\item "prc_dat": only if \code{curves = TRUE}; a list with length 1 if \code{fullsims = FALSE}, longer otherwise
-\item "roc_dat": only if \code{curves = TRUE}; a list with length 1 if \code{fullsims = FALSE}, longer otherwise
+\item "area_under_roc": \code{numeric()}; either length 1 if \code{fullsims = FALSE}, or
+one value for each posterior sample otherwise
+\item "area_under_prc": \code{numeric()}; either length 1 if \code{fullsims = FALSE}, or
+one value for each posterior sample otherwise
+\item "prc_dat": only if \code{curves = TRUE}; a list with length 1 if
+\code{fullsims = FALSE}, longer otherwise
+\item "roc_dat": only if \code{curves = TRUE}; a list with length 1 if
+\code{fullsims = FALSE}, longer otherwise
 }
 }
 \description{
 Generate ROC and Precision-Recall curves after fitting a Bayesian logit or
-probit regression using \code{\link[R2jags:jags]{R2jags::jags()}}
+probit regression using \code{\link[rstan:stan]{rstan::stan()}}, \code{\link[rstanarm:stan_glm]{rstanarm::stan_glm()}},
+\code{\link[R2jags:jags]{R2jags::jags()}}, \code{\link[R2WinBUGS:bugs]{R2WinBUGS::bugs()}}, \code{\link[MCMCpack:MCMClogit]{MCMCpack::MCMClogit()}}, or other
+functions that provide samples from a posterior density.
+}
+\details{
+If only the average AUC-ROC and PR are of interest, setting
+\code{curves = FALSE} and \code{fullsims = FALSE} can greatly speed up calculation
+time. The curve data (\code{curves = TRUE}) is needed for plotting. The plot
+method will always plot both the ROC and PR curves, but the underlying
+data can easily be extracted from the output for your own plotting;
+see the documentation of the value returned below.
+
+The default method works with a matrix of predicted probabilities and the
+vector of observed incomes as input. Other methods accommodate some of the
+common Bayesian modeling packages like rstan (which returns class "stanfit"),
+rstanarm ("stanreg"), R2jags ("jags"), R2WinBUGS ("bugs"), and
+MCMCpack ("mcmc"). Even if a package-specific method is not implemented,
+the default method can always be used as a fallback by manually calculating
+the matrix of predicted probabilities for each posterior sample.
+
+Note that MCMCpack returns generic "mcmc" output that is annotated with
+some additional information as attributes, including the original function
+call. There is no inherent way to distinguish any other kind of "mcmc"
+object from one generated by a proper MCMCpack modeling function, but as a
+basic precaution, \code{mcmcRocPrc()} will check the saved call and return an
+error if the function called was not \code{MCMClogit()} or \code{MCMCprobit()}.
+This behavior can be suppressed by setting \code{force = TRUE}.
 }
 \examples{
 # load simulated data and fitted model (see ?sim_data and ?jags_logit)
-library(R2jags)
 data("jags_logit")
 
 # using mcmcRocPrc
@@ -82,6 +164,30 @@ fit_sum <- mcmcRocPrc(jags_logit,
                       fullsims = FALSE)
 fit_sum                     
 plot(fit_sum)
+
+# Equivalently, we can calculate the matrix of predicted probabilities 
+# ourselves; using the example from ?jags_logit:
+library(R2jags)
+
+data("sim_data")
+yvec <- sim_data$Y
+xmat <- sim_data[, c("X1", "X2")]
+
+# add intercept to the X data
+xmat <- as.matrix(cbind(Intercept = 1L, xmat))
+
+beta <- as.matrix(as.mcmc(jags_logit))[, c("b[1]", "b[2]", "b[3]")]
+pred_mat <- plogis(xmat \%*\% t(beta)) 
+
+# the matrix of predictions has rows matching the number of rows in the data;
+# the column are the predictions for each of the 2,000 posterior samples
+nrow(sim_data)
+dim(pred_mat)
+
+# now we can call mcmcRocPrc; the default method works with the matrix
+# of predictions and vector of outcomes as input
+mcmcRocPrc(object = pred_mat, curves = TRUE, fullsims = FALSE, yvec = yvec)
+
 }
 \references{
 Beger, Andreas. 2016. “Precision-Recall Curves.” Available at

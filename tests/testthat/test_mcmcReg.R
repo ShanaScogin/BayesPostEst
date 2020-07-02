@@ -108,3 +108,7 @@ test_that("mcmcReg fails with multiple oject types", {
   expect_error(mcmcReg(list(runjags_interactive, mcmcpack_linear)))
   
 })
+
+# clean up output artifacts
+unlink("tab.html")
+unlink("tab.tex")
