@@ -344,3 +344,14 @@
 #' Y_interactive_cat <- rnorm(n, Z_interactive_cat, 1)
 #' sim_data_interactive_cat <- data.frame(cbind(X1, X3, Y = Y_interactive_cat))
 "sim_data_interactive_cat"
+
+#' Fitted BUGS logit model
+#'
+#' A fitted WinBUGS logit model.
+#' 
+#' @format a R2WinBUGS bugs object. 
+#' 
+#' @examples 
+#' data(bugs_logit)
+#' bugs_logit  
+"bugs_logit"
