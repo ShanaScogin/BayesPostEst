@@ -492,12 +492,37 @@ mcmcRocPrc.brmsfit <- function(object, curves = FALSE, fullsims = FALSE, ...) {
 # Other input types (MCMCpack, ...) ---------------------------------------
 
 
-#' #' @rdname mcmcRocPrc
-#' #'
-#' #' @export
-#' mcmcRocPrc.bugs <- function(object, curves = FALSE, fullsims = FALSE, ...) {
-#'   stop("not implemented yet")
-#' }
+
+#' @rdname mcmcRocPrc
+#'
+#' @export
+mcmcRocPrc.bugs <- function(object, curves = FALSE, fullsims = FALSE, data,
+                            xnames, yname, type = c("logit", "probit"), ...) {
+  
+  link_type <- match.arg(type)
+  mdl_data <- data
+  stopifnot(
+    all(xnames %in% names(mdl_data)),
+    all(yname %in% names(mdl_data))
+  )
+  
+  # add intercept by default, maybe revisit this
+  xdata <- as.matrix(cbind(X0 = 1L, as.data.frame(mdl_data[xnames])))
+  yvec  <- mdl_data[[yname]]
+  
+  sm <- object$sims.matrix
+  # Drop "deviance" column
+  betadraws <- sm[, !colnames(sm) %in% "deviance"]
+  
+  if(link_type=="logit") {
+    pred_prob <- plogis(xdata %*% t(betadraws))  
+  } else if (link_type=="probit") {
+    pred_prob <- pnorm(xdata %*% t(betadraws))
+  } 
+  
+  new_mcmcRocPrc(pred_prob = pred_prob, yvec = yvec, curves = curves, 
+                 fullsims = fullsims)
+}
 
 
 #' @rdname mcmcRocPrc

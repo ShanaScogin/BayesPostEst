@@ -2,6 +2,7 @@
 
 S3method(as.data.frame,mcmcRocPrc)
 S3method(mcmcRocPrc,brmsfit)
+S3method(mcmcRocPrc,bugs)
 S3method(mcmcRocPrc,default)
 S3method(mcmcRocPrc,jags)
 S3method(mcmcRocPrc,mcmc)

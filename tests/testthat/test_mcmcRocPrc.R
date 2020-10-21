@@ -284,10 +284,13 @@ test_that("brms input works", {
 
 
 test_that("BUGS input works", {
-  skip("not implemented yet")
-  data("bugs_model")
+  
+  bugs_logit <- BayesPostEst::bugs_logit
+  sim_data <- BayesPostEst::sim_data
+
   expect_error(
-    out <- mcmcRocPrc(bugs_model, FALSE, FALSE),
+    out <- mcmcRocPrc(bugs_logit, FALSE, FALSE, data = sim_data, yname = "Y",
+                      xnames = c("X1", "X2"), type = "logit"),
     NA
   )
 })
