@@ -201,7 +201,10 @@
 #' 
 #' ## fitting the model with runjags
 #' runjags_interactive <- run.jags(model = model, monitor = c("beta", "tau"),
-#'                                 data = datalist, n.chains = 2, method = "rjags")
+#'                                 data = datalist, n.chains = 2, method = "rjags",
+#'                                 inits = list(list(beta = rnorm(4)), 
+#'                                              list(beta = rnorm(4)))
+#'                                 )
 #' }
 #' @docType data
 "runjags_interactive"
