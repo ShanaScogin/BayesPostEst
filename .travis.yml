@@ -6,6 +6,7 @@ cache: packages
 # dependency for rjags
 apt_packages:
   - jags
+  - libv8-dev
 
 # set up vars for Stan
 before_install:
