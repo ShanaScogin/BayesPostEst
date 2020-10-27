@@ -253,7 +253,7 @@ mcmcTab(fit.jags, pars = c("b[2]", "b[3]", "b[4]"), ROPE = c(-0.1, 0.1))
 
 The `mcmcReg` function serves as an interface to `texreg` and produces more polished and publication-ready tables than `mcmcTab` in HTML or LaTeX format. `mcmcReg` can produce tables with multiple models with each model in a column and supports flexible renaming of parameters. However, these tables are more similar to standard frequentist regression tables, so they do not have a way to incorporate the percent of posterior draws that have the same sign as the median of the posterior distribution or a ROPE like `mcmcTab` is able to. Uncertainty intervals can be either standard credible intervals or highest posterior density intervals (Kruschke 2015) using the `hpdi` argument, and their level can be set with the `ci` argument (default 95%). Separately calculated goodness of fit statistics can be included with the `gof` argument.
 
-```{r, results = 'asis'}
+```{r, results = 'asis' , eval=FALSE}
 mcmcReg(fit.jags, format = 'html', doctype = F)
 ```
 
@@ -261,19 +261,19 @@ mcmcReg(fit.jags, format = 'html', doctype = F)
 
 `mcmcReg` supports limiting the parameters included in the table via the `pars` argument. By default, all parameters saved in the model object will be included. In the case of `fit.jags`, this include the deviance estimate. If we wish to exclude it, we can specify `pars = 'b'` which will capture `b[1]`-`b[4]` using regular expression matching.
 
-```{r, results = 'asis'}
+```{r, results = 'asis' , eval=FALSE}
 mcmcReg(fit.jags, pars = 'b', format = 'html', doctype = F)
 ```
 
 If we only wish to exclude the intercept, we can do this by explicitly specifying the parameters we wish to include as a vector. Note that in this example we have to escape the `[]`s in `pars` because they are a reserved character in regular expressions.
 
-```{r, results = 'asis'}
+```{r, results = 'asis' , eval=FALSE}
 mcmcReg(fit.jags, pars = c('b\\[1\\]', 'b\\[3\\]', 'b\\[4\\]'), format = 'html', doctype = F)
 ```
 
 `mcmcReg` also supports partial regular expression matching of multiple parameter family names as demonstrated below.
 
-```{r, results = 'asis'}
+```{r, results = 'asis' , eval=FALSE}
 mcmcReg(fit.jags, pars = c('b', 'dev'), format = 'html', doctype = F)
 ```
 
@@ -281,7 +281,7 @@ mcmcReg(fit.jags, pars = c('b', 'dev'), format = 'html', doctype = F)
 
 `mcmcReg` supports custom coefficient names to support publication-ready tables. The simplest option is via the `coefnames` argument. Note that the number of parameters and the number of custom coefficient names must match, so it is a good idea to use `pars` in tandem with `coefnames`.
 
-```{r, results = 'asis'}
+```{r, results = 'asis' , eval=FALSE}
 mcmcReg(fit.jags, pars = 'b',
         coefnames = c('(Constant)', 'Female', 'Neuroticism', 'Extraversion'),
         format = 'html', doctype = F)
@@ -289,7 +289,7 @@ mcmcReg(fit.jags, pars = 'b',
 
 A more flexible way to include custom coefficient names is via the `custom.coef.map` argument, which accepts a named list, with names as parameter names in the model and values as the custom coefficient names.
 
-```{r, results = 'asis'}
+```{r, results = 'asis' , eval=FALSE}
 mcmcReg(fit.jags, pars = 'b',
         custom.coef.map = list('b[1]' = '(Constant)',
                                'b[2]' = 'Female',
@@ -300,7 +300,7 @@ mcmcReg(fit.jags, pars = 'b',
 
 The advantage of `custom.coef.map` is that it can flexibly reorder and omit coefficients from the table based on their positions within the list. Notice in the code below that deviance does not have to be included in `pars` because its absence from `custom.coef.map` omits it from the resulting table.
 
-```{r, results = 'asis'}
+```{r, results = 'asis' , eval=FALSE}
 mcmcReg(fit.jags,
         custom.coef.map = list('b[2]' = 'Female',
                                'b[4]' = 'Extraversion',
@@ -314,19 +314,19 @@ However, it is important to remember that `mcmcReg` will look for the parameter 
 
 `mcmcReg` accepts multiple model objects and will produce a table with one model per column. To produce a table from multiple models, pass a list of models as the `mod` argument to `mcmcReg`.
 
-```{r, results = 'asis'}
+```{r, results = 'asis' , eval=FALSE}
 mcmcReg(list(fit.stan, fit.stan), format = 'html', doctype = F)
 ```
 
 Note, however, that all model objects must be of the same class, so it is *not* possible to generate a table from a `jags` object and a `stanfit` object.
 
-```{r, error = T, results = 'asis'}
+```{r, error = T, results = 'asis' , eval=FALSE}
 mcmcReg(list(fit.jags, fit.stan), format = 'html', doctype = F)
 ```
 
 When including multiple models, supplying scalars or vectors to arguments will result in them being applied to each model equally. Treating models differentially is possible by supplying a list of scalars or vectors instead.
 
-```{r, results = 'asis'}
+```{r, results = 'asis' , eval=FALSE}
 mcmcReg(list(fit.rstanarm, fit.rstanarm),
         pars = list(c('female', 'extraversion'), 'neuroticism'),
         format = 'html', doctype = F)
@@ -336,7 +336,7 @@ mcmcReg(list(fit.rstanarm, fit.rstanarm),
 
 Although `custom.coef.map` is not an argument to `mcmcReg`, it works because `mcmcReg` supports all standard `texreg` arguments (a few have been overridden, but they are explicit arguments to `mcmcReg`). This introduces a high level of control over the output of `mcmcReg`, as e.g. models can be renamed.
 
-```{r, results = 'asis'}
+```{r, results = 'asis' , eval=FALSE}
 mcmcReg(fit.rstanarm, custom.model.names = 'Binary Outcome', format = 'html', doctype = F)
 ```
 
@@ -570,7 +570,7 @@ fitstats$area_under_prc
 Users can also plot the ROC curve... 
 
 ```{r}
-ggplot(data = fitstats$roc_dat, aes(x = x, y = y)) +
+ggplot(data = as.data.frame(fitstats, what = "roc"), aes(x = x, y = y)) +
   geom_line() + 
   geom_abline(intercept = 0, slope = 1, color = "gray") + 
   labs(title = "ROC curve") + 
@@ -582,7 +582,7 @@ ggplot(data = fitstats$roc_dat, aes(x = x, y = y)) +
 ... as well as the precision-recall curve.
 
 ```{r}
-ggplot(data = fitstats$prc_dat, aes(x = x, y = y)) +
+ggplot(data = as.data.frame(fitstats, what = "prc"), aes(x = x, y = y)) +
   geom_line() + 
   labs(title = "Precision-Recall curve") + 
   xlab("Recall") + 
@@ -603,15 +603,17 @@ fitstats.fullsims <- mcmcRocPrc(object = fit.jags,
 We can then plot the posterior density of the area under each curve.
 
 ```{r}
-ggplot(fitstats.fullsims, aes(x = area_under_roc)) + 
-  geom_density() + 
+ggplot(as.data.frame(fitstats.fullsims), 
+       aes(x = area_under_roc)) +
+  geom_density() +
   labs(title = "Area under the ROC curve")
 ```
 ![](readme-images/roc_dens.png)<!-- -->
 
 ```{r}
-ggplot(fitstats.fullsims, aes(x = area_under_prc)) + 
-  geom_density() + 
+ggplot(as.data.frame(fitstats.fullsims), 
+       aes(x = area_under_prc)) +
+  geom_density() +
   labs(title = "Area under the Precision-Recall curve")
 ```
 ![](readme-images/prc_dens.png)<!-- -->
@@ -621,6 +623,12 @@ New functions and enhancements to current functions are in the works. Feel free 
 
 # Contact
 Please submit an [issue](https://github.com/ShanaScogin/BayesPostEst/issues) if you encounter any bugs or problems with the package. Feel free to check out [Johannes Karreth's website](http://www.jkarreth.net) for more resources on Bayesian estimation. 
+
+```{r echo=FALSE, results='hide', message=FALSE}
+rm(mod.jags)
+rm(mod.stan)
+rm(mod.rds)
+```
 
 # References
 

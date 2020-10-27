@@ -5,6 +5,12 @@
 .DS_Store
 doc
 Meta
+mod.jags
+mod.stan
+mod.rds
+README.Rmd
+README.log
+README.tex
 
 # if a pkgdown site has been locally built, don't put it on git; 
 # Travis-CI will take care of deployment

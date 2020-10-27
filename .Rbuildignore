@@ -28,3 +28,9 @@ CONTRIBUTING.md
 ^CRAN-RELEASE$
 ^_pkgdown\.yml$
 ^revdep$
+^README.Rmd
+^README.log
+^README.tex
+^mod.jags
+^mod.stan
+^mod.rds
