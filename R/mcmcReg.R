@@ -1,5 +1,3 @@
-#' This function creates LaTeX or HTML regression tables for MCMC Output using 
-#' the \code{texreg} function from the \code{\link[texreg:texreg-package]{texreg}} R package
 #' @title LaTeX or HTML regression tables for MCMC Output
 #' @description This function creates LaTeX or HTML regression tables for MCMC Output using 
 #' the \code{\link[texreg]{texreg}} function from the \code{\link[texreg:texreg-package]{texreg}} R package.
@@ -19,16 +17,25 @@
 #' @param pointest a character indicating whether to use the mean or median for
 #' point estimates in the table.
 #' @param ci a scalar indicating the confidence level of the uncertainty intervals.
-#' @param hpdi a logical indicating whether to use highest posterior density intervals
-#' or equal tailed credible intervals to capture uncertainty.
+#' @param hpdi a logical indicating whether to use highest posterior density
+#' intervals instead of equal tailed credible intervals to capture uncertainty
+#' (default \code{FALSE}).
+#' @param sd a logical indicating whether to report the standard deviation of
+#' posterior distributions instead of an uncertainty interval
+#' (default \code{FALSE}). If \code{TRUE}, overrides \code{ci}, \code{hpdi}, and
+#' \code{pr}.
+#' @param pr a logical indicating whether to report the probability that a
+#' coefficient is in the same direction as the point estimate for that
+#' coefficient (default \code{FALSE}). If \code{TRUE}, overrides \code{ci} and
+#' \code{hpdi}.
 #' @param coefnames an optional vector or list of vectors containing parameter
 #' names for each model. If there are multiple models, the list must have the same
 #' number of elements as there are models, and the vector of names in each list
 #' element must match the number of parameters. If not supplied, the function
 #' will use the parameter names in the model object(s). Note that this replaces
-#' the standard \code{custom.coef.names} argument in \code{\link[texreg]{texreg}} because there is no
-#' \code{extract} method for MCMC model objects, and many MCMC model objects do not
-#' have unique parameter names.
+#' the standard \code{custom.coef.names} argument in \code{\link[texreg]{texreg}}
+#' because there is no \code{extract} method for MCMC model objects, and many
+#' MCMC model objects do not have unique parameter names.
 #' @param gof a named list of goodness of fit statistics, or a list of such lists.
 #' @param gofnames an optional vector or list of vectors containing
 #' goodness of fit statistic names for each model. Like \code{coefnames} in this function
@@ -73,10 +80,10 @@
 #' Z <- b0 + b1 * X1 + b2 * X2
 #' pr <- 1 / (1 + exp(-Z)) # inv logit function
 #' Y <- rbinom(n, 1, pr)
-#' data <- data.frame(cbind(X1, X2, Y))
+#' df <- data.frame(cbind(X1, X2, Y))
 #' 
 #' ## formatting the data for jags
-#' datjags <- as.list(data)
+#' datjags <- as.list(df)
 #' datjags$N <- length(datjags$Y)
 #' 
 #' ## creating jags model
@@ -104,18 +111,22 @@
 #' ## fitting the model with R2jags
 #' set.seed(123)
 #' fit <- R2jags::jags(data = datjags, inits = inits,
-#'                     parameters.to.save = params, n.chains = 2, n.iter = 2000,
-#'                     n.burnin = 1000, model.file = model)
+#'                     parameters.to.save = params,
+#'                     n.chains = 2,
+#'                     n.iter = 2000, n.burnin = 1000,
+#'                     model.file = model)
 #' 
 #' ## generating regression table with all parameters
 #' mcmcReg(fit)
 #' 
 #' ## generating regression table with only betas and custom coefficent names
-#' mcmcReg(fit, pars = c('b'), coefnames = c('Variable 1', 'Variable 2',
-#'                                                   'Variable 3'))
+#' mcmcReg(fit, pars = c('b'), coefnames = c('Variable 1',
+#'                                           'Variable 2',
+#'                                           'Variable 3'),
+#'         regex = TRUE)
 #' ## generating regression tables with all betas and custom names
 #' mcmcReg(fit, coefnames = c('Variable 1', 'Variable 2',
-#'                                    'Variable 3', 'deviance'))
+#'                            'Variable 3', 'deviance'))
 #' }
 #' 
 #' \dontshow{setwd(.old_wd)}
@@ -126,6 +137,8 @@ mcmcReg <- function(mod,
                     pointest = 'mean', 
                     ci = .95, 
                     hpdi = FALSE,
+                    sd = FALSE,
+                    pr = FALSE,
                     coefnames = NULL, 
                     gof = numeric(0),
                     gofnames = character(0),
@@ -145,7 +158,7 @@ mcmcReg <- function(mod,
   if (length(unique(lapply(mod, class))) > 1) stop('More than one object class supplied to argument "mod"')
   
   ## if only one custom coefficient names vector, coerce to a list
-  if (class(coefnames) != 'list' & !is.null(coefnames)) coefnames <- list(coefnames)
+  if (!is.null(coefnames) & !is.list(coefnames)) coefnames <- list(coefnames)
   
   ## if only one parameter vector, coerce to a list
   if (class(pars) != 'list' & !is.null(pars)) pars <- list(pars)
@@ -198,18 +211,20 @@ mcmcReg <- function(mod,
   }
   
   ## calculate point estimate of posterior density
-  if (pointest == 'mean') {
-    
-    samps_pe <- lapply(samps, function(x) apply(as.matrix(x), 2, mean))
-    
-  } else {
-    
-    samps_pe <- lapply(samps, function(x) apply(as.matrix(x), 2, median))
-    
-  }
+  samps_pe <- lapply(samps, function(x) apply(as.matrix(x), 2, get(pointest)))
   
-  ## calculate uncertainty interval for ci argument
-  if (hpdi == FALSE) {
+  ## calculate uncertainty interval for or standard deviation
+  if (sd == TRUE) {
+    
+    samps_sd <- lapply(samps, function(x) apply(as.matrix(x), 2, sd))
+    
+  } else if (pr == TRUE) {
+    
+    samps_sd <- lapply(samps,
+                       function(x) apply(as.matrix(x), 2,
+                                         function(y) mean(sign(y) == sign(mean(y)))))
+    
+  } else if (hpdi == FALSE) {
     
     samps_ci <- lapply(samps, function(x) apply(as.matrix(x), 2, quantile,
                                                 probs = c(.5 - ci/2, .5 + ci/2)))
@@ -222,9 +237,7 @@ mcmcReg <- function(mod,
   }
   
   ## if coefficent names supplied, replace names from model object(s)
-  if (!is.null(coefnames) & !is.list(coefnames)) {
-    coefnames <- list(coefnames)
-  } else if (regex & is.null(coefnames)) {
+  if (regex & is.null(coefnames)) {
     coefnames <- mapply(function(x, y) colnames(x)[grepl(x = colnames(x),
                                                           pattern = paste(y, collapse = '|'))],
                          samps, pars, SIMPLIFY = FALSE)
@@ -240,33 +253,59 @@ mcmcReg <- function(mod,
   }
   
   ## create list of texreg object(s) with point estimates and interval
-  tr_list <- mapply(function(v, w, x, y, z) texreg::createTexreg(coef.names = v,
-                                                                 coef = w,
-                                                                 ci.low = x[1, ],
-                                                                 ci.up = x[2, ],
-                                                                 gof = y,
-                                                                 gof.names = z),
-                    coefnames, samps_pe, samps_ci, gof, gofnames)
+  if (sd == TRUE | pr == TRUE) {
+    
+    tr_list <- mapply(function(v, w, x, y, z) texreg::createTexreg(coef.names = v,
+                                                                   coef = w,
+                                                                   se = x,
+                                                                   gof = y,
+                                                                   gof.names = z),
+                      coefnames, samps_pe, samps_sd, gof, gofnames)
+    
+  } else {
+    
+    tr_list <- mapply(function(v, w, x, y, z) texreg::createTexreg(coef.names = v,
+                                                                   coef = w,
+                                                                   ci.low = x[1, ],
+                                                                   ci.up = x[2, ],
+                                                                   gof = y,
+                                                                   gof.names = z),
+                      coefnames, samps_pe, samps_ci, gof, gofnames)
+    
+  }
   
   ## create LaTeX output
   if (grepl('tex$', format)) {
     
     ## create LaTeX code
-    tr <- texreg::texreg(l = tr_list, ...)
-    
-    ## replace confidence w/ credible or highest posterior density in texreg output
-    if (hpdi == FALSE) {
+    if (sd == TRUE) {
       
-      tr <- sub('outside the confidence interval',
-                paste('outside ', ci * 100 ,'\\\\% credible interval', sep = ''),
-                tr)
+      tr <- texreg::texreg(l = tr_list, stars = NULL, ...)
+      
+    } else if (pr == TRUE) {
+      
+      tr <- texreg::texreg(l = tr_list, stars = NULL, ...)
+      
+      tr <- gsub('\\$\\(|\\)\\$', '$', tr)
       
     } else {
       
-      tr <- sub('outside the confidence interval',
-                paste('outside ', ci * 100 ,'\\\\% highest posterior density interval',
-                      sep = ''), tr)
+      tr <- texreg::texreg(l = tr_list, ...) 
       
+      ## replace confidence w/ credible or highest posterior density in texreg output
+      if (hpdi == FALSE) {
+        
+        tr <- sub('outside the confidence interval',
+                  paste('outside ', ci * 100 ,'\\\\% credible interval', sep = ''),
+                  tr)
+        
+      } else {
+        
+        tr <- sub('outside the confidence interval',
+                  paste('outside ', ci * 100 ,'\\\\% highest posterior density interval',
+                        sep = ''), tr)
+        
+      }
     }
     
     ## return LaTeX code to console or write to file
@@ -290,20 +329,34 @@ mcmcReg <- function(mod,
   ## create HTML output
   if (format == 'html') {
     
-    hr <- texreg::htmlreg(l = tr_list, ...)
-    
-    ## replace confidence w/ credible or highest posterior density in texreg output
-    if (hpdi == FALSE) {
+    if (sd == TRUE) {
       
-      hr <- sub('outside the confidence interval',
-                paste('outside ', ci * 100, '% credible interval', sep = ''),
-                hr)
+      hr <- texreg::htmlreg(l = tr_list, stars = NULL, ...)
+      
+    } else if (pr == TRUE) {
+      
+      hr <- texreg::htmlreg(l = tr_list, stars = NULL, ...)
+      
+      hr <- gsub('>\\(([0-9]\\.[0-9]{2})\\)<', '>\\1<', hr)
       
     } else {
       
-      tr <- sub('outside the confidence interval',
-                paste('outside ', ci * 100, '% highest posterior density interval',
-                      sep = ''), hr)
+      hr <- texreg::htmlreg(l = tr_list, ...)
+      
+      ## replace confidence w/ credible or highest posterior density in texreg output
+      if (hpdi == FALSE) {
+        
+        hr <- sub('outside the confidence interval',
+                  paste('outside ', ci * 100, '% credible interval', sep = ''),
+                  hr)
+        
+      } else {
+        
+        hr <- sub('outside the confidence interval',
+                  paste('outside ', ci * 100, '% highest posterior density interval',
+                        sep = ''), hr)
+        
+      }
       
     }
     

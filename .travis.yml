@@ -6,8 +6,7 @@ cache: packages
 # dependency for rjags
 apt_packages:
   - jags
-
-r_check_args: "--no-build-vignettes --ignore-vignettes"
+  - libv8-dev
 
 # set up vars for Stan
 before_install:

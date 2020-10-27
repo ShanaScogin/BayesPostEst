@@ -6,10 +6,11 @@
 #' \item \code{mcmcAveProb()}
 #' \item \code{mcmcObsProb()}
 #' \item \code{mcmcFD()}
-#' \item \code{mcmcFDplot()}
+#' \item \code{mcmcMargEff()}
 #' \item \code{mcmcRocPrc()}
 #' \item \code{mcmcTab()}
 #' \item \code{mcmcReg()}
+#' \item \code{plot.mcmcFD()}
 #' }
 #' These functions can be used to generate and plot postestimation quantities after 
 #' estimating Bayesian regression models using MCMC. The package combines functions 
@@ -57,9 +58,6 @@ NULL
 NULL
 
 #' @importFrom coda as.mcmc HPDinterval
-NULL
-
-#' @importFrom R2jags jags
 NULL
 
 #' @importFrom texreg createTexreg texreg htmlreg

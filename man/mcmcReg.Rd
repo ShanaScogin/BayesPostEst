@@ -10,6 +10,8 @@ mcmcReg(
   pointest = "mean",
   ci = 0.95,
   hpdi = FALSE,
+  sd = FALSE,
+  pr = FALSE,
   coefnames = NULL,
   gof = numeric(0),
   gofnames = character(0),
@@ -40,17 +42,28 @@ point estimates in the table.}
 
 \item{ci}{a scalar indicating the confidence level of the uncertainty intervals.}
 
-\item{hpdi}{a logical indicating whether to use highest posterior density intervals
-or equal tailed credible intervals to capture uncertainty.}
+\item{hpdi}{a logical indicating whether to use highest posterior density
+intervals instead of equal tailed credible intervals to capture uncertainty
+(default \code{FALSE}).}
+
+\item{sd}{a logical indicating whether to report the standard deviation of
+posterior distributions instead of an uncertainty interval
+(default \code{FALSE}). If \code{TRUE}, overrides \code{ci}, \code{hpdi}, and
+\code{pr}.}
+
+\item{pr}{a logical indicating whether to report the probability that a
+coefficient is in the same direction as the point estimate for that
+coefficient (default \code{FALSE}). If \code{TRUE}, overrides \code{ci} and
+\code{hpdi}.}
 
 \item{coefnames}{an optional vector or list of vectors containing parameter
 names for each model. If there are multiple models, the list must have the same
 number of elements as there are models, and the vector of names in each list
 element must match the number of parameters. If not supplied, the function
 will use the parameter names in the model object(s). Note that this replaces
-the standard \code{custom.coef.names} argument in \code{\link[texreg]{texreg}} because there is no
-\code{extract} method for MCMC model objects, and many MCMC model objects do not
-have unique parameter names.}
+the standard \code{custom.coef.names} argument in \code{\link[texreg]{texreg}}
+because there is no \code{extract} method for MCMC model objects, and many
+MCMC model objects do not have unique parameter names.}
 
 \item{gof}{a named list of goodness of fit statistics, or a list of such lists.}
 
@@ -80,9 +93,6 @@ This function creates LaTeX or HTML regression tables for MCMC Output using
 the \code{\link[texreg]{texreg}} function from the \code{\link[texreg:texreg-package]{texreg}} R package.
 }
 \details{
-This function creates LaTeX or HTML regression tables for MCMC Output using 
-the \code{texreg} function from the \code{\link[texreg:texreg-package]{texreg}} R package
-
 If using \code{custom.coef.map} with more than one model, you should rename
 the parameters in the model objects to ensure that different parameters with the
 same subscript are not conflated by \code{texreg} e.g. \code{beta[1]} could represent age
@@ -108,10 +118,10 @@ X2 <- runif(n, -1, 1)
 Z <- b0 + b1 * X1 + b2 * X2
 pr <- 1 / (1 + exp(-Z)) # inv logit function
 Y <- rbinom(n, 1, pr)
-data <- data.frame(cbind(X1, X2, Y))
+df <- data.frame(cbind(X1, X2, Y))
 
 ## formatting the data for jags
-datjags <- as.list(data)
+datjags <- as.list(df)
 datjags$N <- length(datjags$Y)
 
 ## creating jags model
@@ -139,18 +149,22 @@ inits <- list(inits1, inits2)
 ## fitting the model with R2jags
 set.seed(123)
 fit <- R2jags::jags(data = datjags, inits = inits,
-                    parameters.to.save = params, n.chains = 2, n.iter = 2000,
-                    n.burnin = 1000, model.file = model)
+                    parameters.to.save = params,
+                    n.chains = 2,
+                    n.iter = 2000, n.burnin = 1000,
+                    model.file = model)
 
 ## generating regression table with all parameters
 mcmcReg(fit)
 
 ## generating regression table with only betas and custom coefficent names
-mcmcReg(fit, pars = c('b'), coefnames = c('Variable 1', 'Variable 2',
-                                                  'Variable 3'))
+mcmcReg(fit, pars = c('b'), coefnames = c('Variable 1',
+                                          'Variable 2',
+                                          'Variable 3'),
+        regex = TRUE)
 ## generating regression tables with all betas and custom names
 mcmcReg(fit, coefnames = c('Variable 1', 'Variable 2',
-                                   'Variable 3', 'deviance'))
+                           'Variable 3', 'deviance'))
 }
 
 \dontshow{setwd(.old_wd)}

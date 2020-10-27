@@ -10,7 +10,7 @@
 #' data("sim_data")
 #'   
 #' ## formatting the data for jags
-#' datjags <- as.list(data)
+#' datjags <- as.list(sim_data)
 #' datjags$N <- length(datjags$Y)
 #' 
 #' ## creating jags model
@@ -58,7 +58,7 @@
 #' data("sim_data")
 #'   
 #' ## formatting the data for jags
-#' datjags <- as.list(data)
+#' datjags <- as.list(sim_data)
 #' datjags$N <- length(datjags$Y)
 #' 
 #' ## creating jags model
@@ -107,7 +107,7 @@
 #' data("sim_data_interactive")
 #' 
 #' ## formatting the data for jags
-#' datjags <- as.list(data)
+#' datjags <- as.list(sim_data_interactive)
 #' datjags$N <- length(datjags$Y)
 #' 
 #' ## creating jags model
@@ -147,6 +147,70 @@
 #' @docType data
 "jags_interactive"
 
+#' Fitted BUGS model
+#' 
+#' A fitted BUGS model with generated with
+#' [R2WinBUGS::as.bugs.array()]. See the example  code below for how it was created. Used
+#' in examples and for testing. 
+#' 
+#' @format A class "bugs" object created by [R2WinBUGS::as.bugs.array()]
+#' 
+#' @examples 
+#' \donttest{
+#' data(LINE, package = "rjags")
+#' LINE$recompile()
+#' 
+#' ## fitting the model with jags
+#' bugs_model <- rjags::coda.samples(LINE, c("alpha", "beta", "sigma"),
+#'                                   n.iter = 1000)
+#' 
+#' bugs_model <- R2WinBUGS::as.bugs.array(sims.array = as.array(bugs_model))
+#' }
+#' @docType data
+"bugs_model"
+
+#' Fitted runjags interactive linear model
+#' 
+#' A fitted JAGS linear model with interaction term generated with
+#' [runjags::run.jags()]. See the example  code below for how it was created. Used
+#' in examples and for testing. 
+#' 
+#' @format A class "runjags" object created by [runjags::run.jags()]
+#' 
+#' @examples 
+#' \donttest{
+#' library(runjags)
+#' 
+#' data("sim_data_interactive")
+#' 
+#' ## formatting the data for jags
+#' datalist <- list(X = model.matrix(~ X1 * X2, sim_data_interactive),
+#'                  Y = sim_data_interactive[, 3],
+#'                  N = nrow(sim_data_interactive))
+#' 
+#' ## creating jags model
+#' model <- "model { 
+#' for(i in 1 : N){ 
+#' 	Y[i] ~ dnorm(beta %*% X[i, ], tau);
+#' } 
+#' for(i in 1:4) {
+#'   beta[i] ~ dnorm(0, 0.001)
+#' }
+#' tau ~ dexp(1)
+#' }"
+#' 
+#' ## fitting the model with runjags
+#' runjags_interactive <- run.jags(model = model, monitor = c("beta", "tau"),
+#'                                 data = datalist, n.chains = 2, method = "rjags",
+#'                                 inits = list(list(beta = rnorm(4)), 
+#'                                              list(beta = rnorm(4)))
+#'                                 )
+#' }
+#' @docType data
+"runjags_interactive"
+
+# jags_interactive_cat ----------------------------------------------------
+
 #' Fitted JAGS interactive linear model with categorical moderator
 #' 
 #' A fitted JAGS linear model with interaction term generated with
@@ -160,7 +224,7 @@
 #' data("sim_data_interactive_cat")
 #' 
 #' ## formatting the data for jags
-#' datjags <- as.list(data)
+#' datjags <- as.list(sim_data_interactive_cat)
 #' datjags$N <- length(datjags$Y)
 #' 
 #' ## creating jags model
@@ -200,6 +264,25 @@
 #' @docType data
 "jags_interactive_cat"
 
+#' Fitted MCMCpack  linear model
+#' 
+#' A fitted MCMCpack linear model with interaction term generated with
+#' [MCMCpack::MCMCregress()]. See the example code below for how it was created. Used
+#' in examples and for testing. 
+#' 
+#' @format A class "mcmc" object created by [MCMCpack::MCMCregress()]
+#' 
+#' @examples 
+#' \donttest{
+#' ## fitting the model with MCMCpack
+#' mcmcpack_linear <- MCMCpack::MCMCregress(Y ~ X, b0 = 0, B0 = 0.001,
+#'                                          sigma.mu = 5, sigma.var = 10,
+#'                                          data = list(X = rnorm(100),
+#'                                                      Y = rnorm(100, 5, 5)),
+#'                                          seed = 1)
+#' }
+#' @docType data
+"mcmcpack_linear"
 
 #' Simulated data for examples
 #' 
@@ -261,3 +344,14 @@
 #' Y_interactive_cat <- rnorm(n, Z_interactive_cat, 1)
 #' sim_data_interactive_cat <- data.frame(cbind(X1, X3, Y = Y_interactive_cat))
 "sim_data_interactive_cat"
+
+#' Fitted BUGS logit model
+#'
+#' A fitted WinBUGS logit model.
+#' 
+#' @format a R2WinBUGS bugs object. 
+#' 
+#' @examples 
+#' data(bugs_logit)
+#' bugs_logit  
+"bugs_logit"

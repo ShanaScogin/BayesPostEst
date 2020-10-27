@@ -47,16 +47,17 @@ for x = 0 and x = 1.}
 rather than their average) will be returned. Default is \code{FALSE}.}
 }
 \value{
-if \code{fullsims = FALSE} (default), a data frame with four columns:
+An object of class \code{mcmcFD}. If \code{fullsims = FALSE} (default),
+a data frame with five columns:
 \itemize{
 \item median_fd: median first difference
 \item lower_fd: lower bound of credible interval of the first difference
 \item upper_fd: upper bound of credible interval of the first difference
 \item VarName: name of the variable as found in \code{modelmatrix}
-\item VarID: identifier of the variable, based on the order of columns in \code{modelmatrix} and 
-\code{mcmcout}. Can be adjusted for plotting
+\item VarID: identifier of the variable, based on the order of columns in
+\code{modelmatrix} and  \code{mcmcout}. Can be adjusted for plotting
 }
-if \code{fullsims = TRUE}, a data frame with as many columns as predictors in the model. Each row 
+If \code{fullsims = TRUE}, a matrix with as many columns as predictors in the model. Each row 
 is the first difference for that variable based on one set of posterior draws. Column names are taken 
 from the column names of \code{modelmatrix}.
 }
@@ -82,10 +83,10 @@ X2 <- runif(n, -1, 1)
 Z <- b0 + b1 * X1 + b2 * X2
 pr <- 1 / (1 + exp(-Z)) # inv logit function
 Y <- rbinom(n, 1, pr) 
-data <- data.frame(cbind(X1, X2, Y))
+df <- data.frame(cbind(X1, X2, Y))
 
 ## formatting the data for jags
-datjags <- as.list(data)
+datjags <- as.list(df)
 datjags$N <- length(datjags$Y)
 
 ## creating jags model
@@ -117,7 +118,7 @@ fit <- R2jags::jags(data = datjags, inits = inits,
                     n.burnin = 1000, model.file = model)
 
 ## running function with logit
-xmat <- model.matrix(Y ~ X1 + X2, data = data)
+xmat <- model.matrix(Y ~ X1 + X2, data = df)
 mcmc <- coda::as.mcmc(fit)
 mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
 object <- mcmcFD(modelmatrix = xmat,
