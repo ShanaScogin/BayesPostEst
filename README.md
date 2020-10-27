@@ -20,13 +20,13 @@ BayesPostEst contains functions to generate postestimation quantities after esti
 
 To install the latest release on CRAN:
 
-```{r}
+```{r eval=FALSE}
 install.packages("BayesPostEst")
 ```
 
 The latest development version on GitHub can be installed with:
 
-```{r}
+```{r eval=FALSE}
 library("remotes")
 install_github("ShanaScogin/BayesPostEst")
 ```
