@@ -2,15 +2,10 @@
 BayesPostEst
 ============
 
-[![Build Status](https://travis-ci.com/ShanaScogin/BayesPostEst.svg?branch=master)](https://travis-ci.com/ShanaScogin/BayesPostEst)
-===================================================================================================================================
-
-<!-- # [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/BayesPostEst)](https://CRAN.R-project.org/package=BayesPostEst) -->
-[![DOI](https://joss.theoj.org/papers/10.21105/joss.01722/status.svg)](https://doi.org/10.21105/joss.01722)
-===========================================================================================================
-
-[![Codecov test coverage](https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg)](https://codecov.io/gh/ShanaScogin/BayesPostEst?branch=master)
-======================================================================================================================================================================
+# [![Build Status](https://travis-ci.com/ShanaScogin/BayesPostEst.svg?branch=master)](https://travis-ci.com/ShanaScogin/BayesPostEst)
+ # [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/BayesPostEst)](https://CRAN.R-project.org/package=BayesPostEst)
+# [![DOI](https://joss.theoj.org/papers/10.21105/joss.01722/status.svg)](https://doi.org/10.21105/joss.01722) -->
+# [![Codecov test coverage](https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg)](https://codecov.io/gh/ShanaScogin/BayesPostEst?branch=master)
 
 An R package implementing functions to assist in generating and plotting postestimation quantities after estimating Bayesian regression models using MCMC.
 
@@ -263,10 +258,10 @@ mcmcTab(fit.rjags)
 ```
 
     ##   Variable Median    SD  Lower  Upper
-    ## 1     b[1] -0.459 0.083 -0.619 -0.297
-    ## 2     b[2]  0.236 0.111  0.011  0.447
-    ## 3     b[3]  0.060 0.111 -0.156  0.281
-    ## 4     b[4]  0.520 0.109  0.310  0.737
+    ## 1     b[1] -0.461 0.082 -0.619 -0.299
+    ## 2     b[2]  0.236 0.112  0.014  0.453
+    ## 3     b[3]  0.062 0.112 -0.156  0.281
+    ## 4     b[4]  0.520 0.110  0.305  0.739
 
 ``` r
 mcmcTab(fit.MCMCpack)
