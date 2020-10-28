@@ -2,11 +2,10 @@
 BayesPostEst
 ============
 
-[![Build Status](https://travis-ci.com/ShanaScogin/BayesPostEst.svg?branch=master)](https://travis-ci.com/ShanaScogin/BayesPostEst)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/BayesPostEst)](https://CRAN.R-project.org/package=BayesPostEst)
-[![DOI](https://joss.theoj.org/papers/10.21105/joss.01722/status.svg)](https://doi.org/10.21105/joss.01722)
-[![Codecov test coverage](https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg)](https://codecov.io/gh/ShanaScogin/BayesPostEst?branch=master)
-
+<!-- [![Build Status](https://travis-ci.com/ShanaScogin/BayesPostEst.svg?branch=master)](https://travis-ci.com/ShanaScogin/BayesPostEst) -->
+<!-- [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/BayesPostEst)](https://CRAN.R-project.org/package=BayesPostEst) -->
+<!-- [![DOI](https://joss.theoj.org/papers/10.21105/joss.01722/status.svg)](https://doi.org/10.21105/joss.01722) -->
+<!-- [![Codecov test coverage](https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg)](https://codecov.io/gh/ShanaScogin/BayesPostEst?branch=master) -->
 An R package implementing functions to assist in generating and plotting postestimation quantities after estimating Bayesian regression models using MCMC.
 
 Introduction
@@ -70,7 +69,7 @@ df$neuroticism <- (df$neuroticism - mean(df$neuroticism)) / (2 * sd(df$neurotici
 
 We estimate a Bayesian generalized linear model with the inverse logit link function, where
 
-*P**r*(Volunteering<sub>*i*</sub>)=logit<sup>−1</sup>(*β*<sub>1</sub> + *β*<sub>2</sub>Female<sub>*i*</sub> + *β*<sub>3</sub>Neuroticism<sub>*i*</sub> + *β*<sub>4</sub>Extraversion<sub>*i*</sub>)
+Pr(Volunteering<sub>*i*</sub>) = logit<sup>−1</sup>(*β*<sub>1</sub>+*β*<sub>2</sub>Female<sub>*i*</sub>+*β*<sub>3</sub>Neuroticism<sub>*i*</sub>+*β*<sub>4</sub>Extraversion<sub>*i*</sub>)
 
 BayesPostEst functions accommodate GLM estimates for both logit and probit link functions. The examples proceed with the logit link function. If we had estimated a probit regression, the corresponding argument `link` in relevant function calls would need to be set to `link = "probit"`. Otherwise, it is set to `link = "logit"` by default.
 
@@ -258,10 +257,10 @@ mcmcTab(fit.rjags)
 ```
 
     ##   Variable Median    SD  Lower  Upper
-    ## 1     b[1] -0.461 0.082 -0.619 -0.299
-    ## 2     b[2]  0.236 0.112  0.014  0.453
-    ## 3     b[3]  0.062 0.112 -0.156  0.281
-    ## 4     b[4]  0.520 0.110  0.305  0.739
+    ## 1     b[1] -0.461 0.083 -0.620 -0.298
+    ## 2     b[2]  0.237 0.111  0.018  0.451
+    ## 3     b[3]  0.064 0.112 -0.157  0.283
+    ## 4     b[4]  0.519 0.110  0.300  0.733
 
 ``` r
 mcmcTab(fit.MCMCpack)
@@ -475,7 +474,8 @@ ggplot(data = aveprob.female.jags,
   scale_y_discrete(labels = c("Male", "Female")) + 
   ylab("") + 
   xlab("Estimated probability of volunteering") + 
-  labs(title = "Probability based on average-case approach")
+  labs(title = "Probability based on average-case approach") +
+  theme_minimal()
 ```
 
     ## Picking joint bandwidth of 0.00327
@@ -506,7 +506,8 @@ ggplot(data = aveprob.extra.jags,
   xlab("Extraversion") + 
   ylab("Estimated probability of volunteering") + 
   ylim(0, 1) + 
-  labs(title = "Probability based on average-case approach")
+  labs(title = "Probability based on average-case approach") +
+  theme_minimal()
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-39-1.png)
@@ -540,7 +541,8 @@ ggplot(data = obsprob.female.jags,
   scale_y_discrete(labels = c("Male", "Female")) + 
   ylab("") + 
   xlab("Estimated probability of volunteering") + 
-  labs(title = "Probability based on observed-case approach")
+  labs(title = "Probability based on observed-case approach") +
+  theme_minimal()
 ```
 
     ## Picking joint bandwidth of 0.00318
@@ -571,7 +573,8 @@ ggplot(data = obsprob.extra.jags,
   xlab("Extraversion") + 
   ylab("Estimated probability of volunteering") + 
   ylim(0, 1) + 
-  labs(title = "Probability based on observed-case approach")
+  labs(title = "Probability based on observed-case approach") +
+  theme_minimal()
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-43-1.png)
@@ -626,7 +629,8 @@ ggplot(data = fdsum.jags,
   geom_segment(aes(x = lower_fd, xend = upper_fd, yend = VarName)) + 
   geom_vline(xintercept = 0) + 
   xlab("Change in Pr(Volunteering)") + 
-  ylab("")
+  ylab("") +
+  theme_minimal()
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-46-1.png)
@@ -648,7 +652,8 @@ The user can further customize the plot.
 
 ``` r
 p <- plot(fdfull.jags, ROPE = c(-0.01, 0.01))
-p + labs(title = "First differences") + ggridges::theme_ridges()
+p + labs(title = "First differences") + 
+  ggridges::theme_ridges()
 ```
 
     ## Picking joint bandwidth of 0.37
@@ -697,7 +702,8 @@ ggplot(data = as.data.frame(fitstats, what = "roc"), aes(x = x, y = y)) +
   geom_abline(intercept = 0, slope = 1, color = "gray") + 
   labs(title = "ROC curve") + 
   xlab("1 - Specificity") + 
-  ylab("Sensitivity")
+  ylab("Sensitivity") +
+  theme_minimal()
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-52-1.png)
@@ -709,7 +715,8 @@ ggplot(data = as.data.frame(fitstats, what = "prc"), aes(x = x, y = y)) +
   geom_line() + 
   labs(title = "Precision-Recall curve") + 
   xlab("Recall") + 
-  ylab("Precision")
+  ylab("Precision") +
+  theme_minimal()
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-53-1.png)
@@ -730,7 +737,8 @@ We can then plot the posterior density of the area under each curve.
 ggplot(as.data.frame(fitstats.fullsims), 
        aes(x = area_under_roc)) +
   geom_density() +
-  labs(title = "Area under the ROC curve")
+  labs(title = "Area under the ROC curve") +
+  theme_minimal()
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-55-1.png)
@@ -739,7 +747,8 @@ ggplot(as.data.frame(fitstats.fullsims),
 ggplot(as.data.frame(fitstats.fullsims), 
        aes(x = area_under_prc)) +
   geom_density() +
-  labs(title = "Area under the Precision-Recall curve")
+  labs(title = "Area under the Precision-Recall curve") +
+  theme_minimal()
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-56-1.png)

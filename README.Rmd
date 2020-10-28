@@ -3,10 +3,10 @@ output: rmarkdown::github_document
 ---
 # BayesPostEst 
 
-<!-- # [![Build Status](https://travis-ci.com/ShanaScogin/BayesPostEst.svg?branch=master)](https://travis-ci.com/ShanaScogin/BayesPostEst) -->
-<!-- # [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/BayesPostEst)](https://CRAN.R-project.org/package=BayesPostEst) -->
-<!-- # [![DOI](https://joss.theoj.org/papers/10.21105/joss.01722/status.svg)](https://doi.org/10.21105/joss.01722) -->
-<!-- # [![Codecov test coverage](https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg)](https://codecov.io/gh/ShanaScogin/BayesPostEst?branch=master) -->
+<!-- [![Build Status](https://travis-ci.com/ShanaScogin/BayesPostEst.svg?branch=master)](https://travis-ci.com/ShanaScogin/BayesPostEst) -->
+<!-- [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/BayesPostEst)](https://CRAN.R-project.org/package=BayesPostEst) -->
+<!-- [![DOI](https://joss.theoj.org/papers/10.21105/joss.01722/status.svg)](https://doi.org/10.21105/joss.01722) -->
+<!-- [![Codecov test coverage](https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg)](https://codecov.io/gh/ShanaScogin/BayesPostEst?branch=master) -->
 
 An R package implementing functions to assist in generating and plotting postestimation quantities after estimating Bayesian regression models using MCMC.
 
@@ -67,7 +67,7 @@ df$neuroticism <- (df$neuroticism - mean(df$neuroticism)) / (2 * sd(df$neurotici
 We estimate a Bayesian generalized linear model with the inverse logit link function, where
 
 $$
-Pr(\text{Volunteering}_i) = \text{logit}^{-1}(\beta_1 + \beta_2 \text{Female}_i +  \beta_3 \text{Neuroticism}_i + \beta_4 \text{Extraversion}_i)
+\text{Pr}\left(\text{Volunteering}_i\right) = \text{logit}^{-1}\left(\beta_1 + \beta_2 \text{Female}_i +  \beta_3 \text{Neuroticism}_i + \beta_4 \text{Extraversion}_i\right)
 $$
 
 BayesPostEst functions accommodate GLM estimates for both logit and probit link functions. The examples proceed with the logit link function. If we had estimated a probit regression, the corresponding argument `link` in relevant function calls would need to be set to `link = "probit"`. Otherwise, it is set to `link = "logit"` by default.
@@ -393,7 +393,8 @@ ggplot(data = aveprob.female.jags,
   scale_y_discrete(labels = c("Male", "Female")) + 
   ylab("") + 
   xlab("Estimated probability of volunteering") + 
-  labs(title = "Probability based on average-case approach")
+  labs(title = "Probability based on average-case approach") +
+  theme_minimal()
 ```
 
 ### Extraversion
@@ -420,7 +421,8 @@ ggplot(data = aveprob.extra.jags,
   xlab("Extraversion") + 
   ylab("Estimated probability of volunteering") + 
   ylim(0, 1) + 
-  labs(title = "Probability based on average-case approach")
+  labs(title = "Probability based on average-case approach") +
+  theme_minimal()
 ```
 
 ## `mcmcObsProb`
@@ -451,7 +453,8 @@ ggplot(data = obsprob.female.jags,
   scale_y_discrete(labels = c("Male", "Female")) + 
   ylab("") + 
   xlab("Estimated probability of volunteering") + 
-  labs(title = "Probability based on observed-case approach")
+  labs(title = "Probability based on observed-case approach") +
+  theme_minimal()
 ```
 
 ### Extraversion
@@ -478,7 +481,8 @@ ggplot(data = obsprob.extra.jags,
   xlab("Extraversion") + 
   ylab("Estimated probability of volunteering") + 
   ylim(0, 1) + 
-  labs(title = "Probability based on observed-case approach")
+  labs(title = "Probability based on observed-case approach") +
+  theme_minimal()
 ```
 
 # First differences
@@ -516,7 +520,8 @@ ggplot(data = fdsum.jags,
   geom_segment(aes(x = lower_fd, xend = upper_fd, yend = VarName)) + 
   geom_vline(xintercept = 0) + 
   xlab("Change in Pr(Volunteering)") + 
-  ylab("")
+  ylab("") +
+  theme_minimal()
 ```
 
 ## Plotting `mcmcFD` objects
@@ -531,7 +536,8 @@ The user can further customize the plot.
 
 ```{r, warning = FALSE}
 p <- plot(fdfull.jags, ROPE = c(-0.01, 0.01))
-p + labs(title = "First differences") + ggridges::theme_ridges()
+p + labs(title = "First differences") + 
+  ggridges::theme_ridges()
 ```
 
 # Model fit
@@ -568,7 +574,8 @@ ggplot(data = as.data.frame(fitstats, what = "roc"), aes(x = x, y = y)) +
   geom_abline(intercept = 0, slope = 1, color = "gray") + 
   labs(title = "ROC curve") + 
   xlab("1 - Specificity") + 
-  ylab("Sensitivity")
+  ylab("Sensitivity") +
+  theme_minimal()
 ```
 
 ... as well as the precision-recall curve.
@@ -578,7 +585,8 @@ ggplot(data = as.data.frame(fitstats, what = "prc"), aes(x = x, y = y)) +
   geom_line() + 
   labs(title = "Precision-Recall curve") + 
   xlab("Recall") + 
-  ylab("Precision")
+  ylab("Precision") +
+  theme_minimal()
 ```
 
 To plot the posterior distribution of the area under the curves, users set the `fullsims` argument to `TRUE`. Unless a user wishes to plot credible intervals around the ROC and PR curves themselves, we recommend keeping `curves` at `FALSE` to avoid long computation time. 
@@ -597,14 +605,16 @@ We can then plot the posterior density of the area under each curve.
 ggplot(as.data.frame(fitstats.fullsims), 
        aes(x = area_under_roc)) +
   geom_density() +
-  labs(title = "Area under the ROC curve")
+  labs(title = "Area under the ROC curve") +
+  theme_minimal()
 ```
 
 ```{r, warning = FALSE}
 ggplot(as.data.frame(fitstats.fullsims), 
        aes(x = area_under_prc)) +
   geom_density() +
-  labs(title = "Area under the Precision-Recall curve")
+  labs(title = "Area under the Precision-Recall curve") +
+  theme_minimal()
 ```
 
 # What's Happening

@@ -421,7 +421,8 @@ ggplot(data = aveprob.female.jags,
   scale_y_discrete(labels = c("Male", "Female")) + 
   ylab("") + 
   xlab("Estimated probability of volunteering") + 
-  labs(title = "Probability based on average-case approach")
+  labs(title = "Probability based on average-case approach") +
+  theme_minimal()
 ```
 
 ### Extraversion
@@ -448,7 +449,8 @@ ggplot(data = aveprob.extra.jags,
   xlab("Extraversion") + 
   ylab("Estimated probability of volunteering") + 
   ylim(0, 1) + 
-  labs(title = "Probability based on average-case approach")
+  labs(title = "Probability based on average-case approach") +
+  theme_minimal()
 ```
 
 ## `mcmcObsProb`
@@ -479,7 +481,8 @@ ggplot(data = obsprob.female.jags,
   scale_y_discrete(labels = c("Male", "Female")) + 
   ylab("") + 
   xlab("Estimated probability of volunteering") + 
-  labs(title = "Probability based on observed-case approach")
+  labs(title = "Probability based on observed-case approach") +
+  theme_minimal()
 ```
 
 ### Extraversion
@@ -505,7 +508,8 @@ ggplot(data = obsprob.extra.jags,
   xlab("Extraversion") + 
   ylab("Estimated probability of volunteering") + 
   ylim(0, 1) + 
-  labs(title = "Probability based on observed-case approach")
+  labs(title = "Probability based on observed-case approach") +
+  theme_minimal()
 ```
 
 # First differences
@@ -543,7 +547,8 @@ ggplot(data = fdsum.jags,
   geom_segment(aes(x = lower_fd, xend = upper_fd, yend = VarName)) + 
   geom_vline(xintercept = 0) + 
   xlab("Change in Pr(Volunteering)") + 
-  ylab("")
+  ylab("") +
+  theme_minimal()
 ```
 
 ## Plotting `mcmcFD` objects
@@ -558,7 +563,8 @@ The user can further customize the plot.
 
 ```{r}
 p <- plot(fdfull.jags, ROPE = c(-0.01, 0.01))
-p + labs(title = "First differences") + ggridges::theme_ridges()
+p + labs(title = "First differences") + 
+  ggridges::theme_ridges()
 ```
 
 # Model fit
@@ -597,7 +603,8 @@ ggplot(data = as.data.frame(fitstats, what = "roc"), aes(x = x, y = y)) +
   geom_abline(intercept = 0, slope = 1, color = "gray") + 
   labs(title = "ROC curve") + 
   xlab("1 - Specificity") + 
-  ylab("Sensitivity")
+  ylab("Sensitivity") +
+  theme_minimal()
 ```
 
 ... as well as the precision-recall curve.
@@ -607,7 +614,8 @@ ggplot(data = as.data.frame(fitstats, what = "prc"), aes(x = x, y = y)) +
   geom_line() + 
   labs(title = "Precision-Recall curve") + 
   xlab("Recall") + 
-  ylab("Precision")
+  ylab("Precision") +
+  theme_minimal()
 ```
 
 To plot the posterior distribution of the area under the curves, users set the `fullsims` argument to `TRUE`. Unless a user wishes to plot credible intervals around the ROC and PR curves themselves, we recommend keeping `curves` at `FALSE` to avoid long computation time. 
@@ -626,14 +634,16 @@ We can then plot the posterior density of the area under each curve.
 ggplot(as.data.frame(fitstats.fullsims), 
        aes(x = area_under_roc)) +
   geom_density() +
-  labs(title = "Area under the ROC curve")
+  labs(title = "Area under the ROC curve") +
+  theme_minimal()
 ```
 
 ```{r}
 ggplot(as.data.frame(fitstats.fullsims), 
        aes(x = area_under_prc)) +
   geom_density() +
-  labs(title = "Area under the Precision-Recall curve")
+  labs(title = "Area under the Precision-Recall curve") +
+  theme_minimal()
 ```
 
 ```{r echo=FALSE, results='hide', message=FALSE}

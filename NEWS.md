@@ -5,7 +5,8 @@
   + The function has now become a generic with S3 methods for different types of input, e.g. "rjags" objects created by [R2jags::jags()] or "stanfit" via [rstan::stan()]. The default method takes a matrix of predicted probabilities and vector of observed outcomes as input, thus allowing any posterior sampling method to be accommodated. (#5)
   + Added print, plot, as.data.frame methods for "mcmcRocPrc" objects created with mcmcRocPrc(). (#32)
 * Fixed several errors in documentation code examples. (#64)
-* Added images to readme
+* Added README.rmd to render images.
+* Updated plots to a minimalist theme in documentation
 
 # BayesPostEst 0.3.0
 
