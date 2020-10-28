@@ -11,6 +11,7 @@ mod.rds
 README.Rmd
 README.log
 README.tex
+README.pdf
 
 # if a pkgdown site has been locally built, don't put it on git; 
 # Travis-CI will take care of deployment
