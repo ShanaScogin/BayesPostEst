@@ -2,10 +2,16 @@
 BayesPostEst
 ============
 
-<!-- # [![Build Status](https://travis-ci.com/ShanaScogin/BayesPostEst.svg?branch=master)](https://travis-ci.com/ShanaScogin/BayesPostEst) -->
+[![Build Status](https://travis-ci.com/ShanaScogin/BayesPostEst.svg?branch=master)](https://travis-ci.com/ShanaScogin/BayesPostEst)
+===================================================================================================================================
+
 <!-- # [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/BayesPostEst)](https://CRAN.R-project.org/package=BayesPostEst) -->
-<!-- # [![DOI](https://joss.theoj.org/papers/10.21105/joss.01722/status.svg)](https://doi.org/10.21105/joss.01722) -->
-<!-- # [![Codecov test coverage](https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg)](https://codecov.io/gh/ShanaScogin/BayesPostEst?branch=master) -->
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.01722/status.svg)](https://doi.org/10.21105/joss.01722)
+===========================================================================================================
+
+[![Codecov test coverage](https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg)](https://codecov.io/gh/ShanaScogin/BayesPostEst?branch=master)
+======================================================================================================================================================================
+
 An R package implementing functions to assist in generating and plotting postestimation quantities after estimating Bayesian regression models using MCMC.
 
 Introduction
@@ -34,10 +40,6 @@ Once you have installed the package, you can access it by calling:
 ``` r
 library("BayesPostEst")
 ```
-
-    ## Registered S3 method overwritten by 'GGally':
-    ##   method from   
-    ##   +.gg   ggplot2
 
 After the package is loaded, check out the `?BayesPostEst` to see a help file.
 
@@ -124,34 +126,12 @@ Now, fit the model.
 
 ``` r
 library("R2jags")
-```
-
-    ## Loading required package: rjags
-
-    ## Loading required package: coda
-
-    ## Warning: package 'coda' was built under R version 4.0.2
-
-    ## Linked to JAGS 4.3.0
-
-    ## Loaded modules: basemod,bugs
-
-    ## 
-    ## Attaching package: 'R2jags'
-
-    ## The following object is masked from 'package:coda':
-    ## 
-    ##     traceplot
-
-``` r
 set.seed(123)
 
 fit.jags <- jags(data = dl, inits = inits.jags, 
   parameters.to.save = params.jags, n.chains = 4, n.iter = 2000, 
   n.burnin = 1000, model.file = "mod.jags")
 ```
-
-    ## module glm loaded
 
     ## Compiling model graph
     ##    Resolving undeclared variables
@@ -194,22 +174,6 @@ We estimate the same model using [MCMCpack](https://cran.r-project.org/package=M
 
 ``` r
 library("MCMCpack")
-```
-
-    ## Loading required package: MASS
-
-    ## ##
-    ## ## Markov Chain Monte Carlo Package (MCMCpack)
-
-    ## ## Copyright (C) 2003-2020 Andrew D. Martin, Kevin M. Quinn, and Jong Hee Park
-
-    ## ##
-    ## ## Support provided by the U.S. National Science Foundation
-
-    ## ## (Grants SES-0350646 and SES-0350613)
-    ## ##
-
-``` r
 fit.MCMCpack <- MCMClogit(volunteer ~ female + neuroticism + extraversion, 
                           data = df, burning = 1000, mcmc = 2000, seed = 123,
                           b0 = 0, B0 = 0.1)
@@ -247,31 +211,6 @@ We then load [rstan](https://cran.r-project.org/package=rstan)...
 
 ``` r
 library("rstan")
-```
-
-    ## Loading required package: StanHeaders
-
-    ## Loading required package: ggplot2
-
-    ## rstan (Version 2.19.3, GitRev: 2e1f913d3ca3)
-
-    ## For execution on a local, multicore CPU with excess RAM we recommend calling
-    ## options(mc.cores = parallel::detectCores()).
-    ## To avoid recompilation of unchanged Stan programs, we recommend calling
-    ## rstan_options(auto_write = TRUE)
-
-    ## 
-    ## Attaching package: 'rstan'
-
-    ## The following object is masked from 'package:R2jags':
-    ## 
-    ##     traceplot
-
-    ## The following object is masked from 'package:coda':
-    ## 
-    ##     traceplot
-
-``` r
 rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 ```
@@ -294,36 +233,6 @@ Lastly, we use the [rstanarm](https://cran.r-project.org/package=rstanarm) inter
 
 ``` r
 library("rstanarm")
-```
-
-    ## Loading required package: Rcpp
-
-    ## Warning: package 'Rcpp' was built under R version 4.0.2
-
-    ## rstanarm (Version 2.19.3, packaged: 2020-02-11 05:16:41 UTC)
-
-    ## - Do not expect the default priors to remain the same in future rstanarm versions.
-
-    ## Thus, R scripts should specify priors explicitly, even if they are just the defaults.
-
-    ## - For execution on a local, multicore CPU with excess RAM we recommend calling
-
-    ## options(mc.cores = parallel::detectCores())
-
-    ## - bayesplot theme set to bayesplot::theme_default()
-
-    ##    * Does _not_ affect other ggplot2 plots
-
-    ##    * See ?bayesplot_theme_set for details on theme setting
-
-    ## 
-    ## Attaching package: 'rstanarm'
-
-    ## The following object is masked from 'package:rstan':
-    ## 
-    ##     loo
-
-``` r
 fit.rstanarm <- stan_glm(volunteer ~ female + neuroticism + extraversion, 
                           data = df, family = binomial(link = "logit"),
                          prior = normal(0, 3),
@@ -354,10 +263,10 @@ mcmcTab(fit.rjags)
 ```
 
     ##   Variable Median    SD  Lower  Upper
-    ## 1     b[1] -0.457 0.082 -0.621 -0.297
-    ## 2     b[2]  0.235 0.111  0.014  0.453
-    ## 3     b[3]  0.065 0.110 -0.154  0.275
-    ## 4     b[4]  0.519 0.112  0.305  0.741
+    ## 1     b[1] -0.459 0.083 -0.619 -0.297
+    ## 2     b[2]  0.236 0.111  0.011  0.447
+    ## 3     b[3]  0.060 0.111 -0.156  0.281
+    ## 4     b[4]  0.520 0.109  0.310  0.737
 
 ``` r
 mcmcTab(fit.MCMCpack)
@@ -808,8 +717,6 @@ ggplot(data = as.data.frame(fitstats, what = "prc"), aes(x = x, y = y)) +
   ylab("Precision")
 ```
 
-    ## Warning: Removed 1 row(s) containing missing values (geom_path).
-
 ![](README_files/figure-markdown_github/unnamed-chunk-53-1.png)
 
 To plot the posterior distribution of the area under the curves, users set the `fullsims` argument to `TRUE`. Unless a user wishes to plot credible intervals around the ROC and PR curves themselves, we recommend keeping `curves` at `FALSE` to avoid long computation time.
@@ -851,8 +758,6 @@ Contact
 =======
 
 Please submit an [issue](https://github.com/ShanaScogin/BayesPostEst/issues) if you encounter any bugs or problems with the package. Feel free to check out [Johannes Karreth's website](http://www.jkarreth.net) for more resources on Bayesian estimation.
-
-    ## Warning in rm(mod.rds): object 'mod.rds' not found
 
 References
 ==========
