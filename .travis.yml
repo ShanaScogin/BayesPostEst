@@ -7,9 +7,6 @@ cache: packages
 apt_packages:
   - jags
   - libv8-dev
-  
-# ignoring the vignettes
-r_check_args: "--no-build-vignettes --ignore-vignettes"
 
 # set up vars for Stan
 before_install:
