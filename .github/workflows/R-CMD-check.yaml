@@ -63,9 +63,20 @@ jobs:
           do
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
+      
+      - name: Install JAGS macOS
         if: runner.os == 'macOS'
         run: |
+          rm '/usr/local/bin/gfortran'
           brew install jags
+          
+      - name: Install JAGS (windows-latest)
+        if: runner.os == 'Windows'
+        run: |
+          curl.exe -o wjags.exe --url https://deac-fra.dl.sourceforge.net/project/mcmc-jags/JAGS/4.x/Windows/JAGS-4.2.0-Rtools33.exe
+          wjags.exe /S
+          del wjags.exe
+        shell: cmd
 
       - name: Install dependencies
         run: |
