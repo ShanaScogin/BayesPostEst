@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Simulated data for examples — sim_data • BayesPostEst</title>
+<title>Constructor for mcmcRocPrc objects — new_mcmcRocPrc • BayesPostEst</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,11 @@
 
 
 
-<meta property="og:title" content="Simulated data for examples — sim_data" />
-<meta property="og:description" content="Simulated data to fit example models against" />
+<meta property="og:title" content="Constructor for mcmcRocPrc objects — new_mcmcRocPrc" />
+<meta property="og:description" content="This function actually does the heavy lifting once we have a matrix of
+predicted probabilities from a model, plus the vector of observed outcomes.
+The reason to have it here in a single function is that we don't replicate
+it in each function that accomodates a JAGS, BUGS, RStan, etc. object." />
 
 
 <meta name="robots" content="noindex">
@@ -123,36 +126,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Simulated data for examples</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ShanaScogin/BayesPostEst/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>sim_data.Rd</code></div>
+    <h1>Constructor for mcmcRocPrc objects</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ShanaScogin/BayesPostEst/blob/master/R/mcmcRocPrc.R'><code>R/mcmcRocPrc.R</code></a></small>
+    <div class="hidden name"><code>new_mcmcRocPrc.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Simulated data to fit example models against</p>
+    <p>This function actually does the heavy lifting once we have a matrix of
+predicted probabilities from a model, plus the vector of observed outcomes.
+The reason to have it here in a single function is that we don't replicate
+it in each function that accomodates a JAGS, BUGS, RStan, etc. object.</p>
     </div>
 
-    <pre class="usage"><span class='va'>sim_data</span></pre>
+    <pre class="usage"><span class='fu'>new_mcmcRocPrc</span><span class='op'>(</span><span class='va'>pred_prob</span>, <span class='va'>yvec</span>, <span class='va'>curves</span>, <span class='va'>fullsims</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>pred_prob</th>
+      <td><p>a <code>\[N, iter\]</code> matrix of predicted probabilities</p></td>
+    </tr>
+    <tr>
+      <th>yvec</th>
+      <td><p>a <code><a href='https://rdrr.io/r/base/numeric.html'>numeric(N)</a></code> vector of observed outcomes</p></td>
+    </tr>
+    <tr>
+      <th>curves</th>
+      <td><p>include curve data in output?</p></td>
+    </tr>
+    <tr>
+      <th>fullsims</th>
+      <td><p>collapse posterior samples into single summary?</p></td>
+    </tr>
+    </table>
 
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>a data.frame</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## simulating data</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123456</span><span class='op'>)</span>
-<span class='va'>b0</span> <span class='op'>&lt;-</span> <span class='fl'>0.2</span> <span class='co'># true value for the intercept</span>
-<span class='va'>b1</span> <span class='op'>&lt;-</span> <span class='fl'>0.5</span> <span class='co'># true value for first beta</span>
-<span class='va'>b2</span> <span class='op'>&lt;-</span> <span class='fl'>0.7</span> <span class='co'># true value for second beta</span>
-<span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>500</span> <span class='co'># sample size</span>
-<span class='va'>X1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>X2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>Z</span> <span class='op'>&lt;-</span> <span class='va'>b0</span> <span class='op'>+</span> <span class='va'>b1</span> <span class='op'>*</span> <span class='va'>X1</span> <span class='op'>+</span> <span class='va'>b2</span> <span class='op'>*</span> <span class='va'>X2</span>
-<span class='va'>pr</span> <span class='op'>&lt;-</span> <span class='fl'>1</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>Z</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># inv logit function</span>
-<span class='va'>Y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='fl'>1</span>, <span class='va'>pr</span><span class='op'>)</span> 
-<span class='va'>sim_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>X1</span>, <span class='va'>X2</span>, <span class='va'>Y</span><span class='op'>)</span><span class='op'>)</span>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

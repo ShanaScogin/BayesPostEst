@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Simulated data for examples — sim_data • BayesPostEst</title>
+<title>Compute ROC and PR curve points — compute_roc • BayesPostEst</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="Simulated data for examples — sim_data" />
-<meta property="og:description" content="Simulated data to fit example models against" />
+<meta property="og:title" content="Compute ROC and PR curve points — compute_roc" />
+<meta property="og:description" content="Faster replacements for calculating ROC and PR curve data than with
+ROCR::prediction() and ROCR::performance()" />
 
 
 <meta name="robots" content="noindex">
@@ -123,36 +124,31 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Simulated data for examples</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ShanaScogin/BayesPostEst/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>sim_data.Rd</code></div>
+    <h1>Compute ROC and PR curve points</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ShanaScogin/BayesPostEst/blob/master/R/mcmcRocPrc.R'><code>R/mcmcRocPrc.R</code></a></small>
+    <div class="hidden name"><code>compute_roc.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Simulated data to fit example models against</p>
+    <p>Faster replacements for calculating ROC and PR curve data than with
+<code><a href='http://ipa-tys.github.io/ROCR/reference/prediction.html'>ROCR::prediction()</a></code> and <code><a href='http://ipa-tys.github.io/ROCR/reference/performance.html'>ROCR::performance()</a></code></p>
     </div>
 
-    <pre class="usage"><span class='va'>sim_data</span></pre>
+    <pre class="usage"><span class='fu'>compute_roc</span><span class='op'>(</span><span class='va'>yvec</span>, <span class='va'>pvec</span><span class='op'>)</span>
+
+<span class='fu'>compute_pr</span><span class='op'>(</span><span class='va'>yvec</span>, <span class='va'>pvec</span><span class='op'>)</span></pre>
 
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>a data.frame</p>
+    <p>Replacements to use instead of a combination of <code><a href='http://ipa-tys.github.io/ROCR/reference/prediction.html'>ROCR::prediction()</a></code>
+and <code><a href='http://ipa-tys.github.io/ROCR/reference/performance.html'>ROCR::performance()</a></code> to calculate ROC and PR curves. These functions are
+about 10 to 20 times faster when using <code><a href='print.mcmcRocPrc.html'>mcmcRocPrc()</a></code> with <code>curves = TRUE</code>
+and/or <code>fullsims = TRUE</code>.</p>
+<p>See this <a href='https://github.com/ShanaScogin/BayesPostEst/issues/25'>issue on GH (ShanaScogin/BayesPostEst#25)</a> for more general details.</p>
+<p>And <a href='https://github.com/andybega/BayesPostEst/blob/f1da23b9db86461d4f9c671d9393265dd10578c5/tests/profile-mcmcRocPrc.md'>here is a note</a> with specific performance benchmarks, compared to the
+old approach relying on ROCR.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## simulating data</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123456</span><span class='op'>)</span>
-<span class='va'>b0</span> <span class='op'>&lt;-</span> <span class='fl'>0.2</span> <span class='co'># true value for the intercept</span>
-<span class='va'>b1</span> <span class='op'>&lt;-</span> <span class='fl'>0.5</span> <span class='co'># true value for first beta</span>
-<span class='va'>b2</span> <span class='op'>&lt;-</span> <span class='fl'>0.7</span> <span class='co'># true value for second beta</span>
-<span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>500</span> <span class='co'># sample size</span>
-<span class='va'>X1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>X2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>Z</span> <span class='op'>&lt;-</span> <span class='va'>b0</span> <span class='op'>+</span> <span class='va'>b1</span> <span class='op'>*</span> <span class='va'>X1</span> <span class='op'>+</span> <span class='va'>b2</span> <span class='op'>*</span> <span class='va'>X2</span>
-<span class='va'>pr</span> <span class='op'>&lt;-</span> <span class='fl'>1</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>Z</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># inv logit function</span>
-<span class='va'>Y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='fl'>1</span>, <span class='va'>pr</span><span class='op'>)</span> 
-<span class='va'>sim_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>X1</span>, <span class='va'>X2</span>, <span class='va'>Y</span><span class='op'>)</span><span class='op'>)</span>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

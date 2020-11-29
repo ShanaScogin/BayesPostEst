@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ROC and Precision-Recall Curves using Bayesian MCMC estimates — mcmcRocPrc • BayesPostEst</title>
+<title>ROC and Precision-Recall Curves using Bayesian MCMC estimates — print.mcmcRocPrc • BayesPostEst</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,11 @@
 
 
 
-<meta property="og:title" content="ROC and Precision-Recall Curves using Bayesian MCMC estimates — mcmcRocPrc" />
+<meta property="og:title" content="ROC and Precision-Recall Curves using Bayesian MCMC estimates — print.mcmcRocPrc" />
 <meta property="og:description" content="Generate ROC and Precision-Recall curves after fitting a Bayesian logit or
-probit regression using jags" />
+probit regression using rstan::stan(), rstanarm::stan_glm(),
+R2jags::jags(), R2WinBUGS::bugs(), MCMCpack::MCMClogit(), or other
+functions that provide samples from a posterior density." />
 
 
 <meta name="robots" content="noindex">
@@ -125,24 +127,139 @@ probit regression using jags" />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>ROC and Precision-Recall Curves using Bayesian MCMC estimates</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ShanaScogin/BayesPostEst/blob/master/R/mcmcRocPrc.R'><code>R/mcmcRocPrc.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/ShanaScogin/BayesPostEst/blob/master/R/mcmcRocPrc-methods.R'><code>R/mcmcRocPrc-methods.R</code></a>, <a href='https://github.com/ShanaScogin/BayesPostEst/blob/master/R/mcmcRocPrc.R'><code>R/mcmcRocPrc.R</code></a></small>
     <div class="hidden name"><code>mcmcRocPrc.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Generate ROC and Precision-Recall curves after fitting a Bayesian logit or
-probit regression using <code><a href='https://rdrr.io/pkg/R2jags/man/jags.html'>jags</a></code></p>
+probit regression using <code><a href='https://mc-stan.org/rstan/reference/stan.html'>rstan::stan()</a></code>, <code><a href='https://mc-stan.org/rstanarm/reference/stan_glm.html'>rstanarm::stan_glm()</a></code>,
+<code><a href='https://rdrr.io/pkg/R2jags/man/jags.html'>R2jags::jags()</a></code>, <code><a href='https://rdrr.io/pkg/R2WinBUGS/man/bugs.html'>R2WinBUGS::bugs()</a></code>, <code><a href='https://rdrr.io/pkg/MCMCpack/man/MCMClogit.html'>MCMCpack::MCMClogit()</a></code>, or other
+functions that provide samples from a posterior density.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mcmcRocPrc</span>(<span class='no'>object</span>, <span class='no'>yname</span>, <span class='no'>xnames</span>, <span class='no'>curves</span>, <span class='no'>fullsims</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for mcmcRocPrc</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for mcmcRocPrc</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, n <span class='op'>=</span> <span class='fl'>40</span>, alpha <span class='op'>=</span> <span class='fl'>0.5</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for mcmcRocPrc</span>
+<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  row.names <span class='op'>=</span> <span class='cn'>NULL</span>,
+  optional <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  what <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"auc"</span>, <span class='st'>"roc"</span>, <span class='st'>"prc"</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='fu'>mcmcRocPrc</span><span class='op'>(</span><span class='va'>object</span>, curves <span class='op'>=</span> <span class='cn'>FALSE</span>, fullsims <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>mcmcRocPrc</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>curves</span>, <span class='va'>fullsims</span>, <span class='va'>yvec</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for jags</span>
+<span class='fu'>mcmcRocPrc</span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  curves <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  fullsims <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>yname</span>,
+  <span class='va'>xnames</span>,
+  <span class='va'>posterior_samples</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for rjags</span>
+<span class='fu'>mcmcRocPrc</span><span class='op'>(</span><span class='va'>object</span>, curves <span class='op'>=</span> <span class='cn'>FALSE</span>, fullsims <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>yname</span>, <span class='va'>xnames</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for runjags</span>
+<span class='fu'>mcmcRocPrc</span><span class='op'>(</span><span class='va'>object</span>, curves <span class='op'>=</span> <span class='cn'>FALSE</span>, fullsims <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>yname</span>, <span class='va'>xnames</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for stanfit</span>
+<span class='fu'>mcmcRocPrc</span><span class='op'>(</span><span class='va'>object</span>, curves <span class='op'>=</span> <span class='cn'>FALSE</span>, fullsims <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>data</span>, <span class='va'>xnames</span>, <span class='va'>yname</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for stanreg</span>
+<span class='fu'>mcmcRocPrc</span><span class='op'>(</span><span class='va'>object</span>, curves <span class='op'>=</span> <span class='cn'>FALSE</span>, fullsims <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for brmsfit</span>
+<span class='fu'>mcmcRocPrc</span><span class='op'>(</span><span class='va'>object</span>, curves <span class='op'>=</span> <span class='cn'>FALSE</span>, fullsims <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for bugs</span>
+<span class='fu'>mcmcRocPrc</span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  curves <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  fullsims <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>data</span>,
+  <span class='va'>xnames</span>,
+  <span class='va'>yname</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"logit"</span>, <span class='st'>"probit"</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for mcmc</span>
+<span class='fu'>mcmcRocPrc</span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  curves <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  fullsims <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>data</span>,
+  <span class='va'>xnames</span>,
+  <span class='va'>yname</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"logit"</span>, <span class='st'>"probit"</span><span class='op'>)</span>,
+  force <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>x</th>
+      <td><p>a <code>mcmcRocPrc()</code> object</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Used by methods</p></td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td><p>plot method: if `fullsims = TRUE`, how many sample curves to draw?</p></td>
+    </tr>
+    <tr>
+      <th>alpha</th>
+      <td><p>plot method: alpha value for plotting sampled curves; between 0 and 1</p></td>
+    </tr>
+    <tr>
+      <th>row.names</th>
+      <td><p>see [base::as.data.frame()]</p></td>
+    </tr>
+    <tr>
+      <th>optional</th>
+      <td><p>see [base::as.data.frame()]</p></td>
+    </tr>
+    <tr>
+      <th>what</th>
+      <td><p>which information to extract and convert to a data frame?</p></td>
+    </tr>
+    <tr>
       <th>object</th>
-      <td><p>A "rjags" object (see <code><a href='https://rdrr.io/pkg/R2jags/man/jags.html'>jags</a></code>) for a fitted binary
-choice model.</p></td>
+      <td><p>A fitted binary choice model, e.g. "rjags" object
+(see <code><a href='https://rdrr.io/pkg/R2jags/man/jags.html'>R2jags::jags()</a></code>), or a <code>[N, iter]</code> matrix of predicted probabilites.</p></td>
+    </tr>
+    <tr>
+      <th>curves</th>
+      <td><p>logical indicator of whether or not to return values to plot
+the ROC or Precision-Recall curves. If set to <code>FALSE</code> (default),
+results are returned as a list without the extra values.</p></td>
+    </tr>
+    <tr>
+      <th>fullsims</th>
+      <td><p>logical indicator of whether full object (based on all MCMC
+draws rather than their average) will be returned. Default is <code>FALSE</code>.
+Note: If <code>TRUE</code> is chosen, the function takes notably longer to execute.</p></td>
+    </tr>
+    <tr>
+      <th>yvec</th>
+      <td><p>A <code><a href='https://rdrr.io/r/base/numeric.html'>numeric(N)</a></code> vector of observed outcomes.</p></td>
     </tr>
     <tr>
       <th>yname</th>
@@ -157,43 +274,108 @@ A character vector of the independent variable names, should match the
 corresponding names in the JAGS data object.</p></td>
     </tr>
     <tr>
-      <th>curves</th>
-      <td><p>logical indicator of whether or not to return values to plot
-the ROC or Precision-Recall curves. If set to <code>FALSE</code> (default),
-results are returned as a list without the extra values.</p></td>
+      <th>posterior_samples</th>
+      <td><p>a "mcmc" object with the posterior samples</p></td>
     </tr>
     <tr>
-      <th>fullsims</th>
-      <td><p>logical indicator of whether full object (based on all MCMC
-draws rather than their average) will be returned. Default is <code>FALSE</code>.
-Note: If <code>TRUE</code> is chosen, the function takes notably longer to execute.</p></td>
+      <th>data</th>
+      <td><p>the data that was used in the `stan(data = ?, ...)` call</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>"logit" or "probit"</p></td>
+    </tr>
+    <tr>
+      <th>force</th>
+      <td><p>for MCMCpack models, suppress warning if the model does not 
+appear to be a binary choice model?</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a list; the specific structure depends on the combination
-of the "curves" and "fullsims" argument values.</p>
+    <p>Returns a list with length 2 or 4, depending on the on the "curves"
+and "fullsims" argument values:</p><ul>
+<li><p>"area_under_roc": <code><a href='https://rdrr.io/r/base/numeric.html'>numeric()</a></code>; either length 1 if <code>fullsims = FALSE</code>, or
+one value for each posterior sample otherwise</p></li>
+<li><p>"area_under_prc": <code><a href='https://rdrr.io/r/base/numeric.html'>numeric()</a></code>; either length 1 if <code>fullsims = FALSE</code>, or
+one value for each posterior sample otherwise</p></li>
+<li><p>"prc_dat": only if <code>curves = TRUE</code>; a list with length 1 if
+<code>fullsims = FALSE</code>, longer otherwise</p></li>
+<li><p>"roc_dat": only if <code>curves = TRUE</code>; a list with length 1 if
+<code>fullsims = FALSE</code>, longer otherwise</p></li>
+</ul>
+
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>If only the average AUC-ROC and PR are of interest, setting
+<code>curves = FALSE</code> and <code>fullsims = FALSE</code> can greatly speed up calculation
+time. The curve data (<code>curves = TRUE</code>) is needed for plotting. The plot
+method will always plot both the ROC and PR curves, but the underlying
+data can easily be extracted from the output for your own plotting;
+see the documentation of the value returned below.</p>
+<p>The default method works with a matrix of predicted probabilities and the
+vector of observed incomes as input. Other methods accommodate some of the
+common Bayesian modeling packages like rstan (which returns class "stanfit"),
+rstanarm ("stanreg"), R2jags ("jags"), R2WinBUGS ("bugs"), and
+MCMCpack ("mcmc"). Even if a package-specific method is not implemented,
+the default method can always be used as a fallback by manually calculating
+the matrix of predicted probabilities for each posterior sample.</p>
+<p>Note that MCMCpack returns generic "mcmc" output that is annotated with
+some additional information as attributes, including the original function
+call. There is no inherent way to distinguish any other kind of "mcmc"
+object from one generated by a proper MCMCpack modeling function, but as a
+basic precaution, <code>mcmcRocPrc()</code> will check the saved call and return an
+error if the function called was not <code><a href='https://rdrr.io/pkg/MCMCpack/man/MCMClogit.html'>MCMClogit()</a></code> or <code><a href='https://rdrr.io/pkg/MCMCpack/man/MCMCprobit.html'>MCMCprobit()</a></code>.
+This behavior can be suppressed by setting <code>force = TRUE</code>.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Beger, Andreas. 2016. “Precision-Recall Curves.” Available at
 SSRN: <a href='http://dx.doi.org/10.2139/ssrn.2765419'>http://dx.doi.org/10.2139/ssrn.2765419</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>.old_wd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())
-<span class='co'># \donttest{</span>
-<span class='co'># load simulated data and fitted model (see ?sim_data and ?jags_logit)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"jags_logit"</span>)
+    <pre class="examples"><div class='input'><span class='co'># load simulated data and fitted model (see ?sim_data and ?jags_logit)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"jags_logit"</span><span class='op'>)</span>
 
 <span class='co'># using mcmcRocPrc</span>
-<span class='no'>fit_sum</span> <span class='kw'>&lt;-</span> <span class='fu'>mcmcRocPrc</span>(<span class='no'>jags_logit</span>,
-                      <span class='kw'>yname</span> <span class='kw'>=</span> <span class='st'>"Y"</span>,
-                      <span class='kw'>xnames</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"X1"</span>, <span class='st'>"X2"</span>),
-                      <span class='kw'>curves</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-                      <span class='kw'>fullsims</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='co'># }</span>
+<span class='va'>fit_sum</span> <span class='op'>&lt;-</span> <span class='fu'>mcmcRocPrc</span><span class='op'>(</span><span class='va'>jags_logit</span>,
+                      yname <span class='op'>=</span> <span class='st'>"Y"</span>,
+                      xnames <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"X1"</span>, <span class='st'>"X2"</span><span class='op'>)</span>,
+                      curves <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                      fullsims <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>fit_sum</span>                     
+</div><div class='output co'>#&gt; mcmcRocPrc object
+#&gt; curves: TRUE; fullsims: FALSE
+#&gt; AUC-ROC: 0.627
+#&gt; AUC-PR:  0.621</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>fit_sum</span><span class='op'>)</span>
+</div><div class='img'><img src='mcmcRocPrc-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'># Equivalently, we can calculate the matrix of predicted probabilities </span>
+<span class='co'># ourselves; using the example from ?jags_logit:</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>R2jags</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='no'>.old_wd</span>)</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"sim_data"</span><span class='op'>)</span>
+<span class='va'>yvec</span> <span class='op'>&lt;-</span> <span class='va'>sim_data</span><span class='op'>$</span><span class='va'>Y</span>
+<span class='va'>xmat</span> <span class='op'>&lt;-</span> <span class='va'>sim_data</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"X1"</span>, <span class='st'>"X2"</span><span class='op'>)</span><span class='op'>]</span>
+
+<span class='co'># add intercept to the X data</span>
+<span class='va'>xmat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span>Intercept <span class='op'>=</span> <span class='fl'>1L</span>, <span class='va'>xmat</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>beta</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/coda/man/mcmc.html'>as.mcmc</a></span><span class='op'>(</span><span class='va'>jags_logit</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"b[1]"</span>, <span class='st'>"b[2]"</span>, <span class='st'>"b[3]"</span><span class='op'>)</span><span class='op'>]</span>
+<span class='va'>pred_mat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Logistic.html'>plogis</a></span><span class='op'>(</span><span class='va'>xmat</span> <span class='op'>%*%</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='va'>beta</span><span class='op'>)</span><span class='op'>)</span> 
+
+<span class='co'># the matrix of predictions has rows matching the number of rows in the data;</span>
+<span class='co'># the column are the predictions for each of the 2,000 posterior samples</span>
+<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>sim_data</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 500</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>pred_mat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1]  500 2000</div><div class='input'>
+<span class='co'># now we can call mcmcRocPrc; the default method works with the matrix</span>
+<span class='co'># of predictions and vector of outcomes as input</span>
+<span class='fu'>mcmcRocPrc</span><span class='op'>(</span>object <span class='op'>=</span> <span class='va'>pred_mat</span>, curves <span class='op'>=</span> <span class='cn'>TRUE</span>, fullsims <span class='op'>=</span> <span class='cn'>FALSE</span>, yvec <span class='op'>=</span> <span class='va'>yvec</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; mcmcRocPrc object
+#&gt; curves: TRUE; fullsims: FALSE
+#&gt; AUC-ROC: 0.627
+#&gt; AUC-PR:  0.621</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -209,7 +391,7 @@ SSRN: <a href='http://dx.doi.org/10.2139/ssrn.2765419'>http://dx.doi.org/10.2139
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

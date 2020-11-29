@@ -4,7 +4,25 @@
     <loc>https://shanascogin.github.io/BayesPostEst//index.html</loc>
   </url>
   <url>
+    <loc>https://shanascogin.github.io/BayesPostEst//reference/BayesPostEst-deprecated.html</loc>
+  </url>
+  <url>
     <loc>https://shanascogin.github.io/BayesPostEst//reference/BayesPostEst.html</loc>
+  </url>
+  <url>
+    <loc>https://shanascogin.github.io/BayesPostEst//reference/bugs_logit.html</loc>
+  </url>
+  <url>
+    <loc>https://shanascogin.github.io/BayesPostEst//reference/bugs_model.html</loc>
+  </url>
+  <url>
+    <loc>https://shanascogin.github.io/BayesPostEst//reference/compute_roc.html</loc>
+  </url>
+  <url>
+    <loc>https://shanascogin.github.io/BayesPostEst//reference/identify_link_function.html</loc>
+  </url>
+  <url>
+    <loc>https://shanascogin.github.io/BayesPostEst//reference/is_binary_model.html</loc>
   </url>
   <url>
     <loc>https://shanascogin.github.io/BayesPostEst//reference/jags_interactive.html</loc>
@@ -28,9 +46,6 @@
     <loc>https://shanascogin.github.io/BayesPostEst//reference/mcmcFD.html</loc>
   </url>
   <url>
-    <loc>https://shanascogin.github.io/BayesPostEst//reference/mcmcFDplot.html</loc>
-  </url>
-  <url>
     <loc>https://shanascogin.github.io/BayesPostEst//reference/mcmcMargEff.html</loc>
   </url>
   <url>
@@ -47,6 +62,18 @@
   </url>
   <url>
     <loc>https://shanascogin.github.io/BayesPostEst//reference/mcmcTab.html</loc>
+  </url>
+  <url>
+    <loc>https://shanascogin.github.io/BayesPostEst//reference/mcmcpack_linear.html</loc>
+  </url>
+  <url>
+    <loc>https://shanascogin.github.io/BayesPostEst//reference/new_mcmcRocPrc.html</loc>
+  </url>
+  <url>
+    <loc>https://shanascogin.github.io/BayesPostEst//reference/plot.mcmcFD.html</loc>
+  </url>
+  <url>
+    <loc>https://shanascogin.github.io/BayesPostEst//reference/runjags_interactive.html</loc>
   </url>
   <url>
     <loc>https://shanascogin.github.io/BayesPostEst//reference/sim_data.html</loc>

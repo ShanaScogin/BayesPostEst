@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Simulated data for examples — sim_data • BayesPostEst</title>
+<title>Fitted MCMCpack  linear model — mcmcpack_linear • BayesPostEst</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Simulated data for examples — sim_data" />
-<meta property="og:description" content="Simulated data to fit example models against" />
+<meta property="og:title" content="Fitted MCMCpack  linear model — mcmcpack_linear" />
+<meta property="og:description" content="A fitted MCMCpack linear model with interaction term generated with
+[MCMCpack::MCMCregress()]. See the example code below for how it was created. Used
+in examples and for testing." />
 
 
 <meta name="robots" content="noindex">
@@ -123,35 +125,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Simulated data for examples</h1>
+    <h1>Fitted MCMCpack  linear model</h1>
     <small class="dont-index">Source: <a href='https://github.com/ShanaScogin/BayesPostEst/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>sim_data.Rd</code></div>
+    <div class="hidden name"><code>mcmcpack_linear.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Simulated data to fit example models against</p>
+    <p>A fitted MCMCpack linear model with interaction term generated with
+[MCMCpack::MCMCregress()]. See the example code below for how it was created. Used
+in examples and for testing.</p>
     </div>
 
-    <pre class="usage"><span class='va'>sim_data</span></pre>
+    <pre class="usage"><span class='va'>mcmcpack_linear</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>a data.frame</p>
+    <p>A class "mcmc" object created by [MCMCpack::MCMCregress()]</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## simulating data</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123456</span><span class='op'>)</span>
-<span class='va'>b0</span> <span class='op'>&lt;-</span> <span class='fl'>0.2</span> <span class='co'># true value for the intercept</span>
-<span class='va'>b1</span> <span class='op'>&lt;-</span> <span class='fl'>0.5</span> <span class='co'># true value for first beta</span>
-<span class='va'>b2</span> <span class='op'>&lt;-</span> <span class='fl'>0.7</span> <span class='co'># true value for second beta</span>
-<span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>500</span> <span class='co'># sample size</span>
-<span class='va'>X1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>X2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>
-<span class='va'>Z</span> <span class='op'>&lt;-</span> <span class='va'>b0</span> <span class='op'>+</span> <span class='va'>b1</span> <span class='op'>*</span> <span class='va'>X1</span> <span class='op'>+</span> <span class='va'>b2</span> <span class='op'>*</span> <span class='va'>X2</span>
-<span class='va'>pr</span> <span class='op'>&lt;-</span> <span class='fl'>1</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>Z</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># inv logit function</span>
-<span class='va'>Y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='fl'>1</span>, <span class='va'>pr</span><span class='op'>)</span> 
-<span class='va'>sim_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>X1</span>, <span class='va'>X2</span>, <span class='va'>Y</span><span class='op'>)</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
+<span class='co'>## fitting the model with MCMCpack</span>
+<span class='va'>mcmcpack_linear</span> <span class='op'>&lt;-</span> <span class='fu'>MCMCpack</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/MCMCpack/man/MCMCregress.html'>MCMCregress</a></span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='va'>X</span>, b0 <span class='op'>=</span> <span class='fl'>0</span>, B0 <span class='op'>=</span> <span class='fl'>0.001</span>,
+                                         sigma.mu <span class='op'>=</span> <span class='fl'>5</span>, sigma.var <span class='op'>=</span> <span class='fl'>10</span>,
+                                         data <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>X <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>,
+                                                     Y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>,
+                                         seed <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
