@@ -3,7 +3,7 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   getting_started: getting_started.html
-last_built: 2020-11-29T21:29Z
+last_built: 2020-11-29T21:42Z
 urls:
   reference: https://shanascogin.github.io/BayesPostEst//reference
   article: https://shanascogin.github.io/BayesPostEst//articles
