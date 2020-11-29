@@ -2,12 +2,10 @@
 BayesPostEst
 ============
 
-[![Build
-Status](https://travis-ci.com/ShanaScogin/BayesPostEst.svg?branch=master)](https://travis-ci.com/ShanaScogin/BayesPostEst)
+[![R build status](https://github.com/ShanaScogin/BayesPostEst/workflows/R-CMD-check/badge.svg)](https://github.com/ShanaScogin/BayesPostEst/actions)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/BayesPostEst)](https://CRAN.R-project.org/package=BayesPostEst)
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.01722/status.svg)](https://doi.org/10.21105/joss.01722)
-[![Codecov test
-coverage](https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg)](https://codecov.io/gh/ShanaScogin/BayesPostEst?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg)](https://codecov.io/gh/ShanaScogin/BayesPostEst?branch=master)
 
 An R package implementing functions to assist in generating and plotting
 postestimation quantities after estimating Bayesian regression models
