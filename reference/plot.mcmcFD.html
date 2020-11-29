@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ROC and Precision-Recall Curves using Bayesian MCMC estimates generalized — mcmcRocPrcGen • BayesPostEst</title>
+<title>Plot Method for First Differences from MCMC output — plot.mcmcFD • BayesPostEst</title>
 
 
 <!-- jquery -->
@@ -39,10 +39,12 @@
 
 
 
-<meta property="og:title" content="ROC and Precision-Recall Curves using Bayesian MCMC estimates generalized — mcmcRocPrcGen" />
-<meta property="og:description" content="This function generates ROC and Precision-Recall curves 
-after fitting a Bayesian logit or probit regression. For fast calculation for 
-from an &quot;rjags&quot; object use mcmcRocPrc" />
+<meta property="og:title" content="Plot Method for First Differences from MCMC output — plot.mcmcFD" />
+<meta property="og:description" content="The plot method for first differences generated from MCMC
+output by mcmcFD. For more on this method, see Long
+(1997, Sage Publications), and King, Tomz, and Wittenberg (2000, American
+Journal of Political Science 44(2): 347-361). For a description of this type
+of plot, see Figure 1 in Karreth (2018, International Interactions 44(3): 463-90)." />
 
 
 
@@ -125,96 +127,70 @@ from an &quot;rjags&quot; object use mcmcRocPrc" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>ROC and Precision-Recall Curves using Bayesian MCMC estimates generalized</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ShanaScogin/BayesPostEst/blob/master/R/mcmcRocPrcGen.R'><code>R/mcmcRocPrcGen.R</code></a></small>
-    <div class="hidden name"><code>mcmcRocPrcGen.Rd</code></div>
+    <h1>Plot Method for First Differences from MCMC output</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ShanaScogin/BayesPostEst/blob/master/R/mcmcFD.R'><code>R/mcmcFD.R</code></a></small>
+    <div class="hidden name"><code>plot.mcmcFD.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function generates ROC and Precision-Recall curves 
-after fitting a Bayesian logit or probit regression. For fast calculation for 
-from an "rjags" object use <code><a href='print.mcmcRocPrc.html'>mcmcRocPrc</a></code></p>
+    <p>The <code>plot</code> method for first differences generated from MCMC
+output by <code><a href='mcmcFD.html'>mcmcFD</a></code>. For more on this method, see Long
+(1997, Sage Publications), and King, Tomz, and Wittenberg (2000, American
+Journal of Political Science 44(2): 347-361). For a description of this type
+of plot, see Figure 1 in Karreth (2018, International Interactions 44(3): 463-90).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mcmcRocPrcGen</span><span class='op'>(</span>
-  <span class='va'>modelmatrix</span>,
-  <span class='va'>mcmcout</span>,
-  <span class='va'>modelframe</span>,
-  curves <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  link <span class='op'>=</span> <span class='st'>"logit"</span>,
-  fullsims <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='co'># S3 method for mcmcFD</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>, ROPE <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>modelmatrix</th>
-      <td><p>model matrix, including intercept (if the intercept is among the
-parameters estimated in the model). Create with model.matrix(formula, data).
-Note: the order of columns in the model matrix must correspond to the order of columns 
-in the matrix of posterior draws in the <code>mcmcout</code> argument. See the <code>mcmcout</code>
-argument for more and Beger (2016) for background.</p></td>
+      <th>x</th>
+      <td><p>Output generated from <code><a href='mcmcFD.html'>mcmcFD(..., full_sims = TRUE)</a></code>.</p></td>
     </tr>
     <tr>
-      <th>mcmcout</th>
-      <td><p>posterior distributions of all logit coefficients, 
-in matrix form. This can be created from rstan, MCMCpack, R2jags, etc. and transformed
-into a matrix using the function as.mcmc() from the coda package for <code>jags</code> class
-objects, as.matrix() from base R for <code>mcmc</code>, <code>mcmc.list</code>, <code>stanreg</code>, and 
-<code>stanfit</code> class objects, and <code>object$sims.matrix</code> for <code>bugs</code> class objects.
-Note: the order of columns in this matrix must correspond to the order of columns 
-in the model matrix. One can do this by examining the posterior distribution matrix and sorting the 
-variables in the order of this matrix when creating the model matrix. A useful function for sorting 
-column names containing both characters and numbers as 
-you create the matrix of posterior distributions is <code>mixedsort()</code> from the gtools package.</p></td>
+      <th>ROPE</th>
+      <td><p>defaults to NULL. If not NULL, a numeric vector of length two, 
+defining the Region of Practical Equivalence around 0. See Kruschke (2013, Journal of 
+Experimental Psychology 143(2): 573-603) for more on the ROPE.</p></td>
     </tr>
     <tr>
-      <th>modelframe</th>
-      <td><p>model frame in matrix form. Can be created using 
-as.matrix(model.frame(formula, data))</p></td>
-    </tr>
-    <tr>
-      <th>curves</th>
-      <td><p>logical indicator of whether or not to return values to plot the ROC or Precision-Recall 
-curves. If set to <code>FALSE</code> (default), results are returned as a list without the extra
-values.</p></td>
-    </tr>
-    <tr>
-      <th>link</th>
-      <td><p>type of generalized linear model; a character vector set to <code>"logit"</code> (default) or <code>"probit"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>fullsims</th>
-      <td><p>logical indicator of whether full object (based on all MCMC draws 
-rather than their average) will be returned. Default is <code>FALSE</code>. Note:  If <code>TRUE</code>
-is chosen, the function takes notably longer to execute.</p></td>
+      <th>...</th>
+      <td><p>optional arguments to <code><a href='https://ggplot2.tidyverse.org/reference/theme.html'>theme</a></code> from <code><a href='https://ggplot2.tidyverse.org/reference/ggplot2-package.html'>ggplot2</a></code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>This function returns a list with 4 elements:</p><ul>
-<li><p>area_under_roc: area under ROC curve (scalar)</p></li>
-<li><p>area_under_prc: area under precision-recall curve (scalar)</p></li>
-<li><p>prc_dat: data to plot precision-recall curve (data frame)</p></li>
-<li><p>roc_dat: data to plot ROC curve (data frame)</p></li>
-</ul>
-
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>This function generates ROC and precision-recall curves
-after fitting a Bayesian logit or probit model.</p>
+    <p>a density plot of the differences in probabilities. The plot is made with ggplot2 and can be
+passed on as an object to customize. Annotated numbers show the percent of posterior draws with
+the same sign as the median estimate (if <code>ROPE = NULL</code>) or on the same side of the 
+ROPE as the median estimate (if <code>ROPE</code> is specified).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Beger, Andreas. 2016. “Precision-Recall Curves.” Available at SSRN: 
-https://ssrn.com/Abstract=2765419. http://dx.doi.org/10.2139/ssrn.2765419.</p>
+    
+<ul>
+<li><p>Karreth, Johannes. 2018. “The Economic Leverage of International Organizations in Interstate Disputes.” 
+International Interactions 44 (3): 463-90. https://doi.org/10.1080/03050629.2018.1389728.</p></li>
+<li><p>King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most of Statistical 
+Analyses: Improving Interpretation and Presentation.” American Journal of Political Science 
+44 (2): 347–61. http://www.jstor.org/stable/2669316.</p></li>
+<li><p>Kruschke, John K. 2013. “Bayesian Estimation Supersedes the T-Test.” Journal of 
+Experimental Psychology: General 142 (2): 573–603. https://doi.org/10.1037/a0029146.</p></li>
+<li><p>Long, J. Scott. 1997. Regression Models for Categorical and Limited Dependent Variables. 
+Thousand Oaks: Sage Publications.</p></li>
+</ul>
+
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='mcmcFD.html'>mcmcFD</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>.old_wd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># \donttest{</span>
-<span class='co'># simulating data</span>
-
+<span class='co'>## simulating data</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123456</span><span class='op'>)</span>
 <span class='va'>b0</span> <span class='op'>&lt;-</span> <span class='fl'>0.2</span> <span class='co'># true value for the intercept</span>
 <span class='va'>b1</span> <span class='op'>&lt;-</span> <span class='fl'>0.5</span> <span class='co'># true value for first beta</span>
@@ -227,11 +203,11 @@ https://ssrn.com/Abstract=2765419. http://dx.doi.org/10.2139/ssrn.2765419.</p>
 <span class='va'>Y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='fl'>1</span>, <span class='va'>pr</span><span class='op'>)</span> 
 <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>X1</span>, <span class='va'>X2</span>, <span class='va'>Y</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='co'># formatting the data for jags</span>
+<span class='co'>## formatting the data for jags</span>
 <span class='va'>datjags</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>as.list</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
 <span class='va'>datjags</span><span class='op'>$</span><span class='va'>N</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>datjags</span><span class='op'>$</span><span class='va'>Y</span><span class='op'>)</span>
 
-<span class='co'># creating jags model</span>
+<span class='co'>## creating jags model</span>
 <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='op'>)</span>  <span class='op'>{</span>
   
   <span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='va'>N</span><span class='op'>)</span><span class='op'>{</span>
@@ -268,21 +244,21 @@ https://ssrn.com/Abstract=2765419. http://dx.doi.org/10.2139/ssrn.2765419.</p>
 #&gt; 
 #&gt; Initializing model
 #&gt; </div><div class='input'>
-<span class='co'># processing the data</span>
-<span class='va'>mm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='va'>X1</span> <span class='op'>+</span> <span class='va'>X2</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
-<span class='va'>xframe</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/model.frame.html'>model.frame</a></span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='va'>X1</span> <span class='op'>+</span> <span class='va'>X2</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span><span class='op'>)</span>
+<span class='co'>## preparing data for mcmcFD()</span>
+<span class='va'>xmat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='va'>X1</span> <span class='op'>+</span> <span class='va'>X2</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
 <span class='va'>mcmc</span> <span class='op'>&lt;-</span> <span class='fu'>coda</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/coda/man/mcmc.html'>as.mcmc</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
-<span class='va'>mcmc_mat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>mcmc</span><span class='op'>)</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>xframe</span><span class='op'>)</span><span class='op'>]</span>
+<span class='va'>mcmc_mat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>mcmc</span><span class='op'>)</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>xmat</span><span class='op'>)</span><span class='op'>]</span>
 
-<span class='co'># using mcmcRocPrcGen</span>
-<span class='va'>fit_sum</span> <span class='op'>&lt;-</span> <span class='fu'>mcmcRocPrcGen</span><span class='op'>(</span>modelmatrix <span class='op'>=</span> <span class='va'>mm</span>,
-                      modelframe <span class='op'>=</span> <span class='va'>xframe</span>,
-                      mcmcout <span class='op'>=</span> <span class='va'>mcmc_mat</span>,
-                      curves <span class='op'>=</span> <span class='cn'>TRUE</span>,
-                      fullsims <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='co'>## plotting with mcmcFDplot()</span>
+<span class='va'>full</span> <span class='op'>&lt;-</span> <span class='fu'><a href='mcmcFD.html'>mcmcFD</a></span><span class='op'>(</span>modelmatrix <span class='op'>=</span> <span class='va'>xmat</span>,
+               mcmcout <span class='op'>=</span> <span class='va'>mcmc_mat</span>,
+               fullsims <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>full</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Picking joint bandwidth of 0.785</span></div><div class='img'><img src='plot.mcmcFD-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># }</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='va'>.old_wd</span><span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

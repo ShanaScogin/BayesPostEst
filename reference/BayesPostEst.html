@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>BayesPostEst — BayesPostEst • BayesPostEst</title>
+<title>BayesPostEst Overview — BayesPostEst • BayesPostEst</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,17 @@
 
 
 
-<meta property="og:title" content="BayesPostEst — BayesPostEst" />
-<meta property="og:description" content="BayesPostEst" />
+<meta property="og:title" content="BayesPostEst Overview — BayesPostEst" />
+<meta property="og:description" content="This package currently has nine main functions that can be used to generate 
+and plot postestimation quantities after estimating Bayesian regression models using MCMC. 
+The package combines functions written originally for Johannes Karreth's workshop on 
+Bayesian modeling at the ICPSR Summer program. Currently BayesPostEst focuses mostly on 
+generalized linear regression models for binary outcomes (logistic and probit regression). 
+The vignette for this package has a walk-through of each function in action. 
+Please refer to that to get an overview of all the functions, or visit the 
+documentation for a specific function of your choice. Johannes Karreth's website
+(http://www.jkarreth.net) also has resources for getting started with Bayesian 
+analysis, fitting models, and presenting results." />
 
 
 
@@ -72,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BayesPostEst</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9000</span>
       </span>
     </div>
 
@@ -123,38 +132,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>BayesPostEst</h1>
+    <h1>BayesPostEst Overview</h1>
     <small class="dont-index">Source: <a href='https://github.com/ShanaScogin/BayesPostEst/blob/master/R/BayesPostEst.R'><code>R/BayesPostEst.R</code></a></small>
     <div class="hidden name"><code>BayesPostEst.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>BayesPostEst</p>
-    </div>
-
-
-
-    <h2 class="hasAnchor" id="bayespostest-functions"><a class="anchor" href="#bayespostest-functions"></a>BayesPostEst functions</h2>
-
-    <p>This package currently has 
-seven main functions</p><ul>
-<li><p><code><a href='mcmcAveProb.html'>mcmcAveProb()</a></code></p></li>
-<li><p><code><a href='mcmcObsProb.html'>mcmcObsProb()</a></code></p></li>
-<li><p><code><a href='mcmcFD.html'>mcmcFD()</a></code></p></li>
-<li><p><code><a href='mcmcFDplot.html'>mcmcFDplot()</a></code></p></li>
-<li><p><code><a href='mcmcRocPrc.html'>mcmcRocPrc()</a></code></p></li>
-<li><p><code><a href='mcmcTab.html'>mcmcTab()</a></code></p></li>
-<li><p><code><a href='mcmcReg.html'>mcmcReg()</a></code></p></li>
-</ul><p>These functions can be used to generate and plot postestimation quantities after 
-estimating Bayesian regression models using MCMC. The package combines functions 
-written originally for Johannes Karreth's workshop on Bayesian modeling at the 
-ICPSR Summer program. For now, the package focuses mostly on generalized linear 
-regression models for binary outcomes (logistic and probit regression). 
+    <p>This package currently has nine main functions that can be used to generate 
+and plot postestimation quantities after estimating Bayesian regression models using MCMC. 
+The package combines functions written originally for Johannes Karreth's workshop on 
+Bayesian modeling at the ICPSR Summer program. Currently BayesPostEst focuses mostly on 
+generalized linear regression models for binary outcomes (logistic and probit regression). 
 The vignette for this package has a walk-through of each function in action. 
 Please refer to that to get an overview of all the functions, or visit the 
 documentation for a specific function of your choice. Johannes Karreth's website
 (http://www.jkarreth.net) also has resources for getting started with Bayesian 
 analysis, fitting models, and presenting results.</p>
+    </div>
+
+
+
+    <h2 class="hasAnchor" id="main-functions"><a class="anchor" href="#main-functions"></a>Main Functions</h2>
+
+    
+
+<ul>
+<li><p><code><a href='mcmcAveProb.html'>mcmcAveProb()</a></code></p></li>
+<li><p><code><a href='mcmcObsProb.html'>mcmcObsProb()</a></code></p></li>
+<li><p><code><a href='mcmcFD.html'>mcmcFD()</a></code></p></li>
+<li><p><code><a href='mcmcMargEff.html'>mcmcMargEff()</a></code></p></li>
+<li><p><code><a href='print.mcmcRocPrc.html'>mcmcRocPrc()</a></code></p></li>
+<li><p><code><a href='mcmcRocPrcGen.html'>mcmcRocPrcGen()</a></code></p></li>
+<li><p><code><a href='mcmcTab.html'>mcmcTab()</a></code></p></li>
+<li><p><code><a href='mcmcReg.html'>mcmcReg()</a></code></p></li>
+<li><p><code><a href='plot.mcmcFD.html'>plot.mcmcFD()</a></code></p></li>
+</ul>
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -171,7 +184,7 @@ analysis, fitting models, and presenting results.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

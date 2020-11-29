@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BayesPostEst</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9000</span>
       </span>
     </div>
 
@@ -126,46 +126,64 @@
       <small>Source: <a href='https://github.com/ShanaScogin/BayesPostEst/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="bayespostest-0-3-0" class="section level1">
+    <div id="bayespostest-0309000" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.0.9000">
+<a href="#bayespostest-0309000" class="anchor"></a>BayesPostEst 0.3.0.9000<small> Unreleased </small>
+</h1>
+<ul>
+<li>Removed package dependency on JAGS. Since rjags and R2jags were in the package Imports previously, and they in turn depend on a JAGS installed, the package would not install without JAGS. Now, all specific MCMC implementations are in the package Suggests and the package can be installed in an agnostic way without the need for JAGS, Stan, or any other specific MCMC library.</li>
+<li>There were several changes in mcmcRocPrc:
+<ul>
+<li>The function has now become a generic with S3 methods for different types of input, e.g. “rjags” objects created by [R2jags::jags()] or “stanfit” via [rstan::stan()]. The default method takes a matrix of predicted probabilities and vector of observed outcomes as input, thus allowing any posterior sampling method to be accommodated. (<a href='https://github.com/ShanaScogin/BayesPostEst/issues/5'>#5</a>)</li>
+<li>Added print, plot, as.data.frame methods for “mcmcRocPrc” objects created with mcmcRocPrc(). (<a href='https://github.com/ShanaScogin/BayesPostEst/issues/32'>#32</a>)</li>
+</ul>
+</li>
+<li>Fixed several errors in documentation code examples. (<a href='https://github.com/ShanaScogin/BayesPostEst/issues/64'>#64</a>)</li>
+<li>Added README.rmd to render images.</li>
+<li>Updated plots to a minimalist theme in documentation</li>
+</ul>
+</div>
+    <div id="bayespostest-030" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.0">
-<a href="#bayespostest-0-3-0" class="anchor"></a>BayesPostEst 0.3.0<small> Unreleased </small>
+<a href="#bayespostest-030" class="anchor"></a>BayesPostEst 0.3.0<small> Unreleased </small>
 </h1>
 <ul>
 <li>Planned: Created website through pkgdown</li>
+<li>Added: <code>plot</code> method for <code>mcmcFD</code> objects and warn that <code>mcmcFDplot</code> is deprecated</li>
 </ul>
 </div>
-    <div id="bayespostest-0-2-1" class="section level1">
+    <div id="bayespostest-021" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.1">
-<a href="#bayespostest-0-2-1" class="anchor"></a>BayesPostEst 0.2.1<small> 2020-05-28 </small>
+<a href="#bayespostest-021" class="anchor"></a>BayesPostEst 0.2.1<small> 2020-05-28 </small>
 </h1>
 <ul>
 <li>Added ‘stringsAsFactors = TRUE’ for new data.frame() default with R 4.0.0</li>
 </ul>
 </div>
-    <div id="bayespostest-0-2-0" class="section level1">
+    <div id="bayespostest-020" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.0">
-<a href="#bayespostest-0-2-0" class="anchor"></a>BayesPostEst 0.2.0<small> 2019-12-14 </small>
+<a href="#bayespostest-020" class="anchor"></a>BayesPostEst 0.2.0<small> 2019-12-14 </small>
 </h1>
 <ul>
 <li>Added functions <code><a href="../reference/mcmcCoefPlot.html">mcmcCoefPlot()</a></code> and <code><a href="../reference/mcmcMargEff.html">mcmcMargEff()</a></code>.</li>
 <li>Added corresponding website and static docs using pkgdown.</li>
-<li>Added function <code><a href="../reference/mcmcRocPrcGen.html">mcmcRocPrcGen()</a></code>. This function takes generalized objects and has the same functionality as <code><a href="../reference/mcmcRocPrc.html">mcmcRocPrc()</a></code>, which only works for jags objects currently. It should be noted that <code><a href="../reference/mcmcRocPrcGen.html">mcmcRocPrcGen()</a></code> works much more slowly than <code><a href="../reference/mcmcRocPrc.html">mcmcRocPrc()</a></code>. Future version aim to merge and improve upon these functions.</li>
+<li>Added function <code><a href="../reference/mcmcRocPrcGen.html">mcmcRocPrcGen()</a></code>. This function takes generalized objects and has the same functionality as <code><a href="../reference/print.mcmcRocPrc.html">mcmcRocPrc()</a></code>, which only works for jags objects currently. It should be noted that <code><a href="../reference/mcmcRocPrcGen.html">mcmcRocPrcGen()</a></code> works much more slowly than <code><a href="../reference/print.mcmcRocPrc.html">mcmcRocPrc()</a></code>. Future version aim to merge and improve upon these functions.</li>
 </ul>
 </div>
-    <div id="bayespostest-0-1-0" class="section level1">
+    <div id="bayespostest-010" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.0">
-<a href="#bayespostest-0-1-0" class="anchor"></a>BayesPostEst 0.1.0<small> 2019-10-06 </small>
+<a href="#bayespostest-010" class="anchor"></a>BayesPostEst 0.1.0<small> 2019-10-06 </small>
 </h1>
 <ul>
 <li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
-<li>Improved <code><a href="../reference/mcmcRocPrc.html">mcmcRocPrc()</a></code> speed by replacing imported ROCR functions with faster custom ROC and PR curve calculators. The test example with “fullsims = TRUE” should now take 2s or less to run instead of the previous 10-30s. (<a href='https://github.com/ShanaScogin/BayesPostEst/issues/25'>#25</a>)</li>
+<li>Improved <code><a href="../reference/print.mcmcRocPrc.html">mcmcRocPrc()</a></code> speed by replacing imported ROCR functions with faster custom ROC and PR curve calculators. The test example with “fullsims = TRUE” should now take 2s or less to run instead of the previous 10-30s. (<a href='https://github.com/ShanaScogin/BayesPostEst/issues/25'>#25</a>)</li>
 <li>Removed ROCR package from dependencies.</li>
-<li>Changed the <code><a href="../reference/mcmcRocPrc.html">mcmcRocPrc()</a></code> interface. Instead of pre-calculating several data matrices, the function now takes a fitted “rjags” object ([R2jags::jags()]) as input along with names of the dependent and independent variables that were used in the model.</li>
+<li>Changed the <code><a href="../reference/print.mcmcRocPrc.html">mcmcRocPrc()</a></code> interface. Instead of pre-calculating several data matrices, the function now takes a fitted “rjags” object ([R2jags::jags()]) as input along with names of the dependent and independent variables that were used in the model.</li>
 </ul>
 </div>
-    <div id="bayespostest-0-0-1" class="section level1">
+    <div id="bayespostest-001" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.1">
-<a href="#bayespostest-0-0-1" class="anchor"></a>BayesPostEst 0.0.1<small> 2019-08-05 </small>
+<a href="#bayespostest-001" class="anchor"></a>BayesPostEst 0.0.1<small> 2019-08-05 </small>
 </h1>
 <ul>
 <li>Initial CRAN release.</li>
@@ -188,7 +206,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

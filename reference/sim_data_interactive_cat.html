@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BayesPostEst</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9000</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
     <p>Simulated data to fit example models against</p>
     </div>
 
-    <pre class="usage"><span class='no'>sim_data_interactive_cat</span></pre>
+    <pre class="usage"><span class='va'>sim_data_interactive_cat</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -140,17 +140,18 @@
     <p>a data.frame</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123456</span>)
-<span class='no'>b0</span> <span class='kw'>&lt;-</span> <span class='fl'>0.2</span> <span class='co'># true value for the intercept</span>
-<span class='no'>b1</span> <span class='kw'>&lt;-</span> <span class='fl'>0.5</span> <span class='co'># true value for first beta</span>
-<span class='no'>b2</span> <span class='kw'>&lt;-</span> <span class='fl'>0.7</span> <span class='co'># true value for second beta</span>
-<span class='no'>b3</span> <span class='kw'>&lt;-</span> -<span class='fl'>0.3</span> <span class='co'># true value for second beta</span>
-<span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>500</span> <span class='co'># sample size</span>
-<span class='no'>X1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='no'>n</span>, -<span class='fl'>1</span>, <span class='fl'>1</span>)
-<span class='no'>X3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span>(<span class='no'>n</span>, <span class='fl'>5</span>, <span class='fl'>.23</span>)
-<span class='no'>Z_interactive_cat</span> <span class='kw'>&lt;-</span> <span class='no'>b0</span> + <span class='no'>b1</span> * <span class='no'>X1</span> + <span class='no'>b2</span> * <span class='no'>X3</span> + <span class='no'>b3</span> * (<span class='no'>X1</span> * <span class='no'>X3</span>)
-<span class='no'>Y_interactive_cat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>n</span>, <span class='no'>Z_interactive_cat</span>, <span class='fl'>1</span>)
-<span class='no'>sim_data_interactive_cat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span>(<span class='no'>X1</span>, <span class='no'>X3</span>, <span class='kw'>Y</span> <span class='kw'>=</span> <span class='no'>Y_interactive_cat</span>))</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123456</span><span class='op'>)</span>
+<span class='va'>b0</span> <span class='op'>&lt;-</span> <span class='fl'>0.2</span> <span class='co'># true value for the intercept</span>
+<span class='va'>b1</span> <span class='op'>&lt;-</span> <span class='fl'>0.5</span> <span class='co'># true value for first beta</span>
+<span class='va'>b2</span> <span class='op'>&lt;-</span> <span class='fl'>0.7</span> <span class='co'># true value for second beta</span>
+<span class='va'>b3</span> <span class='op'>&lt;-</span> <span class='op'>-</span><span class='fl'>0.3</span> <span class='co'># true value for second beta</span>
+<span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>500</span> <span class='co'># sample size</span>
+<span class='va'>X1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>X3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='fl'>5</span>, <span class='fl'>.23</span><span class='op'>)</span>
+<span class='va'>Z_interactive_cat</span> <span class='op'>&lt;-</span> <span class='va'>b0</span> <span class='op'>+</span> <span class='va'>b1</span> <span class='op'>*</span> <span class='va'>X1</span> <span class='op'>+</span> <span class='va'>b2</span> <span class='op'>*</span> <span class='va'>X3</span> <span class='op'>+</span> <span class='va'>b3</span> <span class='op'>*</span> <span class='op'>(</span><span class='va'>X1</span> <span class='op'>*</span> <span class='va'>X3</span><span class='op'>)</span>
+<span class='va'>Y_interactive_cat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='va'>Z_interactive_cat</span>, <span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>sim_data_interactive_cat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>X1</span>, <span class='va'>X3</span>, Y <span class='op'>=</span> <span class='va'>Y_interactive_cat</span><span class='op'>)</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -166,7 +167,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
