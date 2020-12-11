@@ -7,6 +7,7 @@
 * Fixed several errors in documentation code examples. (#64)
 * Added README.rmd to render images.
 * Updated plots to a minimalist theme in documentation
+* Updated master branch name to main
 
 # BayesPostEst 0.3.0
 
