@@ -1,7 +1,8 @@
 #
 #   Generate am example MCMCpack logit fitted model object
 #
-
+if (requireNamespace("MCMCpack", quietly = TRUE)) {
+  
 library("MCMCpack")
 
 df <- carData::Cowles
@@ -21,3 +22,5 @@ mcmcpack_logit <- fit.MCMCpack
 format(object.size(mcmcpack_logit), "Kb")
 
 saveRDS(mcmcpack_logit, "tests/testdata/mcmcpack-logit.rds")
+
+}

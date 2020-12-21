@@ -1,3 +1,7 @@
+pkgs <- c("R2jags", "rjags", "MCMCpack", "rstan", "rstanarm")
+
+if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
+
 data("jags_logit")
 data("runjags_interactive")
 data("mcmcpack_linear")
@@ -103,3 +107,5 @@ test_that("ROPE argument works", {
   )
   
 })
+
+}
