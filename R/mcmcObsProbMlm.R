@@ -119,7 +119,7 @@
 #' \dontshow{setwd(.old_wd)}
 #'@export
 #'
-mcmcObsProbMlm <- function(formula,
+mcmcObsProbMlm <- function(object,
                            
                         modelmatrix, ## old arg
                         mcmcout, ## old arg
@@ -129,6 +129,9 @@ mcmcObsProbMlm <- function(formula,
                         link = "logit", 
                         ci = c(0.025, 0.975),
                         fullsims = FALSE){
+  
+  # pull out varibles with tidybayes
+  tidybayes::get_variables(object)
   
   # checking arguments
   if(missing(xcol) & missing(xinterest)) {
