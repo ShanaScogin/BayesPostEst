@@ -1,7 +1,7 @@
 #
 #   Generate am example MCMCpack logit fitted model object
 #
-if (requireNamespace("MCMCpack", quietly = TRUE)) {
+if (require("MCMCpack", quietly = TRUE)) {
   
 library("MCMCpack")
 

@@ -7,6 +7,10 @@ data("runjags_interactive")
 data("mcmcpack_linear")
 data("bugs_model")
 
+}
+
+if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
+  
 test_that("Simple model runs with mcmcTab", {
   
   object <- mcmcTab(jags_logit, 
@@ -26,6 +30,10 @@ test_that("Simple model runs with mcmcTab", {
 
 })
 
+}
+
+if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
+
 test_that("mcmcTab works with different input types", {
   
   # rjags
@@ -44,9 +52,13 @@ test_that("mcmcTab works with different input types", {
   
   # stanfit
   
-  
 })
+  
+}
 
+
+if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
+  
 test_that("pars subsetting works", {
   
   data("jags_logit")
@@ -86,6 +98,10 @@ test_that("pars subsetting works", {
   )
   
 })
+  
+}
+
+if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
 
 test_that("ROPE argument works", {
   
@@ -107,5 +123,5 @@ test_that("ROPE argument works", {
   )
   
 })
-
+  
 }

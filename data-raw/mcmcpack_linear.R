@@ -2,7 +2,7 @@
 #  Generate an example MCMCpack linear fitted model
 #
 
-if (requireNamespace("MCMCpack", quietly = TRUE)) {
+if (require("MCMCpack", quietly = TRUE)) {
   
 ## fitting the model with MCMCpack
 mcmcpack_linear <- MCMCpack::MCMCregress(Y ~ X, b0 = 0, B0 = 0.001,

@@ -20,34 +20,32 @@ editor_options:
 ```{r setup, include = FALSE}
 options(rmarkdown.html_vignette.check_title = FALSE)
 
-pkgs <- c("R2jags", "rjags", "MCMCpack", "rstan", "rstanarm", "ggplot2",
-          "ggridges")
+## Commenting out until rstan solves their makefile issue
 
-if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
-  knitr::opts_chunk$set(
-    eval = FALSE,
-    collapse = TRUE,
-    echo = TRUE,
-    message = FALSE,
-    warning = FALSE,
-    out.width = "90%", 
-    fig.align = "center", 
-    fig.width = 8, 
-    fig.height = 8,
-    comment = "#>")
-} else {
-  knitr::opts_chunk$set(
-  collapse = TRUE,
-  echo = TRUE,
-  message = FALSE,
-  warning = FALSE,
-  out.width = "90%", 
-  fig.align = "center", 
-  fig.width = 8, 
-  fig.height = 8,
-  comment = "#>"
-)
-}
+knitr::opts_chunk$set( ## to be deleted after warning solved
+    eval = FALSE, ## to be deleted after warning solved
+    comment = "#>") ## to be deleted after warning solved
+
+# pkgs <- c("R2jags", "rjags", "MCMCpack", "rstan", "rstanarm", "ggplot2",
+#           "ggridges")
+# 
+# if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
+#   knitr::opts_chunk$set(
+#     eval = FALSE,
+#     comment = "#>")
+# } else {
+#   knitr::opts_chunk$set(
+#   collapse = TRUE,
+#   echo = TRUE,
+#   message = FALSE,
+#   warning = FALSE,
+#   out.width = "90%", 
+#   fig.align = "center", 
+#   fig.width = 8, 
+#   fig.height = 8,
+#   comment = "#>"
+# )
+# }
 ```
 
 # Introduction
