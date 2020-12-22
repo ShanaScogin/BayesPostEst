@@ -20,32 +20,26 @@ editor_options:
 ```{r setup, include = FALSE}
 options(rmarkdown.html_vignette.check_title = FALSE)
 
-## Commenting out until rstan solves their makefile issue
+pkgs <- c("R2jags", "rjags", "MCMCpack", "rstan", "rstanarm", "ggplot2",
+          "ggridges")
 
-knitr::opts_chunk$set( ## to be deleted after warning solved
-    eval = FALSE, ## to be deleted after warning solved
-    comment = "#>") ## to be deleted after warning solved
-
-# pkgs <- c("R2jags", "rjags", "MCMCpack", "rstan", "rstanarm", "ggplot2",
-#           "ggridges")
-# 
-# if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
-#   knitr::opts_chunk$set(
-#     eval = FALSE,
-#     comment = "#>")
-# } else {
-#   knitr::opts_chunk$set(
-#   collapse = TRUE,
-#   echo = TRUE,
-#   message = FALSE,
-#   warning = FALSE,
-#   out.width = "90%", 
-#   fig.align = "center", 
-#   fig.width = 8, 
-#   fig.height = 8,
-#   comment = "#>"
-# )
-# }
+if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
+  knitr::opts_chunk$set(
+    eval = FALSE,
+    comment = "#>")
+} else {
+  knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  out.width = "90%",
+  fig.align = "center",
+  fig.width = 8,
+  fig.height = 8,
+  comment = "#>"
+)
+}
 ```
 
 # Introduction
@@ -186,7 +180,7 @@ fit.MCMCpack <- MCMClogit(volunteer ~ female + neuroticism + extraversion,
 
 We write the same model in Stan language.
 
-```{r}
+```{r, eval=FALSE}
 mod.stan <- paste("	
 data {
   int<lower=0> N;
@@ -210,7 +204,7 @@ writeLines(mod.stan, "mod.stan")
 
 We then load rstan [@rstan2019]...
 
-```{r}
+```{r, eval=FALSE}
 library("rstan")
 rstan_options(auto_write = TRUE)
 options(mc.cores = 2)
@@ -218,7 +212,7 @@ options(mc.cores = 2)
 
 ... and estimate the model, re-using the data in list format created for JAGS earlier.
 
-```{r}
+```{r, eval=FALSE}
 fit.stan <- stan(file = "mod.stan",  
            data = dl,         
            pars = c("b"),     
@@ -268,7 +262,7 @@ mcmcTab(fit.rjags)
 mcmcTab(fit.MCMCpack)
 ```
 
-```{r}
+```{r, eval=FALSE}
 mcmcTab(fit.stan)
 ```
 
@@ -359,13 +353,13 @@ However, it is important to remember that `mcmcReg` will look for the parameter 
 
 `mcmcReg` accepts multiple model objects and will produce a table with one model per column. To produce a table from multiple models, pass a list of models as the `mod` argument to `mcmcReg`.
 
-```{r, results = 'asis'}
+```{r, results = 'asis', eval=FALSE}
 mcmcReg(list(fit.stan, fit.stan), format = 'html', doctype = F)
 ```
 
 Note, however, that all model objects must be of the same class, so it is *not* possible to generate a table from a `jags` object and a `stanfit` object.
 
-```{r, error = T, results = 'asis'}
+```{r, error = T, results = 'asis', eval=FALSE}
 mcmcReg(list(fit.jags, fit.stan), format = 'html', doctype = F)
 ```
 
@@ -397,10 +391,11 @@ Before moving on, we show how create a matrix of posterior draws of coefficients
 ```{r}
 mcmcmat.jags <- as.matrix(coda::as.mcmc(fit.jags))
 mcmcmat.MCMCpack <- as.matrix(fit.MCMCpack)
-  
-mcmcmat.stan <- as.matrix(fit.stan)
-  
 mcmcmat.rstanarm <- as.matrix(fit.rstanarm)
+```
+
+```{r, eval=FALSE}
+mcmcmat.stan <- as.matrix(fit.stan)
 ```
 
 Next, we generate the model matrix to pass on to the function. A model matrix contains as many columns as estimated regression coefficients. The first column is a vector of 1s (corresponding to the intercept); the remaining columns are the observed values of covariates in the model. **Note: the order of columns in the model matrix must correspond to the order of columns in the matrix of posterior draws.**
