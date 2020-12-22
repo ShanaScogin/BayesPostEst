@@ -1,13 +1,15 @@
 # BayesPostEst 0.3.0.9000
 
 * Removed package dependency on JAGS. Since rjags and R2jags were in the package Imports previously, and they in turn depend on a JAGS installed, the package would not install without JAGS. Now, all specific MCMC implementations are in the package Suggests and the package can be installed in an agnostic way without the need for JAGS, Stan, or any other specific MCMC library. 
+  + Conditional was added in the vignette for these packages
 * There were several changes in mcmcRocPrc:
   + The function has now become a generic with S3 methods for different types of input, e.g. "rjags" objects created by [R2jags::jags()] or "stanfit" via [rstan::stan()]. The default method takes a matrix of predicted probabilities and vector of observed outcomes as input, thus allowing any posterior sampling method to be accommodated. (#5)
   + Added print, plot, as.data.frame methods for "mcmcRocPrc" objects created with mcmcRocPrc(). (#32)
 * Fixed several errors in documentation code examples. (#64)
 * Added README.rmd to render images.
-* Updated plots to a minimalist theme in documentation
+  + Updated plots to a minimalist theme in documentation
 * Updated master branch name to main
+* Moved from Travis to GH-Actions
 
 # BayesPostEst 0.3.0
 
