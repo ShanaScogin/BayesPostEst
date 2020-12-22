@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BayesPostEst</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -65,7 +65,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ShanaScogin/BayesPostEst/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -79,8 +79,7 @@
 
       
 
-      </header><script src="getting_started_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="getting_started_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="getting_started_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="getting_started_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Using the BayesPostEst package</h1>
@@ -89,7 +88,7 @@
                         <h4 class="author">Rob Williams</h4>
                         <h4 class="author">Andreas Beger</h4>
             
-            <h4 class="date">2020-12-11</h4>
+            <h4 class="date">2020-12-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ShanaScogin/BayesPostEst/blob/master/vignettes/getting_started.Rmd"><code>vignettes/getting_started.Rmd</code></a></small>
       <div class="hidden name"><code>getting_started.Rmd</code></div>
@@ -273,7 +272,107 @@ model {
                          prior_intercept <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span>,
                          chains <span class="op">=</span> <span class="fl">4</span>, 
                          iter <span class="op">=</span> <span class="fl">2000</span>,
-                         seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></code></pre></div>
+                         seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; SAMPLING FOR MODEL 'bernoulli' NOW (CHAIN 1).</span>
+<span class="co">#&gt; Chain 1: </span>
+<span class="co">#&gt; Chain 1: Gradient evaluation took 0.000109 seconds</span>
+<span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.09 seconds.</span>
+<span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span>
+<span class="co">#&gt; Chain 1: </span>
+<span class="co">#&gt; Chain 1: </span>
+<span class="co">#&gt; Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)</span>
+<span class="co">#&gt; Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)</span>
+<span class="co">#&gt; Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)</span>
+<span class="co">#&gt; Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)</span>
+<span class="co">#&gt; Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)</span>
+<span class="co">#&gt; Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)</span>
+<span class="co">#&gt; Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)</span>
+<span class="co">#&gt; Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)</span>
+<span class="co">#&gt; Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)</span>
+<span class="co">#&gt; Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)</span>
+<span class="co">#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
+<span class="co">#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
+<span class="co">#&gt; Chain 1: </span>
+<span class="co">#&gt; Chain 1:  Elapsed Time: 0.368063 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 1:                0.400823 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 1:                0.768886 seconds (Total)</span>
+<span class="co">#&gt; Chain 1: </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; SAMPLING FOR MODEL 'bernoulli' NOW (CHAIN 2).</span>
+<span class="co">#&gt; Chain 2: </span>
+<span class="co">#&gt; Chain 2: Gradient evaluation took 5.6e-05 seconds</span>
+<span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.56 seconds.</span>
+<span class="co">#&gt; Chain 2: Adjust your expectations accordingly!</span>
+<span class="co">#&gt; Chain 2: </span>
+<span class="co">#&gt; Chain 2: </span>
+<span class="co">#&gt; Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)</span>
+<span class="co">#&gt; Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)</span>
+<span class="co">#&gt; Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)</span>
+<span class="co">#&gt; Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)</span>
+<span class="co">#&gt; Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)</span>
+<span class="co">#&gt; Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)</span>
+<span class="co">#&gt; Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)</span>
+<span class="co">#&gt; Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)</span>
+<span class="co">#&gt; Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)</span>
+<span class="co">#&gt; Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)</span>
+<span class="co">#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
+<span class="co">#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
+<span class="co">#&gt; Chain 2: </span>
+<span class="co">#&gt; Chain 2:  Elapsed Time: 0.36844 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 2:                0.387415 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 2:                0.755855 seconds (Total)</span>
+<span class="co">#&gt; Chain 2: </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; SAMPLING FOR MODEL 'bernoulli' NOW (CHAIN 3).</span>
+<span class="co">#&gt; Chain 3: </span>
+<span class="co">#&gt; Chain 3: Gradient evaluation took 5.5e-05 seconds</span>
+<span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.55 seconds.</span>
+<span class="co">#&gt; Chain 3: Adjust your expectations accordingly!</span>
+<span class="co">#&gt; Chain 3: </span>
+<span class="co">#&gt; Chain 3: </span>
+<span class="co">#&gt; Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)</span>
+<span class="co">#&gt; Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)</span>
+<span class="co">#&gt; Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)</span>
+<span class="co">#&gt; Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)</span>
+<span class="co">#&gt; Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)</span>
+<span class="co">#&gt; Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)</span>
+<span class="co">#&gt; Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)</span>
+<span class="co">#&gt; Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)</span>
+<span class="co">#&gt; Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)</span>
+<span class="co">#&gt; Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)</span>
+<span class="co">#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
+<span class="co">#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
+<span class="co">#&gt; Chain 3: </span>
+<span class="co">#&gt; Chain 3:  Elapsed Time: 0.371059 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 3:                0.401268 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 3:                0.772327 seconds (Total)</span>
+<span class="co">#&gt; Chain 3: </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; SAMPLING FOR MODEL 'bernoulli' NOW (CHAIN 4).</span>
+<span class="co">#&gt; Chain 4: </span>
+<span class="co">#&gt; Chain 4: Gradient evaluation took 5.2e-05 seconds</span>
+<span class="co">#&gt; Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.52 seconds.</span>
+<span class="co">#&gt; Chain 4: Adjust your expectations accordingly!</span>
+<span class="co">#&gt; Chain 4: </span>
+<span class="co">#&gt; Chain 4: </span>
+<span class="co">#&gt; Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)</span>
+<span class="co">#&gt; Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)</span>
+<span class="co">#&gt; Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)</span>
+<span class="co">#&gt; Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)</span>
+<span class="co">#&gt; Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)</span>
+<span class="co">#&gt; Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)</span>
+<span class="co">#&gt; Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)</span>
+<span class="co">#&gt; Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)</span>
+<span class="co">#&gt; Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)</span>
+<span class="co">#&gt; Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)</span>
+<span class="co">#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
+<span class="co">#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
+<span class="co">#&gt; Chain 4: </span>
+<span class="co">#&gt; Chain 4:  Elapsed Time: 0.368202 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 4:                0.394742 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 4:                0.762944 seconds (Total)</span>
+<span class="co">#&gt; Chain 4:</span></code></pre></div>
 </div>
 </div>
 <div id="tables-of-regression-coefficients-and-other-parameters" class="section level1">
@@ -300,10 +399,10 @@ model {
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.rjags</span><span class="op">)</span>
 <span class="co">#&gt;   Variable Median    SD  Lower  Upper</span>
-<span class="co">#&gt; 1     b[1] -0.458 0.081 -0.622 -0.301</span>
-<span class="co">#&gt; 2     b[2]  0.236 0.110  0.020  0.450</span>
-<span class="co">#&gt; 3     b[3]  0.063 0.111 -0.156  0.280</span>
-<span class="co">#&gt; 4     b[4]  0.515 0.110  0.304  0.734</span></code></pre></div>
+<span class="co">#&gt; 1     b[1] -0.458 0.081 -0.618 -0.302</span>
+<span class="co">#&gt; 2     b[2]  0.233 0.110  0.017  0.449</span>
+<span class="co">#&gt; 3     b[3]  0.064 0.112 -0.163  0.276</span>
+<span class="co">#&gt; 4     b[4]  0.517 0.111  0.300  0.736</span></code></pre></div>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.MCMCpack</span><span class="op">)</span>
 <span class="co">#&gt;       Variable Median    SD  Lower  Upper</span>
@@ -312,13 +411,7 @@ model {
 <span class="co">#&gt; 3  neuroticism  0.058 0.112 -0.147  0.321</span>
 <span class="co">#&gt; 4 extraversion  0.509 0.102  0.320  0.718</span></code></pre></div>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.stan</span><span class="op">)</span>
-<span class="co">#&gt;   Variable   Median    SD    Lower    Upper</span>
-<span class="co">#&gt; 1     b[1]   -0.456 0.083   -0.620   -0.295</span>
-<span class="co">#&gt; 2     b[2]    0.233 0.111    0.019    0.449</span>
-<span class="co">#&gt; 3     b[3]    0.067 0.111   -0.148    0.276</span>
-<span class="co">#&gt; 4     b[4]    0.515 0.114    0.286    0.743</span>
-<span class="co">#&gt; 5     lp__ -954.789 1.445 -958.650 -953.297</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.stan</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.rstanarm</span><span class="op">)</span>
 <span class="co">#&gt;       Variable Median    SD  Lower  Upper</span>
@@ -991,143 +1084,9 @@ Extraversion
 <p><code>mcmcReg</code> accepts multiple model objects and will produce a table with one model per column. To produce a table from multiple models, pass a list of models as the <code>mod</code> argument to <code>mcmcReg</code>.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">fit.stan</span>, <span class="va">fit.stan</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
-<table class="table texreg">
-<caption>
-Statistical models
-</caption>
-<thead><tr>
-<th style="padding-left: 5px;padding-right: 5px;">
- 
-</th>
-<th style="padding-left: 5px;padding-right: 5px;">
-Model 1
-</th>
-<th style="padding-left: 5px;padding-right: 5px;">
-Model 2
-</th>
-</tr></thead>
-<tbody>
-<tr style="border-top: 1px solid #000000;">
-<td style="padding-left: 5px;padding-right: 5px;">
-b[1]
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.46<sup>*</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--0.46<sup>*</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-[ -0.62; -0.29]
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-[ -0.62; -0.29]
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-b[2]
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.23<sup>*</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.23<sup>*</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-[ 0.02; 0.45]
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-[ 0.02; 0.45]
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-b[3]
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.06
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.06
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-[ -0.15; 0.28]
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-[ -0.15; 0.28]
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-b[4]
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.52<sup>*</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-0.52<sup>*</sup>
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-[ 0.29; 0.74]
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-[ 0.29; 0.74]
-</td>
-</tr>
-<tr>
-<td style="padding-left: 5px;padding-right: 5px;">
-lp__
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--955.10<sup>*</sup>
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
--955.10<sup>*</sup>
-</td>
-</tr>
-<tr style="border-bottom: 2px solid #000000;">
-<td style="padding-left: 5px;padding-right: 5px;">
- 
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-[-958.65; -953.30]
-</td>
-<td style="padding-left: 5px;padding-right: 5px;">
-[-958.65; -953.30]
-</td>
-</tr>
-</tbody>
-<tfoot><tr>
-<td style="font-size: 0.8em;" colspan="3">
-<sup>*</sup> Null hypothesis value outside 95% credible interval.
-</td>
-</tr></tfoot>
-</table>
 <p>Note, however, that all model objects must be of the same class, so it is <em>not</em> possible to generate a table from a <code>jags</code> object and a <code>stanfit</code> object.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">fit.jags</span>, <span class="va">fit.stan</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
-<span class="co">#&gt; Error in mcmcReg(list(fit.jags, fit.stan), format = "html", doctype = F): More than one object class supplied to argument "mod"</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">fit.jags</span>, <span class="va">fit.stan</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
 <p>When including multiple models, supplying scalars or vectors to arguments will result in them being applied to each model equally. Treating models differentially is possible by supplying a list of scalars or vectors instead.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">fit.rstanarm</span>, <span class="va">fit.rstanarm</span><span class="op">)</span>,
@@ -1329,12 +1288,11 @@ extraversion
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mcmcmat.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="fu">coda</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/coda/man/mcmc.html">as.mcmc</a></span><span class="op">(</span><span class="va">fit.jags</span><span class="op">)</span><span class="op">)</span>
 <span class="va">mcmcmat.MCMCpack</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">fit.MCMCpack</span><span class="op">)</span>
-  
-<span class="va">mcmcmat.stan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">fit.stan</span><span class="op">)</span>
-  
 <span class="va">mcmcmat.rstanarm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">fit.rstanarm</span><span class="op">)</span></code></pre></div>
-<p>Next, we generate the model matrix to pass on to the function. A model matrix contains as many columns as estimated regression coefficients. The first column is a vector of 1s (corresponding to the intercept); the remaining columns are the observed values of covariates in the model. <strong>Note: the order of columns in the model matrix must correspond to the order of columns in the matrix of posterior draws.</strong></p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mcmcmat.stan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">fit.stan</span><span class="op">)</span></code></pre></div>
+<p>Next, we generate the model matrix to pass on to the function. A model matrix contains as many columns as estimated regression coefficients. The first column is a vector of 1s (corresponding to the intercept); the remaining columns are the observed values of covariates in the model. <strong>Note: the order of columns in the model matrix must correspond to the order of columns in the matrix of posterior draws.</strong></p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span><span class="op">(</span><span class="va">volunteer</span> <span class="op">~</span> <span class="va">female</span> <span class="op">+</span> <span class="va">neuroticism</span> <span class="op">+</span> <span class="va">extraversion</span>,
                    data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></code></pre></div>
 <p>We can now generate predicted probabilities for different values of a covariate of interest.</p>
@@ -1342,7 +1300,7 @@ extraversion
 <h3 class="hasAnchor">
 <a href="#sex" class="anchor"></a>Sex</h3>
 <p>First, we generate full posterior distributions of the predicted probability of volunteering for a typical female and a typical male. In this function and <code>mcmcObsProb</code>, users specify the range of <span class="math inline">\(x\)</span> (here 0 and 1) as well as the number of the column of <span class="math inline">\(x\)</span> in the matrix of posterior draws as well as the model matrix.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">aveprob.female.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mcmcAveProb.html">mcmcAveProb</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,
             mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,
             xcol <span class="op">=</span> <span class="fl">2</span>,
@@ -1351,7 +1309,7 @@ extraversion
             ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>,
             fullsims <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Users can then visualize this posterior distribution using the ggplot2 and <code>ggridges</code> packages.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://ggplot2.tidyverse.org">"ggplot2"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://wilkelab.org/ggridges">"ggridges"</a></span><span class="op">)</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">aveprob.female.jags</span>, 
@@ -1363,13 +1321,13 @@ extraversion
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Estimated probability of volunteering"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probability based on average-case approach"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="getting_started_files/figure-html/unnamed-chunk-37-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="getting_started_files/figure-html/unnamed-chunk-38-1.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
 <div id="extraversion" class="section level3">
 <h3 class="hasAnchor">
 <a href="#extraversion" class="anchor"></a>Extraversion</h3>
 <p>For continuous variables of interest, users may want to set <code>fullsims = FALSE</code> to obtain the median predicted probability along the range of <span class="math inline">\(x\)</span> as well as a lower and upper bound of choice (here, the 95% credible interval).</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">aveprob.extra.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mcmcAveProb.html">mcmcAveProb</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,
             mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,
             xcol <span class="op">=</span> <span class="fl">4</span>,
@@ -1378,7 +1336,7 @@ extraversion
             ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>,
             fullsims <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Users can then plot the resulting probabilities using any plotting functions, such as ggplot2.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">aveprob.extra.jags</span>, 
        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">median_pp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_ribbon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">lower_pp</span>, ymax <span class="op">=</span> <span class="va">upper_pp</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span> 
@@ -1388,7 +1346,7 @@ extraversion
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probability based on average-case approach"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="getting_started_files/figure-html/unnamed-chunk-39-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="getting_started_files/figure-html/unnamed-chunk-40-1.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="mcmcobsprob" class="section level2">
@@ -1400,7 +1358,7 @@ extraversion
 <h3 class="hasAnchor">
 <a href="#sex-1" class="anchor"></a>Sex</h3>
 <p>We first calculate the average “effect” of sex on volunteering, again generating a full posterior distribution. Again, <code>xcol</code> represents the position of the covariate of interest, and <code>xrange</code> specifies the values for which <span class="math inline">\(Pr(y = 1)\)</span> is to be calculated.</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">obsprob.female.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mcmcObsProb.html">mcmcObsProb</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,
             mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,
             xcol <span class="op">=</span> <span class="fl">2</span>,
@@ -1409,7 +1367,7 @@ extraversion
             ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>,
             fullsims <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Users can again plot the resulting densities.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">obsprob.female.jags</span>, 
        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, x <span class="op">=</span> <span class="va">pp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://wilkelab.org/ggridges/reference/stat_density_ridges.html">stat_density_ridges</a></span><span class="op">(</span>quantile_lines <span class="op">=</span> <span class="cn">TRUE</span>, 
@@ -1419,13 +1377,13 @@ extraversion
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Estimated probability of volunteering"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probability based on observed-case approach"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="getting_started_files/figure-html/unnamed-chunk-41-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="getting_started_files/figure-html/unnamed-chunk-42-1.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
 <div id="extraversion-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#extraversion-1" class="anchor"></a>Extraversion</h3>
 <p>For this continuous predictor, we use <code>fullsims = FALSE</code>.</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">obsprob.extra.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mcmcObsProb.html">mcmcObsProb</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,
             mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,
             xcol <span class="op">=</span> <span class="fl">4</span>,
@@ -1434,7 +1392,7 @@ extraversion
             ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>,
             fullsims <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>We then plot the resulting probabilities across observed cases.</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">obsprob.extra.jags</span>, 
        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">median_pp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_ribbon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">lower_pp</span>, ymax <span class="op">=</span> <span class="va">upper_pp</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span> 
@@ -1444,7 +1402,7 @@ extraversion
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probability based on observed-case approach"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="getting_started_files/figure-html/unnamed-chunk-43-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="getting_started_files/figure-html/unnamed-chunk-44-1.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 </div>
@@ -1456,7 +1414,7 @@ extraversion
 <a href="#mcmcfd" class="anchor"></a><code>mcmcFD</code>
 </h2>
 <p>To summarize typical effects across covariates, we generate “first differences” (<span class="citation">Long (1997)</span>, <span class="citation">King, Tomz, and Wittenberg (2000)</span>). This quantity represents, for each covariate, the difference in predicted probabilities for cases with low and high values of the respective covariate. For each of these differences, all other variables are held constant at their median.</p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fdfull.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mcmcFD.html">mcmcFD</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,
                   mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,
                   link <span class="op">=</span> <span class="st">"logit"</span>,
@@ -1471,7 +1429,7 @@ extraversion
 <span class="co">#&gt;  3rd Qu.: 0.07619   3rd Qu.: 0.024511   3rd Qu.:0.09313  </span>
 <span class="co">#&gt;  Max.   : 0.15245   Max.   : 0.080707   Max.   :0.14269</span></code></pre></div>
 <p>The posterior distribution can be summarized as above, or users can directly obtain a summary when setting <code>fullsims</code> to FALSE.</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fdsum.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mcmcFD.html">mcmcFD</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,
                   mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,
                   link <span class="op">=</span> <span class="st">"logit"</span>,
@@ -1483,7 +1441,7 @@ extraversion
 <span class="co">#&gt; neuroticism  0.01122442 -0.028097810 0.05008092  neuroticism     2</span>
 <span class="co">#&gt; extraversion 0.08132383  0.045716391 0.11482003 extraversion     3</span></code></pre></div>
 <p>Users can plot the median and credible intervals of the summary of the first differences.</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">fdsum.jags</span>, 
        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">median_fd</span>, y <span class="op">=</span> <span class="va">VarName</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
@@ -1492,21 +1450,21 @@ extraversion
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Change in Pr(Volunteering)"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="getting_started_files/figure-html/unnamed-chunk-46-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="getting_started_files/figure-html/unnamed-chunk-47-1.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
 <div id="plotting-mcmcfd-objects" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plotting-mcmcfd-objects" class="anchor"></a>Plotting <code>mcmcFD</code> objects</h2>
 <p>To make use of the full posterior distribution of first differences, we provide a dedicated plotting method, <code>plot.mcmcFD</code>, which returns a ggplot2 object that can be further customized. The function is modeled after Figure 1 in <span class="citation">Karreth (2018)</span>. Users can specify a region of practical equivalence and print the percent of posterior draws to the right or left of the ROPE. If ROPE is not specified, the figure automatically prints the percent of posterior draws to the left or right of 0.</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fdfull.jags</span>, ROPE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="getting_started_files/figure-html/unnamed-chunk-47-1.png" width="90%" style="display: block; margin: auto;"></p>
-<p>The user can further customize the plot.</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fdfull.jags</span>, ROPE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><img src="getting_started_files/figure-html/unnamed-chunk-48-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p>The user can further customize the plot.</p>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fdfull.jags</span>, ROPE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span>
 <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"First differences"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">ggridges</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/ggridges/reference/theme_ridges.html">theme_ridges</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="getting_started_files/figure-html/unnamed-chunk-48-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="getting_started_files/figure-html/unnamed-chunk-49-1.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="model-fit" class="section level1">
@@ -1519,23 +1477,23 @@ extraversion
 <p>One way to assess model fit is to calculate the area under the Receiver Operating Characteristic (ROC) and Precision-Recall curves. A short description of these curves and their utility for model assessment is provided in <span class="citation">Beger (2016)</span>. The <code>mcmcRocPrc</code> function produces an object with four elements: the area under the ROC curve, the area under the PR curve, and two dataframes to plot each curve. When <code>fullsims</code> is set to <code>FALSE</code>, the elements represent the median of the posterior distribution of each quantity.</p>
 <p><code>mcmcRocPrc</code> currently requires an “rjags” object (a model fitted in R2jags) as input. Future package versions will generalize this input to allow for model objects fit with any of the other packages used in BayesPostEst.</p>
 <!-- Because each of these measures relies on comparing the observed $y$ to $Pr(y = 1)$, the function requires both the posterior distribution of all regression coefficients as well as a model frame. This model frame contains all variables used to estimate the model, with the outcome variable in the first column and all other variables following thereafter. -->
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fitstats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/print.mcmcRocPrc.html">mcmcRocPrc</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">fit.jags</span>,
                        yname  <span class="op">=</span> <span class="st">"volunteer"</span>,
                        xnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"neuroticism"</span>, <span class="st">"extraversion"</span><span class="op">)</span>,
                        curves <span class="op">=</span> <span class="cn">TRUE</span>,
                        fullsims <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p>Users can then print the area under the each curve:</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fitstats</span><span class="op">$</span><span class="va">area_under_roc</span>
 <span class="co">#&gt;        V1 </span>
 <span class="co">#&gt; 0.5840611</span></code></pre></div>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fitstats</span><span class="op">$</span><span class="va">area_under_prc</span>
 <span class="co">#&gt;        V1 </span>
 <span class="co">#&gt; 0.4867844</span></code></pre></div>
 <p>Users can also plot the ROC curve…</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">fitstats</span>, what <span class="op">=</span> <span class="st">"roc"</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span><span class="op">(</span>intercept <span class="op">=</span> <span class="fl">0</span>, slope <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span> 
@@ -1543,38 +1501,38 @@ extraversion
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"1 - Specificity"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Sensitivity"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="getting_started_files/figure-html/unnamed-chunk-52-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="getting_started_files/figure-html/unnamed-chunk-53-1.png" width="90%" style="display: block; margin: auto;"></p>
 <p>… as well as the precision-recall curve.</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">fitstats</span>, what <span class="op">=</span> <span class="st">"prc"</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Precision-Recall curve"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Recall"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Precision"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="getting_started_files/figure-html/unnamed-chunk-53-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="getting_started_files/figure-html/unnamed-chunk-54-1.png" width="90%" style="display: block; margin: auto;"></p>
 <p>To plot the posterior distribution of the area under the curves, users set the <code>fullsims</code> argument to <code>TRUE</code>. Unless a user wishes to plot credible intervals around the ROC and PR curves themselves, we recommend keeping <code>curves</code> at <code>FALSE</code> to avoid long computation time.</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fitstats.fullsims</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/print.mcmcRocPrc.html">mcmcRocPrc</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">fit.jags</span>,
                        yname  <span class="op">=</span> <span class="st">"volunteer"</span>,
                        xnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"neuroticism"</span>, <span class="st">"extraversion"</span><span class="op">)</span>,
                        curves <span class="op">=</span> <span class="cn">FALSE</span>,
                        fullsims <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>We can then plot the posterior density of the area under each curve.</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">fitstats.fullsims</span><span class="op">)</span>, 
        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">area_under_roc</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Area under the ROC curve"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="getting_started_files/figure-html/unnamed-chunk-55-1.png" width="90%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<p><img src="getting_started_files/figure-html/unnamed-chunk-56-1.png" width="90%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">fitstats.fullsims</span><span class="op">)</span>, 
        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">area_under_prc</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Area under the Precision-Recall curve"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="getting_started_files/figure-html/unnamed-chunk-56-1.png" width="90%" style="display: block; margin: auto;"></p>
+<p><img src="getting_started_files/figure-html/unnamed-chunk-57-1.png" width="90%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="references" class="section level1 unnumbered">
