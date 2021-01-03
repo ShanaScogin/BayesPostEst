@@ -49,9 +49,6 @@ NULL
 #' @importFrom ggridges stat_density_ridges
 NULL
 
-#' @importFrom ggmcmc ggs
-NULL
-
 #' @importFrom reshape2 melt
 NULL
 

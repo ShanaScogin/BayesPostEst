@@ -1,7 +1,7 @@
 ## Test environments
-* ubuntu 16.04.6 LTS (on travis-ci), R 3.6.0
-* macOS High Sierra 10.13.3 (on travis-ci), R 3.6.0  
-* win-builder (release and devel)
+* macOS High Sierra 10.13.3, R 3.6.0 (local)  
+* major OS tested (gh-actions)
+* win-builder (release)
 
 ## R CMD check results
 There were no ERRORs, WARNINGs, or NOTEs.
