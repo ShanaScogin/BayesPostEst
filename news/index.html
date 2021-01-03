@@ -126,14 +126,14 @@
       <small>Source: <a href='https://github.com/ShanaScogin/BayesPostEst/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="bayespostest-0309000" class="section level1">
-<h1 class="page-header" data-toc-text="0.3.0.9000">
-<a href="#bayespostest-0309000" class="anchor"></a>BayesPostEst 0.3.0.9000<small> Unreleased </small>
+    <div id="bayespostest-031" class="section level1">
+<h1 class="page-header" data-toc-text="0.3.1">
+<a href="#bayespostest-031" class="anchor"></a>BayesPostEst 0.3.1<small> Unreleased </small>
 </h1>
 <ul>
 <li>Removed package dependency on JAGS. Since rjags and R2jags were in the package Imports previously, and they in turn depend on a JAGS installed, the package would not install without JAGS. Now, all specific MCMC implementations are in the package Suggests and the package can be installed in an agnostic way without the need for JAGS, Stan, or any other specific MCMC library.
 <ul>
-<li>Conditional was added in the vignette for these packages</li>
+<li>Conditional was added in the vignette for these packages (<a href='https://github.com/ShanaScogin/BayesPostEst/issues/77'>#77</a>)</li>
 </ul>
 </li>
 <li>There were several changes in mcmcRocPrc:
