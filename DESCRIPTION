@@ -70,8 +70,7 @@ Suggests:
     rstanarm,
     runjags,
     testthat,
-    covr, 
-    ggmcmc
+    covr
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
 SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net)
