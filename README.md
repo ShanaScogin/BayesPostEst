@@ -3,7 +3,7 @@ BayesPostEst
 ============
 
 [![R build status](https://github.com/ShanaScogin/BayesPostEst/workflows/R-CMD-check/badge.svg)](https://github.com/ShanaScogin/BayesPostEst/actions)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/BayesPostEst)](https://CRAN.R-project.org/package=BayesPostEst)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/BayesPostEst)](https://CRAN.R-project.org/package=BayesPostEst)
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.01722/status.svg)](https://doi.org/10.21105/joss.01722)
 [![Codecov test coverage](https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg)](https://codecov.io/gh/ShanaScogin/BayesPostEst?branch=master)
 
@@ -372,7 +372,7 @@ ROPE
 
 Users can also define a “region of practical equivalence” (ROPE;
 [Kruschke 2013, Journal of Experimental Psychology 143(2):
-573-603](http://dx.doi.org/10.1037/a0029146)). This region is a band of
+573-603](https://doi.org/10.1037/a0029146)). This region is a band of
 values around 0 that are “practically equivalent” to 0 or no effect. For
 this to be useful, all parameters (e.g. regression coefficients) must be
 on the same scale because mcmcTab accepts only one definition of ROPE
@@ -655,7 +655,7 @@ ggplot(data = aveprob.extra.jags,
 
 As an alternative to probabilities for “typical” cases, [Hanmer and
 Kalkan (2013, American Journal of Political Science 57(1):
-263-277)](http://dx.doi.org/10.1111/j.1540-5907.2012.00602.x) suggest to
+263-277)](https://doi.org/10.1111/j.1540-5907.2012.00602.x) suggest to
 calculate predicted probabilities for all observed cases and then derive
 an “average effect”. In their words, the goal of this postestimation “is
 to obtain an estimate of the average effect in the population … rather
@@ -798,7 +798,7 @@ To make use of the full posterior distribution of first differences, we
 provide a dedicated plotting method, `plot.mcmcFD`, which returns a
 ggplot2 object that can be further customized. The function is modeled
 after Figure 1 in [Karreth (2018, International Interactions 44(3):
-463-490](http://dx.doi.org/10.1080/03050629.2018.1389728)). Users can
+463-490](https://doi.org/10.1080/03050629.2018.1389728)). Users can
 specify a region of practical equivalence and print the percent of
 posterior draws to the right or left of the ROPE. If ROPE is not
 specified, the figure automatically prints the percent of posterior
@@ -833,7 +833,7 @@ Model fit
 One way to assess model fit is to calculate the area under the Receiver
 Operating Characteristic (ROC) and Precision-Recall curves. A short
 description of these curves and their utility for model assessment is
-provided in [Beger (2016)](http://dx.doi.org/10.2139/ssrn.2765419). The
+provided in [Beger (2016)](https://ssrn.com/Abstract=2765419). The
 `mcmcRocPrc` function produces an object with four elements: the area
 under the ROC curve, the area under the PR curve, and two dataframes to
 plot each curve. When `fullsims` is set to `FALSE`, the elements
@@ -956,7 +956,6 @@ References
 
 Beger, Andreas. 2016. “Precision-Recall Curves.” Available at SSRN:
 <https://ssrn.com/Abstract=2765419>.
-<http://dx.doi.org/10.2139/ssrn.2765419>.
 
 Cowles, Michael, and Caroline Davis. 1987. “The Subject Matter of
 Psychology: Volunteers.” British Journal of Social Psychology 26 (2):
@@ -971,7 +970,7 @@ and Multilevel/Hierarchical Models. New York, NY: Cambridge University
 Press.
 
 Goodrich, Ben, Jonah Gabry, Imad Ali, and Sam Brilleman. 2019. Rstanarm:
-Bayesian Applied Regression Modeling via Stan. <http://mc-stan.org/>.
+Bayesian Applied Regression Modeling via Stan. <https://mc-stan.org/>.
 
 Hanmer, Michael J., and Kerem Ozan Kalkan. 2013. “Behind the Curve:
 Clarifying the Best Approach to Calculating Predicted Probabilities and
@@ -986,7 +985,7 @@ Organizations in Interstate Disputes.” International Interactions 44
 King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most
 of Statistical Analyses: Improving Interpretation and Presentation.”
 American Journal of Political Science 44 (2): 347–61.
-<http://www.jstor.org/stable/2669316>.
+<https://www.jstor.org/stable/2669316>.
 
 Kruschke, John K. 2013. “Bayesian Estimation Supersedes the T-Test.”
 Journal of Experimental Psychology: General 142 (2): 573–603.
@@ -1000,10 +999,10 @@ Dependent Variables. Thousand Oaks: Sage Publications.
 
 Martin, Andrew D., Kevin M. Quinn, and Jong Hee Park. 2011. “MCMCpack:
 Markov Chain Monte Carlo in R.” Journal of Statistical Software 42 (9):
-22. <http://www.jstatsoft.org/v42/i09/>.
+22. <https://www.jstatsoft.org/v42/i09/>.
 
 Plummer, Martyn. 2017. “JAGS Version 4.3.0 User Manual.”
 <http://mcmc-jags.sourceforge.net>.
 
 Stan Development Team. 2019. RStan: The R Interface to Stan.
-<http://mc-stan.org/>.
+<https://mc-stan.org/>.
