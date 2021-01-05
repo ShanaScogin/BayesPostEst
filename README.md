@@ -985,7 +985,7 @@ Organizations in Interstate Disputes.” International Interactions 44
 King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most
 of Statistical Analyses: Improving Interpretation and Presentation.”
 American Journal of Political Science 44 (2): 347–61.
-<https://www.jstor.org/stable/2669316>.
+<https://doi.org/10.2307/2669316>.
 
 Kruschke, John K. 2013. “Bayesian Estimation Supersedes the T-Test.”
 Journal of Experimental Psychology: General 142 (2): 573–603.
