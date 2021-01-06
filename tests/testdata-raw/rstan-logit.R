@@ -41,7 +41,9 @@ rstan_logit <- stan(file = "mod.stan",
                    pars = c("b"),     
                    chains = 4,        
                    iter = 2000,       
-                   seed = 123)     
+                   seed = 123,
+                   save_dso = F,
+                   save_warmup = F)     
 
 unlink("mod.stan")
 
