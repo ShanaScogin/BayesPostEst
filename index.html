@@ -326,7 +326,7 @@ model {
 <div id="rope" class="section level2">
 <h2 class="hasAnchor">
 <a href="#rope" class="anchor"></a>ROPE</h2>
-<p>Users can also define a “region of practical equivalence” (ROPE; <a href="http://dx.doi.org/10.1037/a0029146">Kruschke 2013, Journal of Experimental Psychology 143(2): 573-603</a>). This region is a band of values around 0 that are “practically equivalent” to 0 or no effect. For this to be useful, all parameters (e.g. regression coefficients) must be on the same scale because mcmcTab accepts only one definition of ROPE for all parameters. Users can standardize regression coefficients to achieve this. Because we standardized variables earlier, the coefficients (except the intercept) are on a similar scale and we define the ROPE to be between -0.1 and 0.1.</p>
+<p>Users can also define a “region of practical equivalence” (ROPE; <a href="https://doi.org/10.1037/a0029146">Kruschke 2013, Journal of Experimental Psychology 143(2): 573-603</a>). This region is a band of values around 0 that are “practically equivalent” to 0 or no effect. For this to be useful, all parameters (e.g. regression coefficients) must be on the same scale because mcmcTab accepts only one definition of ROPE for all parameters. Users can standardize regression coefficients to achieve this. Because we standardized variables earlier, the coefficients (except the intercept) are on a similar scale and we define the ROPE to be between -0.1 and 0.1.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.jags</span>, pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"b[2]"</span>, <span class="st">"b[3]"</span>, <span class="st">"b[4]"</span><span class="op">)</span>, ROPE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb32"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co">## This table contains an estimate for parameter values outside of the region of </span></span>
@@ -486,7 +486,7 @@ model {
 <h2 class="hasAnchor">
 <a href="#mcmcobsprob" class="anchor"></a><code>mcmcObsProb</code>
 </h2>
-<p>As an alternative to probabilities for “typical” cases, <a href="http://dx.doi.org/10.1111/j.1540-5907.2012.00602.x">Hanmer and Kalkan (2013, American Journal of Political Science 57(1): 263-277)</a> suggest to calculate predicted probabilities for all observed cases and then derive an “average effect”. In their words, the goal of this postestimation “is to obtain an estimate of the average effect in the population … rather than seeking to understand the effect for the average case.”</p>
+<p>As an alternative to probabilities for “typical” cases, <a href="https://doi.org/10.1111/j.1540-5907.2012.00602.x">Hanmer and Kalkan (2013, American Journal of Political Science 57(1): 263-277)</a> suggest to calculate predicted probabilities for all observed cases and then derive an “average effect”. In their words, the goal of this postestimation “is to obtain an estimate of the average effect in the population … rather than seeking to understand the effect for the average case.”</p>
 <div id="sex-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sex-1" class="anchor"></a>Sex</h3>
@@ -589,7 +589,7 @@ model {
 <div id="plotting-mcmcfd-objects" class="section level2">
 <h2 class="hasAnchor">
 <a href="#plotting-mcmcfd-objects" class="anchor"></a>Plotting <code>mcmcFD</code> objects</h2>
-<p>To make use of the full posterior distribution of first differences, we provide a dedicated plotting method, <code>plot.mcmcFD</code>, which returns a ggplot2 object that can be further customized. The function is modeled after Figure 1 in <a href="http://dx.doi.org/10.1080/03050629.2018.1389728">Karreth (2018, International Interactions 44(3): 463-490</a>). Users can specify a region of practical equivalence and print the percent of posterior draws to the right or left of the ROPE. If ROPE is not specified, the figure automatically prints the percent of posterior draws to the left or right of 0.</p>
+<p>To make use of the full posterior distribution of first differences, we provide a dedicated plotting method, <code>plot.mcmcFD</code>, which returns a ggplot2 object that can be further customized. The function is modeled after Figure 1 in <a href="https://doi.org/10.1080/03050629.2018.1389728">Karreth (2018, International Interactions 44(3): 463-490</a>). Users can specify a region of practical equivalence and print the percent of posterior draws to the right or left of the ROPE. If ROPE is not specified, the figure automatically prints the percent of posterior draws to the left or right of 0.</p>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fdfull.jags</span>, ROPE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb62"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="co">## Picking joint bandwidth of 0.37</span></span></code></pre></div>
@@ -610,7 +610,7 @@ model {
 <h2 class="hasAnchor">
 <a href="#mcmcrocprc" class="anchor"></a><code>mcmcRocPrc</code>
 </h2>
-<p>One way to assess model fit is to calculate the area under the Receiver Operating Characteristic (ROC) and Precision-Recall curves. A short description of these curves and their utility for model assessment is provided in <a href="http://dx.doi.org/10.2139/ssrn.2765419">Beger (2016)</a>. The <code>mcmcRocPrc</code> function produces an object with four elements: the area under the ROC curve, the area under the PR curve, and two dataframes to plot each curve. When <code>fullsims</code> is set to <code>FALSE</code>, the elements represent the median of the posterior distribution of each quantity.</p>
+<p>One way to assess model fit is to calculate the area under the Receiver Operating Characteristic (ROC) and Precision-Recall curves. A short description of these curves and their utility for model assessment is provided in <a href="https://ssrn.com/Abstract=2765419">Beger (2016)</a>. The <code>mcmcRocPrc</code> function produces an object with four elements: the area under the ROC curve, the area under the PR curve, and two dataframes to plot each curve. When <code>fullsims</code> is set to <code>FALSE</code>, the elements represent the median of the posterior distribution of each quantity.</p>
 <p><code>mcmcRocPrc</code> currently requires an “rjags” object (a model fitted in R2jags) as input. Future package versions will generalize this input to allow for model objects fit with any of the other packages used in BayesPostEst.</p>
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fitstats</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/print.mcmcRocPrc.html">mcmcRocPrc</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">fit.jags</span>,
@@ -683,24 +683,24 @@ model {
 <div id="references" class="section level1">
 <h1 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h1>
-<p>Beger, Andreas. 2016. “Precision-Recall Curves.” Available at SSRN: <a href="https://ssrn.com/Abstract=2765419" class="uri">https://ssrn.com/Abstract=2765419</a>. <a href="http://dx.doi.org/10.2139/ssrn.2765419" class="uri">http://dx.doi.org/10.2139/ssrn.2765419</a>.</p>
+<p>Beger, Andreas. 2016. “Precision-Recall Curves.” Available at SSRN: <a href="https://ssrn.com/Abstract=2765419" class="uri">https://ssrn.com/Abstract=2765419</a>.</p>
 <p>Cowles, Michael, and Caroline Davis. 1987. “The Subject Matter of Psychology: Volunteers.” British Journal of Social Psychology 26 (2): 97–102. <a href="https://doi.org/10.1111/j.2044-8309.1987.tb00769.x" class="uri">https://doi.org/10.1111/j.2044-8309.1987.tb00769.x</a>.</p>
 <p>Fox, John, Sanford Weisberg, and Brad Price. 2018. CarData: Companion to Applied Regression Data Sets. <a href="https://CRAN.R-project.org/package=carData" class="uri">https://CRAN.R-project.org/package=carData</a>.</p>
 <p>Gelman, Andrew, and Jennifer Hill. 2007. Data Analysis Using Regression and Multilevel/Hierarchical Models. New York, NY: Cambridge University Press.</p>
-<p>Goodrich, Ben, Jonah Gabry, Imad Ali, and Sam Brilleman. 2019. Rstanarm: Bayesian Applied Regression Modeling via Stan. <a href="http://mc-stan.org/" class="uri">http://mc-stan.org/</a>.</p>
+<p>Goodrich, Ben, Jonah Gabry, Imad Ali, and Sam Brilleman. 2019. Rstanarm: Bayesian Applied Regression Modeling via Stan. <a href="https://mc-stan.org/" class="uri">https://mc-stan.org/</a>.</p>
 <p>Hanmer, Michael J., and Kerem Ozan Kalkan. 2013. “Behind the Curve: Clarifying the Best Approach to Calculating Predicted Probabilities and Marginal Effects from Limited Dependent Variable Models.” American Journal of Political Science 57 (1): 263–77. <a href="https://doi.org/10.1111/j.1540-5907.2012.00602.x" class="uri">https://doi.org/10.1111/j.1540-5907.2012.00602.x</a>.</p>
 <p>Karreth, Johannes. 2018. “The Economic Leverage of International Organizations in Interstate Disputes.” International Interactions 44 (3): 463–90. <a href="https://doi.org/10.1080/03050629.2018.1389728" class="uri">https://doi.org/10.1080/03050629.2018.1389728</a>.</p>
-<p>King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most of Statistical Analyses: Improving Interpretation and Presentation.” American Journal of Political Science 44 (2): 347–61. <a href="http://www.jstor.org/stable/2669316" class="uri">http://www.jstor.org/stable/2669316</a>.</p>
+<p>King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most of Statistical Analyses: Improving Interpretation and Presentation.” American Journal of Political Science 44 (2): 347–61. <a href="https://doi.org/10.2307/2669316" class="uri">https://doi.org/10.2307/2669316</a>.</p>
 <p>Kruschke, John K. 2013. “Bayesian Estimation Supersedes the T-Test.” Journal of Experimental Psychology: General 142 (2): 573–603. <a href="https://doi.org/10.1037/a0029146" class="uri">https://doi.org/10.1037/a0029146</a>.</p>
 <p>Kruschke, John K. 2015. Doing Bayesian Data Analysis: A Tutorial with R, JAGS, and Stan. Amsterdam: Academic Press. 978-0-12-405888-0</p>
 <p>Long, J. Scott. 1997. Regression Models for Categorical and Limited Dependent Variables. Thousand Oaks: Sage Publications.</p>
 <p>Martin, Andrew D., Kevin M. Quinn, and Jong Hee Park. 2011. “MCMCpack: Markov Chain Monte Carlo in R.” Journal of Statistical Software 42 (9):</p>
 <ol>
 <li>
-<a href="http://www.jstatsoft.org/v42/i09/" class="uri">http://www.jstatsoft.org/v42/i09/</a>.</li>
+<a href="https://www.jstatsoft.org/v42/i09/" class="uri">https://www.jstatsoft.org/v42/i09/</a>.</li>
 </ol>
 <p>Plummer, Martyn. 2017. “JAGS Version 4.3.0 User Manual.” <a href="http://mcmc-jags.sourceforge.net" class="uri">http://mcmc-jags.sourceforge.net</a>.</p>
-<p>Stan Development Team. 2019. RStan: The R Interface to Stan. <a href="http://mc-stan.org/" class="uri">http://mc-stan.org/</a>.</p>
+<p>Stan Development Team. 2019. RStan: The R Interface to Stan. <a href="https://mc-stan.org/" class="uri">https://mc-stan.org/</a>.</p>
 </div>
 
   </div>
@@ -745,7 +745,7 @@ model {
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/ShanaScogin/BayesPostEst/actions"><img src="https://github.com/ShanaScogin/BayesPostEst/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://CRAN.R-project.org/package=BayesPostEst"><img src="http://www.r-pkg.org/badges/version/BayesPostEst" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://CRAN.R-project.org/package=BayesPostEst"><img src="https://www.r-pkg.org/badges/version/BayesPostEst" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://doi.org/10.21105/joss.01722"><img src="https://joss.theoj.org/papers/10.21105/joss.01722/status.svg" alt="DOI"></a></li>
 <li><a href="https://codecov.io/gh/ShanaScogin/BayesPostEst?branch=master"><img src="https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>

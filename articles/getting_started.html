@@ -88,7 +88,7 @@
                         <h4 class="author">Rob Williams</h4>
                         <h4 class="author">Andreas Beger</h4>
             
-            <h4 class="date">2021-01-04</h4>
+            <h4 class="date">2021-01-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ShanaScogin/BayesPostEst/blob/master/vignettes/getting_started.Rmd"><code>vignettes/getting_started.Rmd</code></a></small>
       <div class="hidden name"><code>getting_started.Rmd</code></div>
@@ -294,15 +294,15 @@ model {
 <span class="co">#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 1: </span>
-<span class="co">#&gt; Chain 1:  Elapsed Time: 0.37237 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 1:                0.393125 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 1:                0.765495 seconds (Total)</span>
+<span class="co">#&gt; Chain 1:  Elapsed Time: 0.36338 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 1:                0.38464 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 1:                0.74802 seconds (Total)</span>
 <span class="co">#&gt; Chain 1: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bernoulli' NOW (CHAIN 2).</span>
 <span class="co">#&gt; Chain 2: </span>
-<span class="co">#&gt; Chain 2: Gradient evaluation took 6.8e-05 seconds</span>
-<span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.68 seconds.</span>
+<span class="co">#&gt; Chain 2: Gradient evaluation took 5.3e-05 seconds</span>
+<span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.53 seconds.</span>
 <span class="co">#&gt; Chain 2: Adjust your expectations accordingly!</span>
 <span class="co">#&gt; Chain 2: </span>
 <span class="co">#&gt; Chain 2: </span>
@@ -319,9 +319,9 @@ model {
 <span class="co">#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 2: </span>
-<span class="co">#&gt; Chain 2:  Elapsed Time: 0.372996 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 2:                0.381298 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 2:                0.754294 seconds (Total)</span>
+<span class="co">#&gt; Chain 2:  Elapsed Time: 0.364007 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 2:                0.380535 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 2:                0.744542 seconds (Total)</span>
 <span class="co">#&gt; Chain 2: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bernoulli' NOW (CHAIN 3).</span>
@@ -344,9 +344,9 @@ model {
 <span class="co">#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 3: </span>
-<span class="co">#&gt; Chain 3:  Elapsed Time: 0.404262 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 3:                0.398663 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 3:                0.802925 seconds (Total)</span>
+<span class="co">#&gt; Chain 3:  Elapsed Time: 0.370127 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 3:                0.40424 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 3:                0.774367 seconds (Total)</span>
 <span class="co">#&gt; Chain 3: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bernoulli' NOW (CHAIN 4).</span>
@@ -369,9 +369,9 @@ model {
 <span class="co">#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 4: </span>
-<span class="co">#&gt; Chain 4:  Elapsed Time: 0.362345 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 4:                0.391182 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 4:                0.753527 seconds (Total)</span>
+<span class="co">#&gt; Chain 4:  Elapsed Time: 0.356746 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 4:                0.39411 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 4:                0.750856 seconds (Total)</span>
 <span class="co">#&gt; Chain 4:</span></code></pre></div>
 </div>
 </div>
@@ -399,10 +399,10 @@ model {
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.rjags</span><span class="op">)</span>
 <span class="co">#&gt;   Variable Median    SD  Lower  Upper</span>
-<span class="co">#&gt; 1     b[1] -0.459 0.083 -0.619 -0.296</span>
-<span class="co">#&gt; 2     b[2]  0.235 0.111  0.020  0.458</span>
-<span class="co">#&gt; 3     b[3]  0.063 0.111 -0.155  0.281</span>
-<span class="co">#&gt; 4     b[4]  0.519 0.109  0.306  0.734</span></code></pre></div>
+<span class="co">#&gt; 1     b[1] -0.459 0.082 -0.623 -0.300</span>
+<span class="co">#&gt; 2     b[2]  0.237 0.110  0.023  0.451</span>
+<span class="co">#&gt; 3     b[3]  0.063 0.110 -0.152  0.279</span>
+<span class="co">#&gt; 4     b[4]  0.515 0.111  0.296  0.735</span></code></pre></div>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.MCMCpack</span><span class="op">)</span>
 <span class="co">#&gt;       Variable Median    SD  Lower  Upper</span>
@@ -1540,7 +1540,7 @@ extraversion
 <a href="#references" class="anchor"></a>References</h1>
 <div id="refs" class="references">
 <div id="ref-Beger2016">
-<p>Beger, Andreas. 2016. “Precision-Recall Curves.” <em>Available at SSRN: Https://Ssrn.com/Abstract=2765419</em>. <a href="http://dx.doi.org/10.2139/ssrn.2765419">http://dx.doi.org/10.2139/ssrn.2765419</a>.</p>
+<p>Beger, Andreas. 2016. “Precision-Recall Curves.” <em>Available at SSRN: Https://Ssrn.com/Abstract=2765419</em>. <a href="https://ssrn.com/abstract=2765419">https://ssrn.com/abstract=2765419</a>.</p>
 </div>
 <div id="ref-CowlesDavis1987">
 <p>Cowles, Michael, and Caroline Davis. 1987. “The Subject Matter of Psychology: Volunteers.” <em>British Journal of Social Psychology</em> 26 (2): 97–102. <a href="https://doi.org/10.1111/j.2044-8309.1987.tb00769.x">https://doi.org/10.1111/j.2044-8309.1987.tb00769.x</a>.</p>
@@ -1552,7 +1552,7 @@ extraversion
 <p>Gelman, Andrew, and Jennifer Hill. 2007. <em>Data Analysis Using Regression and Multilevel/Hierarchical Models</em>. New York, NY: Cambridge University Press.</p>
 </div>
 <div id="ref-rstanarm2019">
-<p>Goodrich, Ben, Jonah Gabry, Imad Ali, and Sam Brilleman. 2019. <em>Rstanarm: Bayesian Applied Regression Modeling via Stan.</em> <a href="http://mc-stan.org/">http://mc-stan.org/</a>.</p>
+<p>Goodrich, Ben, Jonah Gabry, Imad Ali, and Sam Brilleman. 2019. <em>Rstanarm: Bayesian Applied Regression Modeling via Stan.</em> <a href="https://mc-stan.org/">https://mc-stan.org/</a>.</p>
 </div>
 <div id="ref-HanmerKalkan2013">
 <p>Hanmer, Michael J., and Kerem Ozan Kalkan. 2013. “Behind the Curve: Clarifying the Best Approach to Calculating Predicted Probabilities and Marginal Effects from Limited Dependent Variable Models.” <em>American Journal of Political Science</em> 57 (1): 263–77. <a href="https://doi.org/10.1111/j.1540-5907.2012.00602.x">https://doi.org/10.1111/j.1540-5907.2012.00602.x</a>.</p>
@@ -1561,7 +1561,7 @@ extraversion
 <p>Karreth, Johannes. 2018. “The Economic Leverage of International Organizations in Interstate Disputes.” <em>International Interactions</em> 44 (3): 463–90. <a href="https://doi.org/10.1080/03050629.2018.1389728">https://doi.org/10.1080/03050629.2018.1389728</a>.</p>
 </div>
 <div id="ref-KingEtal2000">
-<p>King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most of Statistical Analyses: Improving Interpretation and Presentation.” <em>American Journal of Political Science</em> 44 (2): 347–61. <a href="http://www.jstor.org/stable/2669316">http://www.jstor.org/stable/2669316</a>.</p>
+<p>King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most of Statistical Analyses: Improving Interpretation and Presentation.” <em>American Journal of Political Science</em> 44 (2): 347–61. <a href="https://doi.org/10.2307/2669316">https://doi.org/10.2307/2669316</a>.</p>
 </div>
 <div id="ref-Kruschke2015">
 <p>Kruschke, John. 2015. <em>Doing Bayesian Data Analysis: A Tutorial with R, JAGS, and Stan</em>. 2nd Edition. Amsterdam : Academic Press, 2015.</p>
@@ -1576,7 +1576,7 @@ extraversion
 <p>Long, J. Scott. 1997. <em>Regression Models for Categorial and Limited Dependent Variables</em>. Thousand Oaks: Sage Publications.</p>
 </div>
 <div id="ref-MCMCpack">
-<p>Martin, Andrew D., Kevin M. Quinn, and Jong Hee Park. 2011. “MCMCpack: Markov Chain Monte Carlo in R.” <em>Journal of Statistical Software</em> 42 (9): 22. <a href="http://www.jstatsoft.org/v42/i09/">http://www.jstatsoft.org/v42/i09/</a>.</p>
+<p>Martin, Andrew D., Kevin M. Quinn, and Jong Hee Park. 2011. “MCMCpack: Markov Chain Monte Carlo in R.” <em>Journal of Statistical Software</em> 42 (9): 22. <a href="https://www.jstatsoft.org/v42/i09/">https://www.jstatsoft.org/v42/i09/</a>.</p>
 </div>
 <div id="ref-jags2017">
 <p>Plummer, Martyn. 2017. “JAGS Version 4.3.0 User Manual.” <a href="http://mcmc-jags.sourceforge.net">http://mcmc-jags.sourceforge.net</a>.</p>
@@ -1585,7 +1585,7 @@ extraversion
 <p>Scogin, Shana, Johannes Karreth, Andreas Beger, and Rob Williams. 2019. “BayesPostEst: An R Package to Generate Postestimation Quantities for Bayesian MCMC Estimation.” <em>Journal of Open Source Software</em> 4 (42): 1722. <a href="https://doi.org/10.21105/joss.01722">https://doi.org/10.21105/joss.01722</a>.</p>
 </div>
 <div id="ref-rstan2019">
-<p>Stan Development Team. 2019. <em>RStan: The R Interface to Stan</em>. <a href="http://mc-stan.org/">http://mc-stan.org/</a>.</p>
+<p>Stan Development Team. 2019. <em>RStan: The R Interface to Stan</em>. <a href="https://mc-stan.org/">https://mc-stan.org/</a>.</p>
 </div>
 </div>
 </div>
