@@ -281,19 +281,34 @@ test_that("brms input works", {
 
 # Other types of input (MCMpack, BUGS) ------------------------------------
 
+## defining packages for conditional run
+pkgs <- c("rjags", "R2WinBUGS")
 
-
+if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
 test_that("BUGS input works", {
   
-  bugs_logit <- BayesPostEst::bugs_logit
-  sim_data <- BayesPostEst::sim_data
+  ## Generate an example BUGS fitted model object
+  data(LINE, package = "rjags")
+  LINE$recompile()
+  
+  ## fitting the model with jags
+  bugs_model <- rjags::coda.samples(LINE, c("alpha", "beta", "sigma"),
+                                    n.iter = 1000)
 
+  ## fitting BUGS logit model
+  bugs_logit <- R2WinBUGS::as.bugs.array(sims.array = as.array(bugs_model))
+
+  ## reading in simulated data
+  sim_data <- BayesPostEst::sim_data
+  
   expect_error(
     out <- mcmcRocPrc(bugs_logit, FALSE, FALSE, data = sim_data, yname = "Y",
                       xnames = c("X1", "X2"), type = "logit"),
     NA
   )
 })
+}
+
 
 test_that("MCMCpack input works", {
   mcmcpack_logit <- readRDS("../testdata/mcmcpack-logit.rds")

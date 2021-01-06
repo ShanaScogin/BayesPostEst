@@ -1,16 +1,5 @@
-pkgs <- c("R2jags", "rjags", "MCMCpack", "rstan", "rstanarm")
-
-if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
-
 data("jags_logit")
-data("runjags_interactive")
-data("mcmcpack_linear")
-data("bugs_model")
 
-}
-
-if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
-  
 test_that("Simple model runs with mcmcTab", {
   
   object <- mcmcTab(jags_logit, 
@@ -22,17 +11,7 @@ test_that("Simple model runs with mcmcTab", {
   value <- object[2, 2]
   check_against <- c(0.527)
   expect_equal(round(as.numeric(value), 2), round(check_against, 2))
-  
-  
-  # ## checking with Johannes' previous function
-  # devtools::source_url("https://raw.githubusercontent.com/jkarreth/JKmisc/master/mcmctab.R")
-  # mcmcTab(coda::as.mcmc(fit))
-
 })
-
-}
-
-if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
 
 test_that("mcmcTab works with different input types", {
   
@@ -40,25 +19,14 @@ test_that("mcmcTab works with different input types", {
   expect_equal(mcmcTab(jags_logit)[1,3], 0.09)
   
   # mcmc.list
-  expect_equal(mcmcTab(coda::as.mcmc(jags_logit))[2,3], 0.166)
-  
-  # mcmc
-  expect_equal(mcmcTab(mcmcpack_linear)[2,3],0.485)
-  
-  # bugs
-  expect_equal(mcmcTab(bugs_model)[1,2], 1.031)
+  expect_equal(mcmcTab(coda::as.mcmc(jags_logit))[2,3], 0.166) # coda is an imported package
   
   # stanreg
   
   # stanfit
   
 })
-  
-}
 
-
-if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
-  
 test_that("pars subsetting works", {
   
   data("jags_logit")
@@ -98,10 +66,6 @@ test_that("pars subsetting works", {
   )
   
 })
-  
-}
-
-if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
 
 test_that("ROPE argument works", {
   
@@ -121,7 +85,41 @@ test_that("ROPE argument works", {
     object <- mcmcTab(jags_logit, ROPE = 0),
     "Invalid ROPE argument"
   )
-  
 })
+
+pkgs_win <- c("rjags", "R2WinBUGS")
+
+if (!all(sapply(pkgs_win, require, quietly = TRUE, character.only = TRUE))) {
   
+  ## Generate an example BUGS fitted model object
+  data(LINE, package = "rjags")
+  LINE$recompile()
+  
+  ## fitting the model with jags
+  bugs_model <- rjags::coda.samples(LINE, c("alpha", "beta", "sigma"),
+                                    n.iter = 1000)
+  bugs_model <- R2WinBUGS::as.bugs.array(sims.array = as.array(bugs_model))
+  
+  
+  test_that("mcmcTab works with bugs", {
+    
+    # bugs
+    expect_equal(mcmcTab(bugs_model)[1,2], 1.031)
+    
+  })
+  
+}
+
+if (require("MCMCpack", quietly = TRUE)) {
+  ## fitting the model with MCMCpack
+  mcmcpack_linear <- MCMCpack::MCMCregress(Y ~ X, b0 = 0, B0 = 0.001,
+                                           sigma.mu = 5, sigma.var = 10,
+                                           data = list(X = rnorm(100),
+                                                       Y = rnorm(100, 5, 5)),
+                                           seed = 1)
+  ## testing
+  test_that("mcmcTab works with different input types", {
+    # mcmc
+    expect_equal(mcmcTab(mcmcpack_linear)[2,3],0.485)
+  })
 }
