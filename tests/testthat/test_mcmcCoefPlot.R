@@ -50,50 +50,54 @@ test_that("mcmcCoefPlot errors work", {
   expect_error(mcmcCoefPlot(jags_logit, hpdi = 2))
 })
 
-if (require("runjags", quietly = TRUE)) {
-  ## Generate an example runjags interactive fitted model
-  ## formatting the data for jags
-  datalist <- list(X = model.matrix(~ X1 * X2, sim_data_interactive),
-                   Y = sim_data_interactive[, 3],
-                   N = nrow(sim_data_interactive))
-  
-  ## creating jags model
-  model <- "model { 
-  for(i in 1 : N){ 
-  Y[i] ~ dnorm(beta %*% X[i, ], tau);
-  } 
-  for(i in 1:4) {
-  beta[i] ~ dnorm(0, 0.001)
-  }
-  tau ~ dexp(1)
-  }"
-
-  ## fitting the model with runjags
-  runjags_interactive <- runjags::run.jags(model = model, monitor = c("beta", "tau"),
-                                           data = datalist, n.chains = 2, method = "rjags")
-  
-  ## testing
-  test_that("mcmcCoefPlot works with multiple object types", {
-    ## runjags
-    expect_silent(mcmcCoefPlot(runjags_interactive))
-  })
-  
-  rm(datalist, model)
-}
-
-pkgs <- c("rjags", "R2WinBUGS")
-if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
-  ## Generate an example BUGS fitted model object
-  data(LINE, package = "rjags")
-  LINE$recompile()
-  
-  ## fitting the model with jags
-  bugs_model <- rjags::coda.samples(LINE, c("alpha", "beta", "sigma"),
-                                    n.iter = 1000)
-  bugs_model <- R2WinBUGS::as.bugs.array(sims.array = as.array(bugs_model))
-  
-  test_that("mcmcCoefPlot works with bugs", {
-    expect_silent(mcmcCoefPlot(bugs_model))
-  })
-}
-
+# dontrun(
+# if (require("runjags", quietly = TRUE)) {
+#   ## Generate an example runjags interactive fitted model
+#   ## formatting the data for jags
+#   datalist <- list(X = model.matrix(~ X1 * X2, sim_data_interactive),
+#                    Y = sim_data_interactive[, 3],
+#                    N = nrow(sim_data_interactive))
+#   
+#   ## creating jags model
+#   model <- "model { 
+#   for(i in 1 : N){ 
+#   Y[i] ~ dnorm(beta %*% X[i, ], tau);
+#   } 
+#   for(i in 1:4) {
+#   beta[i] ~ dnorm(0, 0.001)
+#   }
+#   tau ~ dexp(1)
+#   }"
+# 
+#   ## fitting the model with runjags
+#   runjags_interactive <- runjags::run.jags(model = model, monitor = c("beta", "tau"),
+#                                            data = datalist, n.chains = 2, method = "rjags")
+#   
+#   ## testing
+#   test_that("mcmcCoefPlot works with multiple object types", {
+#     ## runjags
+#     expect_silent(mcmcCoefPlot(runjags_interactive))
+#   })
+#   
+#   rm(datalist, model)
+# }
+# )
+# 
+# dontrun(
+# pkgs <- c("rjags", "R2WinBUGS"),
+# 
+# if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
+#   ## Generate an example BUGS fitted model object
+#   data(LINE, package = "rjags")
+#   LINE$recompile()
+#   
+#   ## fitting the model with jags
+#   bugs_model <- rjags::coda.samples(LINE, c("alpha", "beta", "sigma"),
+#                                     n.iter = 1000)
+#   bugs_model <- R2WinBUGS::as.bugs.array(sims.array = as.array(bugs_model))
+#   
+#   test_that("mcmcCoefPlot works with bugs", {
+#     expect_silent(mcmcCoefPlot(bugs_model))
+#   })
+# }
+# )
