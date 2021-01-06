@@ -18,7 +18,7 @@ BayesPostEst contains functions to generate postestimation quantities
 after estimating Bayesian regression models. The package was inspired by
 a set of functions written originally for [Johannes
 Karreth](http://www.jkarreth.net)’s workshop on Bayesian modeling at the
-[ICPSR Summer program](https://www.icpsr.umich.edu/icpsrweb/sumprog/).
+[ICPSR Summer program](https://www.icpsr.umich.edu/web/pages/sumprog/index.html).
 It has grown to include new functions (see `mcmcReg`) and will continue
 to grow to support Bayesian postestimation. For now, the package focuses
 mostly on generalized linear regression models for binary outcomes
@@ -955,7 +955,7 @@ References
 ==========
 
 Beger, Andreas. 2016. “Precision-Recall Curves.” Available at SSRN:
-<https://ssrn.com/Abstract=2765419>.
+<http://doi.org/10.2139/ssrn.2765419>.
 
 Cowles, Michael, and Caroline Davis. 1987. “The Subject Matter of
 Psychology: Volunteers.” British Journal of Social Psychology 26 (2):

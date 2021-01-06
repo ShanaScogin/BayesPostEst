@@ -625,7 +625,7 @@ Please submit an [issue](https://github.com/ShanaScogin/BayesPostEst/issues) if 
 
 # References
 
-Beger, Andreas. 2016. “Precision-Recall Curves.” Available at SSRN: https://www.ssrn.com/Abstract=2765419. https://ssrn.com/abstract=2765419.
+Beger, Andreas. 2016. “Precision-Recall Curves.” Available at SSRN: https://www.ssrn.com/Abstract=2765419. http://doi.org/10.2139/ssrn.2765419.
 
 Cowles, Michael, and Caroline Davis. 1987. “The Subject Matter of Psychology: Volunteers.” British Journal of Social Psychology 26 (2): 97–102. https://doi.org/10.1111/j.2044-8309.1987.tb00769.x.
 
