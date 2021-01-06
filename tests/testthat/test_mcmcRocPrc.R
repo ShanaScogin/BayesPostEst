@@ -144,9 +144,7 @@ test_that("JAGS probit input works", {
 })
 
 test_that("Non-logit/probit JAGS does not work", {
-  
   data(jags_logit)
-  
   fake_jags <- structure(
     list(
       model = structure(
@@ -167,15 +165,12 @@ test_that("Non-logit/probit JAGS does not work", {
 
 
 test_that("runjags input works", {
-  
   runjags_logit <- readRDS("../testdata/runjags-logit.rds")
-  
   expect_error(
     out <- mcmcRocPrc(runjags_logit, FALSE, FALSE, yname = "Y", 
                       xnames = c("X1", "X2")),
     NA
   )
-
 })
 
 
@@ -216,7 +211,6 @@ test_that("binary/non-binary stanfit models are correctly IDd", {
 })
 
 test_that("RStan input works", {
-  
   df <- carData::Cowles
   df$female <- (as.numeric(df$sex) - 2) * (-1)
   df$volunteer <- as.numeric(df$volunteer) - 1
@@ -281,12 +275,8 @@ test_that("brms input works", {
 
 # Other types of input (MCMpack, BUGS) ------------------------------------
 
-## defining packages for conditional run
-pkgs <- c("rjags", "R2WinBUGS")
-
-if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
-test_that("BUGS input works", {
-  
+pkgs_win <- c("rjags", "R2WinBUGS")
+if (!all(sapply(pkgs_win, require, quietly = TRUE, character.only = TRUE))) {
   ## Generate an example BUGS fitted model object
   data(LINE, package = "rjags")
   LINE$recompile()
@@ -294,21 +284,20 @@ test_that("BUGS input works", {
   ## fitting the model with jags
   bugs_model <- rjags::coda.samples(LINE, c("alpha", "beta", "sigma"),
                                     n.iter = 1000)
-
-  ## fitting BUGS logit model
   bugs_logit <- R2WinBUGS::as.bugs.array(sims.array = as.array(bugs_model))
-
-  ## reading in simulated data
+  
+  ## loading sim data
   sim_data <- BayesPostEst::sim_data
   
+  ## testing
+  test_that("BUGS input works", {
   expect_error(
     out <- mcmcRocPrc(bugs_logit, FALSE, FALSE, data = sim_data, yname = "Y",
                       xnames = c("X1", "X2"), type = "logit"),
     NA
   )
-})
+  })
 }
-
 
 test_that("MCMCpack input works", {
   mcmcpack_logit <- readRDS("../testdata/mcmcpack-logit.rds")
@@ -340,32 +329,39 @@ test_that("MCMCpack input works", {
   
   # a mcmc object whose call attribute does not indicate MCMClogit or MCMCprobit
   # was used should also cause an error
-  data("mcmcpack_linear")
-  expect_error(
-    mcmcRocPrc(mcmcpack_linear, FALSE, FALSE, data = df, yname = "volunteer",
-               xnames = c("female", "neuroticism", "extraversion"),
-               type = "logit"),
-    "object does not appear to have been fitted using"
-  )
-  
-  # but we can force computation anyways using force;
-  # simulate an instance in which this would be desirable by stripping the call
-  # attribute from mcmcpack_logit
-  attr(mcmcpack_logit, "call") <- NULL
-  expect_error(
-    mcmcRocPrc(mcmcpack_logit, FALSE, FALSE, data = df, yname = "volunteer",
-               xnames = c("female", "neuroticism", "extraversion"),
-               type = "logit"),
-    "object does not have a 'call' attribute"
-  )
-  expect_error(
-    mcmcRocPrc(mcmcpack_logit, FALSE, FALSE, data = df, yname = "volunteer",
-               xnames = c("female", "neuroticism", "extraversion"),
-               type = "logit", 
-               force = TRUE),
-    NA
-  )
-  
+  if (require("MCMCpack", quietly = TRUE)) {
+    ## fitting the model with MCMCpack
+    mcmcpack_linear <- MCMCpack::MCMCregress(Y ~ X, b0 = 0, B0 = 0.001,
+                                             sigma.mu = 5, sigma.var = 10,
+                                             data = list(X = rnorm(100),
+                                                         Y = rnorm(100, 5, 5)),
+                                             seed = 1)
+    ## testing
+    expect_error(
+      mcmcRocPrc(mcmcpack_linear, FALSE, FALSE, data = df, yname = "volunteer",
+                 xnames = c("female", "neuroticism", "extraversion"),
+                 type = "logit"),
+      "object does not appear to have been fitted using"
+    )
+    
+    # but we can force computation anyways using force;
+    # simulate an instance in which this would be desirable by stripping the call
+    # attribute from mcmcpack_logit
+    attr(mcmcpack_logit, "call") <- NULL
+    expect_error(
+      mcmcRocPrc(mcmcpack_logit, FALSE, FALSE, data = df, yname = "volunteer",
+                 xnames = c("female", "neuroticism", "extraversion"),
+                 type = "logit"),
+      "object does not have a 'call' attribute"
+    )
+    expect_error(
+      mcmcRocPrc(mcmcpack_logit, FALSE, FALSE, data = df, yname = "volunteer",
+                 xnames = c("female", "neuroticism", "extraversion"),
+                 type = "logit", 
+                 force = TRUE),
+      NA
+    )
+  }
 })
 
 # Test methods for print, plot, etc. --------------------------------------
