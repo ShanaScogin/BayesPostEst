@@ -833,7 +833,7 @@ Model fit
 One way to assess model fit is to calculate the area under the Receiver
 Operating Characteristic (ROC) and Precision-Recall curves. A short
 description of these curves and their utility for model assessment is
-provided in [Beger (2016)](https://ssrn.com/Abstract=2765419). The
+provided in [Beger (2016)](https://doi.org/10.2139/ssrn.27654199). The
 `mcmcRocPrc` function produces an object with four elements: the area
 under the ROC curve, the area under the PR curve, and two dataframes to
 plot each curve. When `fullsims` is set to `FALSE`, the elements
@@ -954,8 +954,8 @@ on Bayesian estimation.
 References
 ==========
 
-Beger, Andreas. 2016. “Precision-Recall Curves.” Available at SSRN:
-<http://doi.org/10.2139/ssrn.2765419>.
+Beger, Andreas. 2016. “Precision-Recall Curves.” Available at:
+<https://doi.org/10.2139/ssrn.2765419>.
 
 Cowles, Michael, and Caroline Davis. 1987. “The Subject Matter of
 Psychology: Volunteers.” British Journal of Social Psychology 26 (2):
