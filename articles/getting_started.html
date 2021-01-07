@@ -100,7 +100,7 @@
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>BayesPostEst contains functions to generate postestimation quantities after estimating Bayesian regression models. The package was inspired by a set of functions written originally for <a href="http://www.jkarreth.net">Johannes Karreth</a>’s workshop on Bayesian modeling at the <a href="https://www.icpsr.umich.edu/web/pages/sumprog/index.html">ICPSR Summer program</a>. It has grown to include new functions (see <code>mcmcReg</code>) and will continue to grow to support Bayesian postestimation. For now, the package focuses mostly on generalized linear regression models for binary outcomes (logistic and probit regression). More details on the package philosophy, its functions, and related packages can be found in <span class="citation">Scogin et al. (2019)</span>.</p>
+<p>BayesPostEst contains functions to generate postestimation quantities after estimating Bayesian regression models. The package was inspired by a set of functions written originally for <a href="http://www.jkarreth.net">Johannes Karreth</a>’s workshop on Bayesian modeling at the <a href="https://www.icpsr.umich.edu/web/pages/sumprog/">ICPSR Summer program</a>. It has grown to include new functions (see <code>mcmcReg</code>) and will continue to grow to support Bayesian postestimation. For now, the package focuses mostly on generalized linear regression models for binary outcomes (logistic and probit regression). More details on the package philosophy, its functions, and related packages can be found in <span class="citation">Scogin et al. (2019)</span>.</p>
 </div>
 <div id="installation" class="section level1">
 <h1 class="hasAnchor">
@@ -276,8 +276,8 @@ model {
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bernoulli' NOW (CHAIN 1).</span>
 <span class="co">#&gt; Chain 1: </span>
-<span class="co">#&gt; Chain 1: Gradient evaluation took 9.8e-05 seconds</span>
-<span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.98 seconds.</span>
+<span class="co">#&gt; Chain 1: Gradient evaluation took 9.6e-05 seconds</span>
+<span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.96 seconds.</span>
 <span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span>
 <span class="co">#&gt; Chain 1: </span>
 <span class="co">#&gt; Chain 1: </span>
@@ -294,15 +294,15 @@ model {
 <span class="co">#&gt; Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 1: </span>
-<span class="co">#&gt; Chain 1:  Elapsed Time: 0.360761 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 1:                0.387757 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 1:                0.748518 seconds (Total)</span>
+<span class="co">#&gt; Chain 1:  Elapsed Time: 0.359016 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 1:                0.39307 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 1:                0.752086 seconds (Total)</span>
 <span class="co">#&gt; Chain 1: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bernoulli' NOW (CHAIN 2).</span>
 <span class="co">#&gt; Chain 2: </span>
-<span class="co">#&gt; Chain 2: Gradient evaluation took 5.1e-05 seconds</span>
-<span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.51 seconds.</span>
+<span class="co">#&gt; Chain 2: Gradient evaluation took 5.2e-05 seconds</span>
+<span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.52 seconds.</span>
 <span class="co">#&gt; Chain 2: Adjust your expectations accordingly!</span>
 <span class="co">#&gt; Chain 2: </span>
 <span class="co">#&gt; Chain 2: </span>
@@ -319,9 +319,9 @@ model {
 <span class="co">#&gt; Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 2: </span>
-<span class="co">#&gt; Chain 2:  Elapsed Time: 0.366482 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 2:                0.371822 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 2:                0.738304 seconds (Total)</span>
+<span class="co">#&gt; Chain 2:  Elapsed Time: 0.363903 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 2:                0.380134 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 2:                0.744037 seconds (Total)</span>
 <span class="co">#&gt; Chain 2: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bernoulli' NOW (CHAIN 3).</span>
@@ -344,9 +344,9 @@ model {
 <span class="co">#&gt; Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 3: </span>
-<span class="co">#&gt; Chain 3:  Elapsed Time: 0.373527 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 3:                0.391638 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 3:                0.765165 seconds (Total)</span>
+<span class="co">#&gt; Chain 3:  Elapsed Time: 0.370254 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 3:                0.391267 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 3:                0.761521 seconds (Total)</span>
 <span class="co">#&gt; Chain 3: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; SAMPLING FOR MODEL 'bernoulli' NOW (CHAIN 4).</span>
@@ -369,9 +369,9 @@ model {
 <span class="co">#&gt; Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)</span>
 <span class="co">#&gt; Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)</span>
 <span class="co">#&gt; Chain 4: </span>
-<span class="co">#&gt; Chain 4:  Elapsed Time: 0.360009 seconds (Warm-up)</span>
-<span class="co">#&gt; Chain 4:                0.393853 seconds (Sampling)</span>
-<span class="co">#&gt; Chain 4:                0.753862 seconds (Total)</span>
+<span class="co">#&gt; Chain 4:  Elapsed Time: 0.367881 seconds (Warm-up)</span>
+<span class="co">#&gt; Chain 4:                0.378128 seconds (Sampling)</span>
+<span class="co">#&gt; Chain 4:                0.746009 seconds (Total)</span>
 <span class="co">#&gt; Chain 4:</span></code></pre></div>
 </div>
 </div>
@@ -399,10 +399,10 @@ model {
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.rjags</span><span class="op">)</span>
 <span class="co">#&gt;   Variable Median    SD  Lower  Upper</span>
-<span class="co">#&gt; 1     b[1] -0.458 0.083 -0.622 -0.300</span>
-<span class="co">#&gt; 2     b[2]  0.234 0.110  0.021  0.449</span>
-<span class="co">#&gt; 3     b[3]  0.064 0.112 -0.155  0.284</span>
-<span class="co">#&gt; 4     b[4]  0.522 0.112  0.303  0.738</span></code></pre></div>
+<span class="co">#&gt; 1     b[1] -0.461 0.082 -0.623 -0.303</span>
+<span class="co">#&gt; 2     b[2]  0.238 0.111  0.023  0.454</span>
+<span class="co">#&gt; 3     b[3]  0.061 0.112 -0.158  0.282</span>
+<span class="co">#&gt; 4     b[4]  0.516 0.112  0.300  0.737</span></code></pre></div>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.MCMCpack</span><span class="op">)</span>
 <span class="co">#&gt;       Variable Median    SD  Lower  Upper</span>
