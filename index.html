@@ -610,7 +610,7 @@ model {
 <h2 class="hasAnchor">
 <a href="#mcmcrocprc" class="anchor"></a><code>mcmcRocPrc</code>
 </h2>
-<p>One way to assess model fit is to calculate the area under the Receiver Operating Characteristic (ROC) and Precision-Recall curves. A short description of these curves and their utility for model assessment is provided in <a href="https://ssrn.com/Abstract=2765419">Beger (2016)</a>. The <code>mcmcRocPrc</code> function produces an object with four elements: the area under the ROC curve, the area under the PR curve, and two dataframes to plot each curve. When <code>fullsims</code> is set to <code>FALSE</code>, the elements represent the median of the posterior distribution of each quantity.</p>
+<p>One way to assess model fit is to calculate the area under the Receiver Operating Characteristic (ROC) and Precision-Recall curves. A short description of these curves and their utility for model assessment is provided in <a href="https://doi.org/10.2139/ssrn.27654199">Beger (2016)</a>. The <code>mcmcRocPrc</code> function produces an object with four elements: the area under the ROC curve, the area under the PR curve, and two dataframes to plot each curve. When <code>fullsims</code> is set to <code>FALSE</code>, the elements represent the median of the posterior distribution of each quantity.</p>
 <p><code>mcmcRocPrc</code> currently requires an “rjags” object (a model fitted in R2jags) as input. Future package versions will generalize this input to allow for model objects fit with any of the other packages used in BayesPostEst.</p>
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fitstats</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/print.mcmcRocPrc.html">mcmcRocPrc</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">fit.jags</span>,
@@ -683,7 +683,7 @@ model {
 <div id="references" class="section level1">
 <h1 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h1>
-<p>Beger, Andreas. 2016. “Precision-Recall Curves.” Available at SSRN: <a href="http://doi.org/10.2139/ssrn.2765419" class="uri">http://doi.org/10.2139/ssrn.2765419</a>.</p>
+<p>Beger, Andreas. 2016. “Precision-Recall Curves.” Available at: <a href="https://doi.org/10.2139/ssrn.2765419" class="uri">https://doi.org/10.2139/ssrn.2765419</a>.</p>
 <p>Cowles, Michael, and Caroline Davis. 1987. “The Subject Matter of Psychology: Volunteers.” British Journal of Social Psychology 26 (2): 97–102. <a href="https://doi.org/10.1111/j.2044-8309.1987.tb00769.x" class="uri">https://doi.org/10.1111/j.2044-8309.1987.tb00769.x</a>.</p>
 <p>Fox, John, Sanford Weisberg, and Brad Price. 2018. CarData: Companion to Applied Regression Data Sets. <a href="https://CRAN.R-project.org/package=carData" class="uri">https://CRAN.R-project.org/package=carData</a>.</p>
 <p>Gelman, Andrew, and Jennifer Hill. 2007. Data Analysis Using Regression and Multilevel/Hierarchical Models. New York, NY: Cambridge University Press.</p>
