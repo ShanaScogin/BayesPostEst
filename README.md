@@ -18,7 +18,7 @@ BayesPostEst contains functions to generate postestimation quantities
 after estimating Bayesian regression models. The package was inspired by
 a set of functions written originally for [Johannes
 Karreth](http://www.jkarreth.net)’s workshop on Bayesian modeling at the
-[ICPSR Summer program](https://www.icpsr.umich.edu/web/pages/sumprog/index.html).
+[ICPSR Summer program](https://www.icpsr.umich.edu/web/pages/sumprog/).
 It has grown to include new functions (see `mcmcReg`) and will continue
 to grow to support Bayesian postestimation. For now, the package focuses
 mostly on generalized linear regression models for binary outcomes
