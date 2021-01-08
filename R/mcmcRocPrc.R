@@ -57,7 +57,7 @@
 #'   This behavior can be suppressed by setting `force = TRUE`. 
 #' 
 #' @references Beger, Andreas. 2016. “Precision-Recall Curves.” Available at 
-#'   SSRN: [https://doi.org/10.2139/ssrn.2765419](https://doi.org/10.2139/ssrn.2765419)
+#' \doi{10.2139/ssrn.2765419}
 #' 
 #' @return Returns a list with length 2 or 4, depending on the on the "curves" 
 #'   and "fullsims" argument values:

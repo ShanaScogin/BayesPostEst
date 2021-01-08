@@ -203,5 +203,5 @@ mcmcRocPrc(object = pred_mat, curves = TRUE, fullsims = FALSE, yvec = yvec)
 }
 \references{
 Beger, Andreas. 2016. “Precision-Recall Curves.” Available at
-SSRN: \url{https://doi.org/10.2139/ssrn.2765419}
+\doi{10.2139/ssrn.2765419}
 }
