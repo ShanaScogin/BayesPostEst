@@ -147,6 +147,9 @@ mcmcReg <- function(mod,
                     regex = FALSE,
                     ...) {
   
+  ## check pointest argument
+  if (!pointest %in% c('mean', 'median')) stop('pointest must be either mean or median')
+  
   ## pull in unexported functions from other packages
   ## other options for future versions might include lifting this and adding authors as copr holders
   runjags.as.mcmc.list.runjags = getFromNamespace("as.mcmc.list.runjags", "runjags")
@@ -222,7 +225,7 @@ mcmcReg <- function(mod,
     
     samps_sd <- lapply(samps,
                        function(x) apply(as.matrix(x), 2,
-                                         function(y) mean(sign(y) == sign(mean(y)))))
+                                         function(y) mean(sign(y) == sign(get(pointest)(y)))))
     
   } else if (hpdi == FALSE) {
     
