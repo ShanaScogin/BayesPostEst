@@ -20,7 +20,7 @@ in examples and for testing.
 data("sim_data_interactive")
 
 ## formatting the data for jags
-datjags <- as.list(data)
+datjags <- as.list(sim_data_interactive)
 datjags$N <- length(datjags$Y)
 
 ## creating jags model

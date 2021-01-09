@@ -18,22 +18,33 @@ editor_options:
 
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(
+options(rmarkdown.html_vignette.check_title = FALSE)
+
+pkgs <- c("R2jags", "rjags", "MCMCpack", "rstan", "rstanarm", "ggplot2",
+          "ggridges")
+
+if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
+  knitr::opts_chunk$set(
+    eval = FALSE,
+    comment = "#>")
+} else {
+  knitr::opts_chunk$set(
   collapse = TRUE,
   echo = TRUE,
   message = FALSE,
   warning = FALSE,
-  out.width = "90%", 
-  fig.align = "center", 
-  fig.width = 8, 
+  out.width = "90%",
+  fig.align = "center",
+  fig.width = 8,
   fig.height = 8,
   comment = "#>"
 )
+}
 ```
 
 # Introduction
 
-BayesPostEst contains functions to generate postestimation quantities after estimating Bayesian regression models. The package was inspired by a set of functions written originally for [Johannes Karreth](http://www.jkarreth.net)'s workshop on Bayesian modeling at the [ICPSR Summer program](https://www.icpsr.umich.edu/icpsrweb/sumprog/). It has grown to include new functions (see `mcmcReg`) and will continue to grow to support Bayesian postestimation. For now, the package focuses mostly on generalized linear regression models for binary outcomes (logistic and probit regression). More details on the package philosophy, its functions, and related packages can be found in @ScoginEtal2019.
+BayesPostEst contains functions to generate postestimation quantities after estimating Bayesian regression models. The package was inspired by a set of functions written originally for [Johannes Karreth](http://www.jkarreth.net)'s workshop on Bayesian modeling at the [ICPSR Summer program](https://www.icpsr.umich.edu/web/pages/sumprog/). It has grown to include new functions (see `mcmcReg`) and will continue to grow to support Bayesian postestimation. For now, the package focuses mostly on generalized linear regression models for binary outcomes (logistic and probit regression). More details on the package philosophy, its functions, and related packages can be found in @ScoginEtal2019.
 
 # Installation
 
@@ -169,7 +180,7 @@ fit.MCMCpack <- MCMClogit(volunteer ~ female + neuroticism + extraversion,
 
 We write the same model in Stan language.
 
-```{r}
+```{r, eval=FALSE}
 mod.stan <- paste("	
 data {
   int<lower=0> N;
@@ -193,7 +204,7 @@ writeLines(mod.stan, "mod.stan")
 
 We then load rstan [@rstan2019]...
 
-```{r}
+```{r, eval=FALSE}
 library("rstan")
 rstan_options(auto_write = TRUE)
 options(mc.cores = 2)
@@ -201,7 +212,7 @@ options(mc.cores = 2)
 
 ... and estimate the model, re-using the data in list format created for JAGS earlier.
 
-```{r}
+```{r, eval=FALSE}
 fit.stan <- stan(file = "mod.stan",  
            data = dl,         
            pars = c("b"),     
@@ -251,7 +262,7 @@ mcmcTab(fit.rjags)
 mcmcTab(fit.MCMCpack)
 ```
 
-```{r}
+```{r, eval=FALSE}
 mcmcTab(fit.stan)
 ```
 
@@ -342,13 +353,13 @@ However, it is important to remember that `mcmcReg` will look for the parameter 
 
 `mcmcReg` accepts multiple model objects and will produce a table with one model per column. To produce a table from multiple models, pass a list of models as the `mod` argument to `mcmcReg`.
 
-```{r, results = 'asis'}
+```{r, results = 'asis', eval=FALSE}
 mcmcReg(list(fit.stan, fit.stan), format = 'html', doctype = F)
 ```
 
 Note, however, that all model objects must be of the same class, so it is *not* possible to generate a table from a `jags` object and a `stanfit` object.
 
-```{r, error = T, results = 'asis'}
+```{r, error = T, results = 'asis', eval=FALSE}
 mcmcReg(list(fit.jags, fit.stan), format = 'html', doctype = F)
 ```
 
@@ -380,10 +391,11 @@ Before moving on, we show how create a matrix of posterior draws of coefficients
 ```{r}
 mcmcmat.jags <- as.matrix(coda::as.mcmc(fit.jags))
 mcmcmat.MCMCpack <- as.matrix(fit.MCMCpack)
-  
-mcmcmat.stan <- as.matrix(fit.stan)
-  
 mcmcmat.rstanarm <- as.matrix(fit.rstanarm)
+```
+
+```{r, eval=FALSE}
+mcmcmat.stan <- as.matrix(fit.stan)
 ```
 
 Next, we generate the model matrix to pass on to the function. A model matrix contains as many columns as estimated regression coefficients. The first column is a vector of 1s (corresponding to the intercept); the remaining columns are the observed values of covariates in the model. **Note: the order of columns in the model matrix must correspond to the order of columns in the matrix of posterior draws.**
@@ -421,7 +433,8 @@ ggplot(data = aveprob.female.jags,
   scale_y_discrete(labels = c("Male", "Female")) + 
   ylab("") + 
   xlab("Estimated probability of volunteering") + 
-  labs(title = "Probability based on average-case approach")
+  labs(title = "Probability based on average-case approach") +
+  theme_minimal()
 ```
 
 ### Extraversion
@@ -448,7 +461,8 @@ ggplot(data = aveprob.extra.jags,
   xlab("Extraversion") + 
   ylab("Estimated probability of volunteering") + 
   ylim(0, 1) + 
-  labs(title = "Probability based on average-case approach")
+  labs(title = "Probability based on average-case approach") +
+  theme_minimal()
 ```
 
 ## `mcmcObsProb`
@@ -479,7 +493,8 @@ ggplot(data = obsprob.female.jags,
   scale_y_discrete(labels = c("Male", "Female")) + 
   ylab("") + 
   xlab("Estimated probability of volunteering") + 
-  labs(title = "Probability based on observed-case approach")
+  labs(title = "Probability based on observed-case approach") +
+  theme_minimal()
 ```
 
 ### Extraversion
@@ -505,7 +520,8 @@ ggplot(data = obsprob.extra.jags,
   xlab("Extraversion") + 
   ylab("Estimated probability of volunteering") + 
   ylim(0, 1) + 
-  labs(title = "Probability based on observed-case approach")
+  labs(title = "Probability based on observed-case approach") +
+  theme_minimal()
 ```
 
 # First differences
@@ -543,7 +559,8 @@ ggplot(data = fdsum.jags,
   geom_segment(aes(x = lower_fd, xend = upper_fd, yend = VarName)) + 
   geom_vline(xintercept = 0) + 
   xlab("Change in Pr(Volunteering)") + 
-  ylab("")
+  ylab("") +
+  theme_minimal()
 ```
 
 ## Plotting `mcmcFD` objects
@@ -558,7 +575,8 @@ The user can further customize the plot.
 
 ```{r}
 p <- plot(fdfull.jags, ROPE = c(-0.01, 0.01))
-p + labs(title = "First differences") + ggridges::theme_ridges()
+p + labs(title = "First differences") + 
+  ggridges::theme_ridges()
 ```
 
 # Model fit
@@ -592,22 +610,24 @@ fitstats$area_under_prc
 Users can also plot the ROC curve... 
 
 ```{r}
-ggplot(data = fitstats$roc_dat, aes(x = x, y = y)) +
+ggplot(data = as.data.frame(fitstats, what = "roc"), aes(x = x, y = y)) +
   geom_line() + 
   geom_abline(intercept = 0, slope = 1, color = "gray") + 
   labs(title = "ROC curve") + 
   xlab("1 - Specificity") + 
-  ylab("Sensitivity")
+  ylab("Sensitivity") +
+  theme_minimal()
 ```
 
 ... as well as the precision-recall curve.
 
 ```{r}
-ggplot(data = fitstats$prc_dat, aes(x = x, y = y)) +
+ggplot(data = as.data.frame(fitstats, what = "prc"), aes(x = x, y = y)) +
   geom_line() + 
   labs(title = "Precision-Recall curve") + 
   xlab("Recall") + 
-  ylab("Precision")
+  ylab("Precision") +
+  theme_minimal()
 ```
 
 To plot the posterior distribution of the area under the curves, users set the `fullsims` argument to `TRUE`. Unless a user wishes to plot credible intervals around the ROC and PR curves themselves, we recommend keeping `curves` at `FALSE` to avoid long computation time. 
@@ -623,15 +643,19 @@ fitstats.fullsims <- mcmcRocPrc(object = fit.jags,
 We can then plot the posterior density of the area under each curve.
 
 ```{r}
-ggplot(fitstats.fullsims, aes(x = area_under_roc)) +
+ggplot(as.data.frame(fitstats.fullsims), 
+       aes(x = area_under_roc)) +
   geom_density() +
-  labs(title = "Area under the ROC curve")
+  labs(title = "Area under the ROC curve") +
+  theme_minimal()
 ```
 
 ```{r}
-ggplot(fitstats.fullsims, aes(x = area_under_prc)) +
+ggplot(as.data.frame(fitstats.fullsims), 
+       aes(x = area_under_prc)) +
   geom_density() +
-  labs(title = "Area under the Precision-Recall curve")
+  labs(title = "Area under the Precision-Recall curve") +
+  theme_minimal()
 ```
 
 ```{r echo=FALSE, results='hide', message=FALSE}

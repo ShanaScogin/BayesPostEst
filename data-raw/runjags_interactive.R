@@ -1,3 +1,8 @@
+### Shana comment Jan 2021:
+### I'm deleting the data object created by this code and adding the simulation code 
+### conditionally to the test files since CRAN is wanting the tarball to be smaller
+### for coming release. Perhaps we can compress files going forward to keep a central data source?
+
 # 
 #  Generate an example runjags interactive fitted model
 #
@@ -5,9 +10,9 @@
 data("sim_data_interactive")
 
 ## formatting the data for jags
-data <- list(X = model.matrix(~ X1 * X2, sim_data_interactive),
-             Y = sim_data_interactive[, 3],
-             N = nrow(sim_data_interactive))
+datalist <- list(X = model.matrix(~ X1 * X2, sim_data_interactive),
+                 Y = sim_data_interactive[, 3],
+                 N = nrow(sim_data_interactive))
 
 ## creating jags model
 model <- "model { 
@@ -21,8 +26,8 @@ tau ~ dexp(1)
 }"
 
 ## fitting the model with runjags
-runjags_interactive <- run.jags(model = model, monitor = c("beta", "tau"),
-                                data = data, n.chains = 2, method = "rjags")
+runjags_interactive <- runjags::run.jags(model = model, monitor = c("beta", "tau"),
+                                data = datalist, n.chains = 2, method = "rjags")
 
 ## save model object
 usethis::use_data(runjags_interactive, overwrite = TRUE)

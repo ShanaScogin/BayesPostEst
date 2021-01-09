@@ -1,8 +1,8 @@
 Package: BayesPostEst
 Type: Package
 Title: Generate Postestimation Quantities for Bayesian MCMC Estimation
-Version: 0.3.0.9000
-Date: 2020-06-15
+Version: 0.3.1
+Date: 2021-01-06
 Authors@R: 
     c(person("Johannes", 
              "Karreth", 
@@ -41,33 +41,36 @@ Imports:
     caTools,
     coda (>= 0.13),
     dplyr (>= 0.5.0),
-    ggmcmc, 
-    ggplot2, 
-    ggridges, 
-    R2jags,
+    ggplot2,
+    ggridges,
     reshape2,
     rlang,
     stats,
     texreg,
-    runjags,
     tidyr (>= 0.5.1),
     HDInterval,
-    ROCR
+    ROCR,
+    graphics,
+    grDevices
 Depends:
     R (>= 3.5.0)
 Encoding: UTF-8
 LazyData: TRUE
 LazyLoad: TRUE
 Suggests: 
+    brms,
     datasets,
     knitr,
     MCMCpack,
     rjags,
+    R2jags,
+    R2WinBUGS,
     rmarkdown,
     rstan (>= 2.10.1),
     rstanarm,
+    runjags,
     testthat,
     covr
 VignetteBuilder: knitr
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 SystemRequirements: JAGS (http://mcmc-jags.sourceforge.net)

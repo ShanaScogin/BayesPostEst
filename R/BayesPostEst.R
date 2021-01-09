@@ -49,9 +49,6 @@ NULL
 #' @importFrom ggridges stat_density_ridges
 NULL
 
-#' @importFrom ggmcmc ggs
-NULL
-
 #' @importFrom reshape2 melt
 NULL
 
@@ -59,9 +56,6 @@ NULL
 NULL
 
 #' @importFrom coda as.mcmc HPDinterval
-NULL
-
-#' @importFrom R2jags jags
 NULL
 
 #' @importFrom texreg createTexreg texreg htmlreg

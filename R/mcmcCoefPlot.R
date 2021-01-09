@@ -44,10 +44,10 @@
 #' Z <- b0 + b1 * X1 + b2 * X2
 #' pr <- 1 / (1 + exp(-Z)) # inv logit function
 #' Y <- rbinom(n, 1, pr)
-#' data <- data.frame(cbind(X1, X2, Y))
+#' df <- data.frame(cbind(X1, X2, Y))
 #' 
 #' ## formatting the data for jags
-#' datjags <- as.list(data)
+#' datjags <- as.list(df)
 #' datjags$N <- length(datjags$Y)
 #' 
 #' ## creating jags model
@@ -118,9 +118,9 @@ mcmcCoefPlot <- function(mod, pars = NULL,
                   dimnames = list(NULL, pars))
   }
 
-  if (!hpdi) {
+  if (hpdi == FALSE) {
     samps_ci <- t(apply(samps, 2, quantile, probs = c(.5 - ci/2, .5 + ci/2)))
-  } else if (hpdi) {
+  } else if (hpdi == TRUE) {
     samps_ci <- coda::HPDinterval(coda::as.mcmc(samps), prob = ci)
   } else {
     stop("hpdi must be either true or false")
