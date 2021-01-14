@@ -1,18 +1,20 @@
 
-BayesPostEst
-============
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![R build status](https://github.com/ShanaScogin/BayesPostEst/workflows/R-CMD-check/badge.svg)](https://github.com/ShanaScogin/BayesPostEst/actions)
+# BayesPostEst
+
+[![R build
+status](https://github.com/ShanaScogin/BayesPostEst/workflows/R-CMD-check/badge.svg)](https://github.com/ShanaScogin/BayesPostEst/actions)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/BayesPostEst)](https://CRAN.R-project.org/package=BayesPostEst)
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.01722/status.svg)](https://doi.org/10.21105/joss.01722)
-[![Codecov test coverage](https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg)](https://codecov.io/gh/ShanaScogin/BayesPostEst?branch=master)
+[![Codecov test
+coverage](https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg)](https://codecov.io/gh/ShanaScogin/BayesPostEst?branch=master)
 
 An R package implementing functions to assist in generating and plotting
 postestimation quantities after estimating Bayesian regression models
 using MCMC.
 
-Introduction
-============
+# Introduction
 
 BayesPostEst contains functions to generate postestimation quantities
 after estimating Bayesian regression models. The package was inspired by
@@ -24,8 +26,7 @@ to grow to support Bayesian postestimation. For now, the package focuses
 mostly on generalized linear regression models for binary outcomes
 (logistic and probit regression).
 
-Installation
-============
+# Installation
 
 To install the latest release on CRAN:
 
@@ -49,8 +50,7 @@ library("BayesPostEst")
 After the package is loaded, check out the `?BayesPostEst` to see a help
 file.
 
-General setup
-=============
+# General setup
 
 Most functions in this package work with posterior distributions of
 parameters. These distributions need to be converted into a matrix. The
@@ -60,13 +60,12 @@ users must convert these objects into a matrix, where rows represent
 iterations and columns represent parameters. The help file for each
 function explains how to do this.
 
-Example data
-============
+# Example data
 
 This vignette uses the `Cowles` dataset ([Cowles and Davis 1987, British
-Journal of Social Psychology 26(2):
-97-102](https://doi.org/10.1111/j.2044-8309.1987.tb00769.x)) from the
-[carData package](https://CRAN.R-project.org/package=carData).
+Journal of Social
+Psychology 26(2): 97-102](https://doi.org/10.1111/j.2044-8309.1987.tb00769.x))
+from the [carData package](https://CRAN.R-project.org/package=carData).
 
 ``` r
 df <- carData::Cowles
@@ -75,10 +74,10 @@ df <- carData::Cowles
 This data frame contains information on 1421 individuals in the
 following variables:
 
--   neuroticism: scale from Eysenck personality inventory.
--   extraversion: scale from Eysenck personality inventory.
--   sex: a factor with levels: female; male.
--   volunteer: volunteering, a factor with levels: no; yes. This is the
+  - neuroticism: scale from Eysenck personality inventory.
+  - extraversion: scale from Eysenck personality inventory.
+  - sex: a factor with levels: female; male.
+  - volunteer: volunteering, a factor with levels: no; yes. This is the
     outcome variable for the running example in this vignette.
 
 Before proceeding, we convert the two factor variables `sex` and
@@ -96,16 +95,17 @@ df$neuroticism <- (df$neuroticism - mean(df$neuroticism)) / (2 * sd(df$neurotici
 We estimate a Bayesian generalized linear model with the inverse logit
 link function, where
 
-Pr(Volunteering<sub>*i*</sub>) = logit<sup> − 1</sup>(*β*<sub>1</sub>+*β*<sub>2</sub>Female<sub>*i*</sub>+*β*<sub>3</sub>Neuroticism<sub>*i*</sub>+*β*<sub>4</sub>Extraversion<sub>*i*</sub>)
+\[
+\text{Pr}\left(\text{Volunteering}_i\right) = \text{logit}^{-1}\left(\beta_1 + \beta_2 \text{Female}_i +  \beta_3 \text{Neuroticism}_i + \beta_4 \text{Extraversion}_i\right)
+\]
 
 BayesPostEst functions accommodate GLM estimates for both logit and
 probit link functions. The examples proceed with the logit link
 function. If we had estimated a probit regression, the corresponding
-argument `link` in relevant function calls would need to be set to
-`link = "probit"`. Otherwise, it is set to `link = "logit"` by default.
+argument `link` in relevant function calls would need to be set to `link
+= "probit"`. Otherwise, it is set to `link = "logit"` by default.
 
-Model estimation
-================
+# Model estimation
 
 To use BayesPostEst, we first estimate a Bayesian regression model. The
 vignette demonstrates five tools for doing so: JAGS (via the
@@ -115,13 +115,12 @@ vignette demonstrates five tools for doing so: JAGS (via the
 Stan interfaces [rstan](https://cran.r-project.org/package=rstan) and
 [rstanarm](https://cran.r-project.org/package=rstanarm).
 
-JAGS
-----
+## JAGS
 
-First, we prepare the data for JAGS ([Plummer
-2017](http://mcmc-jags.sourceforge.net)). Users need to combine all
-variables into a list and specify any other elements, like in this case
-N, the number of observations.
+First, we prepare the data for JAGS
+([Plummer 2017](http://mcmc-jags.sourceforge.net)). Users need to
+combine all variables into a list and specify any other elements, like
+in this case N, the number of observations.
 
 ``` r
 dl <- as.list(df[, c("volunteer", "female", "neuroticism", "extraversion")])
@@ -174,7 +173,7 @@ fit.jags <- jags(data = dl, inits = inits.jags,
     ## Graph information:
     ##    Observed stochastic nodes: 1421
     ##    Unobserved stochastic nodes: 4
-    ##    Total graph size: 6864
+    ##    Total graph size: 6870
     ## 
     ## Initializing model
 
@@ -193,7 +192,7 @@ mod.rjags <- jags.model(file = "mod.jags", data = dl, inits = inits.jags,
     ## Graph information:
     ##    Observed stochastic nodes: 1421
     ##    Unobserved stochastic nodes: 4
-    ##    Total graph size: 6864
+    ##    Total graph size: 6870
     ## 
     ## Initializing model
 
@@ -203,8 +202,7 @@ fit.rjags <- coda.samples(model = mod.rjags,
                           n.iter = 2000)
 ```
 
-MCMCpack
---------
+## MCMCpack
 
 We estimate the same model using
 [MCMCpack](https://cran.r-project.org/package=MCMCpack) (Martin, Quinn,
@@ -217,8 +215,7 @@ fit.MCMCpack <- MCMClogit(volunteer ~ female + neuroticism + extraversion,
                           b0 = 0, B0 = 0.1)
 ```
 
-RStan
------
+## RStan
 
 We write the same model in Stan language.
 
@@ -265,8 +262,7 @@ fit.stan <- stan(file = "mod.stan",
            seed = 123)        
 ```
 
-rstanarm
---------
+## rstanarm
 
 Lastly, we use the
 [rstanarm](https://cran.r-project.org/package=rstanarm) interface
@@ -284,8 +280,7 @@ fit.rstanarm <- stan_glm(volunteer ~ female + neuroticism + extraversion,
                          seed = 123)
 ```
 
-Tables of regression coefficients and other parameters
-======================================================
+# Tables of regression coefficients and other parameters
 
 `mcmcTab` generates a table summarizing the posterior distributions of
 all parameters contained in the model object. This table can then be
@@ -302,21 +297,21 @@ mcmcTab(fit.jags)
 ```
 
     ##   Variable   Median    SD    Lower    Upper
-    ## 1     b[1]   -0.462 0.082   -0.622   -0.298
-    ## 2     b[2]    0.238 0.112    0.017    0.455
-    ## 3     b[3]    0.063 0.113   -0.158    0.283
-    ## 4     b[4]    0.515 0.112    0.291    0.729
-    ## 5 deviance 1909.455 2.875 1906.574 1917.541
+    ## 1     b[1]   -0.455 0.082   -0.615   -0.294
+    ## 2     b[2]    0.232 0.111    0.008    0.442
+    ## 3     b[3]    0.063 0.111   -0.149    0.285
+    ## 4     b[4]    0.514 0.111    0.288    0.733
+    ## 5 deviance 1909.375 2.856 1906.534 1917.190
 
 ``` r
 mcmcTab(fit.rjags)
 ```
 
     ##   Variable Median    SD  Lower  Upper
-    ## 1     b[1] -0.459 0.082 -0.621 -0.302
-    ## 2     b[2]  0.236 0.111  0.022  0.456
-    ## 3     b[3]  0.064 0.111 -0.152  0.285
-    ## 4     b[4]  0.516 0.111  0.301  0.740
+    ## 1     b[1] -0.460 0.082 -0.622 -0.298
+    ## 2     b[2]  0.233 0.110  0.018  0.449
+    ## 3     b[3]  0.063 0.111 -0.156  0.275
+    ## 4     b[4]  0.520 0.113  0.301  0.746
 
 ``` r
 mcmcTab(fit.MCMCpack)
@@ -344,13 +339,12 @@ mcmcTab(fit.rstanarm)
 ```
 
     ##       Variable Median    SD  Lower  Upper
-    ## 1  (Intercept) -0.458 0.081 -0.623 -0.306
-    ## 2       female  0.237 0.111  0.023  0.462
-    ## 3  neuroticism  0.055 0.108 -0.144  0.276
-    ## 4 extraversion  0.518 0.112  0.296  0.733
+    ## 1  (Intercept) -0.459 0.084 -0.624 -0.293
+    ## 2       female  0.236 0.111  0.014  0.449
+    ## 3  neuroticism  0.065 0.111 -0.149  0.280
+    ## 4 extraversion  0.521 0.109  0.306  0.730
 
-Proportion of positive/negative draws
--------------------------------------
+## Proportion of positive/negative draws
 
 Users can add a column to the table that calculates the percent of
 posterior draws that have the same sign as the median of the posterior
@@ -361,25 +355,24 @@ mcmcTab(fit.jags, Pr = TRUE)
 ```
 
     ##   Variable   Median    SD    Lower    Upper    Pr
-    ## 1     b[1]   -0.462 0.082   -0.622   -0.298 1.000
-    ## 2     b[2]    0.238 0.112    0.017    0.455 0.984
-    ## 3     b[3]    0.063 0.113   -0.158    0.283 0.712
-    ## 4     b[4]    0.515 0.112    0.291    0.729 1.000
-    ## 5 deviance 1909.455 2.875 1906.574 1917.541 1.000
+    ## 1     b[1]   -0.455 0.082   -0.615   -0.294 1.000
+    ## 2     b[2]    0.232 0.111    0.008    0.442 0.979
+    ## 3     b[3]    0.063 0.111   -0.149    0.285 0.724
+    ## 4     b[4]    0.514 0.111    0.288    0.733 1.000
+    ## 5 deviance 1909.375 2.856 1906.534 1917.190 1.000
 
-ROPE
-----
+## ROPE
 
 Users can also define a “region of practical equivalence” (ROPE;
-[Kruschke 2013, Journal of Experimental Psychology 143(2):
-573-603](https://doi.org/10.1037/a0029146)). This region is a band of
-values around 0 that are “practically equivalent” to 0 or no effect. For
-this to be useful, all parameters (e.g. regression coefficients) must be
-on the same scale because mcmcTab accepts only one definition of ROPE
-for all parameters. Users can standardize regression coefficients to
-achieve this. Because we standardized variables earlier, the
-coefficients (except the intercept) are on a similar scale and we define
-the ROPE to be between -0.1 and 0.1.
+[Kruschke 2013, Journal of Experimental
+Psychology 143(2): 573-603](https://doi.org/10.1037/a0029146)). This
+region is a band of values around 0 that are “practically equivalent” to
+0 or no effect. For this to be useful, all parameters (e.g. regression
+coefficients) must be on the same scale because mcmcTab accepts only one
+definition of ROPE for all parameters. Users can standardize regression
+coefficients to achieve this. Because we standardized variables earlier,
+the coefficients (except the intercept) are on a similar scale and we
+define the ROPE to be between -0.1 and 0.1.
 
 ``` r
 mcmcTab(fit.jags, pars = c("b[2]", "b[3]", "b[4]"), ROPE = c(-0.1, 0.1))
@@ -390,12 +383,11 @@ mcmcTab(fit.jags, pars = c("b[2]", "b[3]", "b[4]"), ROPE = c(-0.1, 0.1))
     ##           must be on the same scale (e.g. standardized coefficients or first differences).
 
     ##   Variable Median    SD  Lower Upper PrOutROPE
-    ## 1     b[2]  0.238 0.112  0.017 0.455     0.885
-    ## 2     b[3]  0.063 0.113 -0.158 0.283     0.376
-    ## 3     b[4]  0.515 0.112  0.291 0.729     1.000
+    ## 1     b[2]  0.232 0.111  0.008 0.442     0.879
+    ## 2     b[3]  0.063 0.111 -0.149 0.285     0.376
+    ## 3     b[4]  0.514 0.111  0.288 0.733     1.000
 
-Conventional regression tables
-------------------------------
+## Conventional regression tables
 
 The `mcmcReg` function serves as an interface to `texreg` and produces
 more polished and publication-ready tables than `mcmcTab` in HTML or
@@ -530,20 +522,18 @@ e.g. models can be renamed.
 mcmcReg(fit.rstanarm, custom.model.names = 'Binary Outcome', format = 'html', doctype = F)
 ```
 
-Predicted probabilities
-=======================
+# Predicted probabilities
 
-`mcmcAveProb`
--------------
+## `mcmcAveProb`
 
 To evaluate the relationship between covariates and a binary outcome,
 this function calculates the predicted probability (*Pr(y = 1)*) at
 pre-defined values of one covariate of interest (*x*), while all other
 covariates are held at a “typical” value. This follows suggestions
 outlined in [King, Tomz, and Wittenberg (2000, American Journal of
-Political Science 44(2):
-347-361)](https://www-jstor-org.proxy.library.nd.edu/stable/2669316) and
-elsewhere, which are commonly adopted by users of GLMs. The
+Political
+Science 44(2): 347-361)](https://www-jstor-org.proxy.library.nd.edu/stable/2669316)
+and elsewhere, which are commonly adopted by users of GLMs. The
 `mcmcAveProb` function by default calculates the median value of all
 covariates other than *x* as “typical” values.
 
@@ -612,16 +602,16 @@ ggplot(data = aveprob.female.jags,
   theme_minimal()
 ```
 
-    ## Picking joint bandwidth of 0.00327
+    ## Picking joint bandwidth of 0.00323
 
-![](README_files/figure-gfm/unnamed-chunk-37-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-38-1.png)<!-- -->
 
 ### Extraversion
 
-For continuous variables of interest, users may want to set
-`fullsims = FALSE` to obtain the median predicted probability along the
-range of *x* as well as a lower and upper bound of choice (here, the 95%
-credible interval).
+For continuous variables of interest, users may want to set `fullsims =
+FALSE` to obtain the median predicted probability along the range of *x*
+as well as a lower and upper bound of choice (here, the 95% credible
+interval).
 
 ``` r
 aveprob.extra.jags <- mcmcAveProb(modelmatrix = mm,
@@ -648,18 +638,18 @@ ggplot(data = aveprob.extra.jags,
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-39-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-40-1.png)<!-- -->
 
-`mcmcObsProb`
--------------
+## `mcmcObsProb`
 
 As an alternative to probabilities for “typical” cases, [Hanmer and
-Kalkan (2013, American Journal of Political Science 57(1):
-263-277)](https://doi.org/10.1111/j.1540-5907.2012.00602.x) suggest to
-calculate predicted probabilities for all observed cases and then derive
-an “average effect”. In their words, the goal of this postestimation “is
-to obtain an estimate of the average effect in the population … rather
-than seeking to understand the effect for the average case.”
+Kalkan (2013, American Journal of Political
+Science 57(1): 263-277)](https://doi.org/10.1111/j.1540-5907.2012.00602.x)
+suggest to calculate predicted probabilities for all observed cases and
+then derive an “average effect”. In their words, the goal of this
+postestimation “is to obtain an estimate of the average effect in the
+population … rather than seeking to understand the effect for the
+average case.”
 
 ### Sex
 
@@ -692,9 +682,9 @@ ggplot(data = obsprob.female.jags,
   theme_minimal()
 ```
 
-    ## Picking joint bandwidth of 0.00318
+    ## Picking joint bandwidth of 0.00316
 
-![](README_files/figure-gfm/unnamed-chunk-41-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-42-1.png)<!-- -->
 
 ### Extraversion
 
@@ -724,18 +714,16 @@ ggplot(data = obsprob.extra.jags,
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-43-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-44-1.png)<!-- -->
 
-First differences
-=================
+# First differences
 
-`mcmcFD`
---------
+## `mcmcFD`
 
 To summarize typical effects across covariates, we generate “first
-differences” (Long 1997, Sage Publications; [King, Tomz, and Wittenberg
-2000, American Journal of Political Science 44(2):
-347-361](https://www-jstor-org.proxy.library.nd.edu/stable/2669316)).
+differences” (Long 1997, Sage Publications; [King, Tomz, and
+Wittenberg 2000, American Journal of Political
+Science 44(2): 347-361](https://www-jstor-org.proxy.library.nd.edu/stable/2669316)).
 This quantity represents, for each covariate, the difference in
 predicted probabilities for cases with low and high values of the
 respective covariate. For each of these differences, all other variables
@@ -751,12 +739,12 @@ summary(fdfull.jags)
 ```
 
     ##      female          neuroticism         extraversion    
-    ##  Min.   :-0.04432   Min.   :-0.055522   Min.   :0.01957  
-    ##  1st Qu.: 0.03972   1st Qu.:-0.002247   1st Qu.:0.06957  
-    ##  Median : 0.05795   Median : 0.011224   Median :0.08132  
-    ##  Mean   : 0.05779   Mean   : 0.011263   Mean   :0.08124  
-    ##  3rd Qu.: 0.07619   3rd Qu.: 0.024511   3rd Qu.:0.09313  
-    ##  Max.   : 0.15245   Max.   : 0.080707   Max.   :0.14269
+    ##  Min.   :-0.04199   Min.   :-0.068548   Min.   :0.01851  
+    ##  1st Qu.: 0.03792   1st Qu.:-0.001534   1st Qu.:0.06982  
+    ##  Median : 0.05654   Median : 0.011222   Median :0.08131  
+    ##  Mean   : 0.05597   Mean   : 0.011369   Mean   :0.08109  
+    ##  3rd Qu.: 0.07436   3rd Qu.: 0.024294   3rd Qu.:0.09279  
+    ##  Max.   : 0.14808   Max.   : 0.090988   Max.   :0.13829
 
 The posterior distribution can be summarized as above, or users can
 directly obtain a summary when setting `fullsims` to FALSE.
@@ -771,9 +759,9 @@ fdsum.jags
 ```
 
     ##               median_fd     lower_fd   upper_fd      VarName VarID
-    ## female       0.05794760  0.004299115 0.11073472       female     1
-    ## neuroticism  0.01122442 -0.028097810 0.05008092  neuroticism     2
-    ## extraversion 0.08132383  0.045716391 0.11482003 extraversion     3
+    ## female       0.05653772  0.001903377 0.10752879       female     1
+    ## neuroticism  0.01122227 -0.026638167 0.05025822  neuroticism     2
+    ## extraversion 0.08131182  0.045476273 0.11589552 extraversion     3
 
 Users can plot the median and credible intervals of the summary of the
 first differences.
@@ -789,28 +777,27 @@ ggplot(data = fdsum.jags,
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-46-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-47-1.png)<!-- -->
 
-Plotting `mcmcFD` objects
--------------------------
+## Plotting `mcmcFD` objects
 
 To make use of the full posterior distribution of first differences, we
 provide a dedicated plotting method, `plot.mcmcFD`, which returns a
 ggplot2 object that can be further customized. The function is modeled
-after Figure 1 in [Karreth (2018, International Interactions 44(3):
-463-490](https://doi.org/10.1080/03050629.2018.1389728)). Users can
-specify a region of practical equivalence and print the percent of
-posterior draws to the right or left of the ROPE. If ROPE is not
-specified, the figure automatically prints the percent of posterior
+after Figure 1 in [Karreth (2018, International
+Interactions 44(3): 463-490](https://doi.org/10.1080/03050629.2018.1389728)).
+Users can specify a region of practical equivalence and print the
+percent of posterior draws to the right or left of the ROPE. If ROPE is
+not specified, the figure automatically prints the percent of posterior
 draws to the left or right of 0.
 
 ``` r
 plot(fdfull.jags, ROPE = c(-0.01, 0.01))
 ```
 
-    ## Picking joint bandwidth of 0.37
+    ## Picking joint bandwidth of 0.362
 
-![](README_files/figure-gfm/unnamed-chunk-47-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-48-1.png)<!-- -->
 
 The user can further customize the plot.
 
@@ -820,15 +807,13 @@ p + labs(title = "First differences") +
   ggridges::theme_ridges()
 ```
 
-    ## Picking joint bandwidth of 0.37
+    ## Picking joint bandwidth of 0.362
 
-![](README_files/figure-gfm/unnamed-chunk-48-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-49-1.png)<!-- -->
 
-Model fit
-=========
+# Model fit
 
-`mcmcRocPrc`
-------------
+## `mcmcRocPrc`
 
 One way to assess model fit is to calculate the area under the Receiver
 Operating Characteristic (ROC) and Precision-Recall curves. A short
@@ -859,14 +844,14 @@ fitstats$area_under_roc
 ```
 
     ##        V1 
-    ## 0.5840611
+    ## 0.5843884
 
 ``` r
 fitstats$area_under_prc
 ```
 
     ##        V1 
-    ## 0.4867844
+    ## 0.4866251
 
 Users can also plot the ROC curve…
 
@@ -880,7 +865,7 @@ ggplot(data = as.data.frame(fitstats, what = "roc"), aes(x = x, y = y)) +
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-52-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-53-1.png)<!-- -->
 
 … as well as the precision-recall curve.
 
@@ -893,7 +878,7 @@ ggplot(data = as.data.frame(fitstats, what = "prc"), aes(x = x, y = y)) +
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-53-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-54-1.png)<!-- -->
 
 To plot the posterior distribution of the area under the curves, users
 set the `fullsims` argument to `TRUE`. Unless a user wishes to plot
@@ -918,7 +903,7 @@ ggplot(as.data.frame(fitstats.fullsims),
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-55-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-56-1.png)<!-- -->
 
 ``` r
 ggplot(as.data.frame(fitstats.fullsims), 
@@ -928,10 +913,9 @@ ggplot(as.data.frame(fitstats.fullsims),
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-56-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-57-1.png)<!-- -->
 
-What’s Happening
-================
+# What’s Happening
 
 New functions and enhancements to current functions are in the works.
 Feel free to browse the
@@ -942,8 +926,7 @@ Our
 [contributing](https://github.com/ShanaScogin/BayesPostEst/blob/master/CONTRIBUTING.md)
 document has more information on ways to contribute.
 
-Contact
-=======
+# Contact
 
 Please submit an
 [issue](https://github.com/ShanaScogin/BayesPostEst/issues) if you
@@ -951,8 +934,7 @@ encounter any bugs or problems with the package. Feel free to check out
 [Johannes Karreth’s website](http://www.jkarreth.net) for more resources
 on Bayesian estimation.
 
-References
-==========
+# References
 
 Beger, Andreas. 2016. “Precision-Recall Curves.” Available at:
 <https://doi.org/10.2139/ssrn.2765419>.
