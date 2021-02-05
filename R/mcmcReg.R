@@ -200,7 +200,7 @@ mcmcReg <- function(mod,
   }
   
   ## limit samples to supplied parameters
-  if (regex) {
+  if (regex & !is.null(pars)) {
     samps <- mapply(function(x, y) x[, grepl(x = colnames(x),
                                             pattern = paste(y, collapse = '|'))],
                       samps, pars, SIMPLIFY = FALSE)
