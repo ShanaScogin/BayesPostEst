@@ -225,7 +225,7 @@ fit.stan <- stan(file = "mod.stan",
 
 Lastly, we use the rstanarm interface [@rstanarm2019] to estimate the same model again.
 
-```{r}
+```{r, results = 'hide'}
 library("rstanarm")
 fit.rstanarm <- stan_glm(volunteer ~ female + neuroticism + extraversion, 
                           data = df, family = binomial(link = "logit"),
