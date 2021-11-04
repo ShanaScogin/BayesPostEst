@@ -73,12 +73,22 @@ jobs:
       - name: Install JAGS (windows-latest)
         if: runner.os == 'Windows'
         run: |
-          curl.exe -o wjags.exe --url https://deac-fra.dl.sourceforge.net/project/mcmc-jags/JAGS/4.x/Windows/JAGS-4.2.0-Rtools33.exe
+          curl.exe -o wjags.exe --url https://deac-fra.dl.sourceforge.net/project/mcmc-jags/JAGS/4.x/Windows/JAGS-4.3.0.exe
           wjags.exe /S
           del wjags.exe
         shell: cmd
 
-      - name: Install dependencies
+      - name: Install dependencies (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          options(install.packages.check.source = "no")
+          options(install.packages.compile.from.source = "never")
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_cran("rcmdcheck")
+        shell: Rscript {0}
+        
+      - name: Install dependencies (POSIX)
+        if: runner.os != 'Windows'
         run: |
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
