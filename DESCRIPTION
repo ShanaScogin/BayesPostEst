@@ -1,7 +1,7 @@
 Package: BayesPostEst
 Type: Package
 Title: Generate Postestimation Quantities for Bayesian MCMC Estimation
-Version: 0.3.1.9000
+Version: 0.3.2
 Date: 2021-11-02
 Authors@R: 
     c(person("Johannes", 
@@ -72,5 +72,5 @@ Suggests:
     testthat,
     covr
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 SystemRequirements: JAGS (http://mcmc-jags.sourceforge.io)
