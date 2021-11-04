@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">BayesPostEst</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1.9000</span>
       </span>
     </div>
 
@@ -133,7 +133,7 @@
 <span class="va">df</span><span class="op">$</span><span class="va">extraversion</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">extraversion</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">extraversion</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">extraversion</span><span class="op">)</span><span class="op">)</span>
 <span class="va">df</span><span class="op">$</span><span class="va">neuroticism</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">neuroticism</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">neuroticism</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">neuroticism</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>We estimate a Bayesian generalized linear model with the inverse logit link function, where</p>
-<p>Pr(Volunteering<sub><em>i</em></sub>) = logit<sup> − 1</sup>(<em>β</em><sub>1</sub>+<em>β</em><sub>2</sub>Female<sub><em>i</em></sub>+<em>β</em><sub>3</sub>Neuroticism<sub><em>i</em></sub>+<em>β</em><sub>4</sub>Extraversion<sub><em>i</em></sub>)</p>
+<p><br><span class="math display">Pr(Volunteering<sub><em>i</em></sub>) = logit<sup> − 1</sup>(<em>β</em><sub>1</sub>+<em>β</em><sub>2</sub>Female<sub><em>i</em></sub>+<em>β</em><sub>3</sub>Neuroticism<sub><em>i</em></sub>+<em>β</em><sub>4</sub>Extraversion<sub><em>i</em></sub>)</span><br></p>
 <p>BayesPostEst functions accommodate GLM estimates for both logit and probit link functions. The examples proceed with the logit link function. If we had estimated a probit regression, the corresponding argument <code>link</code> in relevant function calls would need to be set to <code>link = "probit"</code>. Otherwise, it is set to <code>link = "logit"</code> by default.</p>
 </div>
 <div id="model-estimation" class="section level1">
@@ -143,7 +143,7 @@
 <div id="jags" class="section level2">
 <h2 class="hasAnchor">
 <a href="#jags" class="anchor"></a>JAGS</h2>
-<p>First, we prepare the data for JAGS (<a href="http://mcmc-jags.sourceforge.net">Plummer 2017</a>). Users need to combine all variables into a list and specify any other elements, like in this case N, the number of observations.</p>
+<p>First, we prepare the data for JAGS (<a href="http://mcmc-jags.sourceforge.io">Plummer 2017</a>). Users need to combine all variables into a list and specify any other elements, like in this case N, the number of observations.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"volunteer"</span>, <span class="st">"female"</span>, <span class="st">"neuroticism"</span>, <span class="st">"extraversion"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 <span class="va">dl</span><span class="op">$</span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
@@ -183,12 +183,12 @@ for(j in 1:4){
 <span id="cb10-4"><a href="#cb10-4"></a><span class="co">## Graph information:</span></span>
 <span id="cb10-5"><a href="#cb10-5"></a><span class="co">##    Observed stochastic nodes: 1421</span></span>
 <span id="cb10-6"><a href="#cb10-6"></a><span class="co">##    Unobserved stochastic nodes: 4</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a><span class="co">##    Total graph size: 6864</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="co">##    Total graph size: 6870</span></span>
 <span id="cb10-8"><a href="#cb10-8"></a><span class="co">## </span></span>
 <span id="cb10-9"><a href="#cb10-9"></a><span class="co">## Initializing model</span></span></code></pre></div>
 <p>The same data and model can be used to fit the model using the rjags package:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://mcmc-jags.sourceforge.net">"rjags"</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://mcmc-jags.sourceforge.io">"rjags"</a></span><span class="op">)</span>
 <span class="va">mod.rjags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rjags/man/jags.model.html">jags.model</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"mod.jags"</span>, data <span class="op">=</span> <span class="va">dl</span>, inits <span class="op">=</span> <span class="va">inits.jags</span>,
                         n.chains <span class="op">=</span> <span class="fl">4</span>, n.adapt <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">## Compiling model graph</span></span>
@@ -197,7 +197,7 @@ for(j in 1:4){
 <span id="cb12-4"><a href="#cb12-4"></a><span class="co">## Graph information:</span></span>
 <span id="cb12-5"><a href="#cb12-5"></a><span class="co">##    Observed stochastic nodes: 1421</span></span>
 <span id="cb12-6"><a href="#cb12-6"></a><span class="co">##    Unobserved stochastic nodes: 4</span></span>
-<span id="cb12-7"><a href="#cb12-7"></a><span class="co">##    Total graph size: 6864</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="co">##    Total graph size: 6870</span></span>
 <span id="cb12-8"><a href="#cb12-8"></a><span class="co">## </span></span>
 <span id="cb12-9"><a href="#cb12-9"></a><span class="co">## Initializing model</span></span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -276,18 +276,18 @@ model {
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.jags</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co">##   Variable   Median    SD    Lower    Upper</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a><span class="co">## 1     b[1]   -0.462 0.082   -0.622   -0.298</span></span>
-<span id="cb20-3"><a href="#cb20-3"></a><span class="co">## 2     b[2]    0.238 0.112    0.017    0.455</span></span>
-<span id="cb20-4"><a href="#cb20-4"></a><span class="co">## 3     b[3]    0.063 0.113   -0.158    0.283</span></span>
-<span id="cb20-5"><a href="#cb20-5"></a><span class="co">## 4     b[4]    0.515 0.112    0.291    0.729</span></span>
-<span id="cb20-6"><a href="#cb20-6"></a><span class="co">## 5 deviance 1909.455 2.875 1906.574 1917.541</span></span></code></pre></div>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="co">## 1     b[1]   -0.455 0.082   -0.615   -0.294</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="co">## 2     b[2]    0.232 0.111    0.008    0.442</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a><span class="co">## 3     b[3]    0.063 0.111   -0.149    0.285</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="co">## 4     b[4]    0.514 0.111    0.288    0.733</span></span>
+<span id="cb20-6"><a href="#cb20-6"></a><span class="co">## 5 deviance 1909.375 2.856 1906.534 1917.190</span></span></code></pre></div>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.rjags</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co">##   Variable Median    SD  Lower  Upper</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="co">## 1     b[1] -0.459 0.082 -0.621 -0.302</span></span>
-<span id="cb22-3"><a href="#cb22-3"></a><span class="co">## 2     b[2]  0.236 0.111  0.022  0.456</span></span>
-<span id="cb22-4"><a href="#cb22-4"></a><span class="co">## 3     b[3]  0.064 0.111 -0.152  0.285</span></span>
-<span id="cb22-5"><a href="#cb22-5"></a><span class="co">## 4     b[4]  0.516 0.111  0.301  0.740</span></span></code></pre></div>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="co">## 1     b[1] -0.460 0.082 -0.622 -0.298</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="co">## 2     b[2]  0.233 0.110  0.018  0.449</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a><span class="co">## 3     b[3]  0.063 0.111 -0.156  0.275</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a><span class="co">## 4     b[4]  0.520 0.113  0.301  0.746</span></span></code></pre></div>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.MCMCpack</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co">##       Variable Median    SD  Lower  Upper</span></span>
@@ -306,10 +306,10 @@ model {
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.rstanarm</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb28"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co">##       Variable Median    SD  Lower  Upper</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a><span class="co">## 1  (Intercept) -0.458 0.081 -0.623 -0.306</span></span>
-<span id="cb28-3"><a href="#cb28-3"></a><span class="co">## 2       female  0.237 0.111  0.023  0.462</span></span>
-<span id="cb28-4"><a href="#cb28-4"></a><span class="co">## 3  neuroticism  0.055 0.108 -0.144  0.276</span></span>
-<span id="cb28-5"><a href="#cb28-5"></a><span class="co">## 4 extraversion  0.518 0.112  0.296  0.733</span></span></code></pre></div>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="co">## 1  (Intercept) -0.459 0.084 -0.624 -0.293</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="co">## 2       female  0.236 0.111  0.014  0.449</span></span>
+<span id="cb28-4"><a href="#cb28-4"></a><span class="co">## 3  neuroticism  0.065 0.111 -0.149  0.280</span></span>
+<span id="cb28-5"><a href="#cb28-5"></a><span class="co">## 4 extraversion  0.521 0.109  0.306  0.730</span></span></code></pre></div>
 <div id="proportion-of-positivenegative-draws" class="section level2">
 <h2 class="hasAnchor">
 <a href="#proportion-of-positivenegative-draws" class="anchor"></a>Proportion of positive/negative draws</h2>
@@ -317,11 +317,11 @@ model {
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.jags</span>, Pr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb30"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co">##   Variable   Median    SD    Lower    Upper    Pr</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a><span class="co">## 1     b[1]   -0.462 0.082   -0.622   -0.298 1.000</span></span>
-<span id="cb30-3"><a href="#cb30-3"></a><span class="co">## 2     b[2]    0.238 0.112    0.017    0.455 0.984</span></span>
-<span id="cb30-4"><a href="#cb30-4"></a><span class="co">## 3     b[3]    0.063 0.113   -0.158    0.283 0.712</span></span>
-<span id="cb30-5"><a href="#cb30-5"></a><span class="co">## 4     b[4]    0.515 0.112    0.291    0.729 1.000</span></span>
-<span id="cb30-6"><a href="#cb30-6"></a><span class="co">## 5 deviance 1909.455 2.875 1906.574 1917.541 1.000</span></span></code></pre></div>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="co">## 1     b[1]   -0.455 0.082   -0.615   -0.294 1.000</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="co">## 2     b[2]    0.232 0.111    0.008    0.442 0.979</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a><span class="co">## 3     b[3]    0.063 0.111   -0.149    0.285 0.724</span></span>
+<span id="cb30-5"><a href="#cb30-5"></a><span class="co">## 4     b[4]    0.514 0.111    0.288    0.733 1.000</span></span>
+<span id="cb30-6"><a href="#cb30-6"></a><span class="co">## 5 deviance 1909.375 2.856 1906.534 1917.190 1.000</span></span></code></pre></div>
 </div>
 <div id="rope" class="section level2">
 <h2 class="hasAnchor">
@@ -334,9 +334,9 @@ model {
 <span id="cb32-3"><a href="#cb32-3"></a><span class="co">##           must be on the same scale (e.g. standardized coefficients or first differences).</span></span>
 <span id="cb32-4"><a href="#cb32-4"></a></span>
 <span id="cb32-5"><a href="#cb32-5"></a><span class="co">##   Variable Median    SD  Lower Upper PrOutROPE</span></span>
-<span id="cb32-6"><a href="#cb32-6"></a><span class="co">## 1     b[2]  0.238 0.112  0.017 0.455     0.885</span></span>
-<span id="cb32-7"><a href="#cb32-7"></a><span class="co">## 2     b[3]  0.063 0.113 -0.158 0.283     0.376</span></span>
-<span id="cb32-8"><a href="#cb32-8"></a><span class="co">## 3     b[4]  0.515 0.112  0.291 0.729     1.000</span></span></code></pre></div>
+<span id="cb32-6"><a href="#cb32-6"></a><span class="co">## 1     b[2]  0.232 0.111  0.008 0.442     0.879</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a><span class="co">## 2     b[3]  0.063 0.111 -0.149 0.285     0.376</span></span>
+<span id="cb32-8"><a href="#cb32-8"></a><span class="co">## 3     b[4]  0.514 0.111  0.288 0.733     1.000</span></span></code></pre></div>
 </div>
 <div id="conventional-regression-tables" class="section level2">
 <h2 class="hasAnchor">
@@ -453,8 +453,8 @@ model {
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Estimated probability of volunteering"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probability based on average-case approach"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb48"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="co">## Picking joint bandwidth of 0.00327</span></span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-37-1.png"><!-- --></p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="co">## Picking joint bandwidth of 0.00323</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-38-1.png"><!-- --></p>
 </div>
 <div id="extraversion" class="section level3">
 <h3 class="hasAnchor">
@@ -479,7 +479,7 @@ model {
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probability based on average-case approach"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-39-1.png"><!-- --></p>
+<p><img src="reference/figures/README-unnamed-chunk-40-1.png"><!-- --></p>
 </div>
 </div>
 <div id="mcmcobsprob" class="section level2">
@@ -510,8 +510,8 @@ model {
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Estimated probability of volunteering"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probability based on observed-case approach"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb53"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="co">## Picking joint bandwidth of 0.00318</span></span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-41-1.png"><!-- --></p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="co">## Picking joint bandwidth of 0.00316</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-42-1.png"><!-- --></p>
 </div>
 <div id="extraversion-1" class="section level3">
 <h3 class="hasAnchor">
@@ -536,7 +536,7 @@ model {
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probability based on observed-case approach"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-43-1.png"><!-- --></p>
+<p><img src="reference/figures/README-unnamed-chunk-44-1.png"><!-- --></p>
 </div>
 </div>
 </div>
@@ -556,12 +556,12 @@ model {
                   fullsims <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fdfull.jags</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb57"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a><span class="co">##      female          neuroticism         extraversion    </span></span>
-<span id="cb57-2"><a href="#cb57-2"></a><span class="co">##  Min.   :-0.04432   Min.   :-0.055522   Min.   :0.01957  </span></span>
-<span id="cb57-3"><a href="#cb57-3"></a><span class="co">##  1st Qu.: 0.03972   1st Qu.:-0.002247   1st Qu.:0.06957  </span></span>
-<span id="cb57-4"><a href="#cb57-4"></a><span class="co">##  Median : 0.05795   Median : 0.011224   Median :0.08132  </span></span>
-<span id="cb57-5"><a href="#cb57-5"></a><span class="co">##  Mean   : 0.05779   Mean   : 0.011263   Mean   :0.08124  </span></span>
-<span id="cb57-6"><a href="#cb57-6"></a><span class="co">##  3rd Qu.: 0.07619   3rd Qu.: 0.024511   3rd Qu.:0.09313  </span></span>
-<span id="cb57-7"><a href="#cb57-7"></a><span class="co">##  Max.   : 0.15245   Max.   : 0.080707   Max.   :0.14269</span></span></code></pre></div>
+<span id="cb57-2"><a href="#cb57-2"></a><span class="co">##  Min.   :-0.04199   Min.   :-0.068548   Min.   :0.01851  </span></span>
+<span id="cb57-3"><a href="#cb57-3"></a><span class="co">##  1st Qu.: 0.03792   1st Qu.:-0.001534   1st Qu.:0.06982  </span></span>
+<span id="cb57-4"><a href="#cb57-4"></a><span class="co">##  Median : 0.05654   Median : 0.011222   Median :0.08131  </span></span>
+<span id="cb57-5"><a href="#cb57-5"></a><span class="co">##  Mean   : 0.05597   Mean   : 0.011369   Mean   :0.08109  </span></span>
+<span id="cb57-6"><a href="#cb57-6"></a><span class="co">##  3rd Qu.: 0.07436   3rd Qu.: 0.024294   3rd Qu.:0.09279  </span></span>
+<span id="cb57-7"><a href="#cb57-7"></a><span class="co">##  Max.   : 0.14808   Max.   : 0.090988   Max.   :0.13829</span></span></code></pre></div>
 <p>The posterior distribution can be summarized as above, or users can directly obtain a summary when setting <code>fullsims</code> to FALSE.</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fdsum.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mcmcFD.html">mcmcFD</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,
@@ -571,9 +571,9 @@ model {
                   fullsims <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">fdsum.jags</span></code></pre></div>
 <div class="sourceCode" id="cb59"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="co">##               median_fd     lower_fd   upper_fd      VarName VarID</span></span>
-<span id="cb59-2"><a href="#cb59-2"></a><span class="co">## female       0.05794760  0.004299115 0.11073472       female     1</span></span>
-<span id="cb59-3"><a href="#cb59-3"></a><span class="co">## neuroticism  0.01122442 -0.028097810 0.05008092  neuroticism     2</span></span>
-<span id="cb59-4"><a href="#cb59-4"></a><span class="co">## extraversion 0.08132383  0.045716391 0.11482003 extraversion     3</span></span></code></pre></div>
+<span id="cb59-2"><a href="#cb59-2"></a><span class="co">## female       0.05653772  0.001903377 0.10752879       female     1</span></span>
+<span id="cb59-3"><a href="#cb59-3"></a><span class="co">## neuroticism  0.01122227 -0.026638167 0.05025822  neuroticism     2</span></span>
+<span id="cb59-4"><a href="#cb59-4"></a><span class="co">## extraversion 0.08131182  0.045476273 0.11589552 extraversion     3</span></span></code></pre></div>
 <p>Users can plot the median and credible intervals of the summary of the first differences.</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">fdsum.jags</span>, 
@@ -584,7 +584,7 @@ model {
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Change in Pr(Volunteering)"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-46-1.png"><!-- --></p>
+<p><img src="reference/figures/README-unnamed-chunk-47-1.png"><!-- --></p>
 </div>
 <div id="plotting-mcmcfd-objects" class="section level2">
 <h2 class="hasAnchor">
@@ -592,15 +592,15 @@ model {
 <p>To make use of the full posterior distribution of first differences, we provide a dedicated plotting method, <code>plot.mcmcFD</code>, which returns a ggplot2 object that can be further customized. The function is modeled after Figure 1 in <a href="https://doi.org/10.1080/03050629.2018.1389728">Karreth (2018, International Interactions 44(3): 463-490</a>). Users can specify a region of practical equivalence and print the percent of posterior draws to the right or left of the ROPE. If ROPE is not specified, the figure automatically prints the percent of posterior draws to the left or right of 0.</p>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fdfull.jags</span>, ROPE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb62"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="co">## Picking joint bandwidth of 0.37</span></span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-47-1.png"><!-- --></p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="co">## Picking joint bandwidth of 0.362</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-48-1.png"><!-- --></p>
 <p>The user can further customize the plot.</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fdfull.jags</span>, ROPE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span>
 <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"First differences"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">ggridges</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/ggridges/reference/theme_ridges.html">theme_ridges</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb64"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="co">## Picking joint bandwidth of 0.37</span></span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-48-1.png"><!-- --></p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="co">## Picking joint bandwidth of 0.362</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-49-1.png"><!-- --></p>
 </div>
 </div>
 <div id="model-fit" class="section level1">
@@ -622,11 +622,11 @@ model {
 <div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fitstats</span><span class="op">$</span><span class="va">area_under_roc</span></code></pre></div>
 <div class="sourceCode" id="cb67"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a><span class="co">##        V1 </span></span>
-<span id="cb67-2"><a href="#cb67-2"></a><span class="co">## 0.5840611</span></span></code></pre></div>
+<span id="cb67-2"><a href="#cb67-2"></a><span class="co">## 0.5843884</span></span></code></pre></div>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fitstats</span><span class="op">$</span><span class="va">area_under_prc</span></code></pre></div>
 <div class="sourceCode" id="cb69"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a><span class="co">##        V1 </span></span>
-<span id="cb69-2"><a href="#cb69-2"></a><span class="co">## 0.4867844</span></span></code></pre></div>
+<span id="cb69-2"><a href="#cb69-2"></a><span class="co">## 0.4866251</span></span></code></pre></div>
 <p>Users can also plot the ROC curve…</p>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">fitstats</span>, what <span class="op">=</span> <span class="st">"roc"</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -636,7 +636,7 @@ model {
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"1 - Specificity"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Sensitivity"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-52-1.png"><!-- --></p>
+<p><img src="reference/figures/README-unnamed-chunk-53-1.png"><!-- --></p>
 <p>… as well as the precision-recall curve.</p>
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">fitstats</span>, what <span class="op">=</span> <span class="st">"prc"</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -645,7 +645,7 @@ model {
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Recall"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Precision"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-53-1.png"><!-- --></p>
+<p><img src="reference/figures/README-unnamed-chunk-54-1.png"><!-- --></p>
 <p>To plot the posterior distribution of the area under the curves, users set the <code>fullsims</code> argument to <code>TRUE</code>. Unless a user wishes to plot credible intervals around the ROC and PR curves themselves, we recommend keeping <code>curves</code> at <code>FALSE</code> to avoid long computation time.</p>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fitstats.fullsims</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/print.mcmcRocPrc.html">mcmcRocPrc</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">fit.jags</span>,
@@ -660,14 +660,14 @@ model {
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Area under the ROC curve"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-55-1.png"><!-- --></p>
+<p><img src="reference/figures/README-unnamed-chunk-56-1.png"><!-- --></p>
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">fitstats.fullsims</span><span class="op">)</span>, 
        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">area_under_prc</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Area under the Precision-Recall curve"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="README_files/figure-gfm/unnamed-chunk-56-1.png"><!-- --></p>
+<p><img src="reference/figures/README-unnamed-chunk-57-1.png"><!-- --></p>
 </div>
 </div>
 <div id="whats-happening" class="section level1">
@@ -747,7 +747,7 @@ model {
 <li><a href="https://github.com/ShanaScogin/BayesPostEst/actions"><img src="https://github.com/ShanaScogin/BayesPostEst/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 <li><a href="https://CRAN.R-project.org/package=BayesPostEst"><img src="https://www.r-pkg.org/badges/version/BayesPostEst" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://doi.org/10.21105/joss.01722"><img src="https://joss.theoj.org/papers/10.21105/joss.01722/status.svg" alt="DOI"></a></li>
-<li><a href="https://codecov.io/gh/ShanaScogin/BayesPostEst?branch=master"><img src="https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://app.codecov.io/gh/ShanaScogin/BayesPostEst?branch=master"><img src="https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 </div>

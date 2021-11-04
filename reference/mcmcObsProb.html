@@ -74,7 +74,7 @@ Hanmer &amp;amp; Kalkan (2013) (2013, American Journal of Political Science 57(1
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BayesPostEst</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1.9000</span>
       </span>
     </div>
 
@@ -195,7 +195,7 @@ or <code>"probit"</code>.</p></td>
     </tr>
     <tr>
       <th>ci</th>
-      <td><p>the bounds of the credible interval. Default is <code><a href='https://rdrr.io/r/base/c.html'>c(0.025, 0.975)</a></code> for the 95% 
+      <td><p>the bounds of the credible interval. Default is <code>c(0.025, 0.975)</code> for the 95% 
 credible interval.</p></td>
     </tr>
     <tr>
@@ -233,79 +233,80 @@ limited dependent variable models. American Journal of Political Science, 57(1),
 263-277. https://doi.org/10.1111/j.1540-5907.2012.00602.x</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>.old_wd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-<span class='co'># \donttest{</span>
-  <span class='co'>## simulating data</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123456</span><span class='op'>)</span>
-  <span class='va'>b0</span> <span class='op'>&lt;-</span> <span class='fl'>0.2</span> <span class='co'># true value for the intercept</span>
-  <span class='va'>b1</span> <span class='op'>&lt;-</span> <span class='fl'>0.5</span> <span class='co'># true value for first beta</span>
-  <span class='va'>b2</span> <span class='op'>&lt;-</span> <span class='fl'>0.7</span> <span class='co'># true value for second beta</span>
-  <span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>500</span> <span class='co'># sample size</span>
-  <span class='va'>X1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>
-  <span class='va'>X2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>
-  <span class='va'>Z</span> <span class='op'>&lt;-</span> <span class='va'>b0</span> <span class='op'>+</span> <span class='va'>b1</span> <span class='op'>*</span> <span class='va'>X1</span> <span class='op'>+</span> <span class='va'>b2</span> <span class='op'>*</span> <span class='va'>X2</span>
-  <span class='va'>pr</span> <span class='op'>&lt;-</span> <span class='fl'>1</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>Z</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># inv logit function</span>
-  <span class='va'>Y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='fl'>1</span>, <span class='va'>pr</span><span class='op'>)</span> 
-  <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>X1</span>, <span class='va'>X2</span>, <span class='va'>Y</span><span class='op'>)</span><span class='op'>)</span>
-  
-  <span class='co'>## formatting the data for jags</span>
-  <span class='va'>datjags</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>as.list</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
-  <span class='va'>datjags</span><span class='op'>$</span><span class='va'>N</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>datjags</span><span class='op'>$</span><span class='va'>Y</span><span class='op'>)</span>
-  
-  <span class='co'>## creating jags model</span>
-  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='op'>)</span>  <span class='op'>{</span>
-  
-  <span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='va'>N</span><span class='op'>)</span><span class='op'>{</span>
-    <span class='va'>Y</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>~</span> <span class='fu'>dbern</span><span class='op'>(</span><span class='va'>p</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>  <span class='co'>## Bernoulli distribution of y_i</span>
-    <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/logit.html'>logit</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>mu</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>    <span class='co'>## Logit link function</span>
-    <span class='va'>mu</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>b</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>+</span> 
-      <span class='va'>b</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span> <span class='op'>*</span> <span class='va'>X1</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>+</span> 
-      <span class='va'>b</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span> <span class='op'>*</span> <span class='va'>X2</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>
-  <span class='op'>}</span>
-  
-  <span class='kw'>for</span><span class='op'>(</span><span class='va'>j</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>{</span>
-    <span class='va'>b</span><span class='op'>[</span><span class='va'>j</span><span class='op'>]</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>dnorm</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.001</span><span class='op'>)</span> <span class='co'>## Use a coefficient vector for simplicity</span>
-  <span class='op'>}</span>
-  
-<span class='op'>}</span>
-
-<span class='va'>params</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"b"</span><span class='op'>)</span>
-<span class='va'>inits1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"b"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>inits2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"b"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>inits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>inits1</span>, <span class='va'>inits2</span><span class='op'>)</span>
-
-<span class='co'>## fitting the model with R2jags</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>R2jags</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
-<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/R2jags/man/jags.html'>jags</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>datjags</span>, inits <span class='op'>=</span> <span class='va'>inits</span>, 
-          parameters.to.save <span class='op'>=</span> <span class='va'>params</span>, n.chains <span class='op'>=</span> <span class='fl'>2</span>, n.iter <span class='op'>=</span> <span class='fl'>2000</span>, 
-          n.burnin <span class='op'>=</span> <span class='fl'>1000</span>, model.file <span class='op'>=</span> <span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Compiling model graph
-#&gt;    Resolving undeclared variables
-#&gt;    Allocating nodes
-#&gt; Graph information:
-#&gt;    Observed stochastic nodes: 500
-#&gt;    Unobserved stochastic nodes: 3
-#&gt;    Total graph size: 3506
-#&gt; 
-#&gt; Initializing model
-#&gt; </div><div class='input'>
-<span class='co'>### observed value approach</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>coda</span><span class='op'>)</span>
-<span class='va'>xmat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='va'>X1</span> <span class='op'>+</span> <span class='va'>X2</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span>
-<span class='va'>mcmc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/coda/man/mcmc.html'>as.mcmc</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
-<span class='va'>mcmc_mat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>mcmc</span><span class='op'>)</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>xmat</span><span class='op'>)</span><span class='op'>]</span>
-<span class='va'>X1_sim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span>from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>datjags</span><span class='op'>$</span><span class='va'>X1</span><span class='op'>)</span>,
-              to <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>datjags</span><span class='op'>$</span><span class='va'>X1</span><span class='op'>)</span>, 
-              length.out <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-<span class='va'>obs_prob</span> <span class='op'>&lt;-</span> <span class='fu'>mcmcObsProb</span><span class='op'>(</span>modelmatrix <span class='op'>=</span> <span class='va'>xmat</span>,
-                        mcmcout <span class='op'>=</span> <span class='va'>mcmc_mat</span>,
-                        xrange <span class='op'>=</span> <span class='va'>X1_sim</span>,
-                        xcol <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-<span class='co'># }</span>
-
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='va'>.old_wd</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>.old_wd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'>  <span class='co'>## simulating data</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123456</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>b0</span> <span class='op'>&lt;-</span> <span class='fl'>0.2</span> <span class='co'># true value for the intercept</span></span>
+<span class='r-in'>  <span class='va'>b1</span> <span class='op'>&lt;-</span> <span class='fl'>0.5</span> <span class='co'># true value for first beta</span></span>
+<span class='r-in'>  <span class='va'>b2</span> <span class='op'>&lt;-</span> <span class='fl'>0.7</span> <span class='co'># true value for second beta</span></span>
+<span class='r-in'>  <span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>500</span> <span class='co'># sample size</span></span>
+<span class='r-in'>  <span class='va'>X1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>X2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>Z</span> <span class='op'>&lt;-</span> <span class='va'>b0</span> <span class='op'>+</span> <span class='va'>b1</span> <span class='op'>*</span> <span class='va'>X1</span> <span class='op'>+</span> <span class='va'>b2</span> <span class='op'>*</span> <span class='va'>X2</span></span>
+<span class='r-in'>  <span class='va'>pr</span> <span class='op'>&lt;-</span> <span class='fl'>1</span> <span class='op'>/</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>Z</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># inv logit function</span></span>
+<span class='r-in'>  <span class='va'>Y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Binomial.html'>rbinom</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='fl'>1</span>, <span class='va'>pr</span><span class='op'>)</span> </span>
+<span class='r-in'>  <span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='va'>X1</span>, <span class='va'>X2</span>, <span class='va'>Y</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'>  <span class='co'>## formatting the data for jags</span></span>
+<span class='r-in'>  <span class='va'>datjags</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>as.list</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='va'>datjags</span><span class='op'>$</span><span class='va'>N</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>datjags</span><span class='op'>$</span><span class='va'>Y</span><span class='op'>)</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'>  <span class='co'>## creating jags model</span></span>
+<span class='r-in'>  <span class='va'>model</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='op'>)</span>  <span class='op'>{</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'>  <span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='va'>N</span><span class='op'>)</span><span class='op'>{</span></span>
+<span class='r-in'>    <span class='va'>Y</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>~</span> <span class='fu'>dbern</span><span class='op'>(</span><span class='va'>p</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>  <span class='co'>## Bernoulli distribution of y_i</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://mc-stan.org/rstanarm/reference/logit.html'>logit</a></span><span class='op'>(</span><span class='va'>p</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>mu</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>    <span class='co'>## Logit link function</span></span>
+<span class='r-in'>    <span class='va'>mu</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>b</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>+</span> </span>
+<span class='r-in'>      <span class='va'>b</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span> <span class='op'>*</span> <span class='va'>X1</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>+</span> </span>
+<span class='r-in'>      <span class='va'>b</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span> <span class='op'>*</span> <span class='va'>X2</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span></span>
+<span class='r-in'>  <span class='op'>}</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'>  <span class='kw'>for</span><span class='op'>(</span><span class='va'>j</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>{</span></span>
+<span class='r-in'>    <span class='va'>b</span><span class='op'>[</span><span class='va'>j</span><span class='op'>]</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>dnorm</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.001</span><span class='op'>)</span> <span class='co'>## Use a coefficient vector for simplicity</span></span>
+<span class='r-in'>  <span class='op'>}</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>params</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"b"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>inits1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"b"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>inits2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"b"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>inits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>inits1</span>, <span class='va'>inits2</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## fitting the model with R2jags</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>R2jags</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/R2jags/man/jags.html'>jags</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>datjags</span>, inits <span class='op'>=</span> <span class='va'>inits</span>, </span>
+<span class='r-in'>          parameters.to.save <span class='op'>=</span> <span class='va'>params</span>, n.chains <span class='op'>=</span> <span class='fl'>2</span>, n.iter <span class='op'>=</span> <span class='fl'>2000</span>, </span>
+<span class='r-in'>          n.burnin <span class='op'>=</span> <span class='fl'>1000</span>, model.file <span class='op'>=</span> <span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Compiling model graph</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Resolving undeclared variables</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Allocating nodes</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Graph information:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Observed stochastic nodes: 500</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Unobserved stochastic nodes: 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Total graph size: 3506</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Initializing model</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>### observed value approach</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>coda</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>xmat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='va'>X1</span> <span class='op'>+</span> <span class='va'>X2</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mcmc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/coda/man/mcmc.html'>as.mcmc</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mcmc_mat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span><span class='op'>(</span><span class='va'>mcmc</span><span class='op'>)</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>xmat</span><span class='op'>)</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>X1_sim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span>from <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>datjags</span><span class='op'>$</span><span class='va'>X1</span><span class='op'>)</span>,</span>
+<span class='r-in'>              to <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>datjags</span><span class='op'>$</span><span class='va'>X1</span><span class='op'>)</span>, </span>
+<span class='r-in'>              length.out <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>obs_prob</span> <span class='op'>&lt;-</span> <span class='fu'>mcmcObsProb</span><span class='op'>(</span>modelmatrix <span class='op'>=</span> <span class='va'>xmat</span>,</span>
+<span class='r-in'>                        mcmcout <span class='op'>=</span> <span class='va'>mcmc_mat</span>,</span>
+<span class='r-in'>                        xrange <span class='op'>=</span> <span class='va'>X1_sim</span>,</span>
+<span class='r-in'>                        xcol <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># }</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='va'>.old_wd</span><span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

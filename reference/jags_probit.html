@@ -73,7 +73,7 @@ code below for how it was created. Used in examples and for testing." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BayesPostEst</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1.9000</span>
       </span>
     </div>
 
@@ -142,53 +142,54 @@ code below for how it was created. Used in examples and for testing.</p>
     <p>A class "rjags" object created by [R2jags::jags()]</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"sim_data"</span><span class='op'>)</span>
-  
-<span class='co'>## formatting the data for jags</span>
-<span class='va'>datjags</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>as.list</a></span><span class='op'>(</span><span class='va'>sim_data</span><span class='op'>)</span>
-<span class='va'>datjags</span><span class='op'>$</span><span class='va'>N</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>datjags</span><span class='op'>$</span><span class='va'>Y</span><span class='op'>)</span>
-
-<span class='co'>## creating jags model</span>
-<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='op'>)</span>  <span class='op'>{</span>
-
-  <span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='va'>N</span><span class='op'>)</span><span class='op'>{</span>
-    <span class='va'>Y</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>~</span> <span class='fu'>dbern</span><span class='op'>(</span><span class='va'>p</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>  <span class='co'>## Bernoulli distribution of y_i</span>
-      <span class='fu'>probit</span><span class='op'>(</span><span class='va'>p</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>mu</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>    <span class='co'>## Update with probit link function</span>
-      <span class='va'>mu</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>b</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>+</span>
-        <span class='va'>b</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span> <span class='op'>*</span> <span class='va'>X1</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>+</span>
-        <span class='va'>b</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span> <span class='op'>*</span> <span class='va'>X2</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>
-  <span class='op'>}</span>
-
-  <span class='kw'>for</span><span class='op'>(</span><span class='va'>j</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>{</span>
-    <span class='va'>b</span><span class='op'>[</span><span class='va'>j</span><span class='op'>]</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>dnorm</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.001</span><span class='op'>)</span> <span class='co'>## Use a coefficient vector for simplicity</span>
-  <span class='op'>}</span>
-
-<span class='op'>}</span>
-
-<span class='va'>params</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"b"</span><span class='op'>)</span>
-<span class='va'>inits1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"b"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>inits2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"b"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>inits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>inits1</span>, <span class='va'>inits2</span><span class='op'>)</span>
-
-<span class='co'>## fitting the model with R2jags</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
-<span class='va'>jags_probit</span> <span class='op'>&lt;-</span> <span class='fu'>R2jags</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/R2jags/man/jags.html'>jags</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>datjags</span>, inits <span class='op'>=</span> <span class='va'>inits</span>,
-                         parameters.to.save <span class='op'>=</span> <span class='va'>params</span>, n.chains <span class='op'>=</span> <span class='fl'>2</span>, 
-                         n.iter <span class='op'>=</span> <span class='fl'>2000</span>, n.burnin <span class='op'>=</span> <span class='fl'>1000</span>, model.file <span class='op'>=</span> <span class='va'>model</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Compiling model graph
-#&gt;    Resolving undeclared variables
-#&gt;    Allocating nodes
-#&gt; Graph information:
-#&gt;    Observed stochastic nodes: 500
-#&gt;    Unobserved stochastic nodes: 3
-#&gt;    Total graph size: 3506
-#&gt; 
-#&gt; Initializing model
-#&gt; </div><div class='input'>
-<span class='co'># }</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"sim_data"</span><span class='op'>)</span></span>
+<span class='r-in'>  </span>
+<span class='r-in'><span class='co'>## formatting the data for jags</span></span>
+<span class='r-in'><span class='va'>datjags</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>as.list</a></span><span class='op'>(</span><span class='va'>sim_data</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>datjags</span><span class='op'>$</span><span class='va'>N</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>datjags</span><span class='op'>$</span><span class='va'>Y</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## creating jags model</span></span>
+<span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='op'>)</span>  <span class='op'>{</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='va'>N</span><span class='op'>)</span><span class='op'>{</span></span>
+<span class='r-in'>    <span class='va'>Y</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>~</span> <span class='fu'>dbern</span><span class='op'>(</span><span class='va'>p</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span>  <span class='co'>## Bernoulli distribution of y_i</span></span>
+<span class='r-in'>      <span class='fu'>probit</span><span class='op'>(</span><span class='va'>p</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>mu</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>    <span class='co'>## Update with probit link function</span></span>
+<span class='r-in'>      <span class='va'>mu</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>b</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>+</span></span>
+<span class='r-in'>        <span class='va'>b</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span> <span class='op'>*</span> <span class='va'>X1</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>+</span></span>
+<span class='r-in'>        <span class='va'>b</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span> <span class='op'>*</span> <span class='va'>X2</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span></span>
+<span class='r-in'>  <span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='kw'>for</span><span class='op'>(</span><span class='va'>j</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span><span class='op'>{</span></span>
+<span class='r-in'>    <span class='va'>b</span><span class='op'>[</span><span class='va'>j</span><span class='op'>]</span> <span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>dnorm</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.001</span><span class='op'>)</span> <span class='co'>## Use a coefficient vector for simplicity</span></span>
+<span class='r-in'>  <span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>params</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"b"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>inits1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"b"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>inits2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"b"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>inits</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>inits1</span>, <span class='va'>inits2</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'>## fitting the model with R2jags</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>jags_probit</span> <span class='op'>&lt;-</span> <span class='fu'>R2jags</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/R2jags/man/jags.html'>jags</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>datjags</span>, inits <span class='op'>=</span> <span class='va'>inits</span>,</span>
+<span class='r-in'>                         parameters.to.save <span class='op'>=</span> <span class='va'>params</span>, n.chains <span class='op'>=</span> <span class='fl'>2</span>, </span>
+<span class='r-in'>                         n.iter <span class='op'>=</span> <span class='fl'>2000</span>, n.burnin <span class='op'>=</span> <span class='fl'>1000</span>, model.file <span class='op'>=</span> <span class='va'>model</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Compiling model graph</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Resolving undeclared variables</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Allocating nodes</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Graph information:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Observed stochastic nodes: 500</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Unobserved stochastic nodes: 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    Total graph size: 3506</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Initializing model</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># }</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

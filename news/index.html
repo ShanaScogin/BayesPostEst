@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BayesPostEst</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1.9000</span>
       </span>
     </div>
 
@@ -128,7 +128,7 @@
 
     <div id="bayespostest-031" class="section level1">
 <h1 class="page-header" data-toc-text="0.3.1">
-<a href="#bayespostest-031" class="anchor"></a>BayesPostEst 0.3.1<small> Unreleased </small>
+<a href="#bayespostest-031" class="anchor"></a>BayesPostEst 0.3.1<small> 2021-01-08 </small>
 </h1>
 <ul>
 <li>Removed package dependency on JAGS. Since rjags and R2jags were in the package Imports previously, and they in turn depend on a JAGS installed, the package would not install without JAGS. Now, all specific MCMC implementations are in the package Suggests and the package can be installed in an agnostic way without the need for JAGS, Stan, or any other specific MCMC library.
