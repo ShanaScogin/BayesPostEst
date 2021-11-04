@@ -78,10 +78,18 @@ jobs:
           del wjags.exe
         shell: cmd
 
-      - name: Install dependencies
+      - name: Install dependencies (Windows)
+        if: runner.os == 'Windows'
         run: |
           options(install.packages.check.source = "no")
-          options(install.packages.compile.from.source = "interactive")
+          options(install.packages.compile.from.source = "never")
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_cran("rcmdcheck")
+        shell: Rscript {0}
+        
+      - name: Install dependencies (POSIX)
+        if: runner.os != 'Windows'
+        run: |
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
