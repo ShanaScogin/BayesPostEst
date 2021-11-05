@@ -118,7 +118,7 @@ Stan interfaces [rstan](https://cran.r-project.org/package=rstan) and
 ## JAGS
 
 First, we prepare the data for JAGS
-([Plummer 2017](http://mcmc-jags.sourceforge.io)). Users need to
+([Plummer 2017](https://mcmc-jags.sourceforge.io/)). Users need to
 combine all variables into a list and specify any other elements, like
 in this case N, the number of observations.
 
@@ -532,7 +532,7 @@ pre-defined values of one covariate of interest (*x*), while all other
 covariates are held at a “typical” value. This follows suggestions
 outlined in [King, Tomz, and Wittenberg (2000, American Journal of
 Political
-Science 44(2): 347-361)](https://www-jstor-org.proxy.library.nd.edu/stable/2669316)
+Science 44(2): 347-361)](https://doi.org/10.2307/2669316)
 and elsewhere, which are commonly adopted by users of GLMs. The
 `mcmcAveProb` function by default calculates the median value of all
 covariates other than *x* as “typical” values.
@@ -723,7 +723,7 @@ ggplot(data = obsprob.extra.jags,
 To summarize typical effects across covariates, we generate “first
 differences” (Long 1997, Sage Publications; [King, Tomz, and
 Wittenberg 2000, American Journal of Political
-Science 44(2): 347-361](https://www-jstor-org.proxy.library.nd.edu/stable/2669316)).
+Science 44(2): 347-361](https://doi.org/10.2307/2669316)).
 This quantity represents, for each covariate, the difference in
 predicted probabilities for cases with low and high values of the
 respective covariate. For each of these differences, all other variables
@@ -984,7 +984,7 @@ Markov Chain Monte Carlo in R.” Journal of Statistical Software 42 (9):
 22. <https://www.jstatsoft.org/v42/i09/>.
 
 Plummer, Martyn. 2017. “JAGS Version 4.3.0 User Manual.”
-<http://mcmc-jags.sourceforge.net>.
+<https://mcmc-jags.sourceforge.io/>.
 
 Stan Development Team. 2019. RStan: The R Interface to Stan.
 <https://mc-stan.org/>.
