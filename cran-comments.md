@@ -1,7 +1,6 @@
 ## Test environments
-* macOS High Sierra 10.13.3, R 3.6.0 (local)  
 * major OS tested (gh-actions)
-* win-builder (release)
+* win-builder (R-release, R-devel, R-oldrelease)
 
 ## R CMD check results
 There were no ERRORs, WARNINGs, or NOTEs.
@@ -10,4 +9,4 @@ There were no ERRORs, WARNINGs, or NOTEs.
 There are currently no downstream dependencies for this package.
 
 ## Note
-There is a note with winbuilder and checkrhub about the ICPSR link - it is valid and I cannot find one that does not throw a note. Sorry about that!
+Notes exist in winbuilder deveop and checkrhub about the ICPSR link and some doi links including: 10.2307/2669316 and 10.1037/a0029146. All links have been checked and are correct.
