@@ -2,6 +2,8 @@
 #  Generate an example JAGS probit fitted model
 #
 
+if (interactive()) {
+
 data("sim_data")
 
 ## formatting the data for jags
@@ -40,3 +42,4 @@ fit <- R2jags::jags(data = datjags, inits = inits,
 jags_probit <- fit
 usethis::use_data(jags_probit, overwrite = TRUE)
 
+}

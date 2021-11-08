@@ -83,8 +83,9 @@ Political Science 57(1): 263-277)
 \examples{
 \dontshow{.old_wd <- setwd(tempdir())}
 \donttest{
+if (interactive()) {
   ## simulating data
-  set.seed(123456)
+  set.seed(12345)
   b0 <- 0.2 # true value for the intercept
   b1 <- 0.5 # true value for first beta
   b2 <- 0.7 # true value for second beta
@@ -141,6 +142,7 @@ obs_prob <- mcmcObsProb(modelmatrix = xmat,
                         mcmcout = mcmc_mat,
                         xrange = X1_sim,
                         xcol = 2)
+}
 }
 
 \dontshow{setwd(.old_wd)}

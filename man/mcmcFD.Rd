@@ -72,8 +72,9 @@ American Journal of Political Science 44(2): 347-361).
 \examples{
 \dontshow{.old_wd <- setwd(tempdir())}
 \donttest{
+if (interactive()) {
 ## simulating data
-set.seed(123456)
+set.seed(1234)
 b0 <- 0.2 # true value for the intercept
 b1 <- 0.5 # true value for first beta
 b2 <- 0.7 # true value for second beta
@@ -124,6 +125,7 @@ mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
 object <- mcmcFD(modelmatrix = xmat,
                  mcmcout = mcmc_mat)
 object
+}
 }
 
 \dontshow{setwd(.old_wd)}

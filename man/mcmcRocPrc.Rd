@@ -165,6 +165,8 @@ error if the function called was not \code{MCMClogit()} or \code{MCMCprobit()}.
 This behavior can be suppressed by setting \code{force = TRUE}.
 }
 \examples{
+\donttest{
+if (interactive()) {
 # load simulated data and fitted model (see ?sim_data and ?jags_logit)
 data("jags_logit")
 
@@ -199,6 +201,8 @@ dim(pred_mat)
 # now we can call mcmcRocPrc; the default method works with the matrix
 # of predictions and vector of outcomes as input
 mcmcRocPrc(object = pred_mat, curves = TRUE, fullsims = FALSE, yvec = yvec)
+}
+}
 
 }
 \references{

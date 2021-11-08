@@ -69,6 +69,7 @@
 #' @examples
 #' \dontshow{.old_wd <- setwd(tempdir())}
 #' \donttest{
+#' if (interactive()) {
 #' ## simulating data
 #' set.seed(123456)
 #' b0 <- 0.2 # true value for the intercept
@@ -127,6 +128,7 @@
 #' ## generating regression tables with all betas and custom names
 #' mcmcReg(fit, coefnames = c('Variable 1', 'Variable 2',
 #'                            'Variable 3', 'deviance'))
+#' }
 #' }
 #' 
 #' \dontshow{setwd(.old_wd)}

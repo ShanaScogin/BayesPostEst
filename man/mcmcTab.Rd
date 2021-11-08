@@ -47,6 +47,7 @@ R function for summarizing MCMC output in a regression-style table.
 \examples{
 \dontshow{.old_wd <- setwd(tempdir())}
 \donttest{
+if (interactive()) {
 data("jags_logit")
 
 ## printing out table
@@ -56,6 +57,7 @@ object <- mcmcTab(jags_logit,
           Pr = FALSE,
           ROPE = NULL)
 object
+}
 }
 
 \dontshow{setwd(.old_wd)}

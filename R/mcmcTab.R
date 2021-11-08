@@ -25,6 +25,7 @@
 #' @examples
 #' \dontshow{.old_wd <- setwd(tempdir())}
 #' \donttest{
+#' if (interactive()) {
 #' data("jags_logit")
 #' 
 #' ## printing out table
@@ -34,6 +35,7 @@
 #'           Pr = FALSE,
 #'           ROPE = NULL)
 #' object
+#' }
 #' }
 #' 
 #' \dontshow{setwd(.old_wd)}

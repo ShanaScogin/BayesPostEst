@@ -16,6 +16,7 @@ code below for how it was created. Used in examples and for testing.
 }
 \examples{
 \donttest{
+if (interactive()) {
 data("sim_data")
   
 ## formatting the data for jags
@@ -50,6 +51,7 @@ jags_probit <- R2jags::jags(data = datjags, inits = inits,
                          parameters.to.save = params, n.chains = 2, 
                          n.iter = 2000, n.burnin = 1000, model.file = model)
 
+}
 }
 
 }

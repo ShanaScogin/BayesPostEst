@@ -60,6 +60,7 @@ Marginal effects plots for MCMC output using \code{ggplot2}
 \examples{
 \dontshow{.old_wd <- setwd(tempdir())}
 \donttest{
+if (interactive()) {
 ## simulating data
 set.seed(123456)
 b0 <- 0.2 # true value for the intercept
@@ -115,6 +116,7 @@ mcmcMargEff(mod = fit,
             int = 'b[4]',
             moderator = sim_data_interactive$X2,
             plot = TRUE)
+}
 }
 
 \dontshow{setwd(.old_wd)}

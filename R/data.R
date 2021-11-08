@@ -7,6 +7,7 @@
 #' 
 #' @examples 
 #' \donttest{
+#' if (interactive()) {
 #' data("sim_data")
 #'   
 #' ## formatting the data for jags
@@ -42,6 +43,7 @@
 #'                          n.iter = 2000, n.burnin = 1000, model.file = model)
 #'
 #' }
+#' }
 #' 
 #' @docType data
 "jags_logit"
@@ -55,6 +57,7 @@
 #' 
 #' @examples 
 #' \donttest{
+#' if (interactive()) {
 #' data("sim_data")
 #'   
 #' ## formatting the data for jags
@@ -90,6 +93,7 @@
 #'                          n.iter = 2000, n.burnin = 1000, model.file = model)
 #'
 #' }
+#' }
 #' 
 #' @docType data
 "jags_probit"
@@ -104,6 +108,7 @@
 #' 
 #' @examples 
 #' \donttest{
+#' if (interactive()) {
 #' data("sim_data_interactive")
 #' 
 #' ## formatting the data for jags
@@ -144,6 +149,7 @@
 #'                                  model.file = model)
 #'                                  
 #' }
+#' }
 #' @docType data
 "jags_interactive"
 
@@ -159,6 +165,7 @@
 #' 
 #' @examples 
 #' \donttest{
+#' if (interactive()) {
 #' data("sim_data_interactive_cat")
 #' 
 #' ## formatting the data for jags
@@ -198,6 +205,7 @@
 #'                                      n.iter = 2000, n.burnin = 1000,
 #'                                      model.file = model)
 #'                                  
+#' }
 #' }
 #' @docType data
 "jags_interactive_cat"

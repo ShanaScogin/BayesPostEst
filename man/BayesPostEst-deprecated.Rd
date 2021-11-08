@@ -41,8 +41,9 @@ For \code{mcmcFDplot}, use \code{\link{plot.mcmcFD}}.
 \examples{
 \dontshow{.old_wd <- setwd(tempdir())}
 \donttest{
+if (interactive()) {
 ## simulating data
-set.seed(123456)
+set.seed(1234)
 b0 <- 0.2 # true value for the intercept
 b1 <- 0.5 # true value for first beta
 b2 <- 0.7 # true value for second beta
@@ -98,6 +99,7 @@ full <- mcmcFD(modelmatrix = xmat,
 # suppress deprecated warning for R check
 suppressWarnings(mcmcFDplot(full))
 
+}
 }
 
 \dontshow{setwd(.old_wd)}

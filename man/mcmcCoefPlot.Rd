@@ -56,6 +56,7 @@ Coefficient plots for MCMC output using \code{ggplot2}
 \examples{
 \dontshow{.old_wd <- setwd(tempdir())}
 \donttest{
+if (interactive()) {
 ## simulating data
 set.seed(123456)
 b0 <- 0.2 # true value for the intercept
@@ -87,7 +88,6 @@ model <- function()  {
   for(j in 1:3){
     b[j] ~ dnorm(0, 0.001) ## Use a coefficient vector for simplicity
   }
-  
 }
 
 params <- c("b")
@@ -103,6 +103,7 @@ fit <- R2jags::jags(data = datjags, inits = inits,
 
 ## generating coefficient plot with all non-auxiliary parameters
 mcmcCoefPlot(fit)
+}
 }
 
 \dontshow{setwd(.old_wd)}

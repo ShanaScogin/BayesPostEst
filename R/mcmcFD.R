@@ -56,8 +56,9 @@
 #'@examples
 #' \dontshow{.old_wd <- setwd(tempdir())}
 #' \donttest{
+#' if (interactive()) {
 #' ## simulating data
-#' set.seed(123456)
+#' set.seed(1234)
 #' b0 <- 0.2 # true value for the intercept
 #' b1 <- 0.5 # true value for first beta
 #' b2 <- 0.7 # true value for second beta
@@ -108,6 +109,7 @@
 #' object <- mcmcFD(modelmatrix = xmat,
 #'                  mcmcout = mcmc_mat)
 #' object
+#' }
 #' }
 #' 
 #' \dontshow{setwd(.old_wd)}
@@ -223,8 +225,9 @@ print.mcmcFD <- function(x, ...) {
 #'@examples
 #' \dontshow{.old_wd <- setwd(tempdir())}
 #' \donttest{
+#' if (interactive()) {
 #' ## simulating data
-#' set.seed(123456)
+#' set.seed(1234)
 #' b0 <- 0.2 # true value for the intercept
 #' b1 <- 0.5 # true value for first beta
 #' b2 <- 0.7 # true value for second beta
@@ -279,6 +282,7 @@ print.mcmcFD <- function(x, ...) {
 #'                fullsims = TRUE)
 #' plot(full)
 #' 
+#' }
 #' }
 #' 
 #' \dontshow{setwd(.old_wd)}
@@ -398,8 +402,9 @@ plot.mcmcFD <- function(x,
 #'@examples
 #' \dontshow{.old_wd <- setwd(tempdir())}
 #' \donttest{
+#' if (interactive()) {
 #' ## simulating data
-#' set.seed(123456)
+#' set.seed(1234)
 #' b0 <- 0.2 # true value for the intercept
 #' b1 <- 0.5 # true value for first beta
 #' b2 <- 0.7 # true value for second beta
@@ -455,6 +460,7 @@ plot.mcmcFD <- function(x,
 #' # suppress deprecated warning for R check
 #' suppressWarnings(mcmcFDplot(full))
 #' 
+#' }
 #' }
 #' 
 #' \dontshow{setwd(.old_wd)}
