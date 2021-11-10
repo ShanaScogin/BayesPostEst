@@ -1,5 +1,6 @@
 # BayesPostEst 0.3.2
 * Updated dependencies per CRAN warnings (#82)
+ + Added 7 packages used for testing from suggests to imports 
 
 # BayesPostEst 0.3.1
 
