@@ -1,4 +1,4 @@
-### Shana comment Jan 2021:
+### Maintainer comment Jan 2021:
 ### I'm deleting the data object created by this code and adding the simulation code 
 ### conditionally to the test files since CRAN is wanting the tarball to be smaller
 ### for coming release. Perhaps we can compress files going forward to keep a central data source?

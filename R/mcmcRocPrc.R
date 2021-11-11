@@ -72,6 +72,8 @@
 #'     `fullsims = FALSE`, longer otherwise
 #'
 #' @examples
+#' \donttest{
+#' if (interactive()) {
 #' # load simulated data and fitted model (see ?sim_data and ?jags_logit)
 #' data("jags_logit")
 #' 
@@ -106,6 +108,8 @@
 #' # now we can call mcmcRocPrc; the default method works with the matrix
 #' # of predictions and vector of outcomes as input
 #' mcmcRocPrc(object = pred_mat, curves = TRUE, fullsims = FALSE, yvec = yvec)
+#' }
+#' }
 #' 
 #' @export
 #' @md

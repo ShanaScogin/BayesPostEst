@@ -101,3 +101,7 @@ test_that("mcmcCoefPlot errors work", {
 #   })
 # }
 # )
+
+# Maintainer note 11/2021 - I commented out that earlier code I believe because
+# of cran issues with size - Need to go in and figure out if can delete completely
+# or modify

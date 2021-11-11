@@ -1,3 +1,7 @@
+# BayesPostEst 0.3.2
+* Updated dependencies per CRAN warnings (#82)
+ + Added 7 packages used for testing from suggests to imports 
+
 # BayesPostEst 0.3.1
 
 * Removed package dependency on JAGS. Since rjags and R2jags were in the package Imports previously, and they in turn depend on a JAGS installed, the package would not install without JAGS. Now, all specific MCMC implementations are in the package Suggests and the package can be installed in an agnostic way without the need for JAGS, Stan, or any other specific MCMC library. 

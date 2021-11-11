@@ -65,6 +65,7 @@ after fitting a Bayesian logit or probit model.
 \examples{
 \dontshow{.old_wd <- setwd(tempdir())}
 \donttest{
+if (interactive()) {
 # simulating data
 
 set.seed(123456)
@@ -123,6 +124,7 @@ fit_sum <- mcmcRocPrcGen(modelmatrix = mm,
                       mcmcout = mcmc_mat,
                       curves = TRUE,
                       fullsims = FALSE)
+}
 }
 
 \dontshow{setwd(.old_wd)}

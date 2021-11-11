@@ -1,6 +1,7 @@
 # 
 #  Generate an example JAGS logit fitted model object
 #
+if (interactive()) {
 
 data("sim_data")
 
@@ -38,3 +39,5 @@ jags_logit <- R2jags::jags(data = datjags, inits = inits,
                     progress.bar = "none")
 
 usethis::use_data(jags_logit, overwrite = TRUE)
+
+}

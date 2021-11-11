@@ -17,6 +17,7 @@ in examples and for testing.
 }
 \examples{
 \donttest{
+if (interactive()) {
 data("sim_data_interactive")
 
 ## formatting the data for jags
@@ -56,6 +57,7 @@ jags_interactive <- R2jags::jags(data = datjags, inits = inits,
                                  n.iter = 2000, n.burnin = 1000,
                                  model.file = model)
                                  
+}
 }
 }
 \keyword{datasets}

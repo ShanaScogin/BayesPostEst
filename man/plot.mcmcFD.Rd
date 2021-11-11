@@ -31,8 +31,9 @@ of plot, see Figure 1 in Karreth (2018, International Interactions 44(3): 463-90
 \examples{
 \dontshow{.old_wd <- setwd(tempdir())}
 \donttest{
+if (interactive()) {
 ## simulating data
-set.seed(123456)
+set.seed(1234)
 b0 <- 0.2 # true value for the intercept
 b1 <- 0.5 # true value for first beta
 b2 <- 0.7 # true value for second beta
@@ -87,6 +88,7 @@ full <- mcmcFD(modelmatrix = xmat,
                fullsims = TRUE)
 plot(full)
 
+}
 }
 
 \dontshow{setwd(.old_wd)}
