@@ -143,6 +143,7 @@ code below for how it was created. Used in examples and for testing.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"sim_data"</span><span class='op'>)</span></span>
 <span class='r-in'>  </span>
 <span class='r-in'><span class='co'>## formatting the data for jags</span></span>
@@ -176,17 +177,8 @@ code below for how it was created. Used in examples and for testing.</p>
 <span class='r-in'><span class='va'>jags_logit</span> <span class='op'>&lt;-</span> <span class='fu'>R2jags</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/R2jags/man/jags.html'>jags</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>datjags</span>, inits <span class='op'>=</span> <span class='va'>inits</span>,</span>
 <span class='r-in'>                         parameters.to.save <span class='op'>=</span> <span class='va'>params</span>, n.chains <span class='op'>=</span> <span class='fl'>2</span>, </span>
 <span class='r-in'>                         n.iter <span class='op'>=</span> <span class='fl'>2000</span>, n.burnin <span class='op'>=</span> <span class='fl'>1000</span>, model.file <span class='op'>=</span> <span class='va'>model</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Compiling model graph</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    Resolving undeclared variables</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    Allocating nodes</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Graph information:</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    Observed stochastic nodes: 500</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    Unobserved stochastic nodes: 3</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    Total graph size: 3506</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Initializing model</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-in'></span>
+<span class='r-in'><span class='op'>}</span></span>
 <span class='r-in'><span class='co'># }</span></span>
 <span class='r-in'></span>
 </pre>

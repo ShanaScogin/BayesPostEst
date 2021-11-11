@@ -143,7 +143,7 @@
 <div id="jags" class="section level2">
 <h2 class="hasAnchor">
 <a href="#jags" class="anchor"></a>JAGS</h2>
-<p>First, we prepare the data for JAGS (<a href="http://mcmc-jags.sourceforge.io">Plummer 2017</a>). Users need to combine all variables into a list and specify any other elements, like in this case N, the number of observations.</p>
+<p>First, we prepare the data for JAGS (<a href="https://mcmc-jags.sourceforge.io/">Plummer 2017</a>). Users need to combine all variables into a list and specify any other elements, like in this case N, the number of observations.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"volunteer"</span>, <span class="st">"female"</span>, <span class="st">"neuroticism"</span>, <span class="st">"extraversion"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 <span class="va">dl</span><span class="op">$</span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
@@ -413,7 +413,7 @@ model {
 <h2 class="hasAnchor">
 <a href="#mcmcaveprob" class="anchor"></a><code>mcmcAveProb</code>
 </h2>
-<p>To evaluate the relationship between covariates and a binary outcome, this function calculates the predicted probability (<em>Pr(y = 1)</em>) at pre-defined values of one covariate of interest (<em>x</em>), while all other covariates are held at a “typical” value. This follows suggestions outlined in <a href="https://www-jstor-org.proxy.library.nd.edu/stable/2669316">King, Tomz, and Wittenberg (2000, American Journal of Political Science 44(2): 347-361)</a> and elsewhere, which are commonly adopted by users of GLMs. The <code>mcmcAveProb</code> function by default calculates the median value of all covariates other than <em>x</em> as “typical” values.</p>
+<p>To evaluate the relationship between covariates and a binary outcome, this function calculates the predicted probability (<em>Pr(y = 1)</em>) at pre-defined values of one covariate of interest (<em>x</em>), while all other covariates are held at a “typical” value. This follows suggestions outlined in <a href="https://doi.org/10.2307/2669316">King, Tomz, and Wittenberg (2000, American Journal of Political Science 44(2): 347-361)</a> and elsewhere, which are commonly adopted by users of GLMs. The <code>mcmcAveProb</code> function by default calculates the median value of all covariates other than <em>x</em> as “typical” values.</p>
 <p>Before moving on, we show how create a matrix of posterior draws of coefficients to pass onto these functions. Eventually, each function will contain code similar to the first section of <code>mcmcTab</code> to do this as part of the function.</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mcmcmat.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="fu">coda</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/coda/man/mcmc.html">as.mcmc</a></span><span class="op">(</span><span class="va">fit.jags</span><span class="op">)</span><span class="op">)</span>
@@ -547,7 +547,7 @@ model {
 <h2 class="hasAnchor">
 <a href="#mcmcfd" class="anchor"></a><code>mcmcFD</code>
 </h2>
-<p>To summarize typical effects across covariates, we generate “first differences” (Long 1997, Sage Publications; <a href="https://www-jstor-org.proxy.library.nd.edu/stable/2669316">King, Tomz, and Wittenberg 2000, American Journal of Political Science 44(2): 347-361</a>). This quantity represents, for each covariate, the difference in predicted probabilities for cases with low and high values of the respective covariate. For each of these differences, all other variables are held constant at their median.</p>
+<p>To summarize typical effects across covariates, we generate “first differences” (Long 1997, Sage Publications; <a href="https://doi.org/10.2307/2669316">King, Tomz, and Wittenberg 2000, American Journal of Political Science 44(2): 347-361</a>). This quantity represents, for each covariate, the difference in predicted probabilities for cases with low and high values of the respective covariate. For each of these differences, all other variables are held constant at their median.</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fdfull.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mcmcFD.html">mcmcFD</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,
                   mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,
@@ -699,7 +699,7 @@ model {
 <li>
 <a href="https://www.jstatsoft.org/v42/i09/" class="uri">https://www.jstatsoft.org/v42/i09/</a>.</li>
 </ol>
-<p>Plummer, Martyn. 2017. “JAGS Version 4.3.0 User Manual.” <a href="http://mcmc-jags.sourceforge.net" class="uri">http://mcmc-jags.sourceforge.net</a>.</p>
+<p>Plummer, Martyn. 2017. “JAGS Version 4.3.0 User Manual.” <a href="https://mcmc-jags.sourceforge.io/" class="uri">https://mcmc-jags.sourceforge.io/</a>.</p>
 <p>Stan Development Team. 2019. RStan: The R Interface to Stan. <a href="https://mc-stan.org/" class="uri">https://mc-stan.org/</a>.</p>
 </div>
 

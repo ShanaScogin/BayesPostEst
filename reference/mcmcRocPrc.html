@@ -334,7 +334,9 @@ This behavior can be suppressed by setting <code>force = TRUE</code>.</p>
 doi: <a href='https://doi.org/10.2139/ssrn.2765419'>10.2139/ssrn.2765419</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='r-in'><span class='co'># load simulated data and fitted model (see ?sim_data and ?jags_logit)</span></span>
+    <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='co'># load simulated data and fitted model (see ?sim_data and ?jags_logit)</span></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"jags_logit"</span><span class='op'>)</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># using mcmcRocPrc</span></span>
@@ -344,12 +346,7 @@ doi: <a href='https://doi.org/10.2139/ssrn.2765419'>10.2139/ssrn.2765419</a></p>
 <span class='r-in'>                      curves <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
 <span class='r-in'>                      fullsims <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>fit_sum</span>                     </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> mcmcRocPrc object</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> curves: TRUE; fullsims: FALSE</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> AUC-ROC: 0.627</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> AUC-PR:  0.621</span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>fit_sum</span><span class='op'>)</span></span>
-<span class='r-plt img'><img src='mcmcRocPrc-1.png' alt='' width='700' height='433' /></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># Equivalently, we can calculate the matrix of predicted probabilities </span></span>
 <span class='r-in'><span class='co'># ourselves; using the example from ?jags_logit:</span></span>
@@ -368,17 +365,13 @@ doi: <a href='https://doi.org/10.2139/ssrn.2765419'>10.2139/ssrn.2765419</a></p>
 <span class='r-in'><span class='co'># the matrix of predictions has rows matching the number of rows in the data;</span></span>
 <span class='r-in'><span class='co'># the column are the predictions for each of the 2,000 posterior samples</span></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>sim_data</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 500</span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>pred_mat</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> [1]  500 2000</span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># now we can call mcmcRocPrc; the default method works with the matrix</span></span>
 <span class='r-in'><span class='co'># of predictions and vector of outcomes as input</span></span>
 <span class='r-in'><span class='fu'>mcmcRocPrc</span><span class='op'>(</span>object <span class='op'>=</span> <span class='va'>pred_mat</span>, curves <span class='op'>=</span> <span class='cn'>TRUE</span>, fullsims <span class='op'>=</span> <span class='cn'>FALSE</span>, yvec <span class='op'>=</span> <span class='va'>yvec</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> mcmcRocPrc object</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> curves: TRUE; fullsims: FALSE</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> AUC-ROC: 0.627</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> AUC-PR:  0.621</span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'><span class='co'># }</span></span>
 <span class='r-in'></span>
 </pre>
   </div>

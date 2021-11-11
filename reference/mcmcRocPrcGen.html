@@ -213,6 +213,7 @@ https://ssrn.com/Abstract=2765419. http://dx.doi.org/10.2139/ssrn.2765419.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='r-in'><span class='va'>.old_wd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span class='r-in'><span class='co'># simulating data</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123456</span><span class='op'>)</span></span>
@@ -258,16 +259,6 @@ https://ssrn.com/Abstract=2765419. http://dx.doi.org/10.2139/ssrn.2765419.</p>
 <span class='r-in'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'>R2jags</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/R2jags/man/jags.html'>jags</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>datjags</span>, inits <span class='op'>=</span> <span class='va'>inits</span>, </span>
 <span class='r-in'>                    parameters.to.save <span class='op'>=</span> <span class='va'>params</span>, n.chains <span class='op'>=</span> <span class='fl'>2</span>, n.iter <span class='op'>=</span> <span class='fl'>2000</span>, </span>
 <span class='r-in'>                    n.burnin <span class='op'>=</span> <span class='fl'>1000</span>, model.file <span class='op'>=</span> <span class='va'>model</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Compiling model graph</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    Resolving undeclared variables</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    Allocating nodes</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Graph information:</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    Observed stochastic nodes: 500</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    Unobserved stochastic nodes: 3</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    Total graph size: 3506</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Initializing model</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'># processing the data</span></span>
 <span class='r-in'><span class='va'>mm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/model.matrix.html'>model.matrix</a></span><span class='op'>(</span><span class='va'>Y</span> <span class='op'>~</span> <span class='va'>X1</span> <span class='op'>+</span> <span class='va'>X2</span>, data <span class='op'>=</span> <span class='va'>df</span><span class='op'>)</span></span>
@@ -281,6 +272,7 @@ https://ssrn.com/Abstract=2765419. http://dx.doi.org/10.2139/ssrn.2765419.</p>
 <span class='r-in'>                      mcmcout <span class='op'>=</span> <span class='va'>mcmc_mat</span>,</span>
 <span class='r-in'>                      curves <span class='op'>=</span> <span class='cn'>TRUE</span>,</span>
 <span class='r-in'>                      fullsims <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
 <span class='r-in'><span class='co'># }</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='va'>.old_wd</span><span class='op'>)</span></span>

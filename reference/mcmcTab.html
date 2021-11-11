@@ -197,6 +197,7 @@ Psychology 143(2): 573-603) for more on the ROPE.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='r-in'><span class='va'>.old_wd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"jags_logit"</span><span class='op'>)</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'>## printing out table</span></span>
@@ -206,11 +207,7 @@ Psychology 143(2): 573-603) for more on the ROPE.</p></td>
 <span class='r-in'>          Pr <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
 <span class='r-in'>          ROPE <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>object</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>   Variable  Median    SD   Lower   Upper</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     b[1]   0.108 0.090  -0.066   0.285</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 2     b[2]   0.527 0.166   0.197   0.837</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 3     b[3]   0.636 0.161   0.328   0.948</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 deviance 669.628 2.496 667.488 676.678</span>
+<span class='r-in'><span class='op'>}</span></span>
 <span class='r-in'><span class='co'># }</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='va'>.old_wd</span><span class='op'>)</span></span>

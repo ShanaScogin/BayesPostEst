@@ -238,8 +238,9 @@ of Political Science 44 (2): 347–61. http://www.jstor.org/stable/2669316</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='r-in'><span class='va'>.old_wd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
 <span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span class='r-in'>  <span class='co'>## simulating data</span></span>
-<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123456</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span></span>
 <span class='r-in'>  <span class='va'>b0</span> <span class='op'>&lt;-</span> <span class='fl'>0.2</span> <span class='co'># true value for the intercept</span></span>
 <span class='r-in'>  <span class='va'>b1</span> <span class='op'>&lt;-</span> <span class='fl'>0.5</span> <span class='co'># true value for first beta</span></span>
 <span class='r-in'>  <span class='va'>b2</span> <span class='op'>&lt;-</span> <span class='fl'>0.7</span> <span class='co'># true value for second beta</span></span>
@@ -279,29 +280,10 @@ of Political Science 44 (2): 347–61. http://www.jstor.org/stable/2669316</p>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'>## fitting the model with R2jags</span></span>
 <span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>R2jags</span><span class='op'>)</span></span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: rjags</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loading required package: coda</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> Linked to JAGS 4.3.0</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> Loaded modules: basemod,bugs,dic,glm</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> Attaching package: ‘R2jags’</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following object is masked from ‘package:coda’:</span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-msg co'><span class='r-pr'>#&gt;</span>     traceplot</span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/R2jags/man/jags.html'>jags</a></span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>datjags</span>, inits <span class='op'>=</span> <span class='va'>inits</span>, </span>
 <span class='r-in'>         parameters.to.save <span class='op'>=</span> <span class='va'>params</span>, n.chains <span class='op'>=</span> <span class='fl'>2</span>, n.iter <span class='op'>=</span> <span class='fl'>2000</span>, </span>
 <span class='r-in'>         n.burnin <span class='op'>=</span> <span class='fl'>1000</span>, model.file <span class='op'>=</span> <span class='va'>model</span><span class='op'>)</span></span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Compiling model graph</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    Resolving undeclared variables</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    Allocating nodes</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Graph information:</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    Observed stochastic nodes: 500</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    Unobserved stochastic nodes: 3</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span>    Total graph size: 3506</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> Initializing model</span>
-<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
 <span class='r-in'></span>
 <span class='r-in'><span class='co'>### average value approach</span></span>
 <span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>coda</span><span class='op'>)</span></span>
@@ -315,6 +297,7 @@ of Political Science 44 (2): 347–61. http://www.jstor.org/stable/2669316</p>
 <span class='r-in'>                        mcmcout <span class='op'>=</span> <span class='va'>mcmc_mat</span>,</span>
 <span class='r-in'>                        xrange <span class='op'>=</span> <span class='va'>X1_sim</span>, </span>
 <span class='r-in'>                        xcol <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
 <span class='r-in'><span class='co'># }</span></span>
 <span class='r-in'></span>
 <span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='va'>.old_wd</span><span class='op'>)</span></span>
