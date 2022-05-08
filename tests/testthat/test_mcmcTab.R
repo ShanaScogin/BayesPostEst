@@ -1,6 +1,13 @@
-data("jags_logit")
+## SRS comment 5/2022: Adding skips so that CRAN 
+## volunteers can run checks on 
+## their locals and it not trigger a warning if they don't
+## have packages.
 
 test_that("Simple model runs with mcmcTab", {
+  
+  testthat::skip_if_not_installed("rjags")
+  
+  data("jags_logit")
   
   object <- mcmcTab(jags_logit, 
                     ci = c(0.025, 0.975), 
@@ -15,6 +22,10 @@ test_that("Simple model runs with mcmcTab", {
 
 test_that("mcmcTab works with different input types", {
   
+  testthat::skip_if_not_installed("rjags")
+  
+  data("jags_logit")
+  
   # rjags
   expect_equal(mcmcTab(jags_logit)[1,3], 0.09)
   
@@ -28,6 +39,8 @@ test_that("mcmcTab works with different input types", {
 })
 
 test_that("pars subsetting works", {
+  
+  testthat::skip_if_not_installed("rjags")
   
   data("jags_logit")
   
@@ -68,6 +81,10 @@ test_that("pars subsetting works", {
 })
 
 test_that("ROPE argument works", {
+  
+  testthat::skip_if_not_installed("rjags")
+  
+  data("jags_logit")
   
   # valid input
   expect_message(
@@ -124,3 +141,5 @@ if (!all(sapply(pkgs_win, require, quietly = TRUE, character.only = TRUE))) {
 #                  tolerance = 0.1) ## this is a big tolerance: sim'ing mcmcpack is not great for this
 #   })
 # } #### I'm just commenting this out since it still apparently can fail
+
+}
