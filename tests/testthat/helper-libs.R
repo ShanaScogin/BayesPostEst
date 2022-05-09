@@ -3,7 +3,7 @@
 # objects using coda::as.mcmc(). This requires R2jags:::as.mcmc.rjags() to 
 # work properly, so load the package before running any test files. 
 
-library(R2jags)  
+#library(R2jags)  
 
 # Maintainer note 11/2021: Need to check that the above is still true in mcmcAveProb().
 # At first glance, coda does not seem to depend on R2jags, and check with 

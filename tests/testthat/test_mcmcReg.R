@@ -1,3 +1,9 @@
+## SRS comment 5/2022: Adding skips so that CRAN 
+## volunteers can run checks on their locals and 
+## not trigger warning if they don't have packages.
+
+## This file uses data from BayesPostEst/data
+
 test_that("Simple model runs with mcmcReg", {
   
   testthat::skip_if_not_installed("rjags")

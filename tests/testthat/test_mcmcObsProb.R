@@ -1,9 +1,17 @@
+## SRS comment 5/2022: Adding skips so that CRAN 
+## volunteers can run checks on their locals and 
+## not trigger warning if they don't have packages.
+
+## This file uses data from BayesPostEst/data
+
 test_that("Simple model runs with mcmcObsProb", {
   
-  data("jags_logit")
+  testthat::skip_if_not_installed(c("rjags", "coda"))
+  
+  data("jags_logit") # uses rjags
   fit <- jags_logit
   
-  data("sim_data")
+  data("sim_data") # uses coda
   datjags <- as.list(sim_data)
   
   ### observed value approach
