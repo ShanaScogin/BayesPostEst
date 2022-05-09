@@ -1,7 +1,6 @@
 ## SRS comment 5/2022: Adding skips so that CRAN 
-## volunteers can run checks on 
-## their locals and it not trigger a warning if they don't
-## have packages.
+## volunteers can run checks on their locals and 
+## not trigger warning if they don't have packages.
 
 test_that("Simple model runs with mcmcTab", {
   

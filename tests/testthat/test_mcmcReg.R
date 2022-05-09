@@ -1,6 +1,9 @@
-data("jags_logit")
-
 test_that("Simple model runs with mcmcReg", {
+  
+  testthat::skip_if_not_installed("rjags")
+  
+  data("jags_logit")
+  
   ## running some expect silent code
   expect_silent(mcmcReg(jags_logit))
   expect_silent(mcmcReg(jags_logit, pars = c("b[1]", "b[3]")))
@@ -27,6 +30,11 @@ test_that("Simple model runs with mcmcReg", {
 })
 
 test_that("mcmcReg works with hpdi", {
+  
+  testthat::skip_if_not_installed("rjags")
+  
+  data("jags_logit")
+  
   ## running some general value matches
   expect_match(mcmcReg(jags_logit, pointest = "median", hpdi = T),
                "667.30; 675.03")
@@ -35,6 +43,11 @@ test_that("mcmcReg works with hpdi", {
 })
 
 test_that("mcmcReg works with custom coef names", {
+  
+  testthat::skip_if_not_installed("rjags")
+  
+  data("jags_logit")
+  
   expect_match(mcmcReg(jags_logit, coefnames = c("beta 1","beta 2", "beta 3",
                                                  "deviance")), "beta 1")
   expect_error(mcmcReg(list(jags_logit, jags_logit),
@@ -44,22 +57,77 @@ test_that("mcmcReg works with custom coef names", {
 })
 
 test_that("mcmcReg works with standard deviation", {
+  
+  testthat::skip_if_not_installed("rjags")
+  
+  data("jags_logit")
+  
   expect_match(mcmcReg(jags_logit, sd = T), "\\$\\(0.16\\)\\$")
   expect_match(mcmcReg(jags_logit, sd = T, format = "html"), ">\\(0.16\\)<")
 })
 
 test_that("mcmcReg works with pr direction", {
+  
+  testthat::skip_if_not_installed("rjags")
+  
+  data("jags_logit")
+  
   expect_match(mcmcReg(jags_logit, pr = T), "\\$0.89\\$")
   expect_match(mcmcReg(jags_logit, pr = T, format = "html"), ">0.89<")
 })
 
 test_that("mcmcReg works with filenames", {
+  
+  testthat::skip_if_not_installed("rjags")
+  
+  data("jags_logit")
+  
   expect_silent(mcmcReg(jags_logit, sd = T, file = "tab.tex"))
   expect_silent(mcmcReg(jags_logit, sd = T, format = "html", file = "tab.html"))
 })
 
-pkgs <- c("runjags", "MCMCpack")
-if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
+test_that("mcmcReg works with runjags", {
+    
+  testthat::skip_if_not_installed(c("runjags", "MCMCpack"))
+
+  ## Generate an example runjags interactive fitted model
+  ## formatting the data for jags
+  datalist <- list(X = model.matrix(~ X1 * X2, sim_data_interactive),
+                     Y = sim_data_interactive[, 3],
+                     N = nrow(sim_data_interactive))
+    
+  ## creating jags model
+  model <- "model { 
+    for(i in 1 : N){ 
+    Y[i] ~ dnorm(beta %*% X[i, ], tau);
+    } 
+    for(i in 1:4) {
+    beta[i] ~ dnorm(0, 0.001)
+    }
+    tau ~ dexp(1)
+    }"
+    
+  ## fitting the model with runjags
+  set.seed(543)
+  suppressWarnings(runjags_interactive <- runjags::run.jags(model = model, 
+                                           monitor = c("beta", "tau"),
+                                           data = datalist, 
+                                           n.chains = 2, 
+                                           method = "rjags"))
+    
+  ## test the output    
+  expect_silent(mcmcReg(runjags_interactive, format = "html", file = "table"))
+})
+  
+
+  
+
+test_that("mcmcReg fails with multiple object types", {
+  
+  testthat::skip_if_not_installed(c("runjags", "MCMCpack", "rjags"))
+  
+  # attaching data for rjags
+  data("jags_logit")
   
   ## Generate an example runjags interactive fitted model
   ## formatting the data for jags
@@ -69,23 +137,22 @@ if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
   
   ## creating jags model
   model <- "model { 
-  for(i in 1 : N){ 
-  Y[i] ~ dnorm(beta %*% X[i, ], tau);
-  } 
-  for(i in 1:4) {
-  beta[i] ~ dnorm(0, 0.001)
-  }
-  tau ~ dexp(1)
-  }"
-
-  ## fitting the model with runjags
-  runjags_interactive <- runjags::run.jags(model = model, monitor = c("beta", "tau"),
-                                           data = datalist, n.chains = 2, method = "rjags")
+    for(i in 1 : N){ 
+    Y[i] ~ dnorm(beta %*% X[i, ], tau);
+    } 
+    for(i in 1:4) {
+    beta[i] ~ dnorm(0, 0.001)
+    }
+    tau ~ dexp(1)
+    }"
   
-  ## Do the pass test
-  test_that("mcmcReg works with runjags", {
-    expect_match(mcmcReg(runjags_interactive), "-0.55; -0.24")
-  })
+  ## fitting the model with runjags
+  set.seed(543)
+  suppressWarnings(runjags_interactive <- runjags::run.jags(model = model, 
+                                           monitor = c("beta", "tau"),
+                                           data = datalist, 
+                                           n.chains = 2, 
+                                           method = "rjags"))
   
   ## fitting the model with MCMCpack
   mcmcpack_linear <- MCMCpack::MCMCregress(Y ~ X, b0 = 0, B0 = 0.001,
@@ -95,18 +162,31 @@ if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
                                            seed = 1)
   
   ## Do fail test with multiple object types
-  test_that("mcmcReg fails with multiple object types", {
-    
-    expect_error(mcmcReg(list(jags_logit, runjags_interactive)))
-    expect_error(mcmcReg(list(runjags_interactive, mcmcpack_linear)))
-    expect_error(mcmcReg(list(jags_logit, mcmcpack_linear)))
-    
-    
-  })
-}
+  expect_error(mcmcReg(list(jags_logit, runjags_interactive)))
+  expect_error(mcmcReg(list(runjags_interactive, mcmcpack_linear)))
+  expect_error(mcmcReg(list(jags_logit, mcmcpack_linear)))
+  
+})
 
-#### Commenting this out Jan 2021 since even with seed set too much randomness here
-#### Will work on it later
+test_that("mcmcReg works with bugs", {
+  
+    testthat::skip_if_not_installed(c("rjags", "R2WinBUGS"))
+    
+    ## Generate an example BUGS fitted model object
+    data(LINE, package = "rjags")
+    LINE$recompile()
+    
+    ## fitting the model with jags
+    bugs_model <- rjags::coda.samples(LINE, c("alpha", "beta", "sigma"),
+                                      n.iter = 1000)
+    bugs_model <- R2WinBUGS::as.bugs.array(sims.array = as.array(bugs_model))
+    
+      ## testing
+    expect_match(mcmcReg(bugs_model), "0.33; 3.64")
+})
+
+#### SRS commment Jan 2021: even with seed set too much randomness here
+#### need to revisit
 
 # if (require("MCMCpack", quietly = TRUE)) {
 #   ## fitting the model with MCMCpack
@@ -121,23 +201,7 @@ if (!all(sapply(pkgs, require, quietly = TRUE, character.only = TRUE))) {
 #   })
 # }
 
-pkgs_win <- c("rjags", "R2WinBUGS")
-if (!all(sapply(pkgs_win, require, quietly = TRUE, character.only = TRUE))) {
-  ## Generate an example BUGS fitted model object
-  data(LINE, package = "rjags")
-  LINE$recompile()
-  
-  ## fitting the model with jags
-  bugs_model <- rjags::coda.samples(LINE, c("alpha", "beta", "sigma"),
-                                    n.iter = 1000)
-  bugs_model <- R2WinBUGS::as.bugs.array(sims.array = as.array(bugs_model))
-  
-  ## testing
-  test_that("mcmcReg works with bugs", {
-    expect_match(mcmcReg(bugs_model), "0.33; 3.64")
-  })
-}
-
 # clean up output artifacts
 unlink("tab.html")
+unlink("table.html")
 unlink("tab.tex")
