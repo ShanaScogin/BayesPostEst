@@ -1,4 +1,5 @@
-## This file uses data from BayesPostEst/data
+## This file uses data from BayesPostEst/data and 
+## testdata/
 
 # Test mcmcRocPrc constructor and default method --------------------------
 
