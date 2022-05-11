@@ -70,7 +70,7 @@ test_that("mcmcReg works with standard deviation", {
   
   testthat::skip_if_not_installed("rjags")
   
-  data("jags_logit")
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
   
   expect_match(mcmcReg(jags_logit, sd = T), "\\$\\(0.16\\)\\$")
   expect_match(mcmcReg(jags_logit, sd = T, format = "html"), ">\\(0.16\\)<")

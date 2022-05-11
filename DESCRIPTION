@@ -52,7 +52,8 @@ Imports:
     ROCR,
     graphics,
     grDevices,
-    R2jags
+    R2jags,
+    rjags
 Depends:
     R (>= 3.5.0)
 Encoding: UTF-8
@@ -67,7 +68,6 @@ Suggests:
     covr,
     runjags,
     rstanarm,
-    rjags,
     MCMCpack,
     R2WinBUGS,
     brms
