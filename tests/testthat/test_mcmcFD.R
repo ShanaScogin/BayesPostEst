@@ -10,10 +10,10 @@ test_that("Simple model runs with mcmcFD", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  jags_logit <- readRDS("../testdata/jags_logit.rds")
   fit <- jags_logit
   
-  sim_data <- readRDS("~/BayesPostEst/tests/testdata/sim_data.rds")
+  sim_data <- readRDS("../testdata/sim_data.rds")
 
   ## running function with logit
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
@@ -32,10 +32,10 @@ test_that("Simple probit model runs with mcmcFD", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_probit <- readRDS("~/BayesPostEst/tests/testdata/jags_probit.rds")
+  jags_probit <- readRDS("../testdata/jags_probit.rds")
   fit <- jags_probit
   
-  sim_data <- readRDS("~/BayesPostEst/tests/testdata/sim_data.rds")
+  sim_data <- readRDS("../testdata/sim_data.rds")
   
   ## running function with probit
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
@@ -62,10 +62,10 @@ test_that("ROPE version works", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_probit <- readRDS("~/BayesPostEst/tests/testdata/jags_probit.rds")
+  jags_probit <- readRDS("../testdata/jags_probit.rds")
   fit <- jags_probit
   
-  sim_data <- readRDS("~/BayesPostEst/tests/testdata/sim_data.rds")
+  sim_data <- readRDS("../testdata/sim_data.rds")
   
   ## running function with probit
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
@@ -91,10 +91,10 @@ test_that("Errors work", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_probit <- readRDS("~/BayesPostEst/tests/testdata/jags_probit.rds")
+  jags_probit <- readRDS("../testdata/jags_probit.rds")
   fit <- jags_probit
   
-  sim_data <- readRDS("~/BayesPostEst/tests/testdata/sim_data.rds")
+  sim_data <- readRDS("../testdata/sim_data.rds")
   
   ## running function with probit
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
@@ -112,10 +112,10 @@ test_that("Print method works", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_probit <- readRDS("~/BayesPostEst/tests/testdata/jags_probit.rds")
+  jags_probit <- readRDS("../testdata/jags_probit.rds")
   fit <- jags_probit
   
-  sim_data <- readRDS("~/BayesPostEst/tests/testdata/sim_data.rds")
+  sim_data <- readRDS("../testdata/sim_data.rds")
   
   ## running function with probit
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
@@ -133,10 +133,10 @@ test_that("Deprecated plotting function works", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_probit <- readRDS("~/BayesPostEst/tests/testdata/jags_probit.rds")
+  jags_probit <- readRDS("../testdata/jags_probit.rds")
   fit <- jags_probit
   
-  sim_data <- readRDS("~/BayesPostEst/tests/testdata/sim_data.rds")
+  sim_data <- readRDS("../testdata/sim_data.rds")
   
   ## running function with probit
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)

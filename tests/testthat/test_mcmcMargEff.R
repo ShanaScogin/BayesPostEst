@@ -6,10 +6,10 @@
 
 test_that("Simple model runs with mcmcMargEff", {
   
-  jags_interactive <- readRDS("~/BayesPostEst/tests/testdata/jags_interactive.rds")
+  jags_interactive <- readRDS("../testdata/jags_interactive.rds")
   fit <- jags_interactive
   
-  sim_data_interactive <- readRDS("~/BayesPostEst/tests/testdata/sim_data_interactive.rds")
+  sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
   
   ## using mcmcMargEff
   fit_me <- mcmcMargEff(mod = fit,
@@ -27,10 +27,10 @@ test_that("Simple model runs with mcmcMargEff", {
 
 test_that("Simple model runs with mcmcMargEff with arguments", {
   
-  jags_interactive <- readRDS("~/BayesPostEst/tests/testdata/jags_interactive.rds")
+  jags_interactive <- readRDS("../testdata/jags_interactive.rds")
   fit <- jags_interactive
   
-  sim_data_interactive <- readRDS("~/BayesPostEst/tests/testdata/sim_data_interactive.rds")
+  sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
   
   ## processing the data
   mcmc <- coda::as.mcmc(fit)
@@ -55,10 +55,10 @@ test_that("Simple model runs with mcmcMargEff with arguments", {
 
 test_that("Simple model runs with mcmcMargEff with plotting arguments", {
   
-  jags_interactive <- readRDS("~/BayesPostEst/tests/testdata/jags_interactive.rds")
+  jags_interactive <- readRDS("../testdata/jags_interactive.rds")
   fit <- jags_interactive
   
-  sim_data_interactive <- readRDS("~/BayesPostEst/tests/testdata/sim_data_interactive.rds")
+  sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
   
   ## using mcmcMargEff
   plot_me <- mcmcMargEff(mod = fit,
@@ -77,10 +77,10 @@ test_that("Simple model runs with mcmcMargEff with plotting arguments", {
 
 test_that("Simple model runs with mcmcMargEff with categorical moderator", {
   
-  jags_interactive_cat <- readRDS("~/BayesPostEst/tests/testdata/jags_interactive_cat.rds")
+  jags_interactive_cat <- readRDS("../testdata/jags_interactive_cat.rds")
   fit <- jags_interactive_cat
   
-  sim_data_interactive_cat <- readRDS("~/BayesPostEst/tests/testdata/sim_data_interactive_cat.rds")
+  sim_data_interactive_cat <- readRDS("../testdata/sim_data_interactive_cat.rds")
   
   ## using mcmcMargEff
   fit_me <- mcmcMargEff(mod = fit,

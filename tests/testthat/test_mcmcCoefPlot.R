@@ -13,7 +13,7 @@ test_that("Simple model runs with mcmcCoefPlot", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  jags_logit <- readRDS("../testdata/jags_logit.rds")
   
   expect_silent(mcmcCoefPlot(jags_logit))
   
@@ -23,7 +23,7 @@ test_that("mcmcCoefPlot works with jags_logit", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  jags_logit <- readRDS("../testdata/jags_logit.rds")
   
   expect_silent(mcmcCoefPlot(coda::as.mcmc(jags_logit)[[1]]))
 })
@@ -48,7 +48,7 @@ test_that("Simple model runs with mcmcCoefPlot with arguments", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  jags_logit <- readRDS("../testdata/jags_logit.rds")
   
   ## running some expect silent tests for jags_logit
   expect_silent(mcmcCoefPlot(jags_logit))
@@ -69,7 +69,7 @@ test_that("Simple model runs with mcmcCoefPlot with sorting", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  jags_logit <- readRDS("../testdata/jags_logit.rds")
   
   med_df <- mcmcCoefPlot(jags_logit, pars = 'b', sort = T, plot = F, regex = T)
   value <- med_df[3, 1]
@@ -82,7 +82,7 @@ test_that("mcmcCoefPlot errors work", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  jags_logit <- readRDS("../testdata/jags_logit.rds")
   
   expect_error(mcmcCoefPlot(jags_logit, pointest = 'man'))
   expect_error(mcmcCoefPlot(jags_logit, hpdi = 2))
@@ -94,7 +94,7 @@ test_that("mcmcCoefPlot works with runjags", {
   
   testthat::skip_if_not_installed("runjags")
   
-  sim_data_interactive <- readRDS("~/BayesPostEst/tests/testdata/sim_data_interactive.rds")
+  sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
   
   datalist <- list(X = model.matrix(~ X1 * X2, sim_data_interactive),
                    Y = sim_data_interactive[, 3],

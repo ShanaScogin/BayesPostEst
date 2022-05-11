@@ -10,7 +10,7 @@ test_that("Simple model runs with mcmcTab", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  jags_logit <- readRDS("../testdata/jags_logit.rds")
   
   object <- mcmcTab(jags_logit, 
                     ci = c(0.025, 0.975), 
@@ -28,7 +28,7 @@ test_that("mcmcTab works with different input types", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")  
+  jags_logit <- readRDS("../testdata/jags_logit.rds")  
   
   # rjags
   expect_equal(mcmcTab(jags_logit)[1,3], 0.09)
@@ -45,7 +45,7 @@ test_that("pars subsetting works", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  jags_logit <- readRDS("../testdata/jags_logit.rds")
   
   object <- mcmcTab(jags_logit, 
                     ci = c(0.025, 0.975), 
@@ -87,7 +87,7 @@ test_that("ROPE argument works", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  jags_logit <- readRDS("../testdata/jags_logit.rds")
   
   # valid input
   expect_message(
