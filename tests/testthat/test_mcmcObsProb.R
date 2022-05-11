@@ -50,7 +50,10 @@ test_that("Simple model runs with mcmcObsProb", {
 
 test_that("Simple model runs with mcmcObsProb probit", {
   
-  data("jags_probit")
+  testthat::skip_if_not_installed("rjags")
+  
+  
+  jags_probit <- readRDS("~/BayesPostEst/tests/testdata/jags_probit.rds")
   
   sim_data <- readRDS("~/BayesPostEst/tests/testdata/sim_data.rds")
   datjags <- as.list(sim_data)

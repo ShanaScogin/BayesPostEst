@@ -1,9 +1,8 @@
-## packages used:
-## jrags
-
 ## data files used:
 ## jags_interactive.rds
 ## sim_data_interactive.rds
+## jags_interactive_cat.rds
+## sim_data_interactive_cat.rds
 
 test_that("Simple model runs with mcmcMargEff", {
   
@@ -78,10 +77,10 @@ test_that("Simple model runs with mcmcMargEff with plotting arguments", {
 
 test_that("Simple model runs with mcmcMargEff with categorical moderator", {
   
-  jags_interactive <- readRDS("~/BayesPostEst/tests/testdata/jags_interactive.rds")
+  jags_interactive_cat <- readRDS("~/BayesPostEst/tests/testdata/jags_interactive_cat.rds")
   fit <- jags_interactive_cat
   
-  sim_data_interactive <- readRDS("~/BayesPostEst/tests/testdata/sim_data_interactive.rds")
+  sim_data_interactive_cat <- readRDS("~/BayesPostEst/tests/testdata/sim_data_interactive_cat.rds")
   
   ## using mcmcMargEff
   fit_me <- mcmcMargEff(mod = fit,

@@ -1,20 +1,36 @@
-## This file uses data from BayesPostEst/data and 
-## testdata/
+## packages used
+## rjags
+## R2jags
+## runjags
+## MCMCpack
+## rstan
+## rstanarm
+## brms
+
+## data files used:
+## jags_logit.rds
+## jags_probit.rds
+## runjags-logit.rds
+## LINE from package = "rjags"
 
 # Test mcmcRocPrc constructor and default method --------------------------
 
-# pull out a predicted probability matrix and yvec, for simple testing
-data("jags_logit")
-object   <- jags_logit
-mdl_data <- object$model$data()
-xdata <- as.matrix(cbind(X0 = 1L, as.data.frame(mdl_data[c("X1", "X2")])))
-yvec  <- mdl_data[["Y"]]
-pardraws <- as.matrix(coda::as.mcmc(object))
-betadraws <- pardraws[, c(sprintf("b[%s]", 1:ncol(xdata - 1)))]
-pred_prob <- plogis(xdata %*% t(betadraws))  
-
 test_that("constructor and default method work", {
   
+  testthat::skip_if_not_installed("rjags")
+  
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  
+  # pull out a predicted probability matrix and yvec, for simple testing
+  object   <- jags_logit
+  mdl_data <- object$model$data()
+  xdata <- as.matrix(cbind(X0 = 1L, as.data.frame(mdl_data[c("X1", "X2")])))
+  yvec  <- mdl_data[["Y"]]
+  pardraws <- as.matrix(coda::as.mcmc(object))
+  betadraws <- pardraws[, c(sprintf("b[%s]", 1:ncol(xdata - 1)))]
+  pred_prob <- plogis(xdata %*% t(betadraws))  
+  
+  # testing
   expect_error(new_mcmcRocPrc(pred_prob, yvec, curves = FALSE, fullsims = FALSE),
                NA)
   # since pred_prob is a matrix, it should dispatch to the .default method,
@@ -25,6 +41,20 @@ test_that("constructor and default method work", {
 
 test_that("constructor rejects invalid input", {
   
+  testthat::skip_if_not_installed("rjags")
+  
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  
+  # pull out a predicted probability matrix and yvec, for simple testing
+  object   <- jags_logit
+  mdl_data <- object$model$data()
+  xdata <- as.matrix(cbind(X0 = 1L, as.data.frame(mdl_data[c("X1", "X2")])))
+  yvec  <- mdl_data[["Y"]]
+  pardraws <- as.matrix(coda::as.mcmc(object))
+  betadraws <- pardraws[, c(sprintf("b[%s]", 1:ncol(xdata - 1)))]
+  pred_prob <- plogis(xdata %*% t(betadraws))  
+  
+  # testing
   # matrix rows and yvec length differ
   expect_error(
     new_mcmcRocPrc(pred_prob[-1, ], yvec, FALSE, FALSE),
@@ -48,6 +78,20 @@ test_that("constructor rejects invalid input", {
 
 test_that(".default method rejects invalid input", {
   
+  testthat::skip_if_not_installed("rjags")
+  
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  
+  # pull out a predicted probability matrix and yvec, for simple testing
+  object   <- jags_logit
+  mdl_data <- object$model$data()
+  xdata <- as.matrix(cbind(X0 = 1L, as.data.frame(mdl_data[c("X1", "X2")])))
+  yvec  <- mdl_data[["Y"]]
+  pardraws <- as.matrix(coda::as.mcmc(object))
+  betadraws <- pardraws[, c(sprintf("b[%s]", 1:ncol(xdata - 1)))]
+  pred_prob <- plogis(xdata %*% t(betadraws))  
+  
+  # testing
   # object is not a matrix
   expect_error(
     mcmcRocPrc(pred_prob[, 1], FALSE, FALSE, yvec),
@@ -58,7 +102,9 @@ test_that(".default method rejects invalid input", {
 
 test_that("Simple model runs with mcmcRocPrc Full", {
   
-  data("jags_logit")
+  testthat::skip_if_not_installed("rjags")
+  
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
   
   ## using mcmcRocPrc with full draws
   full_with_curves <- mcmcRocPrc(jags_logit,
@@ -86,8 +132,11 @@ test_that("class 'jags' input works", {
   # from packages R2jags and runjags include "jags" classes that are model 
   # definitions without posterior samples (see rjags::jags.model()). Both 
   # include underlying "jags" classes in them
-  data("jags_logit")
-  jags_object       <- jags_logit$model
+  testthat::skip_if_not_installed("rjags")
+  
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  
+  jags_object <- jags_logit$model
   posterior_samples <- as.mcmc(jags_logit)
   
   expect_error(
@@ -97,12 +146,13 @@ test_that("class 'jags' input works", {
     NA
   )
   
-  
 })
 
 test_that("JAGS logit input works", {
   
-  data("jags_logit")
+  testthat::skip_if_not_installed("rjags")
+  
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
   
   ## using mcmcRocPrc
   expect_error(
@@ -131,7 +181,9 @@ test_that("JAGS logit input works", {
 
 test_that("JAGS probit input works", {
   
-  data("jags_probit")
+  testthat::skip_if_not_installed("rjags")
+  
+  jags_probit <- readRDS("~/BayesPostEst/tests/testdata/jags_probit.rds")
   
   expect_error(
     with_curves <- mcmcRocPrc(jags_probit,
@@ -145,7 +197,11 @@ test_that("JAGS probit input works", {
 })
 
 test_that("Non-logit/probit JAGS does not work", {
-  data(jags_logit)
+  
+  testthat::skip_if_not_installed("rjags")
+  
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  
   fake_jags <- structure(
     list(
       model = structure(
@@ -166,7 +222,11 @@ test_that("Non-logit/probit JAGS does not work", {
 
 
 test_that("runjags input works", {
-  runjags_logit <- readRDS("../testdata/runjags-logit.rds")
+  
+  testthat::skip_if_not_installed("runjags")
+  
+  runjags_logit <- readRDS("~/BayesPostEst/tests/testdata/runjags-logit.rds")
+  
   expect_error(
     out <- mcmcRocPrc(runjags_logit, FALSE, FALSE, yname = "Y", 
                       xnames = c("X1", "X2")),
@@ -182,8 +242,6 @@ test_that("runjags input works", {
 #
 #   The next couple of tests build up to checking if rstan input works
 #
-
-rstan_logit <- readRDS("../testdata/rstan-logit.rds")
 
 # based on the ?stan_model example and code at 
 # https://github.com/stan-dev/rstan/blob/develop/rstan/rstan/R/AllClass.R
@@ -206,12 +264,21 @@ test_that("binary/non-binary stanfit models are correctly IDd", {
   # to create dummy examples for testing, like I do with the S3 classes 
   # elsewhere here. See the commented out code above. 
   
+  testthat::skip_if_not_installed("rstan")
+  
+  rstan_logit <- readRDS("~/BayesPostEst/tests/testdata/rstan-logit.rds")
+  
   expect_true(is_binary_model(rstan_logit))
   expect_equal(identify_link_function(rstan_logit), "logit")
   
 })
 
 test_that("RStan input works", {
+  
+  testthat::skip_if_not_installed("rstan")
+  
+  rstan_logit <- readRDS("~/BayesPostEst/tests/testdata/rstan-logit.rds")
+  
   df <- carData::Cowles
   df$female <- (as.numeric(df$sex) - 2) * (-1)
   df$volunteer <- as.numeric(df$volunteer) - 1
@@ -233,7 +300,11 @@ test_that("RStan input works", {
 #
 
 test_that("rstanarm input works", {
-  rstanarm_logit <- readRDS("../testdata/rstanarm-logit.rds")
+  
+  testthat::skip_if_not_installed("rstanarm")
+  
+  rstanarm_logit <- readRDS("~/BayesPostEst/tests/testdata/rstanarm-logit.rds")
+  
   expect_error(
     out <- mcmcRocPrc(rstanarm_logit, FALSE, FALSE),
     NA
@@ -256,7 +327,9 @@ test_that("rstanarm input works", {
 
 test_that("brms input works", {
   
-  brms_logit <- readRDS("../testdata/brms-logit.rds")
+  testthat::skip_if_not_installed("brms")
+  
+  brms_logit <- readRDS("~/BayesPostEst/tests/testdata/brms-logit.rds")
   
   expect_error(
     out <- mcmcRocPrc(brms_logit, FALSE, FALSE),
@@ -276,8 +349,10 @@ test_that("brms input works", {
 
 # Other types of input (MCMpack, BUGS) ------------------------------------
 
-pkgs_win <- c("rjags", "R2WinBUGS")
-if (!all(sapply(pkgs_win, require, quietly = TRUE, character.only = TRUE))) {
+test_that("BUGS input works", {
+  
+  testthat::skip_if_not_installed(c("rjags", "R2WinBUGS"))
+  
   ## Generate an example BUGS fitted model object
   data(LINE, package = "rjags")
   LINE$recompile()
@@ -288,20 +363,24 @@ if (!all(sapply(pkgs_win, require, quietly = TRUE, character.only = TRUE))) {
   bugs_logit <- R2WinBUGS::as.bugs.array(sims.array = as.array(bugs_model))
   
   ## loading sim data
-  sim_data <- BayesPostEst::sim_data
-  
-  ## testing
-  test_that("BUGS input works", {
+  sim_data <- readRDS("~/BayesPostEst/tests/testdata/sim_data.rds")
+    
+  # testing
   expect_error(
-    out <- mcmcRocPrc(bugs_logit, FALSE, FALSE, data = sim_data, yname = "Y",
-                      xnames = c("X1", "X2"), type = "logit"),
-    NA
-  )
-  })
-}
+    out <- mcmcRocPrc(object = bugs_logit, 
+                      curves = FALSE, 
+                      fullsims = FALSE, 
+                      data = sim_data, 
+                      yname = "Y",
+                      xnames = c("X1", "X2"), 
+                      type = "logit"))
+})
 
 test_that("MCMCpack input works", {
-  mcmcpack_logit <- readRDS("../testdata/mcmcpack-logit.rds")
+  
+  testthat::skip_if_not_installed("MCMCpack")
+  
+  mcmcpack_logit <- readRDS("~/BayesPostEst/tests/testdata/mcmcpack-logit.rds")
   
   df <- carData::Cowles
   df$female <- (as.numeric(df$sex) - 2) * (-1)
@@ -371,31 +450,35 @@ test_that("MCMCpack input works", {
 # four possible return value types that can be used for the rest of the tests
 # below
 
-with_curves <- mcmcRocPrc(jags_logit,
+test_that("mcmcRocPrc returns the same output structure, sans NULL elements", {
+  
+  testthat::skip_if_not_installed("rjags")
+  
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  
+  with_curves <- mcmcRocPrc(jags_logit,
+                            yname = "Y",
+                            xnames = c("X1", "X2"),
+                            curves = TRUE,
+                            fullsims = FALSE)
+  
+  no_curves <- mcmcRocPrc(jags_logit,
                           yname = "Y",
                           xnames = c("X1", "X2"),
-                          curves = TRUE,
+                          curves = FALSE,
                           fullsims = FALSE)
-
-no_curves <- mcmcRocPrc(jags_logit,
-                        yname = "Y",
-                        xnames = c("X1", "X2"),
-                        curves = FALSE,
-                        fullsims = FALSE)
-
-full_no_curves <- mcmcRocPrc(jags_logit,
-                             yname = "Y",
-                             xnames = c("X1", "X2"),
-                             curves = FALSE,
-                             fullsims = TRUE)
-
-full_with_curves <- mcmcRocPrc(jags_logit,
+  
+  full_no_curves <- mcmcRocPrc(jags_logit,
                                yname = "Y",
                                xnames = c("X1", "X2"),
-                               curves = TRUE,
+                               curves = FALSE,
                                fullsims = TRUE)
-
-test_that("mcmcRocPrc returns the same output structure, sans NULL elements", {
+  
+  full_with_curves <- mcmcRocPrc(jags_logit,
+                                 yname = "Y",
+                                 xnames = c("X1", "X2"),
+                                 curves = TRUE,
+                                 fullsims = TRUE)
   
   expect_true(is.list(with_curves$prc_dat))
   expect_true(is.list(full_with_curves$prc_dat))
@@ -404,6 +487,34 @@ test_that("mcmcRocPrc returns the same output structure, sans NULL elements", {
 
 
 test_that("print method works", {
+  
+  testthat::skip_if_not_installed("rjags")
+  
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  
+  with_curves <- mcmcRocPrc(jags_logit,
+                            yname = "Y",
+                            xnames = c("X1", "X2"),
+                            curves = TRUE,
+                            fullsims = FALSE)
+  
+  no_curves <- mcmcRocPrc(jags_logit,
+                          yname = "Y",
+                          xnames = c("X1", "X2"),
+                          curves = FALSE,
+                          fullsims = FALSE)
+  
+  full_no_curves <- mcmcRocPrc(jags_logit,
+                               yname = "Y",
+                               xnames = c("X1", "X2"),
+                               curves = FALSE,
+                               fullsims = TRUE)
+  
+  full_with_curves <- mcmcRocPrc(jags_logit,
+                                 yname = "Y",
+                                 xnames = c("X1", "X2"),
+                                 curves = TRUE,
+                                 fullsims = TRUE)
   
   expect_equal(
     capture_output(print(with_curves)), 
@@ -426,6 +537,34 @@ test_that("print method works", {
 
 test_that("plot method gives informative errors", {
   
+  testthat::skip_if_not_installed("rjags")
+  
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  
+  with_curves <- mcmcRocPrc(jags_logit,
+                            yname = "Y",
+                            xnames = c("X1", "X2"),
+                            curves = TRUE,
+                            fullsims = FALSE)
+  
+  no_curves <- mcmcRocPrc(jags_logit,
+                          yname = "Y",
+                          xnames = c("X1", "X2"),
+                          curves = FALSE,
+                          fullsims = FALSE)
+  
+  full_no_curves <- mcmcRocPrc(jags_logit,
+                               yname = "Y",
+                               xnames = c("X1", "X2"),
+                               curves = FALSE,
+                               fullsims = TRUE)
+  
+  full_with_curves <- mcmcRocPrc(jags_logit,
+                                 yname = "Y",
+                                 xnames = c("X1", "X2"),
+                                 curves = TRUE,
+                                 fullsims = TRUE)
+  
   expect_error(plot(no_curves), "to generate data for plots")
   expect_error(plot(with_curves, n = 0), "n must be")
   expect_error(plot(with_curves, alpha = 5), "alpha must be")
@@ -433,6 +572,34 @@ test_that("plot method gives informative errors", {
 })
 
 test_that("plot method works", {
+  
+  testthat::skip_if_not_installed("rjags")
+  
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  
+  with_curves <- mcmcRocPrc(jags_logit,
+                            yname = "Y",
+                            xnames = c("X1", "X2"),
+                            curves = TRUE,
+                            fullsims = FALSE)
+  
+  no_curves <- mcmcRocPrc(jags_logit,
+                          yname = "Y",
+                          xnames = c("X1", "X2"),
+                          curves = FALSE,
+                          fullsims = FALSE)
+  
+  full_no_curves <- mcmcRocPrc(jags_logit,
+                               yname = "Y",
+                               xnames = c("X1", "X2"),
+                               curves = FALSE,
+                               fullsims = TRUE)
+  
+  full_with_curves <- mcmcRocPrc(jags_logit,
+                                 yname = "Y",
+                                 xnames = c("X1", "X2"),
+                                 curves = TRUE,
+                                 fullsims = TRUE)
   
   expect_error(plot(with_curves), NA)
   expect_error(plot(full_with_curves), NA)
@@ -446,6 +613,34 @@ test_that("plot method works", {
 unlink("Rplots.pdf")
 
 test_that("data frame conversion works with all 4 output sets", {
+  
+  testthat::skip_if_not_installed("rjags")
+  
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  
+  with_curves <- mcmcRocPrc(jags_logit,
+                            yname = "Y",
+                            xnames = c("X1", "X2"),
+                            curves = TRUE,
+                            fullsims = FALSE)
+  
+  no_curves <- mcmcRocPrc(jags_logit,
+                          yname = "Y",
+                          xnames = c("X1", "X2"),
+                          curves = FALSE,
+                          fullsims = FALSE)
+  
+  full_no_curves <- mcmcRocPrc(jags_logit,
+                               yname = "Y",
+                               xnames = c("X1", "X2"),
+                               curves = FALSE,
+                               fullsims = TRUE)
+  
+  full_with_curves <- mcmcRocPrc(jags_logit,
+                                 yname = "Y",
+                                 xnames = c("X1", "X2"),
+                                 curves = TRUE,
+                                 fullsims = TRUE)
   
   # all 4 output types have AUC, so this should work across the board
   # (auc is the default what argument)

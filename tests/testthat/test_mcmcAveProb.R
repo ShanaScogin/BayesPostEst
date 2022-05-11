@@ -1,15 +1,19 @@
-## SRS comment 5/2022: Adding skips so that CRAN 
-## volunteers can run checks on their locals and 
-## not trigger warning if they don't have packages.
+## packages used:
+## jrags
 
-## This file uses data from BayesPostEst/data
+## data files used:
+## jags_logit.rds
+## jags_probit.rds
+## sim_data.rds
 
 test_that("Simple model runs with mcmcAveProb", {
   
-  data("jags_logit")
+  testthat::skip_if_not_installed("rjags")
+  
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
   fit <- jags_logit
   
-  data("sim_data")
+  sim_data <- readRDS("~/BayesPostEst/tests/testdata/sim_data.rds")
   datjags <- as.list(sim_data)
   
   ### average value approach
@@ -48,10 +52,12 @@ test_that("Simple model runs with mcmcAveProb", {
 
 test_that("Simple model runs with mcmcAveProb probit", {
   
-  data("jags_probit")
+  testthat::skip_if_not_installed("rjags")
+  
+  jags_probit <- readRDS("~/BayesPostEst/tests/testdata/jags_probit.rds")
   fit <- jags_probit
   
-  data("sim_data")
+  sim_data <- readRDS("~/BayesPostEst/tests/testdata/sim_data.rds")
   datjags <- as.list(sim_data)
   
   ### average value approach

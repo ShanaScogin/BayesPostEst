@@ -51,7 +51,8 @@ Imports:
     HDInterval,
     ROCR,
     graphics,
-    grDevices
+    grDevices,
+    R2jags
 Depends:
     R (>= 3.5.0)
 Encoding: UTF-8
@@ -64,7 +65,6 @@ Suggests:
     rstan (>= 2.10.1),
     testthat,
     covr,
-    R2jags,
     runjags,
     rstanarm,
     rjags,

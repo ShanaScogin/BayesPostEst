@@ -90,7 +90,7 @@ test_that("mcmcReg works with filenames", {
   
   testthat::skip_if_not_installed("rjags")
   
-  data("jags_logit")
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
   
   expect_silent(mcmcReg(jags_logit, sd = T, file = "tab.tex"))
   expect_silent(mcmcReg(jags_logit, sd = T, format = "html", file = "tab.html"))
@@ -99,6 +99,8 @@ test_that("mcmcReg works with filenames", {
 test_that("mcmcReg works with runjags", {
     
   testthat::skip_if_not_installed(c("runjags", "MCMCpack"))
+  
+  sim_data_interactive <- readRDS("~/BayesPostEst/tests/testdata/sim_data_interactive.rds")
 
   ## Generate an example runjags interactive fitted model
   ## formatting the data for jags
@@ -138,6 +140,8 @@ test_that("mcmcReg fails with multiple object types", {
   
   # attaching data for rjags
   jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
+  
+  sim_data_interactive <- readRDS("~/BayesPostEst/tests/testdata/sim_data_interactive.rds")
   
   ## Generate an example runjags interactive fitted model
   ## formatting the data for jags

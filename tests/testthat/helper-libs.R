@@ -3,7 +3,7 @@
 # objects using coda::as.mcmc(). This requires R2jags:::as.mcmc.rjags() to 
 # work properly, so load the package before running any test files. 
 
-#library(R2jags)  
+library(R2jags)  
 
 # Maintainer note 11/2021: Need to check that the above is still true in mcmcAveProb().
 # At first glance, coda does not seem to depend on R2jags, and check with 
@@ -12,5 +12,8 @@
 # really is a suggests for tests only, might should change individual test files 
 # to include r2jags namespace when needed and get rid of this file
 # for greater clarity in future
+
+## Note 5/2022: Yup still true. R2jags seems to be needed for everything using
+## coda::as.mcmc(), so moving to a depends.
 
 
