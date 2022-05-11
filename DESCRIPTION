@@ -53,12 +53,7 @@ Imports:
     graphics,
     grDevices,
     R2jags,
-    runjags,
-    rstanarm,
-    rjags,
-    MCMCpack,
-    R2WinBUGS,
-    brms
+    rjags
 Depends:
     R (>= 3.5.0)
 Encoding: UTF-8
@@ -70,7 +65,12 @@ Suggests:
     rmarkdown,
     rstan (>= 2.10.1),
     testthat,
-    covr
+    covr,
+    runjags,
+    rstanarm,
+    MCMCpack,
+    R2WinBUGS,
+    brms
 VignetteBuilder: knitr
 RoxygenNote: 7.1.2
 SystemRequirements: JAGS (http://mcmc-jags.sourceforge.io)

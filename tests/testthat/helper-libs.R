@@ -13,4 +13,7 @@ library(R2jags)
 # to include r2jags namespace when needed and get rid of this file
 # for greater clarity in future
 
+## Note 5/2022: Yup still true. R2jags seems to be needed for everything using
+## coda::as.mcmc(), so moving to a depends.
+
 

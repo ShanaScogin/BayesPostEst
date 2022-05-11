@@ -1,9 +1,15 @@
+## data files used:
+## jags_interactive.rds
+## sim_data_interactive.rds
+## jags_interactive_cat.rds
+## sim_data_interactive_cat.rds
+
 test_that("Simple model runs with mcmcMargEff", {
   
-  data("jags_interactive")
+  jags_interactive <- readRDS("../testdata/jags_interactive.rds")
   fit <- jags_interactive
   
-  data("sim_data_interactive")
+  sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
   
   ## using mcmcMargEff
   fit_me <- mcmcMargEff(mod = fit,
@@ -14,17 +20,17 @@ test_that("Simple model runs with mcmcMargEff", {
   
   ## testing
   value <- fit_me[25, 3]
-  check_against <- 0.56214
+  check_against <- 0.519057
   expect_equal(value, check_against, tolerance = 1e-2)
   
 })
 
 test_that("Simple model runs with mcmcMargEff with arguments", {
   
-  data("jags_interactive")
+  jags_interactive <- readRDS("../testdata/jags_interactive.rds")
   fit <- jags_interactive
   
-  data("sim_data_interactive")
+  sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
   
   ## processing the data
   mcmc <- coda::as.mcmc(fit)
@@ -42,17 +48,17 @@ test_that("Simple model runs with mcmcMargEff with arguments", {
   
   ## testing
   value <- fit_me[37, 4]
-  check_against <- 0.5267605
+  check_against <- 0.5145419
   expect_equal(value, check_against, tolerance = 1e-2)
   
 })
 
 test_that("Simple model runs with mcmcMargEff with plotting arguments", {
   
-  data("jags_interactive")
+  jags_interactive <- readRDS("../testdata/jags_interactive.rds")
   fit <- jags_interactive
   
-  data("sim_data_interactive")
+  sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
   
   ## using mcmcMargEff
   plot_me <- mcmcMargEff(mod = fit,
@@ -71,10 +77,10 @@ test_that("Simple model runs with mcmcMargEff with plotting arguments", {
 
 test_that("Simple model runs with mcmcMargEff with categorical moderator", {
   
-  data("jags_interactive_cat")
+  jags_interactive_cat <- readRDS("../testdata/jags_interactive_cat.rds")
   fit <- jags_interactive_cat
   
-  data("sim_data_interactive_cat")
+  sim_data_interactive_cat <- readRDS("../testdata/sim_data_interactive_cat.rds")
   
   ## using mcmcMargEff
   fit_me <- mcmcMargEff(mod = fit,
@@ -87,7 +93,8 @@ test_that("Simple model runs with mcmcMargEff with categorical moderator", {
   
   ## testing
   value <- fit_me[4, 3]
-  check_against <- -0.91814
+  check_against <- -0.9342449
   expect_equal(value, check_against, tolerance = 1e-2)
   
 })
+

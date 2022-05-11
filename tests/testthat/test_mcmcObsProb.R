@@ -1,14 +1,23 @@
+## packages used:
+## jrags
+## coda
+
+## data files used:
+## jags_logit.rds
+## sim_data.rds
+
 test_that("Simple model runs with mcmcObsProb", {
   
-  data("jags_logit")
-  fit <- jags_logit
+  testthat::skip_if_not_installed(c("rjags", "coda"))
   
-  data("sim_data")
+  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  
+  sim_data <- readRDS("../testdata/sim_data.rds")
   datjags <- as.list(sim_data)
   
   ### observed value approach
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
-  mcmc <- coda::as.mcmc(fit)
+  mcmc <- coda::as.mcmc(jags_logit)
   mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
   X1_sim <- seq(from = min(datjags$X1),
                 to = max(datjags$X1), 
@@ -41,15 +50,17 @@ test_that("Simple model runs with mcmcObsProb", {
 
 test_that("Simple model runs with mcmcObsProb probit", {
   
-  data("jags_probit")
-  fit <- jags_probit
+  testthat::skip_if_not_installed("rjags")
   
-  data("sim_data")
+  
+  jags_probit <- readRDS("../testdata/jags_probit.rds")
+  
+  sim_data <- readRDS("../testdata/sim_data.rds")
   datjags <- as.list(sim_data)
   
   ### observed value approach
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
-  mcmc <- coda::as.mcmc(fit)
+  mcmc <- coda::as.mcmc(jags_probit)
   mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
   X1_sim <- seq(from = min(datjags$X1),
                 to = max(datjags$X1), 
@@ -84,15 +95,14 @@ test_that("Simple model runs with mcmcObsProb probit", {
 
 test_that("full_sims argument works", {
   
-  data("jags_logit")
-  fit <- jags_logit
+  jags_logit <- readRDS("../testdata/jags_logit.rds")
   
-  data("sim_data")
+  sim_data <- readRDS("../testdata/sim_data.rds")
   datjags <- as.list(sim_data)
   
   ### observed value approach
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
-  mcmc <- coda::as.mcmc(fit)
+  mcmc <- coda::as.mcmc(jags_logit)
   mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
   X1_sim <- seq(from = min(datjags$X1),
                 to = max(datjags$X1), 

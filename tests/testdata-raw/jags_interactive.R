@@ -1,3 +1,8 @@
+## Note SRS 5/11/2022: Moved all the data from ~/data to
+## test data - changing files to save to ~/testdata
+## in the .rds format. Leaving previous code saving
+## data with usethis::usedata() commented out for now
+
 # 
 #  Generate an example JAGS probit fitted model
 #
@@ -42,6 +47,7 @@ jags_interactive <- R2jags::jags(data = datjags, inits = inits,
                                  n.iter = 2000, n.burnin = 1000,
                                  model.file = model)
 
-usethis::use_data(jags_interactive, overwrite = TRUE)
+#usethis::use_data(jags_interactive, overwrite = TRUE)
+saveRDS(jags_interactive, "tests/testdata/jags_interactive.rds")
 
 }

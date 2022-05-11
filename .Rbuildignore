@@ -27,3 +27,4 @@ CONTRIBUTING.md
 ^README.rmd
 ^README_files
 ^\.github$
+^test/testdata-raw$
