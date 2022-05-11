@@ -1,14 +1,16 @@
-## SRS comment 5/2022: Adding skips so that CRAN 
-## volunteers can run checks on their locals and 
-## not trigger warning if they don't have packages.
+## packages used:
+## jrags
+## R2WinBUGS
 
-## This file uses data from BayesPostEst/data
+## data files used:
+## jags_logit.rds
+## LINE from package = "rjags"
 
 test_that("Simple model runs with mcmcTab", {
   
   testthat::skip_if_not_installed("rjags")
   
-  data("jags_logit")
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
   
   object <- mcmcTab(jags_logit, 
                     ci = c(0.025, 0.975), 
@@ -26,7 +28,7 @@ test_that("mcmcTab works with different input types", {
   
   testthat::skip_if_not_installed("rjags")
   
-  data("jags_logit")
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")  
   
   # rjags
   expect_equal(mcmcTab(jags_logit)[1,3], 0.09)
@@ -43,7 +45,7 @@ test_that("pars subsetting works", {
   
   testthat::skip_if_not_installed("rjags")
   
-  data("jags_logit")
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
   
   object <- mcmcTab(jags_logit, 
                     ci = c(0.025, 0.975), 
@@ -85,7 +87,7 @@ test_that("ROPE argument works", {
   
   testthat::skip_if_not_installed("rjags")
   
-  data("jags_logit")
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
   
   # valid input
   expect_message(
@@ -110,6 +112,7 @@ test_that("ROPE argument works", {
 test_that("mcmcTab works with bugs", {
     
     testthat::skip_if_not_installed(c("rjags", "R2WinBUGS"))
+    set.seed(123)
     
     ## Generate an example BUGS fitted model object
     data(LINE, package = "rjags")

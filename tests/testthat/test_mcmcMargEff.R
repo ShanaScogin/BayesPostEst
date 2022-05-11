@@ -1,15 +1,16 @@
-## SRS comment 5/2022: Adding skips so that CRAN 
-## volunteers can run checks on their locals and 
-## not trigger warning if they don't have packages.
+## packages used:
+## jrags
 
-## This file uses data from BayesPostEst/data
+## data files used:
+## jags_interactive.rds
+## sim_data_interactive.rds
 
 test_that("Simple model runs with mcmcMargEff", {
   
-  data("jags_interactive")
+  jags_interactive <- readRDS("~/BayesPostEst/tests/testdata/jags_interactive.rds")
   fit <- jags_interactive
   
-  data("sim_data_interactive")
+  sim_data_interactive <- readRDS("~/BayesPostEst/tests/testdata/sim_data_interactive.rds")
   
   ## using mcmcMargEff
   fit_me <- mcmcMargEff(mod = fit,
@@ -20,17 +21,17 @@ test_that("Simple model runs with mcmcMargEff", {
   
   ## testing
   value <- fit_me[25, 3]
-  check_against <- 0.56214
+  check_against <- 0.519057
   expect_equal(value, check_against, tolerance = 1e-2)
   
 })
 
 test_that("Simple model runs with mcmcMargEff with arguments", {
   
-  data("jags_interactive")
+  jags_interactive <- readRDS("~/BayesPostEst/tests/testdata/jags_interactive.rds")
   fit <- jags_interactive
   
-  data("sim_data_interactive")
+  sim_data_interactive <- readRDS("~/BayesPostEst/tests/testdata/sim_data_interactive.rds")
   
   ## processing the data
   mcmc <- coda::as.mcmc(fit)
@@ -48,17 +49,17 @@ test_that("Simple model runs with mcmcMargEff with arguments", {
   
   ## testing
   value <- fit_me[37, 4]
-  check_against <- 0.5267605
+  check_against <- 0.5145419
   expect_equal(value, check_against, tolerance = 1e-2)
   
 })
 
 test_that("Simple model runs with mcmcMargEff with plotting arguments", {
   
-  data("jags_interactive")
+  jags_interactive <- readRDS("~/BayesPostEst/tests/testdata/jags_interactive.rds")
   fit <- jags_interactive
   
-  data("sim_data_interactive")
+  sim_data_interactive <- readRDS("~/BayesPostEst/tests/testdata/sim_data_interactive.rds")
   
   ## using mcmcMargEff
   plot_me <- mcmcMargEff(mod = fit,
@@ -77,10 +78,10 @@ test_that("Simple model runs with mcmcMargEff with plotting arguments", {
 
 test_that("Simple model runs with mcmcMargEff with categorical moderator", {
   
-  data("jags_interactive_cat")
+  jags_interactive <- readRDS("~/BayesPostEst/tests/testdata/jags_interactive.rds")
   fit <- jags_interactive_cat
   
-  data("sim_data_interactive_cat")
+  sim_data_interactive <- readRDS("~/BayesPostEst/tests/testdata/sim_data_interactive.rds")
   
   ## using mcmcMargEff
   fit_me <- mcmcMargEff(mod = fit,
@@ -93,7 +94,8 @@ test_that("Simple model runs with mcmcMargEff with categorical moderator", {
   
   ## testing
   value <- fit_me[4, 3]
-  check_against <- -0.91814
+  check_against <- -0.9342449
   expect_equal(value, check_against, tolerance = 1e-2)
   
 })
+

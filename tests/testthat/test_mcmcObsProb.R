@@ -1,22 +1,23 @@
-## SRS comment 5/2022: Adding skips so that CRAN 
-## volunteers can run checks on their locals and 
-## not trigger warning if they don't have packages.
+## packages used:
+## jrags
+## coda
 
-## This file uses data from BayesPostEst/data
+## data files used:
+## jags_logit.rds
+## sim_data.rds
 
 test_that("Simple model runs with mcmcObsProb", {
   
   testthat::skip_if_not_installed(c("rjags", "coda"))
   
-  data("jags_logit") # uses rjags
-  fit <- jags_logit
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
   
-  data("sim_data") # uses coda
+  sim_data <- readRDS("~/BayesPostEst/tests/testdata/sim_data.rds")
   datjags <- as.list(sim_data)
   
   ### observed value approach
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
-  mcmc <- coda::as.mcmc(fit)
+  mcmc <- coda::as.mcmc(jags_logit)
   mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
   X1_sim <- seq(from = min(datjags$X1),
                 to = max(datjags$X1), 
@@ -50,14 +51,13 @@ test_that("Simple model runs with mcmcObsProb", {
 test_that("Simple model runs with mcmcObsProb probit", {
   
   data("jags_probit")
-  fit <- jags_probit
   
-  data("sim_data")
+  sim_data <- readRDS("~/BayesPostEst/tests/testdata/sim_data.rds")
   datjags <- as.list(sim_data)
   
   ### observed value approach
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
-  mcmc <- coda::as.mcmc(fit)
+  mcmc <- coda::as.mcmc(jags_probit)
   mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
   X1_sim <- seq(from = min(datjags$X1),
                 to = max(datjags$X1), 
@@ -92,15 +92,14 @@ test_that("Simple model runs with mcmcObsProb probit", {
 
 test_that("full_sims argument works", {
   
-  data("jags_logit")
-  fit <- jags_logit
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
   
-  data("sim_data")
+  sim_data <- readRDS("~/BayesPostEst/tests/testdata/sim_data.rds")
   datjags <- as.list(sim_data)
   
   ### observed value approach
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
-  mcmc <- coda::as.mcmc(fit)
+  mcmc <- coda::as.mcmc(jags_logit)
   mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
   X1_sim <- seq(from = min(datjags$X1),
                 to = max(datjags$X1), 

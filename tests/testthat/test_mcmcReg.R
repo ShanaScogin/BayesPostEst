@@ -1,14 +1,18 @@
-## SRS comment 5/2022: Adding skips so that CRAN 
-## volunteers can run checks on their locals and 
-## not trigger warning if they don't have packages.
+## packages used:
+## jrags
+## R2WinBUGS
+## MCMCpack
+## runjags
 
-## This file uses data from BayesPostEst/data
+## data files used:
+## jags_logit.rds
+## LINE from package = "rjags"
 
 test_that("Simple model runs with mcmcReg", {
   
   testthat::skip_if_not_installed("rjags")
   
-  data("jags_logit")
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
   
   ## running some expect silent code
   expect_silent(mcmcReg(jags_logit))
@@ -39,7 +43,7 @@ test_that("mcmcReg works with hpdi", {
   
   testthat::skip_if_not_installed("rjags")
   
-  data("jags_logit")
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
   
   ## running some general value matches
   expect_match(mcmcReg(jags_logit, pointest = "median", hpdi = T),
@@ -52,7 +56,7 @@ test_that("mcmcReg works with custom coef names", {
   
   testthat::skip_if_not_installed("rjags")
   
-  data("jags_logit")
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
   
   expect_match(mcmcReg(jags_logit, coefnames = c("beta 1","beta 2", "beta 3",
                                                  "deviance")), "beta 1")
@@ -76,7 +80,7 @@ test_that("mcmcReg works with pr direction", {
   
   testthat::skip_if_not_installed("rjags")
   
-  data("jags_logit")
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
   
   expect_match(mcmcReg(jags_logit, pr = T), "\\$0.89\\$")
   expect_match(mcmcReg(jags_logit, pr = T, format = "html"), ">0.89<")
@@ -133,7 +137,7 @@ test_that("mcmcReg fails with multiple object types", {
   testthat::skip_if_not_installed(c("runjags", "MCMCpack", "rjags"))
   
   # attaching data for rjags
-  data("jags_logit")
+  jags_logit <- readRDS("~/BayesPostEst/tests/testdata/jags_logit.rds")
   
   ## Generate an example runjags interactive fitted model
   ## formatting the data for jags
@@ -176,19 +180,21 @@ test_that("mcmcReg fails with multiple object types", {
 
 test_that("mcmcReg works with bugs", {
   
-    testthat::skip_if_not_installed(c("rjags", "R2WinBUGS"))
+  testthat::skip_if_not_installed(c("rjags", "R2WinBUGS"))
     
-    ## Generate an example BUGS fitted model object
-    data(LINE, package = "rjags")
-    LINE$recompile()
-    
-    ## fitting the model with jags
-    bugs_model <- rjags::coda.samples(LINE, c("alpha", "beta", "sigma"),
-                                      n.iter = 1000)
-    bugs_model <- R2WinBUGS::as.bugs.array(sims.array = as.array(bugs_model))
-    
-      ## testing
-    expect_match(mcmcReg(bugs_model), "0.33; 3.64")
+  set.seed(123)
+  
+  ## Generate an example BUGS fitted model object
+  data(LINE, package = "rjags")
+  LINE$recompile()
+  
+  ## fitting the model with jags
+  bugs_model <- rjags::coda.samples(LINE, c("alpha", "beta", "sigma"),
+                                    n.iter = 1000)
+  bugs_model <- R2WinBUGS::as.bugs.array(sims.array = as.array(bugs_model))
+  
+    ## testing
+  expect_match(mcmcReg(bugs_model), "0.33; 3.64") ## this might need to be changed slightly
 })
 
 #### SRS commment Jan 2021: even with seed set too much randomness here

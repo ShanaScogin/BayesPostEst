@@ -1,3 +1,8 @@
+## Note SRS 5/11/2022: Moved all the data from ~/data to
+## test data - changing files to save to ~/testdata
+## in the .rds format. Leaving previous code saving
+## data with usethis::usedata() commented out for now
+
 # 
 #  Generate an example JAGS logit fitted model object
 #
@@ -38,6 +43,10 @@ jags_logit <- R2jags::jags(data = datjags, inits = inits,
                     n.burnin = 1000, model.file = model,
                     progress.bar = "none")
 
-usethis::use_data(jags_logit, overwrite = TRUE)
+#usethis::use_data(jags_logit, overwrite = TRUE)
+saveRDS(jags_logit, "tests/testdata/jags_logit.rds")
 
 }
+
+
+
