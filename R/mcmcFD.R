@@ -313,7 +313,6 @@ plot.mcmcFD <- function(x,
       ggridges::stat_density_ridges(quantile_lines = TRUE, 
                                     quantiles = c(0.025, 0.5, 0.975),
                                     vline_color = "white") + 
-      ggplot2::scale_x_continuous(labels = function(x) x * 100) + 
       ggplot2::xlab("Percentage point change in Pr(y = 1)") + 
       ggplot2::ylab("")
     
@@ -497,7 +496,6 @@ mcmcFDplot <- function(fdfull,
       ggridges::stat_density_ridges(quantile_lines = TRUE, 
                                     quantiles = c(0.025, 0.5, 0.975),
                                     vline_color = "white") + 
-      ggplot2::scale_x_continuous(labels = function(x) x * 100) + 
       ggplot2::xlab("Percentage point change in Pr(y = 1)") + 
       ggplot2::ylab("")
     
@@ -524,7 +522,6 @@ mcmcFDplot <- function(fdfull,
       ggridges::stat_density_ridges(quantile_lines = TRUE, 
                                     quantiles = c(0.025, 0.5, 0.975),
                                     vline_color = "white") + 
-      ggplot2::scale_x_continuous(labels = function(x) x*100) + 
       ggplot2::xlab("Percentage point change in Pr(y = 1)") + 
       ggplot2::ylab("")
     
