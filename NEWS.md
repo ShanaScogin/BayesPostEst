@@ -1,3 +1,7 @@
+# BayesPostEst 0.4.0
+* Fixed documentation issues (#92)
+* Fixed issue with mcmcFDplot() 
+
 # BayesPostEst 0.3.2
 * Updated dependencies per CRAN warnings (#82)
  + Added 7 packages used for testing from suggests to imports 

@@ -10,7 +10,6 @@ knitr::opts_chunk$set(fig.path = "man/figures/README-")
 
 # BayesPostEst 
 
-[![R build status](https://github.com/ShanaScogin/BayesPostEst/workflows/R-CMD-check/badge.svg)](https://github.com/ShanaScogin/BayesPostEst/actions)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/BayesPostEst)](https://CRAN.R-project.org/package=BayesPostEst)
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.01722/status.svg)](https://doi.org/10.21105/joss.01722)
 [![Codecov test coverage](https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ShanaScogin/BayesPostEst?branch=master)
@@ -624,11 +623,9 @@ ggplot(as.data.frame(fitstats.fullsims),
   theme_minimal()
 ```
 
-# What's Happening
-New functions and enhancements to current functions are in the works. Feel free to browse the [issues](https://github.com/ShanaScogin/BayesPostEst/issues) to see what we are working on or submit an [enhancement issue](https://github.com/ShanaScogin/BayesPostEst/issues) of your own. Our [contributing](https://github.com/ShanaScogin/BayesPostEst/blob/master/CONTRIBUTING.md) document has more information on ways to contribute.
 
 # Contact
-Please submit an [issue](https://github.com/ShanaScogin/BayesPostEst/issues) if you encounter any bugs or problems with the package. Feel free to check out [Johannes Karreth's website](http://www.jkarreth.net) for more resources on Bayesian estimation. 
+Please submit an [issue](https://github.com/ShanaScogin/BayesPostEst/issues) if you encounter any bugs with or have suggestions for the package. Feel free to check out [Johannes Karreth's website](http://www.jkarreth.net) for more resources on Bayesian estimation. 
 
 # References
 
