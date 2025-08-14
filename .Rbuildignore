@@ -29,3 +29,4 @@ CONTRIBUTING.md
 ^\.github$
 ^tests/testdata/.*\.rds$
 ^tests/data-static
+^README\.Rmd$

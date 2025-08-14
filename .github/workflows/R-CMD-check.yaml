@@ -40,3 +40,19 @@ jobs:
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
+      
+      - name: Install JAGS
+      
+    run: |
+      if [[ "$RUNNER_OS" == "Linux" ]]; then
+        sudo apt-get update
+        sudo apt-get install -y jags
+      elif [[ "$RUNNER_OS" == "macOS" ]]; then
+        brew install jags
+      elif [[ "$RUNNER_OS" == "Windows" ]]; then
+        curl.exe -o jags.exe --url https://deac-fra.dl.sourceforge.net/project/mcmc-jags/JAGS/4.x/Windows/JAGS-4.3.0.exe
+        jags.exe /S
+        del jags.exe
+      fi
+    shell: bash
+

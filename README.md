@@ -3,12 +3,11 @@
 
 # BayesPostEst
 
-[![R build
-status](https://github.com/ShanaScogin/BayesPostEst/workflows/R-CMD-check/badge.svg)](https://github.com/ShanaScogin/BayesPostEst/actions)
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/BayesPostEst)](https://CRAN.R-project.org/package=BayesPostEst)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/BayesPostEst)](https://CRAN.R-project.org/package=BayesPostEst)
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.01722/status.svg)](https://doi.org/10.21105/joss.01722)
 [![Codecov test
 coverage](https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ShanaScogin/BayesPostEst?branch=master)
+[![R-CMD-check](https://github.com/ShanaScogin/BayesPostEst/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ShanaScogin/BayesPostEst/actions/workflows/R-CMD-check.yaml)
 
 An R package implementing functions to assist in generating and plotting
 postestimation quantities after estimating Bayesian regression models
@@ -63,9 +62,9 @@ function explains how to do this.
 # Example data
 
 This vignette uses the `Cowles` dataset ([Cowles and Davis 1987, British
-Journal of Social
-Psychology 26(2): 97-102](https://doi.org/10.1111/j.2044-8309.1987.tb00769.x))
-from the [carData package](https://CRAN.R-project.org/package=carData).
+Journal of Social Psychology 26(2):
+97-102](https://doi.org/10.1111/j.2044-8309.1987.tb00769.x)) from the
+[carData package](https://CRAN.R-project.org/package=carData).
 
 ``` r
 df <- carData::Cowles
@@ -74,10 +73,10 @@ df <- carData::Cowles
 This data frame contains information on 1421 individuals in the
 following variables:
 
-  - neuroticism: scale from Eysenck personality inventory.
-  - extraversion: scale from Eysenck personality inventory.
-  - sex: a factor with levels: female; male.
-  - volunteer: volunteering, a factor with levels: no; yes. This is the
+-   neuroticism: scale from Eysenck personality inventory.
+-   extraversion: scale from Eysenck personality inventory.
+-   sex: a factor with levels: female; male.
+-   volunteer: volunteering, a factor with levels: no; yes. This is the
     outcome variable for the running example in this vignette.
 
 Before proceeding, we convert the two factor variables `sex` and
@@ -95,15 +94,15 @@ df$neuroticism <- (df$neuroticism - mean(df$neuroticism)) / (2 * sd(df$neurotici
 We estimate a Bayesian generalized linear model with the inverse logit
 link function, where
 
-\[
+$$
 \text{Pr}\left(\text{Volunteering}_i\right) = \text{logit}^{-1}\left(\beta_1 + \beta_2 \text{Female}_i +  \beta_3 \text{Neuroticism}_i + \beta_4 \text{Extraversion}_i\right)
-\]
+$$
 
 BayesPostEst functions accommodate GLM estimates for both logit and
 probit link functions. The examples proceed with the logit link
 function. If we had estimated a probit regression, the corresponding
-argument `link` in relevant function calls would need to be set to `link
-= "probit"`. Otherwise, it is set to `link = "logit"` by default.
+argument `link` in relevant function calls would need to be set to
+`link = "probit"`. Otherwise, it is set to `link = "logit"` by default.
 
 # Model estimation
 
@@ -117,10 +116,10 @@ Stan interfaces [rstan](https://cran.r-project.org/package=rstan) and
 
 ## JAGS
 
-First, we prepare the data for JAGS
-([Plummer 2017](https://mcmc-jags.sourceforge.io/)). Users need to
-combine all variables into a list and specify any other elements, like
-in this case N, the number of observations.
+First, we prepare the data for JAGS ([Plummer
+2017](https://mcmc-jags.sourceforge.io/)). Users need to combine all
+variables into a list and specify any other elements, like in this case
+N, the number of observations.
 
 ``` r
 dl <- as.list(df[, c("volunteer", "female", "neuroticism", "extraversion")])
@@ -173,9 +172,11 @@ fit.jags <- jags(data = dl, inits = inits.jags,
     ## Graph information:
     ##    Observed stochastic nodes: 1421
     ##    Unobserved stochastic nodes: 4
-    ##    Total graph size: 6870
+    ##    Total graph size: 6864
     ## 
     ## Initializing model
+    ## 
+    ##   |                                                          |                                                  |   0%  |                                                          |**                                                |   4%  |                                                          |****                                              |   8%  |                                                          |******                                            |  12%  |                                                          |********                                          |  16%  |                                                          |**********                                        |  20%  |                                                          |************                                      |  24%  |                                                          |**************                                    |  28%  |                                                          |****************                                  |  32%  |                                                          |******************                                |  36%  |                                                          |********************                              |  40%  |                                                          |**********************                            |  44%  |                                                          |************************                          |  48%  |                                                          |**************************                        |  52%  |                                                          |****************************                      |  56%  |                                                          |******************************                    |  60%  |                                                          |********************************                  |  64%  |                                                          |**********************************                |  68%  |                                                          |************************************              |  72%  |                                                          |**************************************            |  76%  |                                                          |****************************************          |  80%  |                                                          |******************************************        |  84%  |                                                          |********************************************      |  88%  |                                                          |**********************************************    |  92%  |                                                          |************************************************  |  96%  |                                                          |**************************************************| 100%
 
 The same data and model can be used to fit the model using the rjags
 package:
@@ -192,7 +193,7 @@ mod.rjags <- jags.model(file = "mod.jags", data = dl, inits = inits.jags,
     ## Graph information:
     ##    Observed stochastic nodes: 1421
     ##    Unobserved stochastic nodes: 4
-    ##    Total graph size: 6870
+    ##    Total graph size: 6864
     ## 
     ## Initializing model
 
@@ -201,6 +202,8 @@ fit.rjags <- coda.samples(model = mod.rjags,
                           variable.names = params.jags,
                           n.iter = 2000)
 ```
+
+    ##   |                                                          |                                                  |   0%  |                                                          |*                                                 |   2%  |                                                          |**                                                |   4%  |                                                          |***                                               |   6%  |                                                          |****                                              |   8%  |                                                          |*****                                             |  10%  |                                                          |******                                            |  12%  |                                                          |*******                                           |  14%  |                                                          |********                                          |  16%  |                                                          |*********                                         |  18%  |                                                          |**********                                        |  20%  |                                                          |***********                                       |  22%  |                                                          |************                                      |  24%  |                                                          |*************                                     |  26%  |                                                          |**************                                    |  28%  |                                                          |***************                                   |  30%  |                                                          |****************                                  |  32%  |                                                          |*****************                                 |  34%  |                                                          |******************                                |  36%  |                                                          |*******************                               |  38%  |                                                          |********************                              |  40%  |                                                          |*********************                             |  42%  |                                                          |**********************                            |  44%  |                                                          |***********************                           |  46%  |                                                          |************************                          |  48%  |                                                          |*************************                         |  50%  |                                                          |**************************                        |  52%  |                                                          |***************************                       |  54%  |                                                          |****************************                      |  56%  |                                                          |*****************************                     |  58%  |                                                          |******************************                    |  60%  |                                                          |*******************************                   |  62%  |                                                          |********************************                  |  64%  |                                                          |*********************************                 |  66%  |                                                          |**********************************                |  68%  |                                                          |***********************************               |  70%  |                                                          |************************************              |  72%  |                                                          |*************************************             |  74%  |                                                          |**************************************            |  76%  |                                                          |***************************************           |  78%  |                                                          |****************************************          |  80%  |                                                          |*****************************************         |  82%  |                                                          |******************************************        |  84%  |                                                          |*******************************************       |  86%  |                                                          |********************************************      |  88%  |                                                          |*********************************************     |  90%  |                                                          |**********************************************    |  92%  |                                                          |***********************************************   |  94%  |                                                          |************************************************  |  96%  |                                                          |************************************************* |  98%  |                                                          |**************************************************| 100%
 
 ## MCMCpack
 
@@ -297,21 +300,21 @@ mcmcTab(fit.jags)
 ```
 
     ##   Variable   Median    SD    Lower    Upper
-    ## 1     b[1]   -0.455 0.082   -0.615   -0.294
-    ## 2     b[2]    0.232 0.111    0.008    0.442
-    ## 3     b[3]    0.063 0.111   -0.149    0.285
-    ## 4     b[4]    0.514 0.111    0.288    0.733
-    ## 5 deviance 1909.375 2.856 1906.534 1917.190
+    ## 1     b[1]   -0.462 0.082   -0.622   -0.298
+    ## 2     b[2]    0.238 0.112    0.017    0.455
+    ## 3     b[3]    0.063 0.113   -0.158    0.283
+    ## 4     b[4]    0.515 0.112    0.291    0.729
+    ## 5 deviance 1909.455 2.875 1906.574 1917.541
 
 ``` r
 mcmcTab(fit.rjags)
 ```
 
     ##   Variable Median    SD  Lower  Upper
-    ## 1     b[1] -0.460 0.082 -0.622 -0.298
-    ## 2     b[2]  0.233 0.110  0.018  0.449
-    ## 3     b[3]  0.063 0.111 -0.156  0.275
-    ## 4     b[4]  0.520 0.113  0.301  0.746
+    ## 1     b[1] -0.458 0.083 -0.623 -0.297
+    ## 2     b[2]  0.234 0.111  0.017  0.451
+    ## 3     b[3]  0.065 0.111 -0.151  0.278
+    ## 4     b[4]  0.519 0.112  0.301  0.738
 
 ``` r
 mcmcTab(fit.MCMCpack)
@@ -328,11 +331,11 @@ mcmcTab(fit.stan)
 ```
 
     ##   Variable   Median    SD    Lower    Upper
-    ## 1     b[1]   -0.460 0.081   -0.620   -0.304
-    ## 2     b[2]    0.238 0.110    0.026    0.454
-    ## 3     b[3]    0.058 0.115   -0.167    0.286
-    ## 4     b[4]    0.517 0.111    0.301    0.736
-    ## 5     lp__ -954.790 1.396 -958.640 -953.302
+    ## 1     b[1]   -0.459 0.082   -0.624   -0.301
+    ## 2     b[2]    0.234 0.112    0.020    0.459
+    ## 3     b[3]    0.062 0.110   -0.157    0.284
+    ## 4     b[4]    0.518 0.112    0.299    0.745
+    ## 5     lp__ -954.763 1.419 -958.661 -953.298
 
 ``` r
 mcmcTab(fit.rstanarm)
@@ -355,24 +358,24 @@ mcmcTab(fit.jags, Pr = TRUE)
 ```
 
     ##   Variable   Median    SD    Lower    Upper    Pr
-    ## 1     b[1]   -0.455 0.082   -0.615   -0.294 1.000
-    ## 2     b[2]    0.232 0.111    0.008    0.442 0.979
-    ## 3     b[3]    0.063 0.111   -0.149    0.285 0.724
-    ## 4     b[4]    0.514 0.111    0.288    0.733 1.000
-    ## 5 deviance 1909.375 2.856 1906.534 1917.190 1.000
+    ## 1     b[1]   -0.462 0.082   -0.622   -0.298 1.000
+    ## 2     b[2]    0.238 0.112    0.017    0.455 0.984
+    ## 3     b[3]    0.063 0.113   -0.158    0.283 0.712
+    ## 4     b[4]    0.515 0.112    0.291    0.729 1.000
+    ## 5 deviance 1909.455 2.875 1906.574 1917.541 1.000
 
 ## ROPE
 
 Users can also define a “region of practical equivalence” (ROPE;
-[Kruschke 2013, Journal of Experimental
-Psychology 143(2): 573-603](https://doi.org/10.1037/a0029146)). This
-region is a band of values around 0 that are “practically equivalent” to
-0 or no effect. For this to be useful, all parameters (e.g. regression
-coefficients) must be on the same scale because mcmcTab accepts only one
-definition of ROPE for all parameters. Users can standardize regression
-coefficients to achieve this. Because we standardized variables earlier,
-the coefficients (except the intercept) are on a similar scale and we
-define the ROPE to be between -0.1 and 0.1.
+[Kruschke 2013, Journal of Experimental Psychology 143(2):
+573-603](https://doi.org/10.1037/a0029146)). This region is a band of
+values around 0 that are “practically equivalent” to 0 or no effect. For
+this to be useful, all parameters (e.g. regression coefficients) must be
+on the same scale because mcmcTab accepts only one definition of ROPE
+for all parameters. Users can standardize regression coefficients to
+achieve this. Because we standardized variables earlier, the
+coefficients (except the intercept) are on a similar scale and we define
+the ROPE to be between -0.1 and 0.1.
 
 ``` r
 mcmcTab(fit.jags, pars = c("b[2]", "b[3]", "b[4]"), ROPE = c(-0.1, 0.1))
@@ -383,9 +386,9 @@ mcmcTab(fit.jags, pars = c("b[2]", "b[3]", "b[4]"), ROPE = c(-0.1, 0.1))
     ##           must be on the same scale (e.g. standardized coefficients or first differences).
 
     ##   Variable Median    SD  Lower Upper PrOutROPE
-    ## 1     b[2]  0.232 0.111  0.008 0.442     0.879
-    ## 2     b[3]  0.063 0.111 -0.149 0.285     0.376
-    ## 3     b[4]  0.514 0.111  0.288 0.733     1.000
+    ## 1     b[2]  0.238 0.112  0.017 0.455     0.885
+    ## 2     b[3]  0.063 0.113 -0.158 0.283     0.376
+    ## 3     b[4]  0.515 0.112  0.291 0.729     1.000
 
 ## Conventional regression tables
 
@@ -531,9 +534,8 @@ this function calculates the predicted probability (*Pr(y = 1)*) at
 pre-defined values of one covariate of interest (*x*), while all other
 covariates are held at a “typical” value. This follows suggestions
 outlined in [King, Tomz, and Wittenberg (2000, American Journal of
-Political
-Science 44(2): 347-361)](https://doi.org/10.2307/2669316)
-and elsewhere, which are commonly adopted by users of GLMs. The
+Political Science 44(2): 347-361)](https://doi.org/10.2307/2669316) and
+elsewhere, which are commonly adopted by users of GLMs. The
 `mcmcAveProb` function by default calculates the median value of all
 covariates other than *x* as “typical” values.
 
@@ -602,16 +604,16 @@ ggplot(data = aveprob.female.jags,
   theme_minimal()
 ```
 
-    ## Picking joint bandwidth of 0.00323
+    ## Picking joint bandwidth of 0.00327
 
 ![](man/figures/README-unnamed-chunk-38-1.png)<!-- -->
 
 ### Extraversion
 
-For continuous variables of interest, users may want to set `fullsims =
-FALSE` to obtain the median predicted probability along the range of *x*
-as well as a lower and upper bound of choice (here, the 95% credible
-interval).
+For continuous variables of interest, users may want to set
+`fullsims = FALSE` to obtain the median predicted probability along the
+range of *x* as well as a lower and upper bound of choice (here, the 95%
+credible interval).
 
 ``` r
 aveprob.extra.jags <- mcmcAveProb(modelmatrix = mm,
@@ -643,13 +645,12 @@ ggplot(data = aveprob.extra.jags,
 ## `mcmcObsProb`
 
 As an alternative to probabilities for “typical” cases, [Hanmer and
-Kalkan (2013, American Journal of Political
-Science 57(1): 263-277)](https://doi.org/10.1111/j.1540-5907.2012.00602.x)
-suggest to calculate predicted probabilities for all observed cases and
-then derive an “average effect”. In their words, the goal of this
-postestimation “is to obtain an estimate of the average effect in the
-population … rather than seeking to understand the effect for the
-average case.”
+Kalkan (2013, American Journal of Political Science 57(1):
+263-277)](https://doi.org/10.1111/j.1540-5907.2012.00602.x) suggest to
+calculate predicted probabilities for all observed cases and then derive
+an “average effect”. In their words, the goal of this postestimation “is
+to obtain an estimate of the average effect in the population … rather
+than seeking to understand the effect for the average case.”
 
 ### Sex
 
@@ -682,7 +683,7 @@ ggplot(data = obsprob.female.jags,
   theme_minimal()
 ```
 
-    ## Picking joint bandwidth of 0.00316
+    ## Picking joint bandwidth of 0.00318
 
 ![](man/figures/README-unnamed-chunk-42-1.png)<!-- -->
 
@@ -721,13 +722,12 @@ ggplot(data = obsprob.extra.jags,
 ## `mcmcFD`
 
 To summarize typical effects across covariates, we generate “first
-differences” (Long 1997, Sage Publications; [King, Tomz, and
-Wittenberg 2000, American Journal of Political
-Science 44(2): 347-361](https://doi.org/10.2307/2669316)).
-This quantity represents, for each covariate, the difference in
-predicted probabilities for cases with low and high values of the
-respective covariate. For each of these differences, all other variables
-are held constant at their median.
+differences” (Long 1997, Sage Publications; [King, Tomz, and Wittenberg
+2000, American Journal of Political Science 44(2):
+347-361](https://doi.org/10.2307/2669316)). This quantity represents,
+for each covariate, the difference in predicted probabilities for cases
+with low and high values of the respective covariate. For each of these
+differences, all other variables are held constant at their median.
 
 ``` r
 fdfull.jags <- mcmcFD(modelmatrix = mm,
@@ -739,12 +739,12 @@ summary(fdfull.jags)
 ```
 
     ##      female          neuroticism         extraversion    
-    ##  Min.   :-0.04199   Min.   :-0.068548   Min.   :0.01851  
-    ##  1st Qu.: 0.03792   1st Qu.:-0.001534   1st Qu.:0.06982  
-    ##  Median : 0.05654   Median : 0.011222   Median :0.08131  
-    ##  Mean   : 0.05597   Mean   : 0.011369   Mean   :0.08109  
-    ##  3rd Qu.: 0.07436   3rd Qu.: 0.024294   3rd Qu.:0.09279  
-    ##  Max.   : 0.14808   Max.   : 0.090988   Max.   :0.13829
+    ##  Min.   :-0.04432   Min.   :-0.055522   Min.   :0.01957  
+    ##  1st Qu.: 0.03972   1st Qu.:-0.002247   1st Qu.:0.06957  
+    ##  Median : 0.05795   Median : 0.011224   Median :0.08132  
+    ##  Mean   : 0.05779   Mean   : 0.011263   Mean   :0.08124  
+    ##  3rd Qu.: 0.07619   3rd Qu.: 0.024511   3rd Qu.:0.09313  
+    ##  Max.   : 0.15245   Max.   : 0.080707   Max.   :0.14269
 
 The posterior distribution can be summarized as above, or users can
 directly obtain a summary when setting `fullsims` to FALSE.
@@ -759,9 +759,9 @@ fdsum.jags
 ```
 
     ##               median_fd     lower_fd   upper_fd      VarName VarID
-    ## female       0.05653772  0.001903377 0.10752879       female     1
-    ## neuroticism  0.01122227 -0.026638167 0.05025822  neuroticism     2
-    ## extraversion 0.08131182  0.045476273 0.11589552 extraversion     3
+    ## female       0.05794760  0.004299115 0.11073472       female     1
+    ## neuroticism  0.01122442 -0.028097810 0.05008092  neuroticism     2
+    ## extraversion 0.08132383  0.045716391 0.11482003 extraversion     3
 
 Users can plot the median and credible intervals of the summary of the
 first differences.
@@ -784,18 +784,18 @@ ggplot(data = fdsum.jags,
 To make use of the full posterior distribution of first differences, we
 provide a dedicated plotting method, `plot.mcmcFD`, which returns a
 ggplot2 object that can be further customized. The function is modeled
-after Figure 1 in [Karreth (2018, International
-Interactions 44(3): 463-490](https://doi.org/10.1080/03050629.2018.1389728)).
-Users can specify a region of practical equivalence and print the
-percent of posterior draws to the right or left of the ROPE. If ROPE is
-not specified, the figure automatically prints the percent of posterior
+after Figure 1 in [Karreth (2018, International Interactions 44(3):
+463-490](https://doi.org/10.1080/03050629.2018.1389728)). Users can
+specify a region of practical equivalence and print the percent of
+posterior draws to the right or left of the ROPE. If ROPE is not
+specified, the figure automatically prints the percent of posterior
 draws to the left or right of 0.
 
 ``` r
 plot(fdfull.jags, ROPE = c(-0.01, 0.01))
 ```
 
-    ## Picking joint bandwidth of 0.362
+    ## Picking joint bandwidth of 0.37
 
 ![](man/figures/README-unnamed-chunk-48-1.png)<!-- -->
 
@@ -807,7 +807,7 @@ p + labs(title = "First differences") +
   ggridges::theme_ridges()
 ```
 
-    ## Picking joint bandwidth of 0.362
+    ## Picking joint bandwidth of 0.37
 
 ![](man/figures/README-unnamed-chunk-49-1.png)<!-- -->
 
@@ -844,14 +844,14 @@ fitstats$area_under_roc
 ```
 
     ##        V1 
-    ## 0.5843884
+    ## 0.5840611
 
 ``` r
 fitstats$area_under_prc
 ```
 
     ##        V1 
-    ## 0.4866251
+    ## 0.4867844
 
 Users can also plot the ROC curve…
 
@@ -915,24 +915,13 @@ ggplot(as.data.frame(fitstats.fullsims),
 
 ![](man/figures/README-unnamed-chunk-57-1.png)<!-- -->
 
-# What’s Happening
-
-New functions and enhancements to current functions are in the works.
-Feel free to browse the
-[issues](https://github.com/ShanaScogin/BayesPostEst/issues) to see what
-we are working on or submit an [enhancement
-issue](https://github.com/ShanaScogin/BayesPostEst/issues) of your own.
-Our
-[contributing](https://github.com/ShanaScogin/BayesPostEst/blob/master/CONTRIBUTING.md)
-document has more information on ways to contribute.
-
 # Contact
 
 Please submit an
 [issue](https://github.com/ShanaScogin/BayesPostEst/issues) if you
-encounter any bugs or problems with the package. Feel free to check out
-[Johannes Karreth’s website](http://www.jkarreth.net) for more resources
-on Bayesian estimation.
+encounter any bugs with or have suggestions for the package. Feel free
+to check out [Johannes Karreth’s website](http://www.jkarreth.net) for
+more resources on Bayesian estimation.
 
 # References
 
