@@ -46,4 +46,7 @@ rstan_logit <- stan(file = "mod.stan",
 unlink("mod.stan")
 
 format(object.size(rstan_logit), "Kb")
-saveRDS(rstan_logit, "tests/testdata/rstan-logit.rds")
+#saveRDS(rstan_logit, "tests/testdata/rstan-logit.rds")
+saveRDS(rstan_logit, file.path(TESTDATA_DIR, "rstan_logit.rds"))
+
+

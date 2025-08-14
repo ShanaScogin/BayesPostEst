@@ -10,9 +10,11 @@ test_that("Simple model runs with mcmcObsProb", {
   
   testthat::skip_if_not_installed(c("rjags", "coda"))
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
-  sim_data <- readRDS("../testdata/sim_data.rds")
+  #sim_data <- readRDS("../testdata/sim_data.rds")
+  sim_data <- readRDS(file.path(TESTDATA_DIR, "sim_data.rds"))
   datjags <- as.list(sim_data)
   
   ### observed value approach
@@ -53,9 +55,11 @@ test_that("Simple model runs with mcmcObsProb probit", {
   testthat::skip_if_not_installed("rjags")
   
   
-  jags_probit <- readRDS("../testdata/jags_probit.rds")
+  #jags_probit <- readRDS("../testdata/jags_probit.rds")
+  jags_probit <- readRDS(file.path(TESTDATA_DIR, "jags_probit.rds"))
   
-  sim_data <- readRDS("../testdata/sim_data.rds")
+  #sim_data <- readRDS("../testdata/sim_data.rds")
+  sim_data <- readRDS(file.path(TESTDATA_DIR, "sim_data.rds"))
   datjags <- as.list(sim_data)
   
   ### observed value approach
@@ -95,9 +99,11 @@ test_that("Simple model runs with mcmcObsProb probit", {
 
 test_that("full_sims argument works", {
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
-  sim_data <- readRDS("../testdata/sim_data.rds")
+  #sim_data <- readRDS("../testdata/sim_data.rds")
+  sim_data <- readRDS(file.path(TESTDATA_DIR, "sim_data.rds"))
   datjags <- as.list(sim_data)
   
   ### observed value approach

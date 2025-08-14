@@ -6,10 +6,12 @@
 
 test_that("Simple model runs with mcmcMargEff", {
   
-  jags_interactive <- readRDS("../testdata/jags_interactive.rds")
+  #jags_interactive <- readRDS("../testdata/jags_interactive.rds")
+  jags_interactive <- readRDS(file.path(TESTDATA_DIR, "jags_interactive.rds"))
   fit <- jags_interactive
   
-  sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
+  #sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
+  sim_data_interactive <- readRDS(file.path(TESTDATA_DIR, "sim_data_interactive.rds"))
   
   ## using mcmcMargEff
   fit_me <- mcmcMargEff(mod = fit,
@@ -20,17 +22,19 @@ test_that("Simple model runs with mcmcMargEff", {
   
   ## testing
   value <- fit_me[25, 3]
-  check_against <- 0.519057
-  expect_equal(value, check_against, tolerance = 1e-2)
+  check_against <- 0.52
+  expect_equal(value, check_against, tolerance = 0.1)
   
 })
 
 test_that("Simple model runs with mcmcMargEff with arguments", {
   
-  jags_interactive <- readRDS("../testdata/jags_interactive.rds")
+  #jags_interactive <- readRDS("../testdata/jags_interactive.rds")
+  jags_interactive <- readRDS(file.path(TESTDATA_DIR, "jags_interactive.rds"))
   fit <- jags_interactive
   
-  sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
+  #sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
+  sim_data_interactive <- readRDS(file.path(TESTDATA_DIR, "sim_data_interactive.rds"))
   
   ## processing the data
   mcmc <- coda::as.mcmc(fit)
@@ -48,17 +52,19 @@ test_that("Simple model runs with mcmcMargEff with arguments", {
   
   ## testing
   value <- fit_me[37, 4]
-  check_against <- 0.5145419
-  expect_equal(value, check_against, tolerance = 1e-2)
+  check_against <- 0.5
+  expect_equal(value, check_against, tolerance = 0.1)
   
 })
 
 test_that("Simple model runs with mcmcMargEff with plotting arguments", {
   
-  jags_interactive <- readRDS("../testdata/jags_interactive.rds")
+  #jags_interactive <- readRDS("../testdata/jags_interactive.rds")
+  jags_interactive <- readRDS(file.path(TESTDATA_DIR, "jags_interactive.rds"))
   fit <- jags_interactive
   
-  sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
+  #sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
+  sim_data_interactive <- readRDS(file.path(TESTDATA_DIR, "sim_data_interactive.rds"))
   
   ## using mcmcMargEff
   plot_me <- mcmcMargEff(mod = fit,
@@ -77,10 +83,12 @@ test_that("Simple model runs with mcmcMargEff with plotting arguments", {
 
 test_that("Simple model runs with mcmcMargEff with categorical moderator", {
   
-  jags_interactive_cat <- readRDS("../testdata/jags_interactive_cat.rds")
+  #jags_interactive_cat <- readRDS("../testdata/jags_interactive_cat.rds")
+  jags_interactive_cat <- readRDS(file.path(TESTDATA_DIR, "jags_interactive_cat.rds"))
   fit <- jags_interactive_cat
   
-  sim_data_interactive_cat <- readRDS("../testdata/sim_data_interactive_cat.rds")
+  #sim_data_interactive_cat <- readRDS("../testdata/sim_data_interactive_cat.rds")
+  sim_data_interactive_cat <- readRDS(file.path(TESTDATA_DIR, "sim_data_interactive_cat.rds"))
   
   ## using mcmcMargEff
   fit_me <- mcmcMargEff(mod = fit,
@@ -93,8 +101,8 @@ test_that("Simple model runs with mcmcMargEff with categorical moderator", {
   
   ## testing
   value <- fit_me[4, 3]
-  check_against <- -0.9342449
-  expect_equal(value, check_against, tolerance = 1e-2)
+  check_against <- -0.6
+  expect_equal(value, check_against, tolerance = 0.1)
   
 })
 

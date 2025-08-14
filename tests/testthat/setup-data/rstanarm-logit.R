@@ -19,4 +19,6 @@ rstanarm_logit <- stan_glm(volunteer ~ female + neuroticism + extraversion,
                            seed = 123)
 
 format(object.size(rstanarm_logit), "Kb")
-saveRDS(rstanarm_logit, "tests/testdata/rstanarm-logit.rds")
+#saveRDS(rstanarm_logit, "tests/testdata/rstanarm-logit.rds")
+saveRDS(rstanarm_logit, file.path(TESTDATA_DIR, "rstanarm_logit.rds"))
+

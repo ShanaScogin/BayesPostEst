@@ -1,9 +1,7 @@
 Testdata generators
 ===================
 
-The scripts here generated the files in `tests/testdata`, akin to the relationship between `data` and `data-raw`. 
-
-The reason to keep them here under tests and not as package data is that some of them (RStan, but also the others) are quite large and noticeably slow down package loading. They also cause an R check NOTE for going over 5MB installed size. 
+The scripts here are temporarily generated for tests. The static version is in file data-static, which is ignored in the build. The reason to keep them here under tests and not as package data is that some of them (RStan, but also the others) are quite large and noticeably slow down package loading. They also cause an R check NOTE for going over the recommended 5MB installed size. 
 
 In case it is needed, below is minimal data object roxygen documentation:
 

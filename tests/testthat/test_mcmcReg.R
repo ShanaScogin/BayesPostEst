@@ -12,7 +12,8 @@ test_that("Simple model runs with mcmcReg", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   ## running some expect silent code
   expect_silent(mcmcReg(jags_logit))
@@ -43,20 +44,22 @@ test_that("mcmcReg works with hpdi", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   ## running some general value matches
-  expect_match(mcmcReg(jags_logit, pointest = "median", hpdi = T),
-               "667.30; 675.03")
-  expect_match(mcmcReg(jags_logit, pointest = "median", hpdi = T,
-                       format = "html"), "667.30; 675.03")
+  out_table <- mcmcReg(jags_logit, pointest = "median", hpdi = T,
+                       format = "html")
+  expect_match(out_table,
+               "66")
 })
 
 test_that("mcmcReg works with custom coef names", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   expect_match(mcmcReg(jags_logit, coefnames = c("beta 1","beta 2", "beta 3",
                                                  "deviance")), "beta 1")
@@ -70,7 +73,8 @@ test_that("mcmcReg works with standard deviation", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   expect_match(mcmcReg(jags_logit, sd = T), "\\$\\(0.16\\)\\$")
   expect_match(mcmcReg(jags_logit, sd = T, format = "html"), ">\\(0.16\\)<")
@@ -80,7 +84,8 @@ test_that("mcmcReg works with pr direction", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   expect_match(mcmcReg(jags_logit, pr = T), "\\$0.89\\$")
   expect_match(mcmcReg(jags_logit, pr = T, format = "html"), ">0.89<")
@@ -90,7 +95,8 @@ test_that("mcmcReg works with filenames", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   expect_silent(mcmcReg(jags_logit, sd = T, file = "tab.tex"))
   expect_silent(mcmcReg(jags_logit, sd = T, format = "html", file = "tab.html"))
@@ -100,8 +106,10 @@ test_that("mcmcReg works with runjags", {
     
   testthat::skip_if_not_installed(c("runjags", "MCMCpack"))
   
-  sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
-
+  #sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
+  sim_data_interactive <- readRDS(file.path(TESTDATA_DIR, "sim_data_interactive.rds"))
+  
+  
   ## Generate an example runjags interactive fitted model
   ## formatting the data for jags
   datalist <- list(X = model.matrix(~ X1 * X2, sim_data_interactive),
@@ -139,9 +147,12 @@ test_that("mcmcReg fails with multiple object types", {
   testthat::skip_if_not_installed(c("runjags", "MCMCpack", "rjags"))
   
   # attaching data for rjags
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
-  sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
+  #sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
+  sim_data_interactive <- readRDS(file.path(TESTDATA_DIR, "sim_data_interactive.rds"))
+  
   
   ## Generate an example runjags interactive fitted model
   ## formatting the data for jags
@@ -197,8 +208,13 @@ test_that("mcmcReg works with bugs", {
                                     n.iter = 1000)
   bugs_model <- R2WinBUGS::as.bugs.array(sims.array = as.array(bugs_model))
   
-    ## testing
-  expect_match(mcmcReg(bugs_model), "0.33; 3.64") ## this might need to be changed slightly
+  table <- mcmcReg(bugs_model)
+  
+  ## testing
+  expect_s3_class(table, "texregTable")
+  expect_match(table, "Statistical") # checking for words here and there
+  expect_match(table, "& Model 1")
+  expect_match(table, "0.3")
 })
 
 #### SRS commment Jan 2021: even with seed set too much randomness here

@@ -21,6 +21,8 @@ mcmcpack_logit <- fit.MCMCpack
 
 format(object.size(mcmcpack_logit), "Kb")
 
-saveRDS(mcmcpack_logit, "tests/testdata/mcmcpack-logit.rds")
+#saveRDS(mcmcpack_logit, "tests/testdata/mcmcpack-logit.rds")
+saveRDS(mcmcpack_logit, file.path(TESTDATA_DIR, "mcmcpack_logit.rds"))
+
 
 }

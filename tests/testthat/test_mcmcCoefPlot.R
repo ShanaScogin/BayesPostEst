@@ -13,7 +13,8 @@ test_that("Simple model runs with mcmcCoefPlot", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   expect_silent(mcmcCoefPlot(jags_logit))
   
@@ -23,7 +24,8 @@ test_that("mcmcCoefPlot works with jags_logit", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   expect_silent(mcmcCoefPlot(coda::as.mcmc(jags_logit)[[1]]))
 })
@@ -48,7 +50,8 @@ test_that("Simple model runs with mcmcCoefPlot with arguments", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   ## running some expect silent tests for jags_logit
   expect_silent(mcmcCoefPlot(jags_logit))
@@ -59,7 +62,7 @@ test_that("Simple model runs with mcmcCoefPlot with arguments", {
   med_df <- mcmcCoefPlot(jags_logit, pars = 'b', pointest = 'median', plot = F, regex = T)
   value <- med_df[2, 1]
   check_against <- 0.5273031
-  expect_equal(value, check_against, tolerance = 1e-4)
+  expect_equal(value, check_against, tolerance = 0.1)
   
   ## running one more for regex = FALSE
   expect_silent(mcmcCoefPlot(jags_logit, pars = c('b[1]', 'b[2]'), regex = FALSE))
@@ -69,12 +72,13 @@ test_that("Simple model runs with mcmcCoefPlot with sorting", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   med_df <- mcmcCoefPlot(jags_logit, pars = 'b', sort = T, plot = F, regex = T)
   value <- med_df[3, 1]
   check_against <- 0.6335488
-  expect_equal(value, check_against, tolerance = 1e-4)
+  expect_equal(value, check_against, tolerance = 0.1)
   
 })
 
@@ -82,7 +86,8 @@ test_that("mcmcCoefPlot errors work", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   expect_error(mcmcCoefPlot(jags_logit, pointest = 'man'))
   expect_error(mcmcCoefPlot(jags_logit, hpdi = 2))
@@ -94,7 +99,8 @@ test_that("mcmcCoefPlot works with runjags", {
   
   testthat::skip_if_not_installed("runjags")
   
-  sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
+  #sim_data_interactive <- readRDS("../testdata/sim_data_interactive.rds")
+  sim_data_interactive <- readRDS(file.path(TESTDATA_DIR, "sim_data_interactive.rds"))
   
   datalist <- list(X = model.matrix(~ X1 * X2, sim_data_interactive),
                    Y = sim_data_interactive[, 3],

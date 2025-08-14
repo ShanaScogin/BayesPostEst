@@ -6,9 +6,11 @@
 # 
 #  Generate an example JAGS probit fitted model
 #
-if (interactive()) {
+ library(R2jags)
+
+#data("sim_data_interactive")
+sim_data_interactive <- readRDS(file.path(TESTDATA_DIR, "sim_data_interactive.rds"))
   
-data("sim_data_interactive")
 
 ## formatting the data for jags
 datjags <- as.list(sim_data_interactive)
@@ -48,6 +50,8 @@ jags_interactive <- R2jags::jags(data = datjags, inits = inits,
                                  model.file = model)
 
 #usethis::use_data(jags_interactive, overwrite = TRUE)
-saveRDS(jags_interactive, "tests/testdata/jags_interactive.rds")
+#saveRDS(jags_interactive, "tests/testdata/jags_interactive.rds")
+saveRDS(jags_interactive, file.path(TESTDATA_DIR, "jags_interactive.rds"))
 
-}
+
+

@@ -19,7 +19,8 @@ test_that("constructor and default method work", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   # pull out a predicted probability matrix and yvec, for simple testing
   object   <- jags_logit
@@ -43,7 +44,8 @@ test_that("constructor rejects invalid input", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   # pull out a predicted probability matrix and yvec, for simple testing
   object   <- jags_logit
@@ -80,7 +82,8 @@ test_that(".default method rejects invalid input", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   # pull out a predicted probability matrix and yvec, for simple testing
   object   <- jags_logit
@@ -104,7 +107,8 @@ test_that("Simple model runs with mcmcRocPrc Full", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   ## using mcmcRocPrc with full draws
   full_with_curves <- mcmcRocPrc(jags_logit,
@@ -134,7 +138,8 @@ test_that("class 'jags' input works", {
   # include underlying "jags" classes in them
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   jags_object <- jags_logit$model
   posterior_samples <- as.mcmc(jags_logit)
@@ -152,7 +157,8 @@ test_that("JAGS logit input works", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   ## using mcmcRocPrc
   expect_error(
@@ -183,7 +189,8 @@ test_that("JAGS probit input works", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_probit <- readRDS("../testdata/jags_probit.rds")
+  #jags_probit <- readRDS("../testdata/jags_probit.rds")
+  jags_probit <- readRDS(file.path(TESTDATA_DIR, "jags_probit.rds"))
   
   expect_error(
     with_curves <- mcmcRocPrc(jags_probit,
@@ -200,7 +207,8 @@ test_that("Non-logit/probit JAGS does not work", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   fake_jags <- structure(
     list(
@@ -225,7 +233,8 @@ test_that("runjags input works", {
   
   testthat::skip_if_not_installed("runjags")
   
-  runjags_logit <- readRDS("../testdata/runjags-logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   expect_error(
     out <- mcmcRocPrc(runjags_logit, FALSE, FALSE, yname = "Y", 
@@ -266,7 +275,8 @@ test_that("binary/non-binary stanfit models are correctly IDd", {
   
   testthat::skip_if_not_installed("rstan")
   
-  rstan_logit <- readRDS("../testdata/rstan-logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   expect_true(is_binary_model(rstan_logit))
   expect_equal(identify_link_function(rstan_logit), "logit")
@@ -277,7 +287,8 @@ test_that("RStan input works", {
   
   testthat::skip_if_not_installed("rstan")
   
-  rstan_logit <- readRDS("../testdata/rstan-logit.rds")
+  #rstan_logit <- readRDS("../testdata/rstan-logit.rds")
+  rstan_logit <- readRDS(file.path(TESTDATA_DIR, "rstan_logit.rds"))
   
   df <- carData::Cowles
   df$female <- (as.numeric(df$sex) - 2) * (-1)
@@ -303,7 +314,8 @@ test_that("rstanarm input works", {
   
   testthat::skip_if_not_installed("rstanarm")
   
-  rstanarm_logit <- readRDS("../testdata/rstanarm-logit.rds")
+  #rstanarm_logit <- readRDS("../testdata/rstanarm-logit.rds")
+  rstanarm_logit <- readRDS(file.path(TESTDATA_DIR, "rstanarm_logit.rds"))
   
   expect_error(
     out <- mcmcRocPrc(rstanarm_logit, FALSE, FALSE),
@@ -329,7 +341,8 @@ test_that("brms input works", {
   
   testthat::skip_if_not_installed("brms")
   
-  brms_logit <- readRDS("../testdata/brms-logit.rds")
+  #brms_logit <- readRDS("../testdata/brms-logit.rds")
+  brms_logit <- readRDS(file.path(TESTDATA_DIR, "brms-logit.rds"))
   
   expect_error(
     out <- mcmcRocPrc(brms_logit, FALSE, FALSE),
@@ -363,7 +376,8 @@ test_that("BUGS input works", {
   bugs_logit <- R2WinBUGS::as.bugs.array(sims.array = as.array(bugs_model))
   
   ## loading sim data
-  sim_data <- readRDS("../testdata/sim_data.rds")
+  #sim_data <- readRDS("../testdata/sim_data.rds")
+  sim_data <- readRDS(file.path(TESTDATA_DIR, "sim_data.rds"))
     
   # testing
   expect_error(
@@ -380,7 +394,8 @@ test_that("MCMCpack input works", {
   
   testthat::skip_if_not_installed("MCMCpack")
   
-  mcmcpack_logit <- readRDS("../testdata/mcmcpack-logit.rds")
+  #mcmcpack_logit <- readRDS("../testdata/mcmcpack-logit.rds")
+  mcmcpack_logit <- readRDS(file.path(TESTDATA_DIR, "mcmcpack_logit.rds"))
   
   df <- carData::Cowles
   df$female <- (as.numeric(df$sex) - 2) * (-1)
@@ -454,7 +469,8 @@ test_that("mcmcRocPrc returns the same output structure, sans NULL elements", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   with_curves <- mcmcRocPrc(jags_logit,
                             yname = "Y",
@@ -490,7 +506,8 @@ test_that("print method works", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   with_curves <- mcmcRocPrc(jags_logit,
                             yname = "Y",
@@ -539,7 +556,8 @@ test_that("plot method gives informative errors", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   with_curves <- mcmcRocPrc(jags_logit,
                             yname = "Y",
@@ -575,7 +593,8 @@ test_that("plot method works", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   with_curves <- mcmcRocPrc(jags_logit,
                             yname = "Y",
@@ -616,7 +635,8 @@ test_that("data frame conversion works with all 4 output sets", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
   with_curves <- mcmcRocPrc(jags_logit,
                             yname = "Y",

@@ -3,13 +3,17 @@
 ## in the .rds format. Leaving previous code saving
 ## data with usethis::usedata() commented out for now
 
-# 
-#  Generate an example JAGS logit fitted model object
-#
-if (interactive()) {
 
-  sim_data <- readRDS("~/BayesPostEst/tests/testdata/sim_data.rds")
+# 
+#  Generate an example JAGS probit fitted model
+#
+
+library(R2jags)
+
+  #sim_data <- readRDS("~/BayesPostEst/tests/testdata/sim_data.rds")
   #data("sim_data")
+  sim_data <- readRDS(file.path(TESTDATA_DIR, "sim_data.rds"))
+  
   
   ## formatting the data for jags
   datjags <- as.list(sim_data)
@@ -20,9 +24,10 @@ if (interactive()) {
     
     for(i in 1:N){
       Y[i] ~ dbern(p[i])  ## Bernoulli distribution of y_i
-      logit(p[i]) <- mu[i]    ## Logit link function
-      mu[i] <- b[1] +
-        b[2] * X1[i] +
+      probit(p[i]) <- mu[i]    ## Update with probit link function
+      
+      mu[i] <- b[1] + 
+        b[2] * X1[i] + 
         b[3] * X2[i]
     }
     
@@ -39,15 +44,13 @@ if (interactive()) {
   
   ## fitting the model with R2jags
   set.seed(123)
-  jags_logit <- R2jags::jags(data = datjags, inits = inits,
-                      parameters.to.save = params, n.chains = 2, n.iter = 2000,
-                      n.burnin = 1000, model.file = model,
-                      progress.bar = "none")
+  fit <- R2jags::jags(data = datjags, inits = inits, 
+                      parameters.to.save = params, n.chains = 2, n.iter = 2000, 
+                      n.burnin = 1000, model.file = model)
   
-  #usethis::use_data(jags_logit, overwrite = TRUE)
-  saveRDS(jags_logit, "tests/testdata/jags_logit.rds")
-
-}
-
-
+  jags_probit <- fit
+  #usethis::use_data(jags_probit, overwrite = TRUE)
+  #saveRDS(jags_probit, "tests/testdata/jags_probit.rds")
+  saveRDS(jags_probit, file.path(TESTDATA_DIR, "jags_probit.rds"))
+  
 

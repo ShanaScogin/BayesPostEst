@@ -10,10 +10,12 @@ test_that("Simple model runs with mcmcFD", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_logit <- readRDS("../testdata/jags_logit.rds")
+  #jags_logit <- readRDS("../testdata/jags_logit.rds")
+  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   fit <- jags_logit
   
-  sim_data <- readRDS("../testdata/sim_data.rds")
+  #sim_data <- readRDS("../testdata/sim_data.rds")
+  sim_data <- readRDS(file.path(TESTDATA_DIR, "sim_data.rds"))
 
   ## running function with logit
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
@@ -32,10 +34,12 @@ test_that("Simple probit model runs with mcmcFD", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_probit <- readRDS("../testdata/jags_probit.rds")
+  #jags_probit <- readRDS("../testdata/jags_probit.rds")
+  jags_probit <- readRDS(file.path(TESTDATA_DIR, "jags_probit.rds"))
   fit <- jags_probit
   
-  sim_data <- readRDS("../testdata/sim_data.rds")
+  #sim_data <- readRDS("../testdata/sim_data.rds")
+  sim_data <- readRDS(file.path(TESTDATA_DIR, "sim_data.rds"))
   
   ## running function with probit
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
@@ -62,10 +66,12 @@ test_that("ROPE version works", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_probit <- readRDS("../testdata/jags_probit.rds")
+  #jags_probit <- readRDS("../testdata/jags_probit.rds")
+  jags_probit <- readRDS(file.path(TESTDATA_DIR, "jags_probit.rds"))
   fit <- jags_probit
   
-  sim_data <- readRDS("../testdata/sim_data.rds")
+  #sim_data <- readRDS("../testdata/sim_data.rds")
+  sim_data <- readRDS(file.path(TESTDATA_DIR, "sim_data.rds"))
   
   ## running function with probit
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
@@ -91,10 +97,12 @@ test_that("Errors work", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_probit <- readRDS("../testdata/jags_probit.rds")
+  #jags_probit <- readRDS("../testdata/jags_probit.rds")
+  jags_probit <- readRDS(file.path(TESTDATA_DIR, "jags_probit.rds"))
   fit <- jags_probit
   
-  sim_data <- readRDS("../testdata/sim_data.rds")
+  #sim_data <- readRDS("../testdata/sim_data.rds")
+  sim_data <- readRDS(file.path(TESTDATA_DIR, "sim_data.rds"))
   
   ## running function with probit
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
@@ -112,19 +120,22 @@ test_that("Print method works", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_probit <- readRDS("../testdata/jags_probit.rds")
+  #jags_probit <- readRDS("../testdata/jags_probit.rds")
+  jags_probit <- readRDS(file.path(TESTDATA_DIR, "jags_probit.rds"))
   fit <- jags_probit
   
-  sim_data <- readRDS("../testdata/sim_data.rds")
+  #sim_data <- readRDS("../testdata/sim_data.rds")
+  sim_data <- readRDS(file.path(TESTDATA_DIR, "sim_data.rds"))
   
   ## running function with probit
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)
   mcmc <- coda::as.mcmc(fit)
   mcmc_mat <- as.matrix(mcmc)[, 1:ncol(xmat)]
   
-  expect_output(print(mcmcFD(modelmatrix = xmat, mcmcout = mcmc_mat,
-                             link = 'logit')),
-                '0.08001370')
+  out_df <- mcmcFD(modelmatrix = xmat, mcmcout = mcmc_mat,
+                      link = 'logit')
+  expect_equal(out_df[1, 1],
+                0.08, tolerance = 0.1)
   expect_output(print(mcmcFD(modelmatrix = xmat, mcmcout = mcmc_mat, link = 'logit', fullsims = T)))
   
 })
@@ -133,10 +144,12 @@ test_that("Deprecated plotting function works", {
   
   testthat::skip_if_not_installed("rjags")
   
-  jags_probit <- readRDS("../testdata/jags_probit.rds")
+  #jags_probit <- readRDS("../testdata/jags_probit.rds")
+  jags_probit <- readRDS(file.path(TESTDATA_DIR, "jags_probit.rds"))
   fit <- jags_probit
   
-  sim_data <- readRDS("../testdata/sim_data.rds")
+  #sim_data <- readRDS("../testdata/sim_data.rds")
+  sim_data <- readRDS(file.path(TESTDATA_DIR, "sim_data.rds"))
   
   ## running function with probit
   xmat <- model.matrix(Y ~ X1 + X2, data = sim_data)

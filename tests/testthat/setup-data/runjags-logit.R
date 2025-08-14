@@ -2,7 +2,10 @@
 #   Generate an example runjags model for testing
 #
 
-data("sim_data")
+library(runjags)
+
+#data("sim_data")
+sim_data <- readRDS(file.path(TESTDATA_DIR, "sim_data.rds"))
 
 # formatting the data for jags
 datjags <- as.list(sim_data)
@@ -29,9 +32,11 @@ inits2 <- list("b" = rnorm(3))
 inits <- list(inits1, inits2)
 
 set.seed(123)
-runjags_logit <- run.jags(model = model_string, monitor = "b", data = datjags, 
+runjags_logit <- runjags::run.jags(model = model_string, monitor = "b", data = datjags, 
                           n.chains = 2, sample = 2000, burnin = 1000,
                           inits = inits)
 
-saveRDS(runjags_logit, "tests/testdata/runjags-logit.rds")
+#saveRDS(runjags_logit, "tests/testdata/runjags-logit.rds")
+saveRDS(runjags_logit, file.path(TESTDATA_DIR, "runjags_logit.rds"))
+
 

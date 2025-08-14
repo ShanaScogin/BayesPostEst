@@ -1,5 +1,6 @@
 # BayesPostEst 0.4.0
 * Fixed documentation issues (#92)
+* Reduced size of file by changing workflow of testthat (#79)
 * Fixed issue with mcmcFDplot() 
 
 # BayesPostEst 0.3.2
