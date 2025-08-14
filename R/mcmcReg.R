@@ -163,13 +163,22 @@ mcmcReg <- function(mod,
   if (!is.null(coefnames) & !is.list(coefnames)) coefnames <- list(coefnames)
   
   ## if only one parameter vector, coerce to a list
-  if (class(pars) != 'list' & !is.null(pars)) pars <- list(pars)
+  #if (class(pars) != 'list' & !is.null(pars)) pars <- list(pars)
+  # 2025 SRS Note: Making these changes based on winbuilder note - leaving
+  # note here for transparency since this is Rob's function
+  if (!inherits(pars, "list") && !is.null(pars)) pars <- list(pars)
   
   ## if only one gof statistic scalar or vector, coerce to a list
-  if (class(gof) != 'list') gof <- list(rep(gof, times = length(mod)))
+  # if (class(gof) != 'list') gof <- list(rep(gof, times = length(mod)))
+  # 2025 SRS Note: Making these changes based on winbuilder note - leaving
+  # note here for transparency since this is Rob's function
+  if (!inherits(gof, "list")) gof <- list(rep(gof, times = length(mod)))
   
   ## if only one gof statistic name scalar or vector, coerce to a list
-  if (class(gofnames) != 'list') gofnames <- list(gofnames)
+  #if (class(gofnames) != 'list') gofnames <- list(gofnames)
+  # 2025 SRS Note: Making these changes based on winbuilder note - leaving
+  # note here for transparency since this is Rob's function
+  if (!inherits(gofnames, "list")) gofnames <- list(gofnames)
   
   ## extract samples and variable names from jags or rjags objects
   if (lapply(mod, inherits, what = c('jags', 'rjags'))[[1]]) {
