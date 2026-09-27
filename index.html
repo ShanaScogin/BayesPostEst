@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Generate Postestimation Quantities for Bayesian MCMC Estimation • BayesPostEst</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,25 +33,19 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">BayesPostEst</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -64,9 +60,9 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ShanaScogin/BayesPostEst/">
+  <a href="https://github.com/ShanaScogin/BayesPostEst/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -77,48 +73,48 @@
 </div>
 <!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="contents col-md-9">
 
-<div id="bayespostest" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#bayespostest" class="anchor"></a>BayesPostEst</h1></div>
-
+<div class="section level1">
+<div class="page-header"><h1 id="bayespostest">BayesPostEst<a class="anchor" aria-label="anchor" href="#bayespostest"></a>
+</h1></div>
+<p><a href="https://CRAN.R-project.org/package=BayesPostEst" class="external-link"><img src="https://www.r-pkg.org/badges/version/BayesPostEst" alt="CRAN_Status_Badge"></a> <a href="https://doi.org/10.21105/joss.01722" class="external-link"><img src="https://joss.theoj.org/papers/10.21105/joss.01722/status.svg" alt="DOI"></a> <a href="https://app.codecov.io/gh/ShanaScogin/BayesPostEst?branch=master" class="external-link"><img src="https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></p>
 <p>An R package implementing functions to assist in generating and plotting postestimation quantities after estimating Bayesian regression models using MCMC.</p>
 </div>
-<div id="introduction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h1>
-<p>BayesPostEst contains functions to generate postestimation quantities after estimating Bayesian regression models. The package was inspired by a set of functions written originally for <a href="http://www.jkarreth.net">Johannes Karreth</a>’s workshop on Bayesian modeling at the <a href="https://www.icpsr.umich.edu/web/pages/sumprog/">ICPSR Summer program</a>. It has grown to include new functions (see <code>mcmcReg</code>) and will continue to grow to support Bayesian postestimation. For now, the package focuses mostly on generalized linear regression models for binary outcomes (logistic and probit regression).</p>
+<div class="section level1">
+<h1 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h1>
+<p>BayesPostEst contains functions to generate postestimation quantities after estimating Bayesian regression models. The package was inspired by a set of functions written originally for <a href="http://www.jkarreth.net" class="external-link">Johannes Karreth</a>’s workshop on Bayesian modeling at the <a href="https://www.icpsr.umich.edu/web/pages/sumprog/" class="external-link">ICPSR Summer program</a>. It has grown to include new functions (see <code>mcmcReg</code>) and will continue to grow to support Bayesian postestimation. For now, the package focuses mostly on generalized linear regression models for binary outcomes (logistic and probit regression).</p>
 </div>
-<div id="installation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h1>
+<div class="section level1">
+<h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h1>
 <p>To install the latest release on CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BayesPostEst"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BayesPostEst"</span><span class="op">)</span></span></code></pre></div>
 <p>The latest development version on GitHub can be installed with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org">"remotes"</a></span><span class="op">)</span>
-<span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"ShanaScogin/BayesPostEst"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://remotes.r-lib.org" class="external-link">"remotes"</a></span><span class="op">)</span></span>
+<span><span class="fu">install_github</span><span class="op">(</span><span class="st">"ShanaScogin/BayesPostEst"</span><span class="op">)</span></span></code></pre></div>
 <p>Once you have installed the package, you can access it by calling:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/ShanaScogin/BayesPostEst">"BayesPostEst"</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/ShanaScogin/BayesPostEst" class="external-link">"BayesPostEst"</a></span><span class="op">)</span></span></code></pre></div>
 <p>After the package is loaded, check out the <code><a href="reference/BayesPostEst.html">?BayesPostEst</a></code> to see a help file.</p>
 </div>
-<div id="general-setup" class="section level1">
-<h1 class="hasAnchor">
-<a href="#general-setup" class="anchor"></a>General setup</h1>
+<div class="section level1">
+<h1 id="general-setup">General setup<a class="anchor" aria-label="anchor" href="#general-setup"></a>
+</h1>
 <p>Most functions in this package work with posterior distributions of parameters. These distributions need to be converted into a matrix. The <code>mcmcTab</code> function does this automatically for posterior draws generated by JAGS, BUGS, MCMCpack, rstan, and rstanarm. For all other functions, users must convert these objects into a matrix, where rows represent iterations and columns represent parameters. The help file for each function explains how to do this.</p>
 </div>
-<div id="example-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#example-data" class="anchor"></a>Example data</h1>
-<p>This vignette uses the <code>Cowles</code> dataset (<a href="https://doi.org/10.1111/j.2044-8309.1987.tb00769.x">Cowles and Davis 1987, British Journal of Social Psychology 26(2): 97-102</a>) from the <a href="https://CRAN.R-project.org/package=carData">carData package</a>.</p>
+<div class="section level1">
+<h1 id="example-data">Example data<a class="anchor" aria-label="anchor" href="#example-data"></a>
+</h1>
+<p>This vignette uses the <code>Cowles</code> dataset (<a href="https://doi.org/10.1111/j.2044-8309.1987.tb00769.x" class="external-link">Cowles and Davis 1987, British Journal of Social Psychology 26(2): 97-102</a>) from the <a href="https://CRAN.R-project.org/package=carData" class="external-link">carData package</a>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">carData</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/carData/man/Cowles.html">Cowles</a></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">carData</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/carData/man/Cowles.html" class="external-link">Cowles</a></span></span></code></pre></div>
 <p>This data frame contains information on 1421 individuals in the following variables:</p>
 <ul>
 <li>neuroticism: scale from Eysenck personality inventory.</li>
@@ -128,644 +124,642 @@
 </ul>
 <p>Before proceeding, we convert the two factor variables <code>sex</code> and <code>volunteer</code> into numeric variables. We also means-center and standardize the two continuous variables by dividing each by two standard deviations (Gelman and Hill 2007, Cambridge University Press).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span><span class="op">$</span><span class="va">female</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">sex</span><span class="op">)</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>
-<span class="va">df</span><span class="op">$</span><span class="va">volunteer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">volunteer</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span>
-<span class="va">df</span><span class="op">$</span><span class="va">extraversion</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">extraversion</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">extraversion</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">extraversion</span><span class="op">)</span><span class="op">)</span>
-<span class="va">df</span><span class="op">$</span><span class="va">neuroticism</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">neuroticism</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">neuroticism</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">neuroticism</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">df</span><span class="op">$</span><span class="va">female</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">sex</span><span class="op">)</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span> <span class="op">*</span> <span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">volunteer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">volunteer</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">extraversion</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">extraversion</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">extraversion</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">extraversion</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">neuroticism</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">neuroticism</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">neuroticism</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fl">2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">neuroticism</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We estimate a Bayesian generalized linear model with the inverse logit link function, where</p>
-<p><br><span class="math display">Pr(Volunteering<sub><em>i</em></sub>) = logit<sup> − 1</sup>(<em>β</em><sub>1</sub>+<em>β</em><sub>2</sub>Female<sub><em>i</em></sub>+<em>β</em><sub>3</sub>Neuroticism<sub><em>i</em></sub>+<em>β</em><sub>4</sub>Extraversion<sub><em>i</em></sub>)</span><br></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Pr</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msub><mtext mathvariant="normal">Volunteering</mtext><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msup><mtext mathvariant="normal">logit</mtext><mrow><mi>−</mi><mn>1</mn></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>β</mi><mn>1</mn></msub><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><msub><mtext mathvariant="normal">Female</mtext><mi>i</mi></msub><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><msub><mtext mathvariant="normal">Neuroticism</mtext><mi>i</mi></msub><mo>+</mo><msub><mi>β</mi><mn>4</mn></msub><msub><mtext mathvariant="normal">Extraversion</mtext><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+\text{Pr}\left(\text{Volunteering}_i\right) = \text{logit}^{-1}\left(\beta_1 + \beta_2 \text{Female}_i +  \beta_3 \text{Neuroticism}_i + \beta_4 \text{Extraversion}_i\right)
+</annotation></semantics></math></p>
 <p>BayesPostEst functions accommodate GLM estimates for both logit and probit link functions. The examples proceed with the logit link function. If we had estimated a probit regression, the corresponding argument <code>link</code> in relevant function calls would need to be set to <code>link = "probit"</code>. Otherwise, it is set to <code>link = "logit"</code> by default.</p>
 </div>
-<div id="model-estimation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#model-estimation" class="anchor"></a>Model estimation</h1>
-<p>To use BayesPostEst, we first estimate a Bayesian regression model. The vignette demonstrates five tools for doing so: JAGS (via the <a href="https://cran.r-project.org/package=R2jags">R2jags</a> and <a href="https://cran.r-project.org/package=rjags">rjags</a> packages), <a href="https://cran.r-project.org/package=MCMCpack">MCMCpack</a>, and the two Stan interfaces <a href="https://cran.r-project.org/package=rstan">rstan</a> and <a href="https://cran.r-project.org/package=rstanarm">rstanarm</a>.</p>
-<div id="jags" class="section level2">
-<h2 class="hasAnchor">
-<a href="#jags" class="anchor"></a>JAGS</h2>
-<p>First, we prepare the data for JAGS (<a href="https://mcmc-jags.sourceforge.io/">Plummer 2017</a>). Users need to combine all variables into a list and specify any other elements, like in this case N, the number of observations.</p>
+<div class="section level1">
+<h1 id="model-estimation">Model estimation<a class="anchor" aria-label="anchor" href="#model-estimation"></a>
+</h1>
+<p>To use BayesPostEst, we first estimate a Bayesian regression model. The vignette demonstrates five tools for doing so: JAGS (via the <a href="https://cran.r-project.org/package=R2jags" class="external-link">R2jags</a> and <a href="https://cran.r-project.org/package=rjags" class="external-link">rjags</a> packages), <a href="https://cran.r-project.org/package=MCMCpack" class="external-link">MCMCpack</a>, and the two Stan interfaces <a href="https://cran.r-project.org/package=rstan" class="external-link">rstan</a> and <a href="https://cran.r-project.org/package=rstanarm" class="external-link">rstanarm</a>.</p>
+<div class="section level2">
+<h2 id="jags">JAGS<a class="anchor" aria-label="anchor" href="#jags"></a>
+</h2>
+<p>First, we prepare the data for JAGS (<a href="https://mcmc-jags.sourceforge.io/" class="external-link">Plummer 2017</a>). Users need to combine all variables into a list and specify any other elements, like in this case N, the number of observations.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"volunteer"</span>, <span class="st">"female"</span>, <span class="st">"neuroticism"</span>, <span class="st">"extraversion"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
-<span class="va">dl</span><span class="op">$</span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">dl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"volunteer"</span>, <span class="st">"female"</span>, <span class="st">"neuroticism"</span>, <span class="st">"extraversion"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">dl</span><span class="op">$</span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <p>We then write the JAGS model into the working directory.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">" 
-model {
-for (i in 1:N){
-  volunteer[i] ~ dbern(p[i])  
-  logit(p[i]) &lt;- mu[i]   
-  mu[i] &lt;- b[1] + b[2] * female[i] + b[3] * neuroticism[i] + b[4] * extraversion[i]
-  }
-
-for(j in 1:4){
-  b[j] ~ dnorm(0, 0.1)
-  }
-
-}
-"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/writeLines.html">writeLines</a></span><span class="op">(</span><span class="va">mod.jags</span>, <span class="st">"mod.jags"</span><span class="op">)</span>    </code></pre></div>
+<code class="sourceCode R"><span><span class="va">mod.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">" </span></span>
+<span><span class="st">model {</span></span>
+<span><span class="st">for (i in 1:N){</span></span>
+<span><span class="st">  volunteer[i] ~ dbern(p[i])  </span></span>
+<span><span class="st">  logit(p[i]) &lt;- mu[i]   </span></span>
+<span><span class="st">  mu[i] &lt;- b[1] + b[2] * female[i] + b[3] * neuroticism[i] + b[4] * extraversion[i]</span></span>
+<span><span class="st">  }</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">for(j in 1:4){</span></span>
+<span><span class="st">  b[j] ~ dnorm(0, 0.1)</span></span>
+<span><span class="st">  }</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">}</span></span>
+<span><span class="st">"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="va">mod.jags</span>, <span class="st">"mod.jags"</span><span class="op">)</span>    </span></code></pre></div>
 <p>We then define the parameters for which we wish to retain posterior distributions and provide starting values.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">params.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"b"</span><span class="op">)</span>
-<span class="va">inits1.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"b"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
-<span class="va">inits.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">inits1.jags</span>, <span class="va">inits1.jags</span>, <span class="va">inits1.jags</span>, <span class="va">inits1.jags</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">params.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b"</span><span class="op">)</span></span>
+<span><span class="va">inits1.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"b"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">inits.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">inits1.jags</span>, <span class="va">inits1.jags</span>, <span class="va">inits1.jags</span>, <span class="va">inits1.jags</span><span class="op">)</span></span></code></pre></div>
 <p>Now, fit the model.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"R2jags"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
-
-<span class="va">fit.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/R2jags/man/jags.html">jags</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dl</span>, inits <span class="op">=</span> <span class="va">inits.jags</span>, 
-  parameters.to.save <span class="op">=</span> <span class="va">params.jags</span>, n.chains <span class="op">=</span> <span class="fl">4</span>, n.iter <span class="op">=</span> <span class="fl">2000</span>, 
-  n.burnin <span class="op">=</span> <span class="fl">1000</span>, model.file <span class="op">=</span> <span class="st">"mod.jags"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">## Compiling model graph</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="co">##    Resolving undeclared variables</span></span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="co">##    Allocating nodes</span></span>
-<span id="cb10-4"><a href="#cb10-4"></a><span class="co">## Graph information:</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="co">##    Observed stochastic nodes: 1421</span></span>
-<span id="cb10-6"><a href="#cb10-6"></a><span class="co">##    Unobserved stochastic nodes: 4</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a><span class="co">##    Total graph size: 6870</span></span>
-<span id="cb10-8"><a href="#cb10-8"></a><span class="co">## </span></span>
-<span id="cb10-9"><a href="#cb10-9"></a><span class="co">## Initializing model</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"R2jags"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">fit.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/R2jags/man/jags.html" class="external-link">jags</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dl</span>, inits <span class="op">=</span> <span class="va">inits.jags</span>, </span>
+<span>  parameters.to.save <span class="op">=</span> <span class="va">params.jags</span>, n.chains <span class="op">=</span> <span class="fl">4</span>, n.iter <span class="op">=</span> <span class="fl">2000</span>, </span>
+<span>  n.burnin <span class="op">=</span> <span class="fl">1000</span>, model.file <span class="op">=</span> <span class="st">"mod.jags"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="do">## Compiling model graph</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="do">##    Resolving undeclared variables</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="do">##    Allocating nodes</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="do">## Graph information:</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="do">##    Observed stochastic nodes: 1421</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="do">##    Unobserved stochastic nodes: 4</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="do">##    Total graph size: 6864</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="do">## Initializing model</span></span></code></pre></div>
 <p>The same data and model can be used to fit the model using the rjags package:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://mcmc-jags.sourceforge.io">"rjags"</a></span><span class="op">)</span>
-<span class="va">mod.rjags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rjags/man/jags.model.html">jags.model</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"mod.jags"</span>, data <span class="op">=</span> <span class="va">dl</span>, inits <span class="op">=</span> <span class="va">inits.jags</span>,
-                        n.chains <span class="op">=</span> <span class="fl">4</span>, n.adapt <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">## Compiling model graph</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="co">##    Resolving undeclared variables</span></span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="co">##    Allocating nodes</span></span>
-<span id="cb12-4"><a href="#cb12-4"></a><span class="co">## Graph information:</span></span>
-<span id="cb12-5"><a href="#cb12-5"></a><span class="co">##    Observed stochastic nodes: 1421</span></span>
-<span id="cb12-6"><a href="#cb12-6"></a><span class="co">##    Unobserved stochastic nodes: 4</span></span>
-<span id="cb12-7"><a href="#cb12-7"></a><span class="co">##    Total graph size: 6870</span></span>
-<span id="cb12-8"><a href="#cb12-8"></a><span class="co">## </span></span>
-<span id="cb12-9"><a href="#cb12-9"></a><span class="co">## Initializing model</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://mcmc-jags.sourceforge.io" class="external-link">"rjags"</a></span><span class="op">)</span></span>
+<span><span class="va">mod.rjags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rjags/man/jags.model.html" class="external-link">jags.model</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"mod.jags"</span>, data <span class="op">=</span> <span class="va">dl</span>, inits <span class="op">=</span> <span class="va">inits.jags</span>,</span>
+<span>                        n.chains <span class="op">=</span> <span class="fl">4</span>, n.adapt <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="do">## Compiling model graph</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="do">##    Resolving undeclared variables</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="do">##    Allocating nodes</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="do">## Graph information:</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a><span class="do">##    Observed stochastic nodes: 1421</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="do">##    Unobserved stochastic nodes: 4</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="do">##    Total graph size: 6864</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="do">## Initializing model</span></span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fit.rjags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rjags/man/coda.samples.html">coda.samples</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">mod.rjags</span>,
-                          variable.names <span class="op">=</span> <span class="va">params.jags</span>,
-                          n.iter <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fit.rjags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rjags/man/coda.samples.html" class="external-link">coda.samples</a></span><span class="op">(</span>model <span class="op">=</span> <span class="va">mod.rjags</span>,</span>
+<span>                          variable.names <span class="op">=</span> <span class="va">params.jags</span>,</span>
+<span>                          n.iter <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="mcmcpack" class="section level2">
-<h2 class="hasAnchor">
-<a href="#mcmcpack" class="anchor"></a>MCMCpack</h2>
-<p>We estimate the same model using <a href="https://cran.r-project.org/package=MCMCpack">MCMCpack</a> (Martin, Quinn, and Park 2011, Journal of Statistical Software 42(9): 1-22).</p>
+<div class="section level2">
+<h2 id="mcmcpack">MCMCpack<a class="anchor" aria-label="anchor" href="#mcmcpack"></a>
+</h2>
+<p>We estimate the same model using <a href="https://cran.r-project.org/package=MCMCpack" class="external-link">MCMCpack</a> (Martin, Quinn, and Park 2011, Journal of Statistical Software 42(9): 1-22).</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://CRAN.R-project.org/package=MCMCpack">"MCMCpack"</a></span><span class="op">)</span>
-<span class="va">fit.MCMCpack</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MCMCpack/man/MCMClogit.html">MCMClogit</a></span><span class="op">(</span><span class="va">volunteer</span> <span class="op">~</span> <span class="va">female</span> <span class="op">+</span> <span class="va">neuroticism</span> <span class="op">+</span> <span class="va">extraversion</span>, 
-                          data <span class="op">=</span> <span class="va">df</span>, burning <span class="op">=</span> <span class="fl">1000</span>, mcmc <span class="op">=</span> <span class="fl">2000</span>, seed <span class="op">=</span> <span class="fl">123</span>,
-                          b0 <span class="op">=</span> <span class="fl">0</span>, B0 <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://CRAN.R-project.org/package=MCMCpack" class="external-link">"MCMCpack"</a></span><span class="op">)</span></span>
+<span><span class="va">fit.MCMCpack</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MCMCpack/man/MCMClogit.html" class="external-link">MCMClogit</a></span><span class="op">(</span><span class="va">volunteer</span> <span class="op">~</span> <span class="va">female</span> <span class="op">+</span> <span class="va">neuroticism</span> <span class="op">+</span> <span class="va">extraversion</span>, </span>
+<span>                          data <span class="op">=</span> <span class="va">df</span>, burning <span class="op">=</span> <span class="fl">1000</span>, mcmc <span class="op">=</span> <span class="fl">2000</span>, seed <span class="op">=</span> <span class="fl">123</span>,</span>
+<span>                          b0 <span class="op">=</span> <span class="fl">0</span>, B0 <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="rstan" class="section level2">
-<h2 class="hasAnchor">
-<a href="#rstan" class="anchor"></a>RStan</h2>
+<div class="section level2">
+<h2 id="rstan">RStan<a class="anchor" aria-label="anchor" href="#rstan"></a>
+</h2>
 <p>We write the same model in Stan language.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mod.stan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">" 
-data {
-  int&lt;lower=0&gt; N;
-  int&lt;lower=0,upper=1&gt; volunteer[N];
-  vector[N] female;
-  vector[N] neuroticism;
-  vector[N] extraversion;
-}
-parameters {
-  vector[4] b;
-}
-model {
-  volunteer ~ bernoulli_logit(b[1] + b[2] * female + b[3] * neuroticism + b[4] * extraversion);
-  for(i in 1:4){
-    b[i] ~ normal(0, 3); 
-  }
-}
-
-"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/writeLines.html">writeLines</a></span><span class="op">(</span><span class="va">mod.stan</span>, <span class="st">"mod.stan"</span><span class="op">)</span>    </code></pre></div>
-<p>We then load <a href="https://cran.r-project.org/package=rstan">rstan</a>…</p>
+<code class="sourceCode R"><span><span class="va">mod.stan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">" </span></span>
+<span><span class="st">data {</span></span>
+<span><span class="st">  int&lt;lower=0&gt; N;</span></span>
+<span><span class="st">  int&lt;lower=0,upper=1&gt; volunteer[N];</span></span>
+<span><span class="st">  vector[N] female;</span></span>
+<span><span class="st">  vector[N] neuroticism;</span></span>
+<span><span class="st">  vector[N] extraversion;</span></span>
+<span><span class="st">}</span></span>
+<span><span class="st">parameters {</span></span>
+<span><span class="st">  vector[4] b;</span></span>
+<span><span class="st">}</span></span>
+<span><span class="st">model {</span></span>
+<span><span class="st">  volunteer ~ bernoulli_logit(b[1] + b[2] * female + b[3] * neuroticism + b[4] * extraversion);</span></span>
+<span><span class="st">  for(i in 1:4){</span></span>
+<span><span class="st">    b[i] ~ normal(0, 3); </span></span>
+<span><span class="st">  }</span></span>
+<span><span class="st">}</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="va">mod.stan</span>, <span class="st">"mod.stan"</span><span class="op">)</span>    </span></code></pre></div>
+<p>We then load <a href="https://cran.r-project.org/package=rstan" class="external-link">rstan</a>…</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://mc-stan.org/rstan">"rstan"</a></span><span class="op">)</span>
-<span class="fu"><a href="https://mc-stan.org/rstan/reference/rstan_options.html">rstan_options</a></span><span class="op">(</span>auto_write <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>mc.cores <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html">detectCores</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://mc-stan.org/rstan/" class="external-link">"rstan"</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://mc-stan.org/rstan/reference/rstan_options.html" class="external-link">rstan_options</a></span><span class="op">(</span>auto_write <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>mc.cores <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>… and estimate the model, re-using the data in list format created for JAGS earlier.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fit.stan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstan/reference/stan.html">stan</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"mod.stan"</span>,  
-           data <span class="op">=</span> <span class="va">dl</span>,         
-           pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"b"</span><span class="op">)</span>,     
-           chains <span class="op">=</span> <span class="fl">4</span>,        
-           iter <span class="op">=</span> <span class="fl">2000</span>,       
-           seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span>        </code></pre></div>
+<code class="sourceCode R"><span><span class="va">fit.stan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstan/reference/stan.html" class="external-link">stan</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">"mod.stan"</span>,  </span>
+<span>           data <span class="op">=</span> <span class="va">dl</span>,         </span>
+<span>           pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b"</span><span class="op">)</span>,     </span>
+<span>           chains <span class="op">=</span> <span class="fl">4</span>,        </span>
+<span>           iter <span class="op">=</span> <span class="fl">2000</span>,       </span>
+<span>           seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span>        </span></code></pre></div>
 </div>
-<div id="rstanarm" class="section level2">
-<h2 class="hasAnchor">
-<a href="#rstanarm" class="anchor"></a>rstanarm</h2>
-<p>Lastly, we use the <a href="https://cran.r-project.org/package=rstanarm">rstanarm</a> interface (Goodrich, Gabry, Ali, and Brilleman 2019) to estimate the same model again.</p>
+<div class="section level2">
+<h2 id="rstanarm">rstanarm<a class="anchor" aria-label="anchor" href="#rstanarm"></a>
+</h2>
+<p>Lastly, we use the <a href="https://cran.r-project.org/package=rstanarm" class="external-link">rstanarm</a> interface (Goodrich, Gabry, Ali, and Brilleman 2019) to estimate the same model again.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://mc-stan.org/rstanarm/">"rstanarm"</a></span><span class="op">)</span>
-<span class="va">fit.rstanarm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html">stan_glm</a></span><span class="op">(</span><span class="va">volunteer</span> <span class="op">~</span> <span class="va">female</span> <span class="op">+</span> <span class="va">neuroticism</span> <span class="op">+</span> <span class="va">extraversion</span>, 
-                          data <span class="op">=</span> <span class="va">df</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span>,
-                         prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span>,
-                         prior_intercept <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span>,
-                         chains <span class="op">=</span> <span class="fl">4</span>, 
-                         iter <span class="op">=</span> <span class="fl">2000</span>,
-                         seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://mc-stan.org/rstanarm/" class="external-link">"rstanarm"</a></span><span class="op">)</span></span>
+<span><span class="va">fit.rstanarm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/stan_glm.html" class="external-link">stan_glm</a></span><span class="op">(</span><span class="va">volunteer</span> <span class="op">~</span> <span class="va">female</span> <span class="op">+</span> <span class="va">neuroticism</span> <span class="op">+</span> <span class="va">extraversion</span>, </span>
+<span>                          data <span class="op">=</span> <span class="va">df</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span>,</span>
+<span>                         prior <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html" class="external-link">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span>,</span>
+<span>                         prior_intercept <span class="op">=</span> <span class="fu"><a href="https://mc-stan.org/rstanarm/reference/priors.html" class="external-link">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3</span><span class="op">)</span>,</span>
+<span>                         chains <span class="op">=</span> <span class="fl">4</span>, </span>
+<span>                         iter <span class="op">=</span> <span class="fl">2000</span>,</span>
+<span>                         seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-<div id="tables-of-regression-coefficients-and-other-parameters" class="section level1">
-<h1 class="hasAnchor">
-<a href="#tables-of-regression-coefficients-and-other-parameters" class="anchor"></a>Tables of regression coefficients and other parameters</h1>
+<div class="section level1">
+<h1 id="tables-of-regression-coefficients-and-other-parameters">Tables of regression coefficients and other parameters<a class="anchor" aria-label="anchor" href="#tables-of-regression-coefficients-and-other-parameters"></a>
+</h1>
 <p><code>mcmcTab</code> generates a table summarizing the posterior distributions of all parameters contained in the model object. This table can then be used to summarize parameter quantities. The function can directly process objects created by the following packages: R2jags, runjags, rjags, R2WinBUGS, MCMCpack, rstan, rstanarm. This includes the following object classes: <code>jags</code>, <code>rjags</code>, <code>bugs</code>, <code>mcmc</code>, <code>mcmc.list</code>, <code>stanreg</code>, <code>stanfit</code>. By default, <code>mcmcTab</code> generates a dataframe with one row per parameter and columns containing the median, standard deviation, and 95% credible interval of each parameter’s posterior distribution.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.jags</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co">##   Variable   Median    SD    Lower    Upper</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a><span class="co">## 1     b[1]   -0.455 0.082   -0.615   -0.294</span></span>
-<span id="cb20-3"><a href="#cb20-3"></a><span class="co">## 2     b[2]    0.232 0.111    0.008    0.442</span></span>
-<span id="cb20-4"><a href="#cb20-4"></a><span class="co">## 3     b[3]    0.063 0.111   -0.149    0.285</span></span>
-<span id="cb20-5"><a href="#cb20-5"></a><span class="co">## 4     b[4]    0.514 0.111    0.288    0.733</span></span>
-<span id="cb20-6"><a href="#cb20-6"></a><span class="co">## 5 deviance 1909.375 2.856 1906.534 1917.190</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.jags</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="do">##   Variable   Median    SD    Lower    Upper</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="do">## 1     b[1]   -0.462 0.082   -0.622   -0.298</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="do">## 2     b[2]    0.238 0.112    0.017    0.455</span></span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a><span class="do">## 3     b[3]    0.063 0.113   -0.158    0.283</span></span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a><span class="do">## 4     b[4]    0.515 0.112    0.291    0.729</span></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a><span class="do">## 5 deviance 1909.455 2.875 1906.574 1917.541</span></span></code></pre></div>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.rjags</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co">##   Variable Median    SD  Lower  Upper</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="co">## 1     b[1] -0.460 0.082 -0.622 -0.298</span></span>
-<span id="cb22-3"><a href="#cb22-3"></a><span class="co">## 2     b[2]  0.233 0.110  0.018  0.449</span></span>
-<span id="cb22-4"><a href="#cb22-4"></a><span class="co">## 3     b[3]  0.063 0.111 -0.156  0.275</span></span>
-<span id="cb22-5"><a href="#cb22-5"></a><span class="co">## 4     b[4]  0.520 0.113  0.301  0.746</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.rjags</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="do">##   Variable Median    SD  Lower  Upper</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="do">## 1     b[1] -0.458 0.083 -0.623 -0.297</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="do">## 2     b[2]  0.233 0.112  0.015  0.459</span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="do">## 3     b[3]  0.062 0.110 -0.154  0.281</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="do">## 4     b[4]  0.517 0.111  0.300  0.739</span></span></code></pre></div>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.MCMCpack</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co">##       Variable Median    SD  Lower  Upper</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="co">## 1  (Intercept) -0.463 0.083 -0.612 -0.304</span></span>
-<span id="cb24-3"><a href="#cb24-3"></a><span class="co">## 2       female  0.231 0.110  0.016  0.435</span></span>
-<span id="cb24-4"><a href="#cb24-4"></a><span class="co">## 3  neuroticism  0.058 0.112 -0.147  0.321</span></span>
-<span id="cb24-5"><a href="#cb24-5"></a><span class="co">## 4 extraversion  0.509 0.102  0.320  0.718</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.MCMCpack</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="do">##       Variable Median    SD  Lower  Upper</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="do">## 1  (Intercept) -0.463 0.083 -0.612 -0.304</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="do">## 2       female  0.231 0.110  0.016  0.435</span></span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a><span class="do">## 3  neuroticism  0.058 0.112 -0.147  0.321</span></span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a><span class="do">## 4 extraversion  0.509 0.102  0.320  0.718</span></span></code></pre></div>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.stan</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb26"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co">##   Variable   Median    SD    Lower    Upper</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a><span class="co">## 1     b[1]   -0.460 0.081   -0.620   -0.304</span></span>
-<span id="cb26-3"><a href="#cb26-3"></a><span class="co">## 2     b[2]    0.238 0.110    0.026    0.454</span></span>
-<span id="cb26-4"><a href="#cb26-4"></a><span class="co">## 3     b[3]    0.058 0.115   -0.167    0.286</span></span>
-<span id="cb26-5"><a href="#cb26-5"></a><span class="co">## 4     b[4]    0.517 0.111    0.301    0.736</span></span>
-<span id="cb26-6"><a href="#cb26-6"></a><span class="co">## 5     lp__ -954.790 1.396 -958.640 -953.302</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.stan</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="do">##   Variable   Median    SD    Lower    Upper</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="do">## 1     b[1]   -0.459 0.082   -0.624   -0.301</span></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a><span class="do">## 2     b[2]    0.234 0.112    0.020    0.459</span></span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="do">## 3     b[3]    0.062 0.110   -0.157    0.284</span></span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a><span class="do">## 4     b[4]    0.518 0.112    0.299    0.745</span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a><span class="do">## 5     lp__ -954.763 1.419 -958.661 -953.298</span></span></code></pre></div>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.rstanarm</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb28"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co">##       Variable Median    SD  Lower  Upper</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a><span class="co">## 1  (Intercept) -0.459 0.084 -0.624 -0.293</span></span>
-<span id="cb28-3"><a href="#cb28-3"></a><span class="co">## 2       female  0.236 0.111  0.014  0.449</span></span>
-<span id="cb28-4"><a href="#cb28-4"></a><span class="co">## 3  neuroticism  0.065 0.111 -0.149  0.280</span></span>
-<span id="cb28-5"><a href="#cb28-5"></a><span class="co">## 4 extraversion  0.521 0.109  0.306  0.730</span></span></code></pre></div>
-<div id="proportion-of-positivenegative-draws" class="section level2">
-<h2 class="hasAnchor">
-<a href="#proportion-of-positivenegative-draws" class="anchor"></a>Proportion of positive/negative draws</h2>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.rstanarm</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="do">##       Variable Median    SD  Lower  Upper</span></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="do">## 1  (Intercept) -0.459 0.084 -0.624 -0.293</span></span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="do">## 2       female  0.236 0.111  0.014  0.449</span></span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="do">## 3  neuroticism  0.065 0.111 -0.149  0.280</span></span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="do">## 4 extraversion  0.521 0.109  0.306  0.730</span></span></code></pre></div>
+<div class="section level2">
+<h2 id="proportion-of-positivenegative-draws">Proportion of positive/negative draws<a class="anchor" aria-label="anchor" href="#proportion-of-positivenegative-draws"></a>
+</h2>
 <p>Users can add a column to the table that calculates the percent of posterior draws that have the same sign as the median of the posterior distribution.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.jags</span>, Pr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb30"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co">##   Variable   Median    SD    Lower    Upper    Pr</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a><span class="co">## 1     b[1]   -0.455 0.082   -0.615   -0.294 1.000</span></span>
-<span id="cb30-3"><a href="#cb30-3"></a><span class="co">## 2     b[2]    0.232 0.111    0.008    0.442 0.979</span></span>
-<span id="cb30-4"><a href="#cb30-4"></a><span class="co">## 3     b[3]    0.063 0.111   -0.149    0.285 0.724</span></span>
-<span id="cb30-5"><a href="#cb30-5"></a><span class="co">## 4     b[4]    0.514 0.111    0.288    0.733 1.000</span></span>
-<span id="cb30-6"><a href="#cb30-6"></a><span class="co">## 5 deviance 1909.375 2.856 1906.534 1917.190 1.000</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.jags</span>, Pr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="do">##   Variable   Median    SD    Lower    Upper    Pr</span></span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="do">## 1     b[1]   -0.462 0.082   -0.622   -0.298 1.000</span></span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a><span class="do">## 2     b[2]    0.238 0.112    0.017    0.455 0.984</span></span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a><span class="do">## 3     b[3]    0.063 0.113   -0.158    0.283 0.712</span></span>
+<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a><span class="do">## 4     b[4]    0.515 0.112    0.291    0.729 1.000</span></span>
+<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a><span class="do">## 5 deviance 1909.455 2.875 1906.574 1917.541 1.000</span></span></code></pre></div>
 </div>
-<div id="rope" class="section level2">
-<h2 class="hasAnchor">
-<a href="#rope" class="anchor"></a>ROPE</h2>
-<p>Users can also define a “region of practical equivalence” (ROPE; <a href="https://doi.org/10.1037/a0029146">Kruschke 2013, Journal of Experimental Psychology 143(2): 573-603</a>). This region is a band of values around 0 that are “practically equivalent” to 0 or no effect. For this to be useful, all parameters (e.g. regression coefficients) must be on the same scale because mcmcTab accepts only one definition of ROPE for all parameters. Users can standardize regression coefficients to achieve this. Because we standardized variables earlier, the coefficients (except the intercept) are on a similar scale and we define the ROPE to be between -0.1 and 0.1.</p>
+<div class="section level2">
+<h2 id="rope">ROPE<a class="anchor" aria-label="anchor" href="#rope"></a>
+</h2>
+<p>Users can also define a “region of practical equivalence” (ROPE; <a href="https://doi.org/10.1037/a0029146" class="external-link">Kruschke 2013, Journal of Experimental Psychology 143(2): 573-603</a>). This region is a band of values around 0 that are “practically equivalent” to 0 or no effect. For this to be useful, all parameters (e.g. regression coefficients) must be on the same scale because mcmcTab accepts only one definition of ROPE for all parameters. Users can standardize regression coefficients to achieve this. Because we standardized variables earlier, the coefficients (except the intercept) are on a similar scale and we define the ROPE to be between -0.1 and 0.1.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.jags</span>, pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"b[2]"</span>, <span class="st">"b[3]"</span>, <span class="st">"b[4]"</span><span class="op">)</span>, ROPE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co">## This table contains an estimate for parameter values outside of the region of </span></span>
-<span id="cb32-2"><a href="#cb32-2"></a><span class="co">##           practical equivalence (ROPE). For this quantity to be meaningful, all parameters </span></span>
-<span id="cb32-3"><a href="#cb32-3"></a><span class="co">##           must be on the same scale (e.g. standardized coefficients or first differences).</span></span>
-<span id="cb32-4"><a href="#cb32-4"></a></span>
-<span id="cb32-5"><a href="#cb32-5"></a><span class="co">##   Variable Median    SD  Lower Upper PrOutROPE</span></span>
-<span id="cb32-6"><a href="#cb32-6"></a><span class="co">## 1     b[2]  0.232 0.111  0.008 0.442     0.879</span></span>
-<span id="cb32-7"><a href="#cb32-7"></a><span class="co">## 2     b[3]  0.063 0.111 -0.149 0.285     0.376</span></span>
-<span id="cb32-8"><a href="#cb32-8"></a><span class="co">## 3     b[4]  0.514 0.111  0.288 0.733     1.000</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/mcmcTab.html">mcmcTab</a></span><span class="op">(</span><span class="va">fit.jags</span>, pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"b[2]"</span>, <span class="st">"b[3]"</span>, <span class="st">"b[4]"</span><span class="op">)</span>, ROPE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="do">## This table contains an estimate for parameter values outside of the region of </span></span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="do">##           practical equivalence (ROPE). For this quantity to be meaningful, all parameters </span></span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a><span class="do">##           must be on the same scale (e.g. standardized coefficients or first differences).</span></span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a><span class="do">##   Variable Median    SD  Lower Upper PrOutROPE</span></span>
+<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a><span class="do">## 1     b[2]  0.238 0.112  0.017 0.455     0.885</span></span>
+<span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a><span class="do">## 2     b[3]  0.063 0.113 -0.158 0.283     0.376</span></span>
+<span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a><span class="do">## 3     b[4]  0.515 0.112  0.291 0.729     1.000</span></span></code></pre></div>
 </div>
-<div id="conventional-regression-tables" class="section level2">
-<h2 class="hasAnchor">
-<a href="#conventional-regression-tables" class="anchor"></a>Conventional regression tables</h2>
+<div class="section level2">
+<h2 id="conventional-regression-tables">Conventional regression tables<a class="anchor" aria-label="anchor" href="#conventional-regression-tables"></a>
+</h2>
 <p>The <code>mcmcReg</code> function serves as an interface to <code>texreg</code> and produces more polished and publication-ready tables than <code>mcmcTab</code> in HTML or LaTeX format. <code>mcmcReg</code> can produce tables with multiple models with each model in a column and supports flexible renaming of parameters. However, these tables are more similar to standard frequentist regression tables, so they do not have a way to incorporate the percent of posterior draws that have the same sign as the median of the posterior distribution or a ROPE like <code>mcmcTab</code> is able to. Uncertainty intervals can be either standard credible intervals or highest posterior density intervals (Kruschke 2015) using the <code>hpdi</code> argument, and their level can be set with the <code>ci</code> argument (default 95%). Separately calculated goodness of fit statistics can be included with the <code>gof</code> argument.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="va">fit.jags</span>, format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
-<div id="limiting-output" class="section level3">
-<h3 class="hasAnchor">
-<a href="#limiting-output" class="anchor"></a>Limiting output</h3>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="va">fit.jags</span>, format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="limiting-output">Limiting output<a class="anchor" aria-label="anchor" href="#limiting-output"></a>
+</h3>
 <p><code>mcmcReg</code> supports limiting the parameters included in the table via the <code>pars</code> argument. By default, all parameters saved in the model object will be included. In the case of <code>fit.jags</code>, this include the deviance estimate. If we wish to exclude it, we can specify <code>pars = 'b'</code> which will capture <code>b[1]</code>-<code>b[4]</code> using regular expression matching.</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="va">fit.jags</span>, pars <span class="op">=</span> <span class="st">'b'</span>, format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="va">fit.jags</span>, pars <span class="op">=</span> <span class="st">'b'</span>, format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>If we only wish to exclude the intercept, we can do this by explicitly specifying the parameters we wish to include as a vector. Note that in this example we have to escape the <code>[]</code>s in <code>pars</code> because they are a reserved character in regular expressions.</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="va">fit.jags</span>, pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'b\\[1\\]'</span>, <span class="st">'b\\[3\\]'</span>, <span class="st">'b\\[4\\]'</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="va">fit.jags</span>, pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'b\\[1\\]'</span>, <span class="st">'b\\[3\\]'</span>, <span class="st">'b\\[4\\]'</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p><code>mcmcReg</code> also supports partial regular expression matching of multiple parameter family names as demonstrated below.</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="va">fit.jags</span>, pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'b'</span>, <span class="st">'dev'</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="va">fit.jags</span>, pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'b'</span>, <span class="st">'dev'</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="custom-coefficient-names" class="section level3">
-<h3 class="hasAnchor">
-<a href="#custom-coefficient-names" class="anchor"></a>Custom coefficient names</h3>
+<div class="section level3">
+<h3 id="custom-coefficient-names">Custom coefficient names<a class="anchor" aria-label="anchor" href="#custom-coefficient-names"></a>
+</h3>
 <p><code>mcmcReg</code> supports custom coefficient names to support publication-ready tables. The simplest option is via the <code>coefnames</code> argument. Note that the number of parameters and the number of custom coefficient names must match, so it is a good idea to use <code>pars</code> in tandem with <code>coefnames</code>.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="va">fit.jags</span>, pars <span class="op">=</span> <span class="st">'b'</span>,
-        coefnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'(Constant)'</span>, <span class="st">'Female'</span>, <span class="st">'Neuroticism'</span>, <span class="st">'Extraversion'</span><span class="op">)</span>,
-        format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="va">fit.jags</span>, pars <span class="op">=</span> <span class="st">'b'</span>,</span>
+<span>        coefnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'(Constant)'</span>, <span class="st">'Female'</span>, <span class="st">'Neuroticism'</span>, <span class="st">'Extraversion'</span><span class="op">)</span>,</span>
+<span>        format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>A more flexible way to include custom coefficient names is via the <code>custom.coef.map</code> argument, which accepts a named list, with names as parameter names in the model and values as the custom coefficient names.</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="va">fit.jags</span>, pars <span class="op">=</span> <span class="st">'b'</span>,
-        custom.coef.map <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">'b[1]'</span> <span class="op">=</span> <span class="st">'(Constant)'</span>,
-                               <span class="st">'b[2]'</span> <span class="op">=</span> <span class="st">'Female'</span>,
-                               <span class="st">'b[3]'</span> <span class="op">=</span> <span class="st">'Nueroticism'</span>,
-                               <span class="st">'b[4]'</span> <span class="op">=</span> <span class="st">'Extraversion'</span><span class="op">)</span>,
-        format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="va">fit.jags</span>, pars <span class="op">=</span> <span class="st">'b'</span>,</span>
+<span>        custom.coef.map <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">'b[1]'</span> <span class="op">=</span> <span class="st">'(Constant)'</span>,</span>
+<span>                               <span class="st">'b[2]'</span> <span class="op">=</span> <span class="st">'Female'</span>,</span>
+<span>                               <span class="st">'b[3]'</span> <span class="op">=</span> <span class="st">'Nueroticism'</span>,</span>
+<span>                               <span class="st">'b[4]'</span> <span class="op">=</span> <span class="st">'Extraversion'</span><span class="op">)</span>,</span>
+<span>        format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>The advantage of <code>custom.coef.map</code> is that it can flexibly reorder and omit coefficients from the table based on their positions within the list. Notice in the code below that deviance does not have to be included in <code>pars</code> because its absence from <code>custom.coef.map</code> omits it from the resulting table.</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="va">fit.jags</span>,
-        custom.coef.map <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">'b[2]'</span> <span class="op">=</span> <span class="st">'Female'</span>,
-                               <span class="st">'b[4]'</span> <span class="op">=</span> <span class="st">'Extraversion'</span>,
-                               <span class="st">'b[1]'</span> <span class="op">=</span> <span class="st">'(Constant)'</span><span class="op">)</span>,
-        format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="va">fit.jags</span>,</span>
+<span>        custom.coef.map <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">'b[2]'</span> <span class="op">=</span> <span class="st">'Female'</span>,</span>
+<span>                               <span class="st">'b[4]'</span> <span class="op">=</span> <span class="st">'Extraversion'</span>,</span>
+<span>                               <span class="st">'b[1]'</span> <span class="op">=</span> <span class="st">'(Constant)'</span><span class="op">)</span>,</span>
+<span>        format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>However, it is important to remember that <code>mcmcReg</code> will look for the parameter names in the model object, so be sure to inspect it for the correct parameter names. This is important because <code>stan_glm</code> will produce a model object with variable names instead of indexed parameter names.</p>
 </div>
-<div id="multiple-models" class="section level3">
-<h3 class="hasAnchor">
-<a href="#multiple-models" class="anchor"></a>Multiple models</h3>
+<div class="section level3">
+<h3 id="multiple-models">Multiple models<a class="anchor" aria-label="anchor" href="#multiple-models"></a>
+</h3>
 <p><code>mcmcReg</code> accepts multiple model objects and will produce a table with one model per column. To produce a table from multiple models, pass a list of models as the <code>mod</code> argument to <code>mcmcReg</code>.</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">fit.stan</span>, <span class="va">fit.stan</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">fit.stan</span>, <span class="va">fit.stan</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>Note, however, that all model objects must be of the same class, so it is <em>not</em> possible to generate a table from a <code>jags</code> object and a <code>stanfit</code> object.</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">fit.jags</span>, <span class="va">fit.stan</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">fit.jags</span>, <span class="va">fit.stan</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>When including multiple models, supplying scalars or vectors to arguments will result in them being applied to each model equally. Treating models differentially is possible by supplying a list of scalars or vectors instead.</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">fit.rstanarm</span>, <span class="va">fit.rstanarm</span><span class="op">)</span>,
-        pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'female'</span>, <span class="st">'extraversion'</span><span class="op">)</span>, <span class="st">'neuroticism'</span><span class="op">)</span>,
-        format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">fit.rstanarm</span>, <span class="va">fit.rstanarm</span><span class="op">)</span>,</span>
+<span>        pars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'female'</span>, <span class="st">'extraversion'</span><span class="op">)</span>, <span class="st">'neuroticism'</span><span class="op">)</span>,</span>
+<span>        format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="texreg-arguments" class="section level3">
-<h3 class="hasAnchor">
-<a href="#texreg-arguments" class="anchor"></a><code>Texreg</code> arguments</h3>
+<div class="section level3">
+<h3 id="texreg-arguments">
+<code>Texreg</code> arguments<a class="anchor" aria-label="anchor" href="#texreg-arguments"></a>
+</h3>
 <p>Although <code>custom.coef.map</code> is not an argument to <code>mcmcReg</code>, it works because <code>mcmcReg</code> supports all standard <code>texreg</code> arguments (a few have been overridden, but they are explicit arguments to <code>mcmcReg</code>). This introduces a high level of control over the output of <code>mcmcReg</code>, as e.g. models can be renamed.</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="va">fit.rstanarm</span>, custom.model.names <span class="op">=</span> <span class="st">'Binary Outcome'</span>, format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/mcmcReg.html">mcmcReg</a></span><span class="op">(</span><span class="va">fit.rstanarm</span>, custom.model.names <span class="op">=</span> <span class="st">'Binary Outcome'</span>, format <span class="op">=</span> <span class="st">'html'</span>, doctype <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 </div>
-<div id="predicted-probabilities" class="section level1">
-<h1 class="hasAnchor">
-<a href="#predicted-probabilities" class="anchor"></a>Predicted probabilities</h1>
-<div id="mcmcaveprob" class="section level2">
-<h2 class="hasAnchor">
-<a href="#mcmcaveprob" class="anchor"></a><code>mcmcAveProb</code>
+<div class="section level1">
+<h1 id="predicted-probabilities">Predicted probabilities<a class="anchor" aria-label="anchor" href="#predicted-probabilities"></a>
+</h1>
+<div class="section level2">
+<h2 id="mcmcaveprob">
+<code>mcmcAveProb</code><a class="anchor" aria-label="anchor" href="#mcmcaveprob"></a>
 </h2>
-<p>To evaluate the relationship between covariates and a binary outcome, this function calculates the predicted probability (<em>Pr(y = 1)</em>) at pre-defined values of one covariate of interest (<em>x</em>), while all other covariates are held at a “typical” value. This follows suggestions outlined in <a href="https://doi.org/10.2307/2669316">King, Tomz, and Wittenberg (2000, American Journal of Political Science 44(2): 347-361)</a> and elsewhere, which are commonly adopted by users of GLMs. The <code>mcmcAveProb</code> function by default calculates the median value of all covariates other than <em>x</em> as “typical” values.</p>
+<p>To evaluate the relationship between covariates and a binary outcome, this function calculates the predicted probability (<em>Pr(y = 1)</em>) at pre-defined values of one covariate of interest (<em>x</em>), while all other covariates are held at a “typical” value. This follows suggestions outlined in <a href="https://doi.org/10.2307/2669316" class="external-link">King, Tomz, and Wittenberg (2000, American Journal of Political Science 44(2): 347-361)</a> and elsewhere, which are commonly adopted by users of GLMs. The <code>mcmcAveProb</code> function by default calculates the median value of all covariates other than <em>x</em> as “typical” values.</p>
 <p>Before moving on, we show how create a matrix of posterior draws of coefficients to pass onto these functions. Eventually, each function will contain code similar to the first section of <code>mcmcTab</code> to do this as part of the function.</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mcmcmat.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="fu">coda</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/coda/man/mcmc.html">as.mcmc</a></span><span class="op">(</span><span class="va">fit.jags</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">mcmcmat.MCMCpack</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">fit.MCMCpack</span><span class="op">)</span>
-  
-<span class="va">mcmcmat.stan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">fit.stan</span><span class="op">)</span>
-  
-<span class="va">mcmcmat.rstanarm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">fit.rstanarm</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mcmcmat.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu">coda</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/coda/man/mcmc.html" class="external-link">as.mcmc</a></span><span class="op">(</span><span class="va">fit.jags</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mcmcmat.MCMCpack</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">fit.MCMCpack</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="va">mcmcmat.stan</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">fit.stan</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="va">mcmcmat.rstanarm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">fit.rstanarm</span><span class="op">)</span></span></code></pre></div>
 <p>Next, we generate the model matrix to pass on to the function. A model matrix contains as many columns as estimated regression coefficients. The first column is a vector of 1s (corresponding to the intercept); the remaining columns are the observed values of covariates in the model. <strong>Note: the order of columns in the model matrix must correspond to the order of columns in the matrix of posterior draws.</strong></p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span><span class="op">(</span><span class="va">volunteer</span> <span class="op">~</span> <span class="va">female</span> <span class="op">+</span> <span class="va">neuroticism</span> <span class="op">+</span> <span class="va">extraversion</span>,
-                   data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html" class="external-link">model.matrix</a></span><span class="op">(</span><span class="va">volunteer</span> <span class="op">~</span> <span class="va">female</span> <span class="op">+</span> <span class="va">neuroticism</span> <span class="op">+</span> <span class="va">extraversion</span>,</span>
+<span>                   data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <p>We can now generate predicted probabilities for different values of a covariate of interest.</p>
-<div id="sex" class="section level3">
-<h3 class="hasAnchor">
-<a href="#sex" class="anchor"></a>Sex</h3>
+<div class="section level3">
+<h3 id="sex">Sex<a class="anchor" aria-label="anchor" href="#sex"></a>
+</h3>
 <p>First, we generate full posterior distributions of the predicted probability of volunteering for a typical female and a typical male. In this function and <code>mcmcObsProb</code>, users specify the range of <em>x</em> (here 0 and 1) as well as the number of the column of <em>x</em> in the matrix of posterior draws as well as the model matrix.</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">aveprob.female.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mcmcAveProb.html">mcmcAveProb</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,
-            mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,
-            xcol <span class="op">=</span> <span class="fl">2</span>,
-            xrange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,
-            link <span class="op">=</span> <span class="st">"logit"</span>,
-            ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>,
-            fullsims <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">aveprob.female.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mcmcAveProb.html">mcmcAveProb</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,</span>
+<span>            mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>            xcol <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>            xrange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>            link <span class="op">=</span> <span class="st">"logit"</span>,</span>
+<span>            ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>,</span>
+<span>            fullsims <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Users can then visualize this posterior distribution using the ggplot2 and ggridges packages.</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org">"ggplot2"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://wilkelab.org/ggridges/">"ggridges"</a></span><span class="op">)</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">aveprob.female.jags</span>, 
-       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, x <span class="op">=</span> <span class="va">pp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://wilkelab.org/ggridges/reference/stat_density_ridges.html">stat_density_ridges</a></span><span class="op">(</span>quantile_lines <span class="op">=</span> <span class="cn">TRUE</span>, 
-                quantiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span><span class="op">)</span>, vline_color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_y_discrete</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Male"</span>, <span class="st">"Female"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Estimated probability of volunteering"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probability based on average-case approach"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb48"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="co">## Picking joint bandwidth of 0.00323</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://wilkelab.org/ggridges/" class="external-link">"ggridges"</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">aveprob.female.jags</span>, </span>
+<span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, x <span class="op">=</span> <span class="va">pp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://wilkelab.org/ggridges/reference/stat_density_ridges.html" class="external-link">stat_density_ridges</a></span><span class="op">(</span>quantile_lines <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>                quantiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span><span class="op">)</span>, vline_color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_y_discrete</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Male"</span>, <span class="st">"Female"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Estimated probability of volunteering"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probability based on average-case approach"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="do">## Picking joint bandwidth of 0.00327</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-38-1.png"><!-- --></p>
 </div>
-<div id="extraversion" class="section level3">
-<h3 class="hasAnchor">
-<a href="#extraversion" class="anchor"></a>Extraversion</h3>
+<div class="section level3">
+<h3 id="extraversion">Extraversion<a class="anchor" aria-label="anchor" href="#extraversion"></a>
+</h3>
 <p>For continuous variables of interest, users may want to set <code>fullsims = FALSE</code> to obtain the median predicted probability along the range of <em>x</em> as well as a lower and upper bound of choice (here, the 95% credible interval).</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">aveprob.extra.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mcmcAveProb.html">mcmcAveProb</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,
-            mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,
-            xcol <span class="op">=</span> <span class="fl">4</span>,
-            xrange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">extraversion</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">extraversion</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,
-            link <span class="op">=</span> <span class="st">"logit"</span>,
-            ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>,
-            fullsims <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">aveprob.extra.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mcmcAveProb.html">mcmcAveProb</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,</span>
+<span>            mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>            xcol <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>            xrange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">extraversion</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">extraversion</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,</span>
+<span>            link <span class="op">=</span> <span class="st">"logit"</span>,</span>
+<span>            ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>,</span>
+<span>            fullsims <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>Users can then plot the resulting probabilities using any plotting functions, such as ggplot2.</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">aveprob.extra.jags</span>, 
-       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">median_pp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_ribbon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">lower_pp</span>, ymax <span class="op">=</span> <span class="va">upper_pp</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Extraversion"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Estimated probability of volunteering"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probability based on average-case approach"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">aveprob.extra.jags</span>, </span>
+<span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">median_pp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">geom_ribbon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">lower_pp</span>, ymax <span class="op">=</span> <span class="va">upper_pp</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Extraversion"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Estimated probability of volunteering"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">ylim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probability based on average-case approach"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-40-1.png"><!-- --></p>
 </div>
 </div>
-<div id="mcmcobsprob" class="section level2">
-<h2 class="hasAnchor">
-<a href="#mcmcobsprob" class="anchor"></a><code>mcmcObsProb</code>
+<div class="section level2">
+<h2 id="mcmcobsprob">
+<code>mcmcObsProb</code><a class="anchor" aria-label="anchor" href="#mcmcobsprob"></a>
 </h2>
-<p>As an alternative to probabilities for “typical” cases, <a href="https://doi.org/10.1111/j.1540-5907.2012.00602.x">Hanmer and Kalkan (2013, American Journal of Political Science 57(1): 263-277)</a> suggest to calculate predicted probabilities for all observed cases and then derive an “average effect”. In their words, the goal of this postestimation “is to obtain an estimate of the average effect in the population … rather than seeking to understand the effect for the average case.”</p>
-<div id="sex-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#sex-1" class="anchor"></a>Sex</h3>
+<p>As an alternative to probabilities for “typical” cases, <a href="https://doi.org/10.1111/j.1540-5907.2012.00602.x" class="external-link">Hanmer and Kalkan (2013, American Journal of Political Science 57(1): 263-277)</a> suggest to calculate predicted probabilities for all observed cases and then derive an “average effect”. In their words, the goal of this postestimation “is to obtain an estimate of the average effect in the population … rather than seeking to understand the effect for the average case.”</p>
+<div class="section level3">
+<h3 id="sex-1">Sex<a class="anchor" aria-label="anchor" href="#sex-1"></a>
+</h3>
 <p>We first calculate the average “effect” of sex on volunteering, again generating a full posterior distribution. Again, <code>xcol</code> represents the position of the covariate of interest, and <code>xrange</code> specifies the values for which <em>Pr(y = 1)</em> is to be calculated.</p>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">obsprob.female.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mcmcObsProb.html">mcmcObsProb</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,
-            mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,
-            xcol <span class="op">=</span> <span class="fl">2</span>,
-            xrange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,
-            link <span class="op">=</span> <span class="st">"logit"</span>,
-            ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>,
-            fullsims <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">obsprob.female.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mcmcObsProb.html">mcmcObsProb</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,</span>
+<span>            mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>            xcol <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>            xrange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>            link <span class="op">=</span> <span class="st">"logit"</span>,</span>
+<span>            ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>,</span>
+<span>            fullsims <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Users can again plot the resulting densities.</p>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">obsprob.female.jags</span>, 
-       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, x <span class="op">=</span> <span class="va">pp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://wilkelab.org/ggridges/reference/stat_density_ridges.html">stat_density_ridges</a></span><span class="op">(</span>quantile_lines <span class="op">=</span> <span class="cn">TRUE</span>, 
-                quantiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span><span class="op">)</span>, vline_color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_y_discrete</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Male"</span>, <span class="st">"Female"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Estimated probability of volunteering"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probability based on observed-case approach"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb53"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="co">## Picking joint bandwidth of 0.00316</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">obsprob.female.jags</span>, </span>
+<span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, x <span class="op">=</span> <span class="va">pp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://wilkelab.org/ggridges/reference/stat_density_ridges.html" class="external-link">stat_density_ridges</a></span><span class="op">(</span>quantile_lines <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>                quantiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span><span class="op">)</span>, vline_color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_y_discrete</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Male"</span>, <span class="st">"Female"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Estimated probability of volunteering"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probability based on observed-case approach"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="do">## Picking joint bandwidth of 0.00318</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-42-1.png"><!-- --></p>
 </div>
-<div id="extraversion-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#extraversion-1" class="anchor"></a>Extraversion</h3>
+<div class="section level3">
+<h3 id="extraversion-1">Extraversion<a class="anchor" aria-label="anchor" href="#extraversion-1"></a>
+</h3>
 <p>For this continuous predictor, we use <code>fullsims = FALSE</code>.</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">obsprob.extra.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mcmcObsProb.html">mcmcObsProb</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,
-            mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,
-            xcol <span class="op">=</span> <span class="fl">4</span>,
-            xrange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">extraversion</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">extraversion</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,
-            link <span class="op">=</span> <span class="st">"logit"</span>,
-            ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>,
-            fullsims <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">obsprob.extra.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mcmcObsProb.html">mcmcObsProb</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,</span>
+<span>            mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>            xcol <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>            xrange <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">extraversion</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">extraversion</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,</span>
+<span>            link <span class="op">=</span> <span class="st">"logit"</span>,</span>
+<span>            ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>,</span>
+<span>            fullsims <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>We then plot the resulting probabilities across observed cases.</p>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">obsprob.extra.jags</span>, 
-       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">median_pp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_ribbon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">lower_pp</span>, ymax <span class="op">=</span> <span class="va">upper_pp</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Extraversion"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Estimated probability of volunteering"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probability based on observed-case approach"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">obsprob.extra.jags</span>, </span>
+<span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">median_pp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">geom_ribbon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">lower_pp</span>, ymax <span class="op">=</span> <span class="va">upper_pp</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Extraversion"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Estimated probability of volunteering"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">ylim</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probability based on observed-case approach"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-44-1.png"><!-- --></p>
 </div>
 </div>
 </div>
-<div id="first-differences" class="section level1">
-<h1 class="hasAnchor">
-<a href="#first-differences" class="anchor"></a>First differences</h1>
-<div id="mcmcfd" class="section level2">
-<h2 class="hasAnchor">
-<a href="#mcmcfd" class="anchor"></a><code>mcmcFD</code>
+<div class="section level1">
+<h1 id="first-differences">First differences<a class="anchor" aria-label="anchor" href="#first-differences"></a>
+</h1>
+<div class="section level2">
+<h2 id="mcmcfd">
+<code>mcmcFD</code><a class="anchor" aria-label="anchor" href="#mcmcfd"></a>
 </h2>
-<p>To summarize typical effects across covariates, we generate “first differences” (Long 1997, Sage Publications; <a href="https://doi.org/10.2307/2669316">King, Tomz, and Wittenberg 2000, American Journal of Political Science 44(2): 347-361</a>). This quantity represents, for each covariate, the difference in predicted probabilities for cases with low and high values of the respective covariate. For each of these differences, all other variables are held constant at their median.</p>
+<p>To summarize typical effects across covariates, we generate “first differences” (Long 1997, Sage Publications; <a href="https://doi.org/10.2307/2669316" class="external-link">King, Tomz, and Wittenberg 2000, American Journal of Political Science 44(2): 347-361</a>). This quantity represents, for each covariate, the difference in predicted probabilities for cases with low and high values of the respective covariate. For each of these differences, all other variables are held constant at their median.</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fdfull.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mcmcFD.html">mcmcFD</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,
-                  mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,
-                  link <span class="op">=</span> <span class="st">"logit"</span>,
-                  ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>,
-                  fullsims <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fdfull.jags</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb57"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a><span class="co">##      female          neuroticism         extraversion    </span></span>
-<span id="cb57-2"><a href="#cb57-2"></a><span class="co">##  Min.   :-0.04199   Min.   :-0.068548   Min.   :0.01851  </span></span>
-<span id="cb57-3"><a href="#cb57-3"></a><span class="co">##  1st Qu.: 0.03792   1st Qu.:-0.001534   1st Qu.:0.06982  </span></span>
-<span id="cb57-4"><a href="#cb57-4"></a><span class="co">##  Median : 0.05654   Median : 0.011222   Median :0.08131  </span></span>
-<span id="cb57-5"><a href="#cb57-5"></a><span class="co">##  Mean   : 0.05597   Mean   : 0.011369   Mean   :0.08109  </span></span>
-<span id="cb57-6"><a href="#cb57-6"></a><span class="co">##  3rd Qu.: 0.07436   3rd Qu.: 0.024294   3rd Qu.:0.09279  </span></span>
-<span id="cb57-7"><a href="#cb57-7"></a><span class="co">##  Max.   : 0.14808   Max.   : 0.090988   Max.   :0.13829</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fdfull.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mcmcFD.html">mcmcFD</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,</span>
+<span>                  mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>                  link <span class="op">=</span> <span class="st">"logit"</span>,</span>
+<span>                  ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>,</span>
+<span>                  fullsims <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fdfull.jags</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a><span class="do">##      female          neuroticism         extraversion    </span></span>
+<span id="cb57-2"><a href="#cb57-2" tabindex="-1"></a><span class="do">##  Min.   :-0.04432   Min.   :-0.055522   Min.   :0.01957  </span></span>
+<span id="cb57-3"><a href="#cb57-3" tabindex="-1"></a><span class="do">##  1st Qu.: 0.03972   1st Qu.:-0.002247   1st Qu.:0.06957  </span></span>
+<span id="cb57-4"><a href="#cb57-4" tabindex="-1"></a><span class="do">##  Median : 0.05795   Median : 0.011224   Median :0.08132  </span></span>
+<span id="cb57-5"><a href="#cb57-5" tabindex="-1"></a><span class="do">##  Mean   : 0.05779   Mean   : 0.011263   Mean   :0.08124  </span></span>
+<span id="cb57-6"><a href="#cb57-6" tabindex="-1"></a><span class="do">##  3rd Qu.: 0.07619   3rd Qu.: 0.024511   3rd Qu.:0.09313  </span></span>
+<span id="cb57-7"><a href="#cb57-7" tabindex="-1"></a><span class="do">##  Max.   : 0.15245   Max.   : 0.080707   Max.   :0.14269</span></span></code></pre></div>
 <p>The posterior distribution can be summarized as above, or users can directly obtain a summary when setting <code>fullsims</code> to FALSE.</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fdsum.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mcmcFD.html">mcmcFD</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,
-                  mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,
-                  link <span class="op">=</span> <span class="st">"logit"</span>,
-                  ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>,
-                  fullsims <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">fdsum.jags</span></code></pre></div>
-<div class="sourceCode" id="cb59"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="co">##               median_fd     lower_fd   upper_fd      VarName VarID</span></span>
-<span id="cb59-2"><a href="#cb59-2"></a><span class="co">## female       0.05653772  0.001903377 0.10752879       female     1</span></span>
-<span id="cb59-3"><a href="#cb59-3"></a><span class="co">## neuroticism  0.01122227 -0.026638167 0.05025822  neuroticism     2</span></span>
-<span id="cb59-4"><a href="#cb59-4"></a><span class="co">## extraversion 0.08131182  0.045476273 0.11589552 extraversion     3</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fdsum.jags</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mcmcFD.html">mcmcFD</a></span><span class="op">(</span>modelmatrix <span class="op">=</span> <span class="va">mm</span>,</span>
+<span>                  mcmcout <span class="op">=</span> <span class="va">mcmcmat.jags</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span><span class="op">]</span>,</span>
+<span>                  link <span class="op">=</span> <span class="st">"logit"</span>,</span>
+<span>                  ci <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.975</span><span class="op">)</span>,</span>
+<span>                  fullsims <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">fdsum.jags</span></span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" tabindex="-1"></a><span class="do">##               median_fd     lower_fd   upper_fd      VarName VarID</span></span>
+<span id="cb59-2"><a href="#cb59-2" tabindex="-1"></a><span class="do">## female       0.05794760  0.004299115 0.11073472       female     1</span></span>
+<span id="cb59-3"><a href="#cb59-3" tabindex="-1"></a><span class="do">## neuroticism  0.01122442 -0.028097810 0.05008092  neuroticism     2</span></span>
+<span id="cb59-4"><a href="#cb59-4" tabindex="-1"></a><span class="do">## extraversion 0.08132383  0.045716391 0.11482003 extraversion     3</span></span></code></pre></div>
 <p>Users can plot the median and credible intervals of the summary of the first differences.</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">fdsum.jags</span>, 
-       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">median_fd</span>, y <span class="op">=</span> <span class="va">VarName</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lower_fd</span>, xend <span class="op">=</span> <span class="va">upper_fd</span>, yend <span class="op">=</span> <span class="va">VarName</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Change in Pr(Volunteering)"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">fdsum.jags</span>, </span>
+<span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">median_fd</span>, y <span class="op">=</span> <span class="va">VarName</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html" class="external-link">geom_segment</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lower_fd</span>, xend <span class="op">=</span> <span class="va">upper_fd</span>, yend <span class="op">=</span> <span class="va">VarName</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Change in Pr(Volunteering)"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-47-1.png"><!-- --></p>
 </div>
-<div id="plotting-mcmcfd-objects" class="section level2">
-<h2 class="hasAnchor">
-<a href="#plotting-mcmcfd-objects" class="anchor"></a>Plotting <code>mcmcFD</code> objects</h2>
-<p>To make use of the full posterior distribution of first differences, we provide a dedicated plotting method, <code>plot.mcmcFD</code>, which returns a ggplot2 object that can be further customized. The function is modeled after Figure 1 in <a href="https://doi.org/10.1080/03050629.2018.1389728">Karreth (2018, International Interactions 44(3): 463-490</a>). Users can specify a region of practical equivalence and print the percent of posterior draws to the right or left of the ROPE. If ROPE is not specified, the figure automatically prints the percent of posterior draws to the left or right of 0.</p>
+<div class="section level2">
+<h2 id="plotting-mcmcfd-objects">Plotting <code>mcmcFD</code> objects<a class="anchor" aria-label="anchor" href="#plotting-mcmcfd-objects"></a>
+</h2>
+<p>To make use of the full posterior distribution of first differences, we provide a dedicated plotting method, <code>plot.mcmcFD</code>, which returns a ggplot2 object that can be further customized. The function is modeled after Figure 1 in <a href="https://doi.org/10.1080/03050629.2018.1389728" class="external-link">Karreth (2018, International Interactions 44(3): 463-490</a>). Users can specify a region of practical equivalence and print the percent of posterior draws to the right or left of the ROPE. If ROPE is not specified, the figure automatically prints the percent of posterior draws to the left or right of 0.</p>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fdfull.jags</span>, ROPE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb62"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="co">## Picking joint bandwidth of 0.362</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fdfull.jags</span>, ROPE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" tabindex="-1"></a><span class="do">## Picking joint bandwidth of 0.37</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-48-1.png"><!-- --></p>
 <p>The user can further customize the plot.</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fdfull.jags</span>, ROPE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span>
-<span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"First differences"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">ggridges</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/ggridges/reference/theme_ridges.html">theme_ridges</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb64"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="co">## Picking joint bandwidth of 0.362</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fdfull.jags</span>, ROPE <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"First differences"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">ggridges</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/ggridges/reference/theme_ridges.html" class="external-link">theme_ridges</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" tabindex="-1"></a><span class="do">## Picking joint bandwidth of 0.37</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-49-1.png"><!-- --></p>
 </div>
 </div>
-<div id="model-fit" class="section level1">
-<h1 class="hasAnchor">
-<a href="#model-fit" class="anchor"></a>Model fit</h1>
-<div id="mcmcrocprc" class="section level2">
-<h2 class="hasAnchor">
-<a href="#mcmcrocprc" class="anchor"></a><code>mcmcRocPrc</code>
+<div class="section level1">
+<h1 id="model-fit">Model fit<a class="anchor" aria-label="anchor" href="#model-fit"></a>
+</h1>
+<div class="section level2">
+<h2 id="mcmcrocprc">
+<code>mcmcRocPrc</code><a class="anchor" aria-label="anchor" href="#mcmcrocprc"></a>
 </h2>
-<p>One way to assess model fit is to calculate the area under the Receiver Operating Characteristic (ROC) and Precision-Recall curves. A short description of these curves and their utility for model assessment is provided in <a href="https://doi.org/10.2139/ssrn.2765419">Beger (2016)</a>. The <code>mcmcRocPrc</code> function produces an object with four elements: the area under the ROC curve, the area under the PR curve, and two dataframes to plot each curve. When <code>fullsims</code> is set to <code>FALSE</code>, the elements represent the median of the posterior distribution of each quantity.</p>
+<p>One way to assess model fit is to calculate the area under the Receiver Operating Characteristic (ROC) and Precision-Recall curves. A short description of these curves and their utility for model assessment is provided in <a href="https://doi.org/10.2139/ssrn.2765419" class="external-link">Beger (2016)</a>. The <code>mcmcRocPrc</code> function produces an object with four elements: the area under the ROC curve, the area under the PR curve, and two dataframes to plot each curve. When <code>fullsims</code> is set to <code>FALSE</code>, the elements represent the median of the posterior distribution of each quantity.</p>
 <p><code>mcmcRocPrc</code> currently requires an “rjags” object (a model fitted in R2jags) as input. Future package versions will generalize this input to allow for model objects fit with any of the other packages used in BayesPostEst.</p>
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fitstats</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/print.mcmcRocPrc.html">mcmcRocPrc</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">fit.jags</span>,
-                       yname  <span class="op">=</span> <span class="st">"volunteer"</span>,
-                       xnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"neuroticism"</span>, <span class="st">"extraversion"</span><span class="op">)</span>,
-                       curves <span class="op">=</span> <span class="cn">TRUE</span>,
-                       fullsims <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fitstats</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mcmcRocPrc.html">mcmcRocPrc</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">fit.jags</span>,</span>
+<span>                       yname  <span class="op">=</span> <span class="st">"volunteer"</span>,</span>
+<span>                       xnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"neuroticism"</span>, <span class="st">"extraversion"</span><span class="op">)</span>,</span>
+<span>                       curves <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                       fullsims <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>Users can then print the area under the each curve:</p>
 <div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fitstats</span><span class="op">$</span><span class="va">area_under_roc</span></code></pre></div>
-<div class="sourceCode" id="cb67"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a><span class="co">##        V1 </span></span>
-<span id="cb67-2"><a href="#cb67-2"></a><span class="co">## 0.5843884</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fitstats</span><span class="op">$</span><span class="va">area_under_roc</span></span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" tabindex="-1"></a><span class="do">##        V1 </span></span>
+<span id="cb67-2"><a href="#cb67-2" tabindex="-1"></a><span class="do">## 0.5840611</span></span></code></pre></div>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fitstats</span><span class="op">$</span><span class="va">area_under_prc</span></code></pre></div>
-<div class="sourceCode" id="cb69"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a><span class="co">##        V1 </span></span>
-<span id="cb69-2"><a href="#cb69-2"></a><span class="co">## 0.4866251</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fitstats</span><span class="op">$</span><span class="va">area_under_prc</span></span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" tabindex="-1"></a><span class="do">##        V1 </span></span>
+<span id="cb69-2"><a href="#cb69-2" tabindex="-1"></a><span class="do">## 0.4867844</span></span></code></pre></div>
 <p>Users can also plot the ROC curve…</p>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">fitstats</span>, what <span class="op">=</span> <span class="st">"roc"</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span><span class="op">(</span>intercept <span class="op">=</span> <span class="fl">0</span>, slope <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"ROC curve"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"1 - Specificity"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Sensitivity"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">fitstats</span>, what <span class="op">=</span> <span class="st">"roc"</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_abline</a></span><span class="op">(</span>intercept <span class="op">=</span> <span class="fl">0</span>, slope <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"ROC curve"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"1 - Specificity"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Sensitivity"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-53-1.png"><!-- --></p>
 <p>… as well as the precision-recall curve.</p>
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">fitstats</span>, what <span class="op">=</span> <span class="st">"prc"</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Precision-Recall curve"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">xlab</a></span><span class="op">(</span><span class="st">"Recall"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"Precision"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">fitstats</span>, what <span class="op">=</span> <span class="st">"prc"</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Precision-Recall curve"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Recall"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Precision"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-54-1.png"><!-- --></p>
 <p>To plot the posterior distribution of the area under the curves, users set the <code>fullsims</code> argument to <code>TRUE</code>. Unless a user wishes to plot credible intervals around the ROC and PR curves themselves, we recommend keeping <code>curves</code> at <code>FALSE</code> to avoid long computation time.</p>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fitstats.fullsims</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/print.mcmcRocPrc.html">mcmcRocPrc</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">fit.jags</span>,
-                       yname  <span class="op">=</span> <span class="st">"volunteer"</span>,
-                       xnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"neuroticism"</span>, <span class="st">"extraversion"</span><span class="op">)</span>,
-                       curves <span class="op">=</span> <span class="cn">FALSE</span>,
-                       fullsims <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fitstats.fullsims</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mcmcRocPrc.html">mcmcRocPrc</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">fit.jags</span>,</span>
+<span>                       yname  <span class="op">=</span> <span class="st">"volunteer"</span>,</span>
+<span>                       xnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"neuroticism"</span>, <span class="st">"extraversion"</span><span class="op">)</span>,</span>
+<span>                       curves <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                       fullsims <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>We can then plot the posterior density of the area under each curve.</p>
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">fitstats.fullsims</span><span class="op">)</span>, 
-       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">area_under_roc</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Area under the ROC curve"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">fitstats.fullsims</span><span class="op">)</span>, </span>
+<span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">area_under_roc</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html" class="external-link">geom_density</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Area under the ROC curve"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-56-1.png"><!-- --></p>
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">fitstats.fullsims</span><span class="op">)</span>, 
-       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">area_under_prc</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Area under the Precision-Recall curve"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">fitstats.fullsims</span><span class="op">)</span>, </span>
+<span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">area_under_prc</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html" class="external-link">geom_density</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Area under the Precision-Recall curve"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-57-1.png"><!-- --></p>
 </div>
 </div>
-<div id="whats-happening" class="section level1">
-<h1 class="hasAnchor">
-<a href="#whats-happening" class="anchor"></a>What’s Happening</h1>
-<p>New functions and enhancements to current functions are in the works. Feel free to browse the <a href="https://github.com/ShanaScogin/BayesPostEst/issues">issues</a> to see what we are working on or submit an <a href="https://github.com/ShanaScogin/BayesPostEst/issues">enhancement issue</a> of your own. Our <a href="https://github.com/ShanaScogin/BayesPostEst/blob/master/CONTRIBUTING.md">contributing</a> document has more information on ways to contribute.</p>
+<div class="section level1">
+<h1 id="contact">Contact<a class="anchor" aria-label="anchor" href="#contact"></a>
+</h1>
+<p>Please submit an <a href="https://github.com/ShanaScogin/BayesPostEst/issues" class="external-link">issue</a> if you encounter any bugs with or have suggestions for the package. Feel free to check out <a href="http://www.jkarreth.net" class="external-link">Johannes Karreth’s website</a> for more resources on Bayesian estimation.</p>
 </div>
-<div id="contact" class="section level1">
-<h1 class="hasAnchor">
-<a href="#contact" class="anchor"></a>Contact</h1>
-<p>Please submit an <a href="https://github.com/ShanaScogin/BayesPostEst/issues">issue</a> if you encounter any bugs or problems with the package. Feel free to check out <a href="http://www.jkarreth.net">Johannes Karreth’s website</a> for more resources on Bayesian estimation.</p>
-</div>
-<div id="references" class="section level1">
-<h1 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h1>
-<p>Beger, Andreas. 2016. “Precision-Recall Curves.” Available at: <a href="https://doi.org/10.2139/ssrn.2765419" class="uri">https://doi.org/10.2139/ssrn.2765419</a>.</p>
-<p>Cowles, Michael, and Caroline Davis. 1987. “The Subject Matter of Psychology: Volunteers.” British Journal of Social Psychology 26 (2): 97–102. <a href="https://doi.org/10.1111/j.2044-8309.1987.tb00769.x" class="uri">https://doi.org/10.1111/j.2044-8309.1987.tb00769.x</a>.</p>
-<p>Fox, John, Sanford Weisberg, and Brad Price. 2018. CarData: Companion to Applied Regression Data Sets. <a href="https://CRAN.R-project.org/package=carData" class="uri">https://CRAN.R-project.org/package=carData</a>.</p>
+<div class="section level1">
+<h1 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h1>
+<p>Beger, Andreas. 2016. “Precision-Recall Curves.” Available at: <a href="https://doi.org/10.2139/ssrn.2765419" class="external-link uri">https://doi.org/10.2139/ssrn.2765419</a>.</p>
+<p>Cowles, Michael, and Caroline Davis. 1987. “The Subject Matter of Psychology: Volunteers.” British Journal of Social Psychology 26 (2): 97–102. <a href="https://doi.org/10.1111/j.2044-8309.1987.tb00769.x" class="external-link uri">https://doi.org/10.1111/j.2044-8309.1987.tb00769.x</a>.</p>
+<p>Fox, John, Sanford Weisberg, and Brad Price. 2018. CarData: Companion to Applied Regression Data Sets. <a href="https://CRAN.R-project.org/package=carData" class="external-link uri">https://CRAN.R-project.org/package=carData</a>.</p>
 <p>Gelman, Andrew, and Jennifer Hill. 2007. Data Analysis Using Regression and Multilevel/Hierarchical Models. New York, NY: Cambridge University Press.</p>
-<p>Goodrich, Ben, Jonah Gabry, Imad Ali, and Sam Brilleman. 2019. Rstanarm: Bayesian Applied Regression Modeling via Stan. <a href="https://mc-stan.org/" class="uri">https://mc-stan.org/</a>.</p>
-<p>Hanmer, Michael J., and Kerem Ozan Kalkan. 2013. “Behind the Curve: Clarifying the Best Approach to Calculating Predicted Probabilities and Marginal Effects from Limited Dependent Variable Models.” American Journal of Political Science 57 (1): 263–77. <a href="https://doi.org/10.1111/j.1540-5907.2012.00602.x" class="uri">https://doi.org/10.1111/j.1540-5907.2012.00602.x</a>.</p>
-<p>Karreth, Johannes. 2018. “The Economic Leverage of International Organizations in Interstate Disputes.” International Interactions 44 (3): 463–90. <a href="https://doi.org/10.1080/03050629.2018.1389728" class="uri">https://doi.org/10.1080/03050629.2018.1389728</a>.</p>
-<p>King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most of Statistical Analyses: Improving Interpretation and Presentation.” American Journal of Political Science 44 (2): 347–61. <a href="https://doi.org/10.2307/2669316" class="uri">https://doi.org/10.2307/2669316</a>.</p>
-<p>Kruschke, John K. 2013. “Bayesian Estimation Supersedes the T-Test.” Journal of Experimental Psychology: General 142 (2): 573–603. <a href="https://doi.org/10.1037/a0029146" class="uri">https://doi.org/10.1037/a0029146</a>.</p>
+<p>Goodrich, Ben, Jonah Gabry, Imad Ali, and Sam Brilleman. 2019. Rstanarm: Bayesian Applied Regression Modeling via Stan. <a href="https://mc-stan.org/" class="external-link uri">https://mc-stan.org/</a>.</p>
+<p>Hanmer, Michael J., and Kerem Ozan Kalkan. 2013. “Behind the Curve: Clarifying the Best Approach to Calculating Predicted Probabilities and Marginal Effects from Limited Dependent Variable Models.” American Journal of Political Science 57 (1): 263–77. <a href="https://doi.org/10.1111/j.1540-5907.2012.00602.x" class="external-link uri">https://doi.org/10.1111/j.1540-5907.2012.00602.x</a>.</p>
+<p>Karreth, Johannes. 2018. “The Economic Leverage of International Organizations in Interstate Disputes.” International Interactions 44 (3): 463–90. <a href="https://doi.org/10.1080/03050629.2018.1389728" class="external-link uri">https://doi.org/10.1080/03050629.2018.1389728</a>.</p>
+<p>King, Gary, Michael Tomz, and Jason Wittenberg. 2000. “Making the Most of Statistical Analyses: Improving Interpretation and Presentation.” American Journal of Political Science 44 (2): 347–61. <a href="https://doi.org/10.2307/2669316" class="external-link uri">https://doi.org/10.2307/2669316</a>.</p>
+<p>Kruschke, John K. 2013. “Bayesian Estimation Supersedes the T-Test.” Journal of Experimental Psychology: General 142 (2): 573–603. <a href="https://doi.org/10.1037/a0029146" class="external-link uri">https://doi.org/10.1037/a0029146</a>.</p>
 <p>Kruschke, John K. 2015. Doing Bayesian Data Analysis: A Tutorial with R, JAGS, and Stan. Amsterdam: Academic Press. 978-0-12-405888-0</p>
 <p>Long, J. Scott. 1997. Regression Models for Categorical and Limited Dependent Variables. Thousand Oaks: Sage Publications.</p>
-<p>Martin, Andrew D., Kevin M. Quinn, and Jong Hee Park. 2011. “MCMCpack: Markov Chain Monte Carlo in R.” Journal of Statistical Software 42 (9):</p>
-<ol>
-<li>
-<a href="https://www.jstatsoft.org/v42/i09/" class="uri">https://www.jstatsoft.org/v42/i09/</a>.</li>
-</ol>
-<p>Plummer, Martyn. 2017. “JAGS Version 4.3.0 User Manual.” <a href="https://mcmc-jags.sourceforge.io/" class="uri">https://mcmc-jags.sourceforge.io/</a>.</p>
-<p>Stan Development Team. 2019. RStan: The R Interface to Stan. <a href="https://mc-stan.org/" class="uri">https://mc-stan.org/</a>.</p>
+<p>Martin, Andrew D., Kevin M. Quinn, and Jong Hee Park. 2011. “MCMCpack: Markov Chain Monte Carlo in R.” Journal of Statistical Software 42 (9): 22. <a href="https://www.jstatsoft.org/v42/i09/" class="external-link uri">https://www.jstatsoft.org/v42/i09/</a>.</p>
+<p>Plummer, Martyn. 2017. “JAGS Version 4.3.0 User Manual.” <a href="https://mcmc-jags.sourceforge.io/" class="external-link uri">https://mcmc-jags.sourceforge.io/</a>.</p>
+<p>Stan Development Team. 2019. RStan: The R Interface to Stan. <a href="https://mc-stan.org/" class="external-link uri">https://mc-stan.org/</a>.</p>
 </div>
 
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=BayesPostEst">https://​cloud.r-project.org/​package=BayesPostEst</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/ShanaScogin/BayesPostEst/">https://​github.com/​ShanaScogin/​BayesPostEst/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/ShanaScogin/BayesPostEst/issues">https://​github.com/​ShanaScogin/​BayesPostEst/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=BayesPostEst" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/ShanaScogin/BayesPostEst/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/ShanaScogin/BayesPostEst/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>Johannes Karreth <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-4586-7153" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Shana Scogin <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-7801-853X" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Rob Williams <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-9259-3883" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Andreas Beger <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-1883-3169" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html#citation">Citing BayesPostEst</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/ShanaScogin/BayesPostEst/actions"><img src="https://github.com/ShanaScogin/BayesPostEst/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://CRAN.R-project.org/package=BayesPostEst"><img src="https://www.r-pkg.org/badges/version/BayesPostEst" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://doi.org/10.21105/joss.01722"><img src="https://joss.theoj.org/papers/10.21105/joss.01722/status.svg" alt="DOI"></a></li>
-<li><a href="https://app.codecov.io/gh/ShanaScogin/BayesPostEst?branch=master"><img src="https://codecov.io/gh/ShanaScogin/BayesPostEst/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li>Johannes Karreth <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-4586-7153" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Shana Scogin <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-7801-853X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Rob Williams <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-9259-3883" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li>Andreas Beger <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-1883-3169" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
-</div>
+
+
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Johannes Karreth, Shana Scogin, Rob Williams, Andreas Beger.</p>
+  <p></p>
+<p>Developed by Johannes Karreth, Shana Scogin, Rob Williams, Andreas Beger.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer>
 </div>
 
-  
+
+
+
 
 
   </body>
