@@ -1,10 +1,25 @@
+## Submission
+
+This is a patch release (0.4.1) that fixes the problems shown on the
+BayesPostEst CRAN check results page:
+
+* ERROR (Linux flavors): a Stan model in the test setup used array syntax
+  that was removed in Stan 2.33. It now uses the `array[N]` syntax.
+* ERROR (Windows flavors): the brms model failed to compile during test setup.
+  Tests that fit Stan-based models (rstan, rstanarm, brms) are now skipped on
+  CRAN, which also shortens the test run time.
+* NOTE: "Namespaces in Imports field not imported from: 'HDInterval' 'carData'
+  'rjags'". These have been moved to Suggests.
+
 ## Test environments
-* major OS tested (gh-actions)
-* win-builder (R-release, R-devel, R-oldrelease)
+
+* local macOS (x86_64), R 4.1.0
+* win-builder, R-devel (2026-09-25 r90590 ucrt)
 
 ## R CMD check results
-There were no ERRORs or WARNINGs. There is one NOTE that seems to be global to all users currently and not the package: `checking for future file timestamps ... NOTE unable to verify current time`. There may also be notes about forbidden URLs/DOIs depending on which check you run. All of these URLs/DOIs have been checked and work. 
 
-## Downstream dependencies
-There are currently no downstream dependencies for this package.
+0 errors | 0 warnings | 0 notes
 
+## Reverse dependencies
+
+There are currently no reverse dependencies.
