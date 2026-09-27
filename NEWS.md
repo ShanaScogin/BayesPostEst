@@ -1,3 +1,12 @@
+# BayesPostEst 0.4.1
+
+* Updated the Stan test model to the `array[N]` syntax required by Stan >= 2.33.
+* Tests that fit rstan, rstanarm, or brms models are now skipped on CRAN. When run
+  locally, a model that fails to compile gives an informative warning and its
+  tests are skipped, instead of stopping the whole test run.
+* Moved carData, HDInterval, and rjags from Imports to Suggests.
+* The plot test for `mcmcRocPrc()` no longer fails when the plot window is small.
+
 # BayesPostEst 0.4.0
 * Fixed documentation issues (#92)
 * Reduced size of file by changing workflow of testthat (#79)

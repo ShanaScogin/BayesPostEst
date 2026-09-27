@@ -37,7 +37,7 @@ test_that("constructor and default method work", {
   # since pred_prob is a matrix, it should dispatch to the .default method,
   # which is setup to use a matrix of predicted probabilities as input
   expect_error(mcmcRocPrc(pred_prob, FALSE, FALSE, yvec = yvec), NA)
-
+  
 })
 
 test_that("constructor rejects invalid input", {
@@ -268,15 +268,19 @@ test_that("runjags input works", {
 
 test_that("binary/non-binary stanfit models are correctly IDd", {
   
+  # Stan models are only fitted off CRAN (see setup.R)
+  testthat::skip_on_cran()
+  
   # It would be good to also have a negative test for a non-binary model. 
   # Unfortunately stanfit is a S4 class, so it's not super straightforward
   # to create dummy examples for testing, like I do with the S3 classes 
   # elsewhere here. See the commented out code above. 
   
   testthat::skip_if_not_installed("rstan")
+  testthat::skip_if_not(file.exists(file.path(TESTDATA_DIR, "rstan_logit.rds")),
+                        "rstan test model could not be fitted")
   
-  #jags_logit <- readRDS("../testdata/jags_logit.rds")
-  jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
+  rstan_logit <- readRDS(file.path(TESTDATA_DIR, "rstan_logit.rds"))
   
   expect_true(is_binary_model(rstan_logit))
   expect_equal(identify_link_function(rstan_logit), "logit")
@@ -285,7 +289,12 @@ test_that("binary/non-binary stanfit models are correctly IDd", {
 
 test_that("RStan input works", {
   
-  testthat::skip_if_not_installed("rstan")
+  # Stan models are only fitted off CRAN (see setup.R)
+  testthat::skip_on_cran()
+  
+  testthat::skip_if_not_installed(c("rstan", "carData"))
+  testthat::skip_if_not(file.exists(file.path(TESTDATA_DIR, "rstan_logit.rds")),
+                        "rstan test model could not be fitted")
   
   #rstan_logit <- readRDS("../testdata/rstan-logit.rds")
   rstan_logit <- readRDS(file.path(TESTDATA_DIR, "rstan_logit.rds"))
@@ -312,7 +321,12 @@ test_that("RStan input works", {
 
 test_that("rstanarm input works", {
   
+  # Stan models are only fitted off CRAN (see setup.R)
+  testthat::skip_on_cran()
+  
   testthat::skip_if_not_installed("rstanarm")
+  testthat::skip_if_not(file.exists(file.path(TESTDATA_DIR, "rstanarm_logit.rds")),
+                        "rstanarm test model could not be fitted")
   
   #rstanarm_logit <- readRDS("../testdata/rstanarm-logit.rds")
   rstanarm_logit <- readRDS(file.path(TESTDATA_DIR, "rstanarm_logit.rds"))
@@ -339,7 +353,12 @@ test_that("rstanarm input works", {
 
 test_that("brms input works", {
   
+  # Stan models are only fitted off CRAN (see setup.R)
+  testthat::skip_on_cran()
+  
   testthat::skip_if_not_installed("brms")
+  testthat::skip_if_not(file.exists(file.path(TESTDATA_DIR, "brms-logit.rds")),
+                        "brms test model could not be fitted")
   
   #brms_logit <- readRDS("../testdata/brms-logit.rds")
   brms_logit <- readRDS(file.path(TESTDATA_DIR, "brms-logit.rds"))
@@ -378,7 +397,7 @@ test_that("BUGS input works", {
   ## loading sim data
   #sim_data <- readRDS("../testdata/sim_data.rds")
   sim_data <- readRDS(file.path(TESTDATA_DIR, "sim_data.rds"))
-    
+  
   # testing
   expect_error(
     out <- mcmcRocPrc(object = bugs_logit, 
@@ -392,7 +411,7 @@ test_that("BUGS input works", {
 
 test_that("MCMCpack input works", {
   
-  testthat::skip_if_not_installed("MCMCpack")
+  testthat::skip_if_not_installed(c("MCMCpack", "carData"))
   
   #mcmcpack_logit <- readRDS("../testdata/mcmcpack-logit.rds")
   mcmcpack_logit <- readRDS(file.path(TESTDATA_DIR, "mcmcpack_logit.rds"))
@@ -593,6 +612,10 @@ test_that("plot method works", {
   
   testthat::skip_if_not_installed("rjags")
   
+  # Draw to a null device so the test doesn't depend on the size of the plot
+  # window (a small RStudio plot pane gives "figure margins too large")
+  grDevices::pdf(NULL)
+  
   #jags_logit <- readRDS("../testdata/jags_logit.rds")
   jags_logit <- readRDS(file.path(TESTDATA_DIR, "jags_logit.rds"))
   
@@ -625,7 +648,9 @@ test_that("plot method works", {
   
   expect_error(plot(no_curves), "to generate data for plots")
   expect_error(plot(full_no_curves), "to generate data for plots")
-
+  
+  grDevices::dev.off()
+  
 })
 
 # the plots from above will be sent to a Rplots.pdf file; clean that up
@@ -701,5 +726,3 @@ test_that("auc_roc and pr work", {
   expect_equal(auc_pr(c(0, 0, 1, 1), c(0, 0, 1, 1)), NaN)
   
 })
-
-
