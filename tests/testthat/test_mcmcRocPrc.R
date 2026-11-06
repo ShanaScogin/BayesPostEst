@@ -551,23 +551,36 @@ test_that("print method works", {
                                  xnames = c("X1", "X2"),
                                  curves = TRUE,
                                  fullsims = TRUE)
-  
-  expect_equal(
-    capture_output(print(with_curves)), 
-    "mcmcRocPrc object\ncurves: TRUE; fullsims: FALSE\nAUC-ROC: 0.627\nAUC-PR:  0.621"
-  )
-  expect_equal(
-    capture_output(print(no_curves)), 
-    "mcmcRocPrc object\ncurves: FALSE; fullsims: FALSE\nAUC-ROC: 0.627\nAUC-PR:  0.621"
-  )
-  expect_equal(
-    capture_output(print(full_with_curves)), 
-    "mcmcRocPrc object\ncurves: TRUE; fullsims: TRUE\nAUC-ROC: 0.624 [80%: 0.619 - 0.627]\nAUC-PR:  0.618 [80%: 0.613 - 0.620]"
-  )
-  expect_equal(
-    capture_output(print(full_no_curves)), 
-    "mcmcRocPrc object\ncurves: FALSE; fullsims: TRUE\nAUC-ROC: 0.624 [80%: 0.619 - 0.627]\nAUC-PR:  0.618 [80%: 0.613 - 0.620]"
-  )
+
+### Equivalent to testing output of print method, but with numerical tolerance
+
+  ## mcmcRocPrc object\ncurves: TRUE; fullsims: FALSE\nAUC-ROC: 0.627\nAUC-PR:  0.621
+  expect_false(is.null(with_curves$roc_dat))
+  expect_equal(c(with_curves$area_under_roc, use.names=FALSE), 0.627, tolerance=0.001)
+  expect_equal(c(with_curves$area_under_prc, use.names=FALSE), 0.621, tolerance=0.001)
+
+  ## mcmcRocPrc object\ncurves: FALSE; fullsims: FALSE\nAUC-ROC: 0.627\nAUC-PR:  0.621
+  expect_true(is.null(no_curves$roc_dat))
+  expect_equal(c(no_curves$area_under_roc, use.names=FALSE), 0.627, tolerance=0.001)
+  expect_equal(c(no_curves$area_under_prc, use.names=FALSE), 0.621, tolerance=0.001)
+
+  ## mcmcRocPrc object\ncurves: TRUE; fullsims: TRUE\nAUC-ROC: 0.624 [80%: 0.619 - 0.627]\nAUC-PR:  0.618 [80%: 0.613 - 0.620]
+  expect_false(is.null(full_with_curves$roc_dat))
+  expect_equal(mean(full_with_curves$area_under_roc), 0.624, tolerance=0.001)
+  expect_equal(quantile(full_with_curves$area_under_roc, c(0.1, 0.9), names=FALSE),
+               c(0.619, 0.627), tolerance=0.001)
+  expect_equal(mean(full_with_curves$area_under_prc), 0.618, tolerance=0.001)
+  expect_equal(quantile(full_with_curves$area_under_prc, c(0.1, 0.9), names=FALSE),
+               c(0.613, 0.620), tolerance=0.001)
+
+  ## mcmcRocPrc object\ncurves: FALSE; fullsims: TRUE\nAUC-ROC: 0.624 [80%: 0.619 - 0.627]\nAUC-PR:  0.618 [80%: 0.613 - 0.620]
+  expect_true(is.null(full_no_curves$roc_dat))
+  expect_equal(mean(full_no_curves$area_under_roc), 0.624, tolerance=0.001)
+  expect_equal(quantile(full_no_curves$area_under_roc, c(0.1, 0.9), names=FALSE),
+               c(0.619, 0.627), tolerance=0.001)
+  expect_equal(mean(full_no_curves$area_under_prc), 0.618, tolerance=0.001)
+  expect_equal(quantile(full_no_curves$area_under_prc, c(0.1, 0.9), names=FALSE),
+               c(0.613, 0.620), tolerance=0.001)
   
 })
 
